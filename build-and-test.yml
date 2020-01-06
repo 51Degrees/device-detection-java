@@ -1,0 +1,135 @@
+name: Build and Test Device Detection Java
+
+pr:
+- master
+- develop
+- release/*
+
+trigger: none
+
+stages:
+
+- stage: Build_Windows
+  dependsOn: []
+  jobs:
+  - job: Build
+    pool:
+      name: Default
+      demands: msbuild
+
+    steps:
+
+    - checkout: self
+      submodules: recursive
+      lfs: true
+      persistCredentials: true
+
+    - powershell: |
+        git lfs install
+        ls
+        git -c http.https://51degrees.visualstudio.com.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" lfs fetch
+        git -c http.https://51degrees.visualstudio.com.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" lfs checkout
+        ls
+      workingDirectory: 'device-detection-cxx/device-detection-data'
+      displayName: 'Fetch LFS Data Files'
+
+    - task: MavenAuthenticate@0
+      inputs:
+        artifactsFeeds: 'pipeline-insider'
+
+    - task: Maven@1
+      displayName: 'Maven test'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'clean test'
+        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url)'
+        javaHomeOption: Path
+        jdkDirectory: 'C:\\Program Files\\Java\\jdk1.7.0_80'
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+      inputs:
+        SourceFolder: '$(build.sourcesdirectory)'
+        Contents: '**/*.jar'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
+
+- stage: Build_Mac
+  dependsOn: []
+  jobs:
+  - job: Build
+    pool:
+      vmImage: 'macOS-10.14'
+
+    steps:
+
+    - checkout: self
+      submodules: recursive
+      lfs: true
+
+    - task: MavenAuthenticate@0
+      inputs:
+        artifactsFeeds: 'pipeline-insider'
+
+    - task: Maven@1
+      displayName: 'Maven test'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'clean test'
+        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url)'
+
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+      inputs:
+        SourceFolder: '$(build.sourcesdirectory)'
+        Contents: '**/*.jar'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
+
+- stage: Build_Linux
+  dependsOn: []
+  jobs:
+  - job: Build
+    pool:
+      name: Linux
+      demands: maven
+
+    steps:
+
+    - checkout: self
+      submodules: recursive
+      lfs: true
+
+    - task: MavenAuthenticate@0
+      inputs:
+        artifactsFeeds: 'pipeline-insider'
+
+    - task: Maven@1
+      displayName: 'Maven test'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'clean test'
+        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url)'
+        javaHomeOption: Path
+        jdkDirectory: '/usr/lib/jvm/java-7-openjdk-amd64'
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+      inputs:
+        SourceFolder: '$(build.sourcesdirectory)'
+        Contents: '**/*.jar'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'

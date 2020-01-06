@@ -1,0 +1,136 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.51degrees</groupId>
+    <artifactId>pipeline.device-detection</artifactId>
+    <version>4.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>51Degrees :: Pipeline :: Device Detection</name>
+    <url>https://51degrees.com</url>
+    <description>Device detection engines for the 51Degrees Pipeline API</description>
+
+    <developers>
+        <developer>
+            <name>51Degrees</name>
+            <email>support@51degrees.com</email>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
+        <junit.version>4.12</junit.version>
+        <slf4j-api.version>1.7.25</slf4j-api.version>
+        <slf4j-simple.version>1.7.21</slf4j-simple.version>
+        <mockito-core.version>2.16.0</mockito-core.version>
+        <org.json.version>20180813</org.json.version>
+        <pipeline.version>4.1.0-beta.19</pipeline.version>
+        <publishrepository.id>ossrh</publishrepository.id>
+        <publishrepository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</publishrepository.url>
+        <fetchrepository.id>central</fetchrepository.id>
+        <fetchrepository.url>http://repo1.maven.org/maven2</fetchrepository.url>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <doclint>none</doclint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <modules>
+        <module>device-detection.shared</module>
+        <module>device-detection.pattern.engine.on-premise</module>
+        <module>device-detection.hash.engine.on-premise</module>
+        <module>device-detection.cloud</module>
+        <module>device-detection</module>
+        <module>device-detection.examples</module>
+        <module>web/pipeline.web.examples.servlet</module>
+        <module>web/pipeline.web.examples.mvc</module>
+    </modules>
+
+    <distributionManagement>
+        <repository>
+            <id>${publishrepository.id}</id>
+            <url>${publishrepository.url}</url>
+        </repository>
+    </distributionManagement>
+    <repositories>
+        <repository>
+            <id>${fetchrepository.id}</id>
+            <url>${fetchrepository.url}</url>
+        </repository>
+    </repositories>
+
+    <licenses>
+        <license>
+            <name>European Union Public License 1.2</name>
+            <url>https://opensource.org/licenses/EUPL-1.2</url>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/51Degrees/device-detection-java</url>
+        <connection>scm:git:git://github.com/51Degrees/device-detection-java.git</connection>
+        <developerConnection>scm:git:info@51degrees.com:51Degrees/device-detection-java.git</developerConnection>
+    </scm>
+</project>
