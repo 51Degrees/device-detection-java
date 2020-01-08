@@ -220,12 +220,17 @@ stages:
       inputs:
         secureFile: 'stagingsettings.xml'
 
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: 'cp $(stagingsettings.secureFilePath) /tmp/settings.xml'
+        
     - task: Maven@1
       displayName: 'Maven deploy staging'
       inputs:
         mavenPomFile: 'pom.xml'
         goals: deploy
-        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -s $(stagingsettings.secureFilePath) -Dgpg.passphrase=$(gpg_passphrase)'
+        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dgpg.passphrase=$(gpg_passphrase)'
         publishJUnitResults: false
         javaHomeOption: Path
         jdkDirectory: '/usr/lib/jvm/java-7-openjdk-amd64/'
