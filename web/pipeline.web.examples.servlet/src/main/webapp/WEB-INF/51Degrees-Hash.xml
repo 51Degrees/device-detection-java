@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<PipelineOptions>
+    <Elements>
+        <Element>
+            <BuildParameters>
+                <AutoUpdate>true</AutoUpdate>
+                <DataFileSystemWatcher>false</DataFileSystemWatcher>
+                <CreateTempDataCopy>true</CreateTempDataCopy>
+                <!-- Obtain your own license key and enterprise data file
+                from https://51degrees.com. -->
+                <DataUpdateLicenseKey>[[Your License Key]]</DataUpdateLicenseKey>
+                <DataFile>D:\[[Path to data file]]\51Degrees-EnterpriseV3.4.trie</DataFile>
+                <PerformanceProfile>LowMemory</PerformanceProfile>
+            </BuildParameters>
+            <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
+        </Element>
+        <Element>
+            <BuilderName>JavaScriptBundlerElement</BuilderName>
+        </Element>
+    </Elements>
+</PipelineOptions>

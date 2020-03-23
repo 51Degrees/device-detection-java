@@ -70,6 +70,31 @@ import static fiftyone.pipeline.web.mvc.components.FiftyOneInterceptor.enableCli
  * </PipelineOptions>
  * ```
  *
+ * Alternatively, to use the on-premise API with automatic updates enabled,
+ * replace the cloud element in the config with the new configuration.
+ * ```{xml}
+ * <PipelineOptions>
+ *     <Elements>
+ *         <Element>
+ *             <BuildParameters>
+ *                 <AutoUpdate>true</AutoUpdate>
+ *                 <DataFileSystemWatcher>false</DataFileSystemWatcher>
+ *                 <CreateTempDataCopy>true</CreateTempDataCopy>
+ *                 <!-- Obtain your own license key and enterprise data file
+ *                 from https://51degrees.com. -->
+ *                 <DataUpdateLicenseKey>[[Your License Key]]</DataUpdateLicenseKey>
+ *                 <DataFile>D:\[[Path to data file]]\51Degrees-EnterpriseV3.4.trie</DataFile>
+ *                 <PerformanceProfile>LowMemory</PerformanceProfile>
+ *             </BuildParameters>
+ *             <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
+ *         </Element>
+ *         <Element>
+ *             <BuilderName>JavaScriptBundlerElement</BuilderName>
+ *         </Element>
+ *     </Elements>
+ * </PipelineOptions>
+ * ```
+ *
  * 2. Set up MVC, enable configuration, and add the Pipeline component.
  * ```{java}
  * @EnableWebMvc
@@ -87,7 +112,7 @@ import static fiftyone.pipeline.web.mvc.components.FiftyOneInterceptor.enableCli
  *     public FiftyOneInterceptorConfig fiftyOneInterceptorConfig() {
  *         final FiftyOneInterceptorConfigDefault bean = new FiftyOneInterceptorConfigDefault();
  *     
- *         bean.setDataFilePath(servletContext.getRealPath("/WEB-INF/51Degrees.xml"));
+ *         bean.setDataFilePath(servletContext.getRealPath("/WEB-INF/51Degrees-Cloud.xml"));
  *         bean.setClientsidePropertiesEnabled(true);
  *     
  *         return bean;
@@ -178,7 +203,7 @@ public class ExampleMvcConfig extends WebMvcConfigurerAdapter {
     public FiftyOneInterceptorConfig fiftyOneInterceptorConfig() {
         final FiftyOneInterceptorConfigDefault bean = new FiftyOneInterceptorConfigDefault();
 
-        bean.setDataFilePath(servletContext.getRealPath("/WEB-INF/51Degrees.xml"));
+        bean.setDataFilePath(servletContext.getRealPath("/WEB-INF/51Degrees-Cloud.xml"));
         bean.setClientsidePropertiesEnabled(true);
 
         return bean;

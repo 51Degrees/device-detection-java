@@ -64,6 +64,31 @@ import java.util.Map;
  * </PipelineOptions>
  * ```
  *
+ * Alternatively, to use the on-premise API with automatic updates enabled,
+ * replace the cloud element in the config with the new configuration.
+ * ```{xml}
+ * <PipelineOptions>
+ *     <Elements>
+ *         <Element>
+ *             <BuildParameters>
+ *                 <AutoUpdate>true</AutoUpdate>
+ *                 <DataFileSystemWatcher>false</DataFileSystemWatcher>SS
+ *                 <CreateTempDataCopy>true</CreateTempDataCopy>
+ *                 <!-- Obtain your own license key and enterprise data file
+ *                 from https://51degrees.com. -->
+ *                 <DataUpdateLicenseKey>[[Your License Key]]</DataUpdateLicenseKey>
+ *                 <DataFile>D:\[[Path to data file]]\51Degrees-EnterpriseV3.4.trie</DataFile>
+ *                 <PerformanceProfile>LowMemory</PerformanceProfile>
+ *             </BuildParameters>
+ *             <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
+ *         </Element>
+ *         <Element>
+ *             <BuilderName>JavaScriptBundlerElement</BuilderName>
+ *         </Element>
+ *     </Elements>
+ * </PipelineOptions>
+ * ```
+ *
  * 2. Configure the filter and map it to be run for all URLs.
  * ```{xml}
  * <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
