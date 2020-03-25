@@ -35,6 +35,11 @@
             <artifactId>device-detection.cloud</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>device-detection.pattern.engine.on-premise</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

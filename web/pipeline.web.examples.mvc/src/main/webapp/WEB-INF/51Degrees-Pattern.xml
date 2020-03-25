@@ -10,10 +10,10 @@
                 <!-- Obtain your own license key and enterprise data file
                 from https://51degrees.com. -->
                 <DataUpdateLicenseKey>[[Your License Key]]</DataUpdateLicenseKey>
-                <DataFile>D:\[[Path to data file]]\51Degrees-EnterpriseV3.4.trie</DataFile>
+                <DataFile>D:\[[Path to data file]]\51Degrees-EnterpriseV3.2.dat</DataFile>
                 <PerformanceProfile>LowMemory</PerformanceProfile>
             </BuildParameters>
-            <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
+            <BuilderName>DeviceDetectionPatternEngineBuilder</BuilderName>
         </Element>
         <Element>
             <BuilderName>JavaScriptBundlerElement</BuilderName>
