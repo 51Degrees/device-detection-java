@@ -33,7 +33,7 @@
         <publishrepository.id>ossrh</publishrepository.id>
         <publishrepository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</publishrepository.url>
         <fetchrepository.id>central</fetchrepository.id>
-        <fetchrepository.url>http://repo1.maven.org/maven2</fetchrepository.url>
+        <fetchrepository.url>https://repo1.maven.org/maven2</fetchrepository.url>
     </properties>
 
     <dependencies>
