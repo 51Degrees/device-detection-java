@@ -26,6 +26,8 @@ import fiftyone.devicedetection.shared.testhelpers.Wrapper;
 import fiftyone.devicedetection.shared.testhelpers.data.MetaDataHasher;
 import fiftyone.pipeline.engines.fiftyone.data.ComponentMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
+import fiftyone.pipeline.engines.fiftyone.data.ProfileMetaData;
+import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
 
 import static org.junit.Assert.fail;
 
@@ -34,19 +36,21 @@ public class MetaDataHasherHash implements MetaDataHasher {
     @Override
     public int hashProperties(int hash, Wrapper wrapper) {
         int i = 0;
-        for (FiftyOneAspectPropertyMetaData property : wrapper.getProperties()) {
+        Iterable<FiftyOneAspectPropertyMetaData> properties = wrapper.getProperties();
+        for (FiftyOneAspectPropertyMetaData property : properties) {
             if (i % 10 == 0) {
                 hash ^= property.hashCode();
-                hash ^= property.getComponent().hashCode();
-                try {
-                    Object values = property.getValues();
-                    fail();
-                } catch (UnsupportedOperationException e) {
+
+                int j = 0;
+                for (ValueMetaData value : property.getValues()) {
+                    if (j % 10 == 0) {
+                        hash ^= value.hashCode();
+                    }
+                    j++;
                 }
-                try {
-                    Object value = property.getDefaultValue();
-                    fail();
-                } catch (UnsupportedOperationException e) {
+                hash ^= property.getComponent().hashCode();
+                if (property.getDefaultValue() != null) {
+                    hash ^= property.getDefaultValue().hashCode();
                 }
             }
             i++;
@@ -56,10 +60,13 @@ public class MetaDataHasherHash implements MetaDataHasher {
 
     @Override
     public int hashValues(int hash, Wrapper wrapper) {
-        try {
-            Object profiles = wrapper.getEngine().getValues();
-            fail();
-        } catch (UnsupportedOperationException e) {
+        int i = 0;
+        for (ValueMetaData value : wrapper.getValues()) {
+            if (i % 100 == 0) {
+                hash ^= value.hashCode();
+                hash ^= value.getProperty().hashCode();
+            }
+            i++;
         }
         return hash;
     }
@@ -72,24 +79,30 @@ public class MetaDataHasherHash implements MetaDataHasher {
             for (FiftyOneAspectPropertyMetaData property : component.getProperties()) {
                 if (i % 10 == 0) {
                     hash ^= property.hashCode();
-                    try {
-                        Object profile = component.getDefaultProfile();
-                        fail();
-                    } catch (UnsupportedOperationException e) {
-                    }
                 }
                 i++;
             }
+            hash ^= component.getDefaultProfile().hashCode();
         }
         return hash;
     }
 
     @Override
     public int hashProfiles(int hash, Wrapper wrapper) {
-        try {
-            Object profiles = wrapper.getEngine().getProfiles();
-            fail();
-        } catch (UnsupportedOperationException e) {
+        int i = 0;
+        for (ProfileMetaData profile : wrapper.getProfiles()) {
+            if (i % 100 == 0) {
+                hash ^= profile.hashCode();
+                hash ^= profile.getComponent().hashCode();
+                int j = 0;
+                for (ValueMetaData value : profile.getValues()) {
+                    if (j % 10 == 0) {
+                        hash ^= value.hashCode();
+                    }
+                    j++;
+                }
+            }
+            i++;
         }
         return hash;
     }

@@ -12,7 +12,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="device-detection.hash.engine.on-premise" />
     <orderEntry type="module" module-name="device-detection.shared" />
-    <orderEntry type="library" name="Maven: com.51degrees:device-detection.pattern.engine.on-premise:4.1.0-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="device-detection.cloud" />
     <orderEntry type="library" name="Maven: com.51degrees:pipeline.cloudrequestengine:4.1.0-beta.26" level="project" />
     <orderEntry type="library" name="Maven: com.51degrees:pipeline.engines:4.1.0-beta.26" level="project" />

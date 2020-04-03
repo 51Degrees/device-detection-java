@@ -23,12 +23,14 @@
 package fiftyone.devicedetection.hash.engine.onpremise.data;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
+import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.devicedetection.shared.testhelpers.data.DataValidator;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.engines.exceptions.NoValueException;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -44,9 +46,10 @@ public class DataValidatorHash implements DataValidator {
 
     @Override
     public void validateData(FlowData data, boolean validEvidence) throws NoValueException {
-        DeviceDataHash elementData = data.getFromElement(engine);
+        DeviceData elementData = data.getFromElement(engine);
         Map<String, Object> map = elementData.asKeyMap();
-        for (FiftyOneAspectPropertyMetaData property : engine.getProperties()) {
+        for (FiftyOneAspectPropertyMetaData property :
+                engine.getProperties()) {
             if (property.isAvailable()) {
                 assertTrue(map.containsKey(property.getName()));
                 AspectPropertyValue value = (AspectPropertyValue)map.get(property.getName());
@@ -69,21 +72,20 @@ public class DataValidatorHash implements DataValidator {
         if (validEvidence == false) {
             assertEquals("0-0-0-0", elementData.getDeviceId().getValue());
         }
-        int validKeyCount = 0;
+        int validKeys = 0;
         for (String key : data.getEvidence().asKeyMap().keySet()) {
             if (engine.getEvidenceKeyFilter().include(key)) {
-                validKeyCount++;
+                validKeys++;
             }
         }
-        if (validKeyCount > 0) {
-            assertNotNull(elementData.getDeviceId().getValue());
-            assertFalse(elementData.getDeviceId().getValue().isEmpty());
-            assertEquals(validKeyCount, elementData.getUserAgents().getValue().size());
-        }
+        assertEquals(validKeys, elementData.getUserAgents().getValue().size());
     }
 
     @Override
-    public void validateProfileIds(FlowData data, List<String> profileIds) {
-        // Don't check anything as Hash does not support profile overrides.
+    public void validateProfileIds(FlowData data, List<String> profileIds) throws NoValueException {
+        DeviceData elementData = data.getFromElement(engine);
+        List<String> matchedProfiles = Arrays.asList(elementData.getDeviceId().getValue().split("-"));
+        assertTrue("One or more profiles were not set in the result",
+                matchedProfiles.containsAll(profileIds));
     }
 }

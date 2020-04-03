@@ -101,7 +101,6 @@ public class ConfigureFromFile extends ProgramBase {
             // Bind the configuration to a pipeline options instance
             PipelineOptions options = (PipelineOptions) unmarshaller.unmarshal(file);
 
-            FiftyOnePipelineBuilder builder = new FiftyOnePipelineBuilder();
             // Create a simple pipeline to access the engine with.
             Pipeline pipeline = new FiftyOnePipelineBuilder()
                 .buildFromConfiguration(options);

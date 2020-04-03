@@ -123,7 +123,7 @@ public class DeviceDetectionHashEngineBuilder
             default:
                 throw new IllegalArgumentException(
                     "The performance profile '" + profile.name() + "' is not valid " +
-                        "for a DeviceDetectionPatternEngine.");
+                        "for a DeviceDetectionHashEngine.");
         }
         return this;
     }

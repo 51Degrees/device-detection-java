@@ -24,7 +24,11 @@ package fiftyone.devicedetection.hash.engine.onpremise.data;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.Swig;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.ValueIterable;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.PropertyMetaDataSwig;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataCollectionSwig;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataKeySwig;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataSwig;
 import fiftyone.pipeline.core.data.types.JavaScript;
 import fiftyone.pipeline.core.flowelements.FlowElement;
 import fiftyone.pipeline.engines.fiftyone.data.ComponentMetaData;
@@ -55,8 +59,8 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
     private final String type;
 
     public PropertyMetaDataHash(
-        DeviceDetectionHashEngine engine,
-        PropertyMetaDataSwig source) {
+            DeviceDetectionHashEngine engine,
+            PropertyMetaDataSwig source) {
         this.source = source;
         this.engine = engine;
         this.url = source.getUrl();
@@ -117,23 +121,42 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
     @Override
     public ComponentMetaData getComponent() {
         return new ComponentMetaDataHash(
-            engine,
-            engine.getMetaData().getComponentForProperty(source));
+                engine,
+                engine.getMetaData().getComponentForProperty(source));
     }
 
     @Override
     public Iterable<ValueMetaData> getValues() {
-        throw new UnsupportedOperationException();
+        return new ValueIterable(
+                engine,
+                engine.getMetaData().getValuesForProperty(source));
     }
 
     @Override
     public ValueMetaData getValue(String valueName) {
-        throw new UnsupportedOperationException();
+        ValueMetaData result = null;
+
+        ValueMetaDataCollectionSwig values =
+                engine.getMetaData().getValuesForProperty(source);
+        try {
+            ValueMetaDataSwig value = values.getByKey(
+                    new ValueMetaDataKeySwig(getName(), valueName));
+            if (value != null) {
+                result = new ValueMetaDataHash(engine, value);
+            }
+        } finally {
+            values.delete();
+        }
+        return result;
     }
 
     @Override
     public ValueMetaData getDefaultValue() {
-        throw new UnsupportedOperationException();
+        ValueMetaDataSwig value =
+                engine.getMetaData().getDefaultValueForProperty(source);
+        return value == null ?
+                null :
+                new ValueMetaDataHash(engine, value);
     }
 
     @Override
@@ -206,8 +229,12 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
     }
 
     @Override
+    public String toString() {
+        return getName();
+    }
+
+    @Override
     public void close() throws IOException {
         source.delete();
     }
-
 }

@@ -104,7 +104,6 @@
 
     <modules>
         <module>device-detection.shared</module>
-        <module>device-detection.pattern.engine.on-premise</module>
         <module>device-detection.hash.engine.on-premise</module>
         <module>device-detection.cloud</module>
         <module>device-detection</module>

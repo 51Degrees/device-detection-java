@@ -48,9 +48,13 @@ import java.util.Map;
  *         <Element>
  *             <BuildParameters>
  *                 <EndPoint>https://cloud.51degrees.com/api/v4</EndPoint>
- *                 <!-- Obtain your own resource key from 
- *                 https://configure.51degrees.com to access more properties. -->
- *                 <ResourceKey>AQS5HKcyHJbECm6E10g</ResourceKey>
+ *                  <!-- Obtain a resource key for free at
+ *                  https://configure.51degrees.com
+ *                  Make sure to include the 'BrowserName','BrowserVendor',
+ *                  'BrowserVersion','HardwareName','HardeareVendor',
+ *                  'PlatformName','PlatformVendor','PlatformVersion'
+ *                  properties as they are used by this example. -->
+ *                  <ResourceKey>!!YOUR_RESOURCE_KEY!!</ResourceKey>
  *             </BuildParameters>
  *             <BuilderName>CloudRequestEngine</BuilderName>
  *         </Element>
@@ -77,10 +81,10 @@ import java.util.Map;
  *                 <!-- Obtain your own license key and enterprise data file
  *                 from https://51degrees.com. -->
  *                 <DataUpdateLicenseKey>[[Your License Key]]</DataUpdateLicenseKey>
- *                 <DataFile>D:\[[Path to data file]]\51Degrees-EnterpriseV3.2.dat</DataFile>
+ *                 <DataFile>D:\[[Path to data file]]\51Degrees-EnterpriseV4.1.hash</DataFile>
  *                 <PerformanceProfile>LowMemory</PerformanceProfile>
  *             </BuildParameters>
- *             <BuilderName>DeviceDetectionPatternEngineBuilder</BuilderName>
+ *             <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
  *         </Element>
  *         <Element>
  *             <BuilderName>JavaScriptBundlerElement</BuilderName>

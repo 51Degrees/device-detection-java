@@ -20,44 +20,36 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-package fiftyone.devicedetection.pattern.engine.onpremise.flowelements;
+package fiftyone.devicedetection.hash.engine.onpremise.interop;
 
-import fiftyone.devicedetection.pattern.engine.onpremise.TestsBase;
-import fiftyone.devicedetection.shared.testhelpers.flowelements.EvidenceKeyTests;
-import fiftyone.pipeline.engines.Constants;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import fiftyone.devicedetection.hash.engine.onpremise.data.ProfileMetaDataHash;
+import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ProfileMetaDataCollectionSwig;
+import fiftyone.pipeline.engines.fiftyone.data.CollectionIterableBase;
+import fiftyone.pipeline.engines.fiftyone.data.ProfileMetaData;
 
-public class EvidenceKeys extends TestsBase {
+public class ProfileIterable
+        extends CollectionIterableBase<ProfileMetaData> {
 
-    @Before
-    public void init() throws Exception {
-        testInitialize(Constants.PerformanceProfiles.HighPerformance);
+    private ProfileMetaDataCollectionSwig collection;
+
+    private DeviceDetectionHashEngine engine;
+
+    public ProfileIterable(
+            DeviceDetectionHashEngine engine,
+            ProfileMetaDataCollectionSwig collection) {
+        super(collection.getSize());
+        this.engine = engine;
+        this.collection = collection;
     }
 
-    @After
-    public void cleanup() {
-        testCleanup();
+    @Override
+    protected ProfileMetaData get(long index) {
+        return new ProfileMetaDataHash(engine, collection.getByIndex(index));
     }
 
-    @Test
-    public void EvidenceKeys_Pattern_ContainsUserAgent() {
-        EvidenceKeyTests.containsUserAgent(getWrapper());
-    }
-
-    @Test
-    public void EvidenceKeys_Pattern_ContainsHeaderNames() {
-        EvidenceKeyTests.containsHeaderNames(getWrapper());
-    }
-
-    @Test
-    public void EvidenceKeys_Pattern_ContainsOverrides() {
-        EvidenceKeyTests.containsOverrides(getWrapper());
-    }
-
-    @Test
-    public void EvidenceKeys_Pattern_CaseInsensitiveKeys() {
-        EvidenceKeyTests.caseInsensitiveKeys(getWrapper());
+    @Override
+    public void close() throws Exception {
+        collection.delete();
     }
 }

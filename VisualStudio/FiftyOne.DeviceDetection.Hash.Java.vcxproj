@@ -42,9 +42,9 @@
     <None Include="..\device-detection-cxx\src\hash\hash.i" />
     <None Include="..\device-detection-cxx\src\hash\ResultsHash.i" />
     <None Include="..\device-detection-cxx\src\ResultsDeviceDetection.i" />
-    <None Include="..\device-detection.hash.engine.on-premise\PreBuild.bat" />
-    <None Include="..\device-detection.hash.engine.on-premise\PreBuild.sh" />
-    <None Include="..\hash_java.i" />
+    <None Include="..\device-detection.hash.engine.on-premise\hash_java.i" />
+    <None Include="..\PreBuild.bat" />
+    <None Include="..\PreBuild.sh" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\device-detection-cxx\VisualStudio\FiftyOne.DeviceDetection.Hash.Cpp\FiftyOne.DeviceDetection.Hash.Cpp.vcxproj">

@@ -23,7 +23,6 @@
 package fiftyone.devicedetection;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder;
-import fiftyone.devicedetection.pattern.engine.onpremise.flowelements.DeviceDetectionPatternEngineBuilder;
 import fiftyone.devicedetection.shared.flowelements.OnPremiseDeviceDetectionEngineBuilderBase;
 import fiftyone.pipeline.core.exceptions.PipelineConfigurationException;
 import fiftyone.pipeline.core.flowelements.Pipeline;
@@ -54,7 +53,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
     private Constants.PerformanceProfiles performanceProfile =
         Constants.PerformanceProfiles.Balanced;
     private Enums.DeviceDetectionAlgorithm algorithm =
-        Enums.DeviceDetectionAlgorithm.Pattern;
+        Enums.DeviceDetectionAlgorithm.Hash;
     private DataUpdateService dataUpdateService;
     private HttpClient httpClient;
 
@@ -83,13 +82,15 @@ public class DeviceDetectionOnPremisePipelineBuilder
         this.createTempDataCopy = createTempDataCopy;
         if (filename.substring(filename.length() - 4)
             .equalsIgnoreCase(".dat")) {
-            algorithm = Enums.DeviceDetectionAlgorithm.Pattern;
+            throw new Exception("The Pattern data format data " +
+                "files are deprecated in version 4. Please use a " +
+                "Hash V4.1 data file.");
         } else if (filename.substring(filename.length() - 5)
-            .equalsIgnoreCase(".trie")) {
+            .equalsIgnoreCase(".hash")) {
             algorithm = Enums.DeviceDetectionAlgorithm.Hash;
         } else {
             throw new Exception("Unrecognised filename. " +
-                "Expected a '*.dat' pattern data file or '*.trie' hash data file.");
+                "Expected a '*.hash' hash data file.");
         }
         return this;
     }
@@ -141,14 +142,9 @@ public class DeviceDetectionOnPremisePipelineBuilder
     /**
      * Set the maximum difference to allow when processing HTTP headers.
      * The meaning of difference depends on the Device Detection API being
-     * used.
-     * For Pattern: The difference is a combination of the difference in
-     *              character position of matched substrings, and the
-     *              difference in ASCII value of each character of matched
-     *              substrings. By default this is 10.
-     * For Hash: The difference is the difference in hash value between
-     *           the hash that was found, and the hash that is being
-     *           searched for. By default this is 0.
+     * used. The difference is the difference in hash value between the
+     * hash that was found, and the hash that is being searched for.
+     * By default this is 0.
      * @param difference to allow
      * @return this builder
      */
@@ -183,11 +179,6 @@ public class DeviceDetectionOnPremisePipelineBuilder
                 DeviceDetectionHashEngineBuilder hashBuilder =
                     new DeviceDetectionHashEngineBuilder(loggerFactory, dataUpdateService);
                 deviceDetectionEngine = configureAndBuild(hashBuilder);
-                break;
-            case Pattern:
-                DeviceDetectionPatternEngineBuilder patternBuilder =
-                    new DeviceDetectionPatternEngineBuilder(loggerFactory, dataUpdateService);
-                deviceDetectionEngine = configureAndBuild(patternBuilder);
                 break;
             default:
                 throw new PipelineConfigurationException(

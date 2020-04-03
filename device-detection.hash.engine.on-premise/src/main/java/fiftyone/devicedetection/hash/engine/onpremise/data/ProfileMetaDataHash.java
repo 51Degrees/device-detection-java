@@ -20,11 +20,13 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-package fiftyone.devicedetection.pattern.engine.onpremise.data;
+package fiftyone.devicedetection.hash.engine.onpremise.data;
 
-import fiftyone.devicedetection.pattern.engine.onpremise.flowelements.DeviceDetectionPatternEngine;
-import fiftyone.devicedetection.pattern.engine.onpremise.interop.ValueIterable;
-import fiftyone.devicedetection.pattern.engine.onpremise.interop.swig.*;
+import fiftyone.devicedetection.hash.engine.onpremise.data.ComponentMetaDataHash;
+import fiftyone.devicedetection.hash.engine.onpremise.data.ValueMetaDataHash;
+import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.ValueIterable;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.*;
 import fiftyone.pipeline.engines.fiftyone.data.*;
 
 import java.io.IOException;
@@ -35,15 +37,15 @@ import java.util.List;
 
 import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 
-public class ProfileMetaDataPattern implements ProfileMetaData {
+public class ProfileMetaDataHash implements ProfileMetaData {
 
     private final ProfileMetaDataSwig source;
 
-    private final DeviceDetectionPatternEngine engine;
+    private final DeviceDetectionHashEngine engine;
 
-    public ProfileMetaDataPattern(
-        DeviceDetectionPatternEngine engine,
-        ProfileMetaDataSwig source) {
+    public ProfileMetaDataHash(
+            DeviceDetectionHashEngine engine,
+            ProfileMetaDataSwig source) {
         this.engine = engine;
         this.source = source;
     }
@@ -56,7 +58,7 @@ public class ProfileMetaDataPattern implements ProfileMetaData {
     @Override
     public CloseableIterable<ValueMetaData> getValues() {
         return new ValueIterable(engine,
-            engine.getMetaData().getValuesForProfile(source));
+                engine.getMetaData().getValuesForProfile(source));
     }
 
     @Override
@@ -64,13 +66,13 @@ public class ProfileMetaDataPattern implements ProfileMetaData {
         List<ValueMetaData> result = new ArrayList<>();
 
         ValueMetaDataCollectionSwig values =
-            engine.getMetaData().getValuesForProfile(source);
+                engine.getMetaData().getValuesForProfile(source);
         long size = values.getSize();
         for (long i = 0; i < size; i++) {
             ValueMetaDataSwig value = values.getByIndex(i);
             PropertyMetaDataSwig valueProperty = engine.getMetaData().getPropertyForValue(value);
             if (propertyName.equalsIgnoreCase(valueProperty.getName())) {
-                result.add(new ValueMetaDataPattern(engine, value));
+                result.add(new ValueMetaDataHash(engine, value));
             } else {
                 value.delete();
             }
@@ -84,10 +86,10 @@ public class ProfileMetaDataPattern implements ProfileMetaData {
     public ValueMetaData getValue(String propertyName, String valueName) {
         ValueMetaData result = null;
         ValueMetaDataCollectionSwig values =
-            engine.getMetaData().getValuesForProfile(source);
+                engine.getMetaData().getValuesForProfile(source);
         ValueMetaDataSwig value = values.getByKey(new ValueMetaDataKeySwig(propertyName, valueName));
         if (value != null) {
-            result = new ValueMetaDataPattern(engine, value);
+            result = new ValueMetaDataHash(engine, value);
         }
         values.delete();
         return result;
@@ -95,14 +97,14 @@ public class ProfileMetaDataPattern implements ProfileMetaData {
 
     @Override
     public int getSignatureCount() {
-        return (int) source.getSignatureCount();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public ComponentMetaData getComponent() {
-        return new ComponentMetaDataPattern(
-            engine,
-            engine.getMetaData().getComponentForProfile(source));
+        return new ComponentMetaDataHash(
+                engine,
+                engine.getMetaData().getComponentForProfile(source));
     }
 
     @Override
@@ -110,7 +112,7 @@ public class ProfileMetaDataPattern implements ProfileMetaData {
         List<ValueMetaData> values = new ArrayList<>();
         for (ValueMetaData value : getValues()) {
             if (value.getProperty().getDisplayOrder() > 0 &&
-                value.getName().equalsIgnoreCase("N/A") == false) {
+                    value.getName().equalsIgnoreCase("N/A") == false) {
                 values.add(value);
             }
         }
@@ -121,7 +123,7 @@ public class ProfileMetaDataPattern implements ProfileMetaData {
             @Override
             public int compare(ValueMetaData o1, ValueMetaData o2) {
                 return o1.getProperty().getDisplayOrder() -
-                    o2.getProperty().getDisplayOrder();
+                        o2.getProperty().getDisplayOrder();
             }
         });
 

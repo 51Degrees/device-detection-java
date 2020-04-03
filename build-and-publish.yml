@@ -16,9 +16,7 @@ stages:
   jobs:
   - job: Build
     pool:
-      name: Default
-      demands: msbuild
-    steps:
+      vmImage: 'vs2017-win2016'
 
     - checkout: self
       submodules: recursive
@@ -199,7 +197,7 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean install'
-        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url )-Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -DcreateChecksum=true'
+        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -DcreateChecksum=true'
         jdkVersionOption: '1.8'
 
     - task: Maven@1
@@ -238,7 +236,6 @@ stages:
       inputs:
         tagUser: 'Azure DevOps'
         tagEmail: 'CIUser@51Degrees.com'
-        tag: 'v$(GitVersion.SemVer)'
       # Only create the tag if we also published a package as defined in
       # the previous task.
       condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), or(startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'), eq('true', variables['ForcePushMaven'])))))

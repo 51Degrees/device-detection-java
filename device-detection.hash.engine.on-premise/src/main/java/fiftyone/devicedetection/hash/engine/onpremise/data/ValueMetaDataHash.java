@@ -20,33 +20,33 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-package fiftyone.devicedetection.pattern.engine.onpremise.data;
+package fiftyone.devicedetection.hash.engine.onpremise.data;
 
-import fiftyone.devicedetection.pattern.engine.onpremise.flowelements.DeviceDetectionPatternEngine;
-import fiftyone.devicedetection.pattern.engine.onpremise.interop.swig.ValueMetaDataSwig;
+import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataSwig;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
 
 import java.io.IOException;
 
-public class ValueMetaDataPattern implements ValueMetaData {
+public class ValueMetaDataHash implements ValueMetaData {
 
     private final ValueMetaDataSwig source;
 
-    private final DeviceDetectionPatternEngine engine;
+    private final DeviceDetectionHashEngine engine;
 
-    public ValueMetaDataPattern(
-        DeviceDetectionPatternEngine engine,
-        ValueMetaDataSwig source) {
+    public ValueMetaDataHash(
+            DeviceDetectionHashEngine engine,
+            ValueMetaDataSwig source) {
         this.engine = engine;
         this.source = source;
     }
 
     @Override
     public FiftyOneAspectPropertyMetaData getProperty() {
-        return new PropertyMetaDataPattern(
-            engine,
-            engine.getMetaData().getPropertyForValue(source));
+        return new PropertyMetaDataHash(
+                engine,
+                engine.getMetaData().getPropertyForValue(source));
     }
 
     @Override
@@ -79,7 +79,7 @@ public class ValueMetaDataPattern implements ValueMetaData {
 
     public boolean equals(ValueMetaData other) {
         return getProperty().equals(other.getProperty()) &&
-            getName().equals(other.getName());
+                getName().equals(other.getName());
     }
 
     @Override

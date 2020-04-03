@@ -37,31 +37,55 @@ public class ResultsHashSwig extends ResultsDeviceDetectionSwig {
   }
 
   public String getDeviceId() {
-    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getDeviceId(swigCPtr, this);
+    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getDeviceId__SWIG_0(swigCPtr, this);
   }
 
-  public int getRank() {
-    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getRank(swigCPtr, this);
+  public String getDeviceId(long resultIndex) {
+    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getDeviceId__SWIG_1(swigCPtr, this, resultIndex);
   }
 
   public int getDifference() {
-    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getDifference(swigCPtr, this);
+    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getDifference__SWIG_0(swigCPtr, this);
+  }
+
+  public int getDifference(long resultIndex) {
+    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getDifference__SWIG_1(swigCPtr, this, resultIndex);
+  }
+
+  public int getMethod() {
+    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getMethod__SWIG_0(swigCPtr, this);
+  }
+
+  public int getMethod(long resultIndex) {
+    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getMethod__SWIG_1(swigCPtr, this, resultIndex);
   }
 
   public int getDrift() {
-    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getDrift(swigCPtr, this);
+    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getDrift__SWIG_0(swigCPtr, this);
+  }
+
+  public int getDrift(long resultIndex) {
+    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getDrift__SWIG_1(swigCPtr, this, resultIndex);
+  }
+
+  public String getTrace() {
+    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getTrace(swigCPtr, this);
+  }
+
+  public int getMatchedNodes() {
+    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getMatchedNodes(swigCPtr, this);
   }
 
   public int getIterations() {
     return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getIterations(swigCPtr, this);
   }
 
-  public int getMethod() {
-    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getMethod(swigCPtr, this);
+  public String getUserAgent(long resultIndex) {
+    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getUserAgent(swigCPtr, this, resultIndex);
   }
 
-  public int getMatchedNodes() {
-    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getMatchedNodes(swigCPtr, this);
+  public int getUserAgents() {
+    return DeviceDetectionHashEngineModuleJNI.ResultsHashSwig_getUserAgents(swigCPtr, this);
   }
 
 }

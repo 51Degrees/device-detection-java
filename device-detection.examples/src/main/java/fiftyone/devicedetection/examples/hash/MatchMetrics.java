@@ -41,7 +41,7 @@ import fiftyone.pipeline.engines.Constants;
  * performance profile.
  * ```
  * Pipeline pipeline = new DeviceDetectionPipelineBuilder()
- *     .useOnPremise("51Degrees-LiteV3.4.trie", false)
+ *     .useOnPremise("51Degrees-LiteV4.1.hash", false)
  *     .setAutoUpdate(false)
  *     .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
  *     .build();
@@ -92,7 +92,7 @@ public class MatchMetrics extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
         String dataFile = args.length > 0 ? args[0] :
-            getDefaultFilePath("51Degrees-LiteV3.4.trie").getAbsolutePath();
+            getDefaultFilePath("51Degrees-LiteV4.1.hash").getAbsolutePath();
 
         new Example(true).run(dataFile);
         System.out.println("Complete. Press enter to exit.");

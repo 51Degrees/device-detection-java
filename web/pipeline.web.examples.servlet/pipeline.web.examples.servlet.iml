@@ -9,6 +9,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="device-detection.hash.engine.on-premise" />
+    <orderEntry type="module" module-name="device-detection.shared" />
+    <orderEntry type="library" name="Maven: com.51degrees:pipeline.engines.fiftyone:4.1.0-beta.26" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax:javaee-web-api:7.0" level="project" />
     <orderEntry type="library" name="Maven: com.51degrees:pipeline.web:4.1.0-beta.26" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
@@ -18,7 +21,6 @@
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.21.0-GA" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20180813" level="project" />
     <orderEntry type="library" name="Maven: com.51degrees:pipeline.web.shared:4.1.0-beta.26" level="project" />
-    <orderEntry type="library" name="Maven: com.51degrees:pipeline.engines.fiftyone:4.1.0-beta.26" level="project" />
     <orderEntry type="library" name="Maven: javax:javaee-api:6.0" level="project" />
     <orderEntry type="library" name="Maven: com.51degrees:pipeline.jsonbuilder:4.1.0-beta.26" level="project" />
     <orderEntry type="library" name="Maven: com.51degrees:pipeline.engines:4.1.0-beta.26" level="project" />
@@ -31,7 +33,6 @@
     <orderEntry type="library" name="Maven: com.51degrees:pipeline.javascriptbuilder:4.1.0-beta.26" level="project" />
     <orderEntry type="library" name="Maven: com.github.spullara.mustache.java:compiler:0.8.18" level="project" />
     <orderEntry type="module" module-name="device-detection.cloud" />
-    <orderEntry type="module" module-name="device-detection.shared" />
     <orderEntry type="library" name="Maven: com.51degrees:pipeline.cloudrequestengine:4.1.0-beta.26" level="project" />
     <orderEntry type="library" name="Maven: com.51degrees:device-detection.pattern.engine.on-premise:4.1.0-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.12" level="project" />

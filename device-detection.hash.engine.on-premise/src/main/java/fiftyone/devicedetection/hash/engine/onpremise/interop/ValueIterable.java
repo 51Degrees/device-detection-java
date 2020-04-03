@@ -20,39 +20,36 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-package fiftyone.devicedetection.pattern.engine.onpremise;
+package fiftyone.devicedetection.hash.engine.onpremise.interop;
 
-import fiftyone.devicedetection.shared.testhelpers.UserAgentGenerator;
-import fiftyone.devicedetection.shared.testhelpers.Utils;
-import fiftyone.pipeline.engines.Constants;
+import fiftyone.devicedetection.hash.engine.onpremise.data.ValueMetaDataHash;
+import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataCollectionSwig;
+import fiftyone.pipeline.engines.fiftyone.data.CollectionIterableBase;
+import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
 
-import static fiftyone.devicedetection.shared.testhelpers.Constants.PATTERN_DATA_FILE_NAME;
-import static fiftyone.devicedetection.shared.testhelpers.Constants.UA_FILE_NAME;
+public class ValueIterable
+        extends CollectionIterableBase<ValueMetaData> {
 
-public class TestsBase {
+    private DeviceDetectionHashEngine engine;
 
-    private WrapperPattern wrapper = null;
-    private UserAgentGenerator userAgents;
+    private ValueMetaDataCollectionSwig collection;
 
-    protected WrapperPattern getWrapper() {
-        return wrapper;
+    public ValueIterable(
+            DeviceDetectionHashEngine engine,
+            ValueMetaDataCollectionSwig collection) {
+        super(collection.getSize());
+        this.engine = engine;
+        this.collection = collection;
     }
 
-    protected UserAgentGenerator getUserAgents() {
-        return userAgents;
+    @Override
+    protected ValueMetaData get(long index) {
+        return new ValueMetaDataHash(engine, collection.getByIndex(index));
     }
 
-    protected void testInitialize(Constants.PerformanceProfiles profile) throws Exception {
-        wrapper = new WrapperPattern(
-            Utils.getFilePath(PATTERN_DATA_FILE_NAME),
-            profile);
-        userAgents = new UserAgentGenerator(
-            Utils.getFilePath(UA_FILE_NAME));
-    }
-
-    public void testCleanup() {
-        if (wrapper != null) {
-            wrapper.close();
-        }
+    @Override
+    public void close() throws Exception {
+        collection.delete();
     }
 }

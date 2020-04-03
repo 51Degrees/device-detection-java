@@ -27,7 +27,6 @@
     <orderEntry type="library" name="Maven: com.51degrees:pipeline.common:4.1.0-beta.26" level="project" />
     <orderEntry type="module" module-name="device-detection" />
     <orderEntry type="module" module-name="device-detection.hash.engine.on-premise" />
-    <orderEntry type="library" name="Maven: com.51degrees:device-detection.pattern.engine.on-premise:4.1.0-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="device-detection.cloud" />
     <orderEntry type="library" name="Maven: com.51degrees:pipeline.cloudrequestengine:4.1.0-beta.26" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20180813" level="project" />
