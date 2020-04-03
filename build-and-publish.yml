@@ -19,7 +19,7 @@ stages:
       vmImage: 'vs2017-win2016'
 
     steps:
-    
+
     - checkout: self
       submodules: recursive
       persistCredentials: true
@@ -66,12 +66,6 @@ stages:
 
     - checkout: self
       submodules: recursive
-
-    - task: ShellScript@2
-      displayName: 'Build Pattern'
-      inputs:
-        scriptPath: 'PreBuild.sh'
-        args: pattern
 
     - task: ShellScript@2
       displayName: 'Build Hash'
@@ -131,24 +125,10 @@ stages:
         script: 'echo $(gpg_passphrase) | gpg --import --batch --yes --passphrase-fd 0 "$(CodeSigningCert.secureFilePath)"'
 
     - task: DownloadBuildArtifacts@0
-      displayName: 'Download Build Artifacts - Mac Pattern Binaries'
-      inputs:
-        downloadType: specific
-        itemPattern: '**/*Pattern*.so'
-        downloadPath: '$(build.sourcesdirectory)/binaries/'
-
-    - task: DownloadBuildArtifacts@0
       displayName: 'Download Build Artifacts - Mac Hash Binaries'
       inputs:
         downloadType: specific
         itemPattern: '**/*Hash*.so'
-        downloadPath: '$(build.sourcesdirectory)/binaries/'
-
-    - task: DownloadBuildArtifacts@0
-      displayName: 'Download Build Artifacts - Windows Pattern Binaries'
-      inputs:
-        downloadType: specific
-        itemPattern: '**/*Pattern*.dll'
         downloadPath: '$(build.sourcesdirectory)/binaries/'
 
     - task: DownloadBuildArtifacts@0
@@ -165,22 +145,10 @@ stages:
         script: 'mkdir $(build.sourcesdirectory)/device-detection.hash.engine.on-premise/src/main/resources'
 
     - task: Bash@3
-      displayName: 'Make Pattern Resources Directory'
-      inputs:
-        targetType: 'inline'
-        script: 'mkdir $(build.sourcesdirectory)/device-detection.pattern.engine.on-premise/src/main/resources'
-
-    - task: Bash@3
       displayName: 'Move Hash Binaries'
       inputs:
         targetType: 'inline'
         script: 'mv $(build.sourcesdirectory)/binaries/*/*Hash* $(build.sourcesdirectory)/device-detection.hash.engine.on-premise/src/main/resources/'
-
-    - task: Bash@3
-      displayName: 'Move Pattern Binaries'
-      inputs:
-        targetType: 'inline'
-        script: 'mv $(build.sourcesdirectory)/binaries/*/*Pattern* $(build.sourcesdirectory)/device-detection.pattern.engine.on-premise/src/main/resources/'
 
     - task: MavenAuthenticate@0
       inputs:
