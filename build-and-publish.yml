@@ -18,6 +18,8 @@ stages:
     pool:
       vmImage: 'vs2017-win2016'
 
+    steps:
+    
     - checkout: self
       submodules: recursive
       persistCredentials: true
