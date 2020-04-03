@@ -58,7 +58,10 @@ public class DeviceDetectionCloudPipelineBuilder
                 new CacheConfiguration(resultsCacheSize));
         }
         if (url != null && url.isEmpty() == false) {
-            cloudRequestEngineBuilder.setDataEndpoint(url);
+            cloudRequestEngineBuilder.setEndpoint(url);
+        }
+        if (dataEndpoint != null && dataEndpoint.isEmpty() == false) {
+            cloudRequestEngineBuilder.setDataEndpoint(dataEndpoint);
         }
         if (propertiesEndpoint != null && propertiesEndpoint.isEmpty() == false) {
             cloudRequestEngineBuilder.setPropertiesEndpoint(propertiesEndpoint);

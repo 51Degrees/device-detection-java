@@ -24,6 +24,7 @@ package fiftyone.devicedetection.cloud.flowelements;
 
 import fiftyone.devicedetection.cloud.data.DeviceDataCloud;
 import fiftyone.pipeline.cloudrequestengine.data.CloudRequestData;
+import fiftyone.pipeline.cloudrequestengine.flowelements.CloudAspectEngineBase;
 import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngine;
 import fiftyone.pipeline.core.data.AccessiblePropertyMetaData;
 import fiftyone.pipeline.core.data.EvidenceKeyFilter;
@@ -37,7 +38,6 @@ import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
 import fiftyone.pipeline.engines.data.AspectPropertyMetaDataDefault;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.engines.data.AspectPropertyValueDefault;
-import fiftyone.pipeline.engines.flowelements.CloudAspectEngineBase;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 
@@ -49,7 +49,7 @@ import java.util.TreeMap;
 import org.json.JSONArray;
 
 public class DeviceDetectionCloudEngine
-    extends CloudAspectEngineBase<DeviceDataCloud, AspectPropertyMetaData> {
+    extends CloudAspectEngineBase<DeviceDataCloud> {
     private List<AspectPropertyMetaData> aspectProperties;
     private String dataSourceTier;
     private CloudRequestEngine cloudRequestEngine;
