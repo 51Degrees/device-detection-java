@@ -29,6 +29,7 @@ import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.PropertyMetaD
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataCollectionSwig;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataKeySwig;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataSwig;
+import fiftyone.pipeline.core.data.ElementPropertyMetaData;
 import fiftyone.pipeline.core.data.types.JavaScript;
 import fiftyone.pipeline.core.flowelements.FlowElement;
 import fiftyone.pipeline.engines.fiftyone.data.ComponentMetaData;
@@ -167,6 +168,11 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
     @Override
     public boolean isAvailable() {
         return available;
+    }
+
+    @Override
+    public List<ElementPropertyMetaData> getItemProperties() {
+        return null;
     }
 
     @Override
