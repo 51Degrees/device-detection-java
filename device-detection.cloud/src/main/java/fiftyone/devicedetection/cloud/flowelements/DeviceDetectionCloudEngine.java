@@ -275,7 +275,7 @@ public class DeviceDetectionCloudEngine
     }
     
     private String getNoValueReason(JSONObject nullValueReasonsObj, String key){
-        return tryToGet(nullValueReasonsObj, this.getElementDataKey() + "." + key + "nullreason").toString();
+        return tryToGet(nullValueReasonsObj, key + "nullreason").toString();
     }
     
     private Object tryToGet(JSONObject jsonObj, String key) {
