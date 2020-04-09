@@ -78,7 +78,7 @@ public class DeviceDetectionCloudEngineBuilder
 
         @Override
         public DeviceDataCloud create(FlowData flowData, FlowElement<DeviceDataCloud, ?> engine) {
-            return new DeviceDataCloud(
+            return new DeviceDataCloudInternal(
                 loggerFactory.getLogger(DeviceDataCloud.class.getName()),
                 flowData,
                 (DeviceDetectionCloudEngine) engine,

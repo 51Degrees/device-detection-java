@@ -22,18 +22,8 @@
 
 package fiftyone.devicedetection.cloud.data;
 
-import fiftyone.devicedetection.cloud.flowelements.DeviceDataCloudInternal;
-import fiftyone.pipeline.core.data.FlowData;
-import fiftyone.pipeline.engines.flowelements.AspectEngine;
-import fiftyone.pipeline.engines.services.MissingPropertyService;
-import org.slf4j.Logger;
+import fiftyone.devicedetection.shared.DeviceData;
 
-public class DeviceDataCloud extends DeviceDataCloudInternal {
-    public DeviceDataCloud(
-        Logger logger,
-        FlowData flowData,
-        AspectEngine engine,
-        MissingPropertyService missingPropertyService) {
-        super(logger, flowData, engine, missingPropertyService);
-    }
+public interface DeviceDataCloud extends DeviceData {
+
 }
