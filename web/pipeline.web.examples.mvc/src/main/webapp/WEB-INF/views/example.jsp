@@ -8,8 +8,54 @@
 <script src="/pipeline.web.examples.mvc/51Degrees.core.js"></script>
 </head>
 <body>
-    <p>Browser : ${browser}</p>
-    <p>Device : ${device}</p>
-    <p>OS : ${os}</p>
-</body>
+
+<h2>Example</h2>
+
+<div id="content">
+    <p>
+        Hardware Vendor: ${hardwareVendor.HasValue ? hardwareVendor.Value : "Unknown " + hardwareVendor.getNoValueMessage()}<br />
+        Hardware Name: ${hardwareName.hasValue() ? stringJoin(hardwareName.getValue(), ", ") : "Unknown " +  hardwareName.getNoValueMessage()}<br />
+        Device Type: ${deviceType.hasValue() ? deviceType.getValue() : "Unknown " +  deviceType.getNoValueMessage()}<br />
+        Platform Vendor: ${platformVendor.hasValue() ? platformVendor.getValue() : "Unknown " +  platformVendor.getNoValueMessage()}<br />
+        Platform Name: ${platformName.hasValue() ? platformName.getValue() : "Unknown " +  platformName.getNoValueMessage()}<br />
+        Platform Version: ${platformVersion.hasValue() ? platformVersion.getValue() : "Unknown " +  platformVersion.getNoValueMessage()}<br />
+        Browser Vendor: ${browserVendor.hasValue() ? browserVendor.getValue() : "Unknown " +  browserVendor.getNoValueMessage()}<br />
+        Browser Name: ${browserName.hasValue() ? browserName.getValue() : "Unknown " +  browserName.getNoValueMessage()}<br />
+        Browser Version: ${browserVersion.hasValue() ? browserVersion.getValue() : "Unknown " +  browserVersion.getNoValueMessage()}
+    </p>
+</div>
+
+<script>
+    // This function will fire when the JSON data object is updated
+    // with information from the server.
+    // The sequence is:
+    // 1. Response contains JavaScript property 'getLatitude' that gets executed on the client
+    // 2. This triggers another call to the webserver that passes the location as evidence
+    // 3. The web server responds with new JSON data that contains the hemisphere based on the location.
+    // 4. The JavaScript integrates the new JSON data and fires the onChange callback below.
+    window.onload = function () {
+        fod.complete(function (data) {
+            var para = document.createElement("p");
+            var br = document.createElement("br");
+            var text = document.createTextNode("Updated information from client-side evidence:");
+            para.appendChild(text);
+            para.appendChild(br);
+            text = document.createTextNode("Hardware Name: " + data.device.HardwareName.join(","));
+            br = document.createElement("br");
+            para.appendChild(text);
+            para.appendChild(br);
+            text = document.createTextNode("Screen width (pixels): " + data.device.ScreenPixelsWidth);
+            br = document.createElement("br");
+            para.appendChild(text);
+            para.appendChild(br);
+            text = document.createTextNode("Screen height (pixels): " + data.device.ScreenPixelsHeight);
+            br = document.createElement("br");
+            para.appendChild(text);
+            para.appendChild(br);
+
+            var element = document.getElementById("content");
+            element.appendChild(para);
+        });
+    }
+</script></body>
 </html>
