@@ -44,24 +44,57 @@ public class EngineHashSwig extends EngineDeviceDetectionSwig {
     this(DeviceDetectionHashEngineModuleJNI.new_EngineHashSwig__SWIG_1(data, ConfigHashSwig.getCPtr(config), config, RequiredPropertiesConfigSwig.getCPtr(properties), properties), true);
   }
 
-  public ResultsHashSwig process(EvidenceDeviceDetectionSwig evidence, int drift, int difference) {
-    long cPtr = DeviceDetectionHashEngineModuleJNI.EngineHashSwig_process__SWIG_0(swigCPtr, this, EvidenceDeviceDetectionSwig.getCPtr(evidence), evidence, drift, difference);
-    return (cPtr == 0) ? null : new ResultsHashSwig(cPtr, true);
+  public Date getPublishedTime() {
+    return new Date(DeviceDetectionHashEngineModuleJNI.EngineHashSwig_getPublishedTime(swigCPtr, this), true);
   }
 
-  public ResultsHashSwig process(String userAgent, int drift, int difference) {
-    long cPtr = DeviceDetectionHashEngineModuleJNI.EngineHashSwig_process__SWIG_1(swigCPtr, this, userAgent, drift, difference);
-    return (cPtr == 0) ? null : new ResultsHashSwig(cPtr, true);
+  public Date getUpdateAvailableTime() {
+    return new Date(DeviceDetectionHashEngineModuleJNI.EngineHashSwig_getUpdateAvailableTime(swigCPtr, this), true);
+  }
+
+  public String getDataFilePath() {
+    return DeviceDetectionHashEngineModuleJNI.EngineHashSwig_getDataFilePath(swigCPtr, this);
+  }
+
+  public String getDataFileTempPath() {
+    return DeviceDetectionHashEngineModuleJNI.EngineHashSwig_getDataFileTempPath(swigCPtr, this);
+  }
+
+  public void refreshData() {
+    DeviceDetectionHashEngineModuleJNI.EngineHashSwig_refreshData__SWIG_0(swigCPtr, this);
+  }
+
+  public void refreshData(String fileName) {
+    DeviceDetectionHashEngineModuleJNI.EngineHashSwig_refreshData__SWIG_1(swigCPtr, this, fileName);
+  }
+
+  public void refreshData(byte[] data) {
+    DeviceDetectionHashEngineModuleJNI.EngineHashSwig_refreshData__SWIG_2(swigCPtr, this, data);
   }
 
   public ResultsHashSwig process(EvidenceDeviceDetectionSwig evidence) {
-    long cPtr = DeviceDetectionHashEngineModuleJNI.EngineHashSwig_process__SWIG_2(swigCPtr, this, EvidenceDeviceDetectionSwig.getCPtr(evidence), evidence);
+    long cPtr = DeviceDetectionHashEngineModuleJNI.EngineHashSwig_process__SWIG_0(swigCPtr, this, EvidenceDeviceDetectionSwig.getCPtr(evidence), evidence);
     return (cPtr == 0) ? null : new ResultsHashSwig(cPtr, true);
   }
 
   public ResultsHashSwig process(String userAgent) {
-    long cPtr = DeviceDetectionHashEngineModuleJNI.EngineHashSwig_process__SWIG_3(swigCPtr, this, userAgent);
+    long cPtr = DeviceDetectionHashEngineModuleJNI.EngineHashSwig_process__SWIG_1(swigCPtr, this, userAgent);
     return (cPtr == 0) ? null : new ResultsHashSwig(cPtr, true);
+  }
+
+  public ResultsBaseSwig processBase(EvidenceBaseSwig evidence) {
+    long cPtr = DeviceDetectionHashEngineModuleJNI.EngineHashSwig_processBase(swigCPtr, this, EvidenceBaseSwig.getCPtr(evidence), evidence);
+    return (cPtr == 0) ? null : new ResultsBaseSwig(cPtr, true);
+  }
+
+  public ResultsDeviceDetectionSwig processDeviceDetection(EvidenceDeviceDetectionSwig evidence) {
+    long cPtr = DeviceDetectionHashEngineModuleJNI.EngineHashSwig_processDeviceDetection__SWIG_0(swigCPtr, this, EvidenceDeviceDetectionSwig.getCPtr(evidence), evidence);
+    return (cPtr == 0) ? null : new ResultsDeviceDetectionSwig(cPtr, true);
+  }
+
+  public ResultsDeviceDetectionSwig processDeviceDetection(String userAgent) {
+    long cPtr = DeviceDetectionHashEngineModuleJNI.EngineHashSwig_processDeviceDetection__SWIG_1(swigCPtr, this, userAgent);
+    return (cPtr == 0) ? null : new ResultsDeviceDetectionSwig(cPtr, true);
   }
 
 }

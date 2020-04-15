@@ -22,6 +22,7 @@
 
 package fiftyone.devicedetection.hash.engine.onpremise.flowelements;
 
+import fiftyone.devicedetection.hash.engine.onpremise.Enums;
 import fiftyone.devicedetection.hash.engine.onpremise.data.DeviceDataHash;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.Swig;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.*;
@@ -44,6 +45,9 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 public class DeviceDataHashDefault
     extends DeviceDataBaseOnPremise
     implements DeviceDataHash {
+    // Pre-populate this to avoid calling the method every time.
+    private static final Enums.MatchMethods[] matchMethods =
+            Enums.MatchMethods.values();
 
     private final List<ResultsHashSwig> resultsList = new ArrayList<>();
 
@@ -73,7 +77,7 @@ public class DeviceDataHashDefault
             // Only one Engine has added results, so return the device
             // id from those results.
             return new AspectPropertyValueDefault<>(
-                resultsList.get(0).getDeviceId());
+                    resultsList.get(0).getDeviceId());
         } else {
             // Multiple Engines have added results, so construct a device
             // id from the results.
@@ -98,7 +102,7 @@ public class DeviceDataHashDefault
                 result.add(profileId);
             }
             return new AspectPropertyValueDefault<>(
-                stringJoin(result, "-"));
+                    stringJoin(result, "-"));
         }
     }
 
@@ -136,6 +140,16 @@ public class DeviceDataHashDefault
         return new AspectPropertyValueDefault<>(result);
     }
 
+    private AspectPropertyValue<String> getMethodInternal() {
+        int result = 0;
+        for (ResultsHashSwig results : resultsList) {
+            if (results.getMethod() > result) {
+                result = results.getMethod();
+            }
+        }
+        return new AspectPropertyValueDefault<>(matchMethods[result].name());
+    }
+
     private AspectPropertyValue<List<String>> getUserAgentsInternal() {
         List<String> result = new ArrayList<>();
         for (ResultsHashSwig results : resultsList) {
@@ -162,6 +176,11 @@ public class DeviceDataHashDefault
     @Override
     public AspectPropertyValue<Integer> getMatchedNodes() {
         return getAs("MatchedNodes", AspectPropertyValue.class, Integer.class);
+    }
+
+    @Override
+    public AspectPropertyValue<String> getMethod() {
+        return getAs("Method", AspectPropertyValue.class, String.class);
     }
 
     @Override
@@ -295,6 +314,10 @@ public class DeviceDataHashDefault
             }
             else if (key.equalsIgnoreCase("MatchedNodes")) {
                 obj = getMatchedNodesInternal();
+                objSet = true;
+            }
+            else if (key.equalsIgnoreCase("Method")){
+                obj = getMethodInternal();
                 objSet = true;
             }
             if (objSet == true) {

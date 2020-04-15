@@ -83,30 +83,6 @@ public class DeviceDetectionTests {
         new TestConfig(HASH_DATA_FILE_NAME, BalancedTemp, true, true, "Hash-BalancedTemp-Cache-MultiThread"),
         new TestConfig(HASH_DATA_FILE_NAME, BalancedTemp, true, true, "Hash-BalancedTemp-Cache-MultiThread")
     };
-    TestConfig[] patternConfigs = {
-        // ******** Pattern with a single thread *********
-        new TestConfig(PATTERN_DATA_FILE_NAME, HighPerformance, false, false, "Pattern-HighPerformance-NoCache-SingleThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, LowMemory, false, false, "Pattern-LowMemory-NoCache-SingleThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, Balanced, false, false, "Pattern-Balanced-NoCache-SingleThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, BalancedTemp, false, false, "Pattern-HighPerformance-NoCache-SingleThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, HighPerformance, true, false, "Pattern-HighPerformance-Cache-SingleThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, LowMemory, true, false, "Pattern-LowMemory-Cache-SingleThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, Balanced, true, false, "Pattern-Balanced-Cache-SingleThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, BalancedTemp, true, false, "Pattern-BalancedTemp-Cache-SingleThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, BalancedTemp, true, false, "Pattern-BalancedTemp-Cache-SingleThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, BalancedTemp, true, false, "Pattern-BalancedTemp-Cache-SingleThread"),
-        // ******** Pattern with multiple threads *********
-        new TestConfig(PATTERN_DATA_FILE_NAME, HighPerformance, false, true, "Pattern-HighPerformance-NoCache-MultiThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, LowMemory, false, true, "Pattern-LowMemory-NoCache-MultiThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, Balanced, false, true, "Pattern-Balanced-NoCache-MultiThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, BalancedTemp, false, true, "Pattern-HighPerformance-NoCache-MultiThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, HighPerformance, true, true, "Pattern-HighPerformance-Cache-MultiThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, LowMemory, true, true, "Pattern-LowMemory-Cache-MultiThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, Balanced, true, true, "Pattern-Balanced-Cache-MultiThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, BalancedTemp, true, true, "Pattern-BalancedTemp-Cache-MultiThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, BalancedTemp, true, true, "Pattern-BalancedTemp-Cache-MultiThread"),
-        new TestConfig(PATTERN_DATA_FILE_NAME, BalancedTemp, true, true, "Pattern-BalancedTemp-Cache-MultiThread")
-    };
 
     @BeforeClass
     public static void initClass() throws IOException {
@@ -145,18 +121,6 @@ public class DeviceDetectionTests {
     @Test
     public void Hash_AllConfigurations_100_UserAgents() throws Exception {
         for (TestConfig config : hashConfigs) {
-            logger.info("Testing '" + config.name + "'");
-            TestOnPremise_AllConfigurations_100_UserAgents(
-                config.dataFileName,
-                config.performanceProfile,
-                config.useCache,
-                config.multiThreaded);
-        }
-    }
-
-    @Test
-    public void Pattern_AllConfigurations_100_UserAgents() throws Exception {
-        for (TestConfig config : patternConfigs) {
             logger.info("Testing '" + config.name + "'");
             TestOnPremise_AllConfigurations_100_UserAgents(
                 config.dataFileName,

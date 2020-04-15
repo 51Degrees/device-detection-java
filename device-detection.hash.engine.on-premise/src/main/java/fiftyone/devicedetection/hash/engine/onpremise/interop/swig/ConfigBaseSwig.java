@@ -52,10 +52,6 @@ public class ConfigBaseSwig {
     DeviceDetectionHashEngineModuleJNI.ConfigBaseSwig_setTempDirectories(swigCPtr, this, VectorStringSwig.getCPtr(tempDirs), tempDirs);
   }
 
-  public void setFreeData(boolean shouldFree) {
-    DeviceDetectionHashEngineModuleJNI.ConfigBaseSwig_setFreeData(swigCPtr, this, shouldFree);
-  }
-
   public boolean getUseUpperPrefixHeaders() {
     return DeviceDetectionHashEngineModuleJNI.ConfigBaseSwig_getUseUpperPrefixHeaders(swigCPtr, this);
   }

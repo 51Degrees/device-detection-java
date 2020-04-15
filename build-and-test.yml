@@ -14,8 +14,7 @@ stages:
   jobs:
   - job: Build
     pool:
-      name: Default
-      demands: msbuild
+      vmImage: 'vs2017-win2016'
 
     steps:
 
@@ -43,8 +42,7 @@ stages:
         mavenPomFile: 'pom.xml'
         goals: 'clean test'
         options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url)'
-        javaHomeOption: Path
-        jdkDirectory: 'C:\\Program Files\\Java\\jdk1.7.0_80'
+        jdkVersionOption: '1.8'
 
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
@@ -81,6 +79,7 @@ stages:
         mavenPomFile: 'pom.xml'
         goals: 'clean test'
         options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url)'
+        jdkVersionOption: '1.8'
 
 
     - task: CopyFiles@2
@@ -100,8 +99,7 @@ stages:
   jobs:
   - job: Build
     pool:
-      name: Linux
-      demands: maven
+      vmImage: 'ubuntu-16.04'
 
     steps:
 
@@ -119,8 +117,7 @@ stages:
         mavenPomFile: 'pom.xml'
         goals: 'clean test'
         options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url)'
-        javaHomeOption: Path
-        jdkDirectory: '/usr/lib/jvm/java-7-openjdk-amd64'
+        jdkVersionOption: '1.8'
 
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'

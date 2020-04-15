@@ -49,42 +49,6 @@ public class ComparisonTests {
     }
 
     @Test
-    public void Comparison_Pattern_Memory_SingleThreaded_Cache() throws Exception {
-        Comparison.ComparisonProvider provider =
-            new Comparison.FiftyOneDegreesPatternMemoryProvider(
-                Utils.getFilePath(PATTERN_DATA_FILE_NAME).getAbsolutePath(),
-                10000);
-        comparison.run(provider, userAgents, 1);
-    }
-
-    @Test
-    public void Comparison_Pattern_Memory_MultiThreaded_NoCache() throws Exception {
-        Comparison.ComparisonProvider provider =
-            new Comparison.FiftyOneDegreesPatternMemoryProvider(
-                Utils.getFilePath(PATTERN_DATA_FILE_NAME).getAbsolutePath(),
-                0);
-        comparison.run(provider, userAgents, 8);
-    }
-
-    @Test
-    public void Comparison_Pattern_Memory_SingleThreaded_NoCache() throws Exception {
-        Comparison.ComparisonProvider provider =
-            new Comparison.FiftyOneDegreesPatternMemoryProvider(
-                Utils.getFilePath(PATTERN_DATA_FILE_NAME).getAbsolutePath(),
-                0);
-        comparison.run(provider, userAgents, 1);
-    }
-
-    @Test
-    public void Comparison_Pattern_Memory_MultiThreaded_Cache() throws Exception {
-        Comparison.ComparisonProvider provider =
-            new Comparison.FiftyOneDegreesPatternMemoryProvider(
-                Utils.getFilePath(PATTERN_DATA_FILE_NAME).getAbsolutePath(),
-                10000);
-        comparison.run(provider, userAgents, 8);
-    }
-
-    @Test
     public void Comparison_Hash_Memory_SingleThreaded() throws Exception {
         Comparison.ComparisonProvider provider =
             new Comparison.FiftyOneDegreesHashMemoryProvider(

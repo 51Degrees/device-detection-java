@@ -44,8 +44,8 @@ public class ComponentMetaDataHash implements ComponentMetaData {
     private final List<FiftyOneAspectPropertyMetaData> properties = new ArrayList<>();
 
     public ComponentMetaDataHash(
-        DeviceDetectionHashEngine engine,
-        ComponentMetaDataSwig source) {
+            DeviceDetectionHashEngine engine,
+            ComponentMetaDataSwig source) {
         this.engine = engine;
         this.source = source;
     }
@@ -62,22 +62,24 @@ public class ComponentMetaDataHash implements ComponentMetaData {
 
     @Override
     public ProfileMetaData getDefaultProfile() {
-        throw new UnsupportedOperationException();
+        return new ProfileMetaDataHash(
+                engine,
+                engine.getMetaData().getDefaultProfileForComponent(source));
     }
 
     @Override
     public Iterable<FiftyOneAspectPropertyMetaData> getProperties() {
         return new PropertyIterable(
-            engine,
-            properties,
-            engine.getMetaData().getPropertiesForComponent(source));
+                engine,
+                properties,
+                engine.getMetaData().getPropertiesForComponent(source));
     }
 
     @Override
     public FiftyOneAspectPropertyMetaData getProperty(String propertyName) {
         FiftyOneAspectPropertyMetaData result = null;
         PropertyMetaDataCollectionSwig components =
-            engine.getMetaData().getPropertiesForComponent(source);
+                engine.getMetaData().getPropertiesForComponent(source);
         PropertyMetaDataSwig value = components.getByKey(propertyName);
         if (value != null) {
             result = new PropertyMetaDataHash(engine, value);

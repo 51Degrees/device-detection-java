@@ -36,24 +36,23 @@ import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.util.Collections;
 
 public class WrapperHash implements Wrapper {
 
     protected static final TestLoggerFactory logger =
-        new TestLoggerFactory(LoggerFactory.getILoggerFactory());
+            new TestLoggerFactory(LoggerFactory.getILoggerFactory());
     private Pipeline pipeline;
     private DeviceDetectionHashEngine engine;
 
     public WrapperHash(File dataFile, Constants.PerformanceProfiles profile) throws Exception {
         engine = new DeviceDetectionHashEngineBuilder(logger, null)
-            .setPerformanceProfile(profile)
-            .setUpdateMatchedUserAgent(true)
-            .setAutoUpdate(false)
-            .build(dataFile.toString(), false);
+                .setPerformanceProfile(profile)
+                .setUpdateMatchedUserAgent(true)
+                .setAutoUpdate(false)
+                .build(dataFile.toString(), false);
         pipeline = new PipelineBuilder(logger)
-            .addFlowElement(engine)
-            .build();
+                .addFlowElement(engine)
+                .build();
     }
 
     @Override
@@ -73,11 +72,11 @@ public class WrapperHash implements Wrapper {
 
     @Override
     public Iterable<ValueMetaData> getValues() {
-        return (Iterable<ValueMetaData>) Collections.emptyIterator();
+        return engine.getValues();
     }
 
     public Iterable<ProfileMetaData> getProfiles() {
-        return Collections.emptyList();
+        return engine.getProfiles();
     }
 
     public Iterable<ComponentMetaData> getComponents() {

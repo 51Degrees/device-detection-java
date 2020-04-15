@@ -50,14 +50,9 @@ public abstract class OnPremiseDeviceDetectionEngineBuilderBase<
     /**
      * Set the maximum difference to allow when processing HTTP headers.
      * The meaning of difference depends on the Device Detection API being
-     * used.
-     * For Pattern: The difference is a combination of the difference in
-     *              character position of matched substrings, and the
-     *              difference in ASCII value of each character of matched
-     *              substrings. By default this is 10.
-     * For Hash: The difference is the difference in hash value between
-     *           the hash that was found, and the hash that is being
-     *           searched for. By default this is 0.
+     * used. The difference is the difference in hash value between the
+     * hash that was found, and the hash that is being searched for. By
+     * default this is 0.
      * @param difference to allow
      * @return this builder
      */

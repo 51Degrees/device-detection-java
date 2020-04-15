@@ -90,17 +90,17 @@
     <None Include="..\device-detection-cxx\src\hash\ResultsHash.i">
       <Filter>SWIG\Hash</Filter>
     </None>
-    <None Include="..\hash_java.i">
-      <Filter>SWIG</Filter>
-    </None>
     <None Include="..\device-detection-cxx\src\common-cxx\JavaTypes.i">
       <Filter>SWIG\Common</Filter>
     </None>
     <None Include="..\device-detection-cxx\src\hash\hash.i">
       <Filter>SWIG\Hash</Filter>
     </None>
-    <None Include="..\device-detection.hash.engine.on-premise\PreBuild.sh" />
-    <None Include="..\device-detection.hash.engine.on-premise\PreBuild.bat" />
+    <None Include="..\device-detection.hash.engine.on-premise\hash_java.i">
+      <Filter>SWIG</Filter>
+    </None>
+    <None Include="..\PreBuild.sh" />
+    <None Include="..\PreBuild.bat" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Java_Hash_Engine.cpp">

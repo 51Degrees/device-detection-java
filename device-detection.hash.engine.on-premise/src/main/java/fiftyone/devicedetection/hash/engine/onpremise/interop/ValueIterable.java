@@ -20,10 +20,36 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-package fiftyone.devicedetection.cloud.data;
+package fiftyone.devicedetection.hash.engine.onpremise.interop;
 
-import fiftyone.devicedetection.shared.DeviceData;
+import fiftyone.devicedetection.hash.engine.onpremise.data.ValueMetaDataHash;
+import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataCollectionSwig;
+import fiftyone.pipeline.engines.fiftyone.data.CollectionIterableBase;
+import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
 
-public interface DeviceDataCloud extends DeviceData {
+public class ValueIterable
+        extends CollectionIterableBase<ValueMetaData> {
 
+    private DeviceDetectionHashEngine engine;
+
+    private ValueMetaDataCollectionSwig collection;
+
+    public ValueIterable(
+            DeviceDetectionHashEngine engine,
+            ValueMetaDataCollectionSwig collection) {
+        super(collection.getSize());
+        this.engine = engine;
+        this.collection = collection;
+    }
+
+    @Override
+    protected ValueMetaData get(long index) {
+        return new ValueMetaDataHash(engine, collection.getByIndex(index));
+    }
+
+    @Override
+    public void close() throws Exception {
+        collection.delete();
+    }
 }

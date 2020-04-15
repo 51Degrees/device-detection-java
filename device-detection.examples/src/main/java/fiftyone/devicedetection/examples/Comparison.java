@@ -23,7 +23,6 @@
 package fiftyone.devicedetection.examples;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder;
-import fiftyone.devicedetection.pattern.engine.onpremise.flowelements.DeviceDetectionPatternEngineBuilder;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.ElementPropertyMetaData;
 import fiftyone.pipeline.core.data.FlowData;
@@ -171,9 +170,15 @@ public class Comparison extends ProgramBase {
             new FileReader(userAgentFile));
         while ((line = bufferedReader.readLine()) != null) {
             String[] values = line.split(CSV_INPUT_REGEX);
-            Request request = new Request(
-                values[0],
-                values.length > 1 ? Integer.parseInt(values[1]) : 4);
+            Request request = null;
+            try {
+                 request = new Request(
+                    values[0],
+                    values.length > 1 ? Integer.parseInt(values[1]) : 4);
+            }
+            catch (NumberFormatException e) {
+                request = new Request(line, 4);
+            }
             requests.add(request);
         }
         bufferedReader.close();
@@ -299,32 +304,6 @@ public class Comparison extends ProgramBase {
         bufferedWriter.close();
     }
 
-    private static void runFiftyOneDegreesPatternMemory(
-        ArrayList<String> providerNames,
-        LinkedList<Request> requests,
-        int cacheSize,
-        int numberOfThreads,
-        String dataFile) throws Exception {
-        if (dataFile != null && new File(dataFile).exists()) {
-            providerNames.add("51D");
-            System.out.printf("Processing 51Degrees file: %s\r\n",
-                dataFile);
-            long startTime = System.currentTimeMillis();
-            ComparisonProvider fodf = new FiftyOneDegreesPatternMemoryProvider(
-                dataFile,
-                cacheSize);
-            long endTime = System.currentTimeMillis();
-            System.out.printf(
-                "Initialised 51Degrees file provider in %d ms\r\n",
-                endTime - startTime);
-            try {
-                runComparison(fodf, requests, numberOfThreads);
-            } finally {
-                fodf.close();
-            }
-        }
-    }
-
     private static void runFiftyOneDegreesHashMemory(
         ArrayList<String> providerNames,
         LinkedList<Request> requests,
@@ -437,7 +416,6 @@ public class Comparison extends ProgramBase {
      */
     private static void runComparisons(
         String userAgentsFile,
-        String fiftyOneDegreesFile,
         String fiftyoneDegreesHashTrieFile,
         String wurflFile,
         String deviceAtlasFile,
@@ -463,12 +441,6 @@ public class Comparison extends ProgramBase {
             requests,
             cacheSize,
             numberOfThreads);
-        runFiftyOneDegreesPatternMemory(
-            providerNames,
-            requests,
-            cacheSize,
-            numberOfThreads,
-            fiftyOneDegreesFile);
         runFiftyOneDegreesHashMemory(
             providerNames,
             requests,
@@ -513,7 +485,6 @@ public class Comparison extends ProgramBase {
         int existingFiles = 0;
 
         String hashFile = null;
-        String patternFile = null;
         List<String> otherFiles = new ArrayList<>();
         for (String arg : args) {
             try {
@@ -521,9 +492,7 @@ public class Comparison extends ProgramBase {
             } catch (NumberFormatException ex) {
                 existingFiles++;
                 if (arg.contains("51Degrees")) {
-                    if (arg.endsWith(".dat")) {
-                        patternFile = arg;
-                    } else if (arg.endsWith(".trie")) {
+                    if (arg.endsWith(".hash")) {
                         hashFile = arg;
                     }
                 } else {
@@ -532,11 +501,8 @@ public class Comparison extends ProgramBase {
             }
         }
 
-        if (patternFile == null) {
-            patternFile = getDefaultFilePath("51Degrees-LiteV3.2.dat").getAbsolutePath();
-        }
         if (hashFile == null) {
-            hashFile = getDefaultFilePath("51Degrees-LiteV3.4.trie").getAbsolutePath();
+            hashFile = getDefaultFilePath("51Degrees-LiteV4.1.hash").getAbsolutePath();
         }
 
         if (otherFiles.size() < 2) {
@@ -553,7 +519,6 @@ public class Comparison extends ProgramBase {
          **/
         runComparisons(
             otherFiles.get(0), // The file containing User-Agents
-            patternFile, // The 51Degrees data file
             hashFile, // The 51Degrees Hash Trie data file
             null, // The WURFL data file
             null, // The DA data file
@@ -975,28 +940,6 @@ public class Comparison extends ProgramBase {
             } catch (Exception e) {
 
             }
-        }
-    }
-
-    /**
-     * Loads all the data into initialised data structures. Fast with a longer
-     * initialisation time.
-     */
-    static class FiftyOneDegreesPatternMemoryProvider
-        extends FiftyOneDegreesBaseProvider {
-
-        FiftyOneDegreesPatternMemoryProvider(String dataFile, int cacheSize)
-            throws Exception {
-            super(new DeviceDetectionPatternEngineBuilder()
-                .setPerformanceProfile(Constants.PerformanceProfiles.HighPerformance)
-                .setUpdateMatchedUserAgent(false)
-                .setAutoUpdate(false)
-                .setAllowUnmatched(true)
-                .setDifference(-1)
-                .setUserAgentCache(cacheSize)
-                .build(dataFile, false));
-            System.out.println(
-                "Created 51Degrees memory provider");
         }
     }
 

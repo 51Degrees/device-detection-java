@@ -54,14 +54,43 @@ import static fiftyone.pipeline.web.mvc.components.FiftyOneInterceptor.enableCli
  *         <Element>
  *             <BuildParameters>
  *                 <EndPoint>https://cloud.51degrees.com/api/v4</EndPoint>
- *                 <!-- Obtain your own resource key from 
- *                 https://configure.51degrees.com to access more properties. -->
- *                 <ResourceKey>AQS5HKcyHJbECm6E10g</ResourceKey>
+ *                 <!-- Obtain a resource key for free at
+ *                 https://configure.51degrees.com
+ *                 Make sure to include the 'BrowserName','BrowserVendor',
+ *                 'BrowserVersion','HardwareName','HardeareVendor',
+ *                 'PlatformName','PlatformVendor','PlatformVersion'
+ *                 properties as they are used by this example. -->
+ *                 <ResourceKey>!!YOUR_RESOURCE_KEY!!</ResourceKey>
  *             </BuildParameters>
  *             <BuilderName>CloudRequestEngine</BuilderName>
  *         </Element>
  *         <Element>
  *         <BuilderName>DeviceDetectionCloudEngine</BuilderName>
+ *         </Element>
+ *         <Element>
+ *             <BuilderName>JavaScriptBundlerElement</BuilderName>
+ *         </Element>
+ *     </Elements>
+ * </PipelineOptions>
+ * ```
+ *
+ * Alternatively, to use the on-premise API with automatic updates enabled,
+ * replace the cloud element in the config with the new configuration.
+ * ```{xml}
+ * <PipelineOptions>
+ *     <Elements>
+ *         <Element>
+ *             <BuildParameters>
+ *                 <AutoUpdate>true</AutoUpdate>
+ *                 <DataFileSystemWatcher>false</DataFileSystemWatcher>
+ *                 <CreateTempDataCopy>true</CreateTempDataCopy>
+ *                 <!-- Obtain your own license key and enterprise data file
+ *                 from https://51degrees.com. -->
+ *                 <DataUpdateLicenseKey>[[Your License Key]]</DataUpdateLicenseKey>
+ *                 <DataFile>D:\[[Path to data file]]\51Degrees-EnterpriseV4.1.hash</DataFile>
+ *                 <PerformanceProfile>LowMemory</PerformanceProfile>
+ *             </BuildParameters>
+ *             <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
  *         </Element>
  *         <Element>
  *             <BuilderName>JavaScriptBundlerElement</BuilderName>
@@ -87,7 +116,7 @@ import static fiftyone.pipeline.web.mvc.components.FiftyOneInterceptor.enableCli
  *     public FiftyOneInterceptorConfig fiftyOneInterceptorConfig() {
  *         final FiftyOneInterceptorConfigDefault bean = new FiftyOneInterceptorConfigDefault();
  *     
- *         bean.setDataFilePath(servletContext.getRealPath("/WEB-INF/51Degrees.xml"));
+ *         bean.setDataFilePath(servletContext.getRealPath("/WEB-INF/51Degrees-Cloud.xml"));
  *         bean.setClientsidePropertiesEnabled(true);
  *     
  *         return bean;
@@ -178,7 +207,7 @@ public class ExampleMvcConfig extends WebMvcConfigurerAdapter {
     public FiftyOneInterceptorConfig fiftyOneInterceptorConfig() {
         final FiftyOneInterceptorConfigDefault bean = new FiftyOneInterceptorConfigDefault();
 
-        bean.setDataFilePath(servletContext.getRealPath("/WEB-INF/51Degrees.xml"));
+        bean.setDataFilePath(servletContext.getRealPath("/WEB-INF/51Degrees-Cloud.xml"));
         bean.setClientsidePropertiesEnabled(true);
 
         return bean;

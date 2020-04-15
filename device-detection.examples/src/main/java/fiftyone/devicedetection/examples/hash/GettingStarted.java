@@ -25,6 +25,7 @@ package fiftyone.devicedetection.examples.hash;
 import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
 import fiftyone.devicedetection.examples.ExampleBase;
 import fiftyone.devicedetection.examples.ProgramBase;
+import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
@@ -42,7 +43,7 @@ import fiftyone.pipeline.engines.data.AspectPropertyValue;
  * performance profile.
  * ```
  * Pipeline pipeline = new DeviceDetectionPipelineBuilder()
- *     .useOnPremise("51Degrees-LiteV3.4.trie", false)
+ *     .useOnPremise("51Degrees-LiteV4.1.hash", false)
  *     .setAutoUpdate(false)
  *     .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
  *     .build();
@@ -75,7 +76,7 @@ public class GettingStarted extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
         String dataFile = args.length > 0 ? args[0] :
-            getDefaultFilePath("51Degrees-LiteV3.4.trie").getAbsolutePath();
+            getDefaultFilePath("51Degrees-LiteV4.1.hash").getAbsolutePath();
 
         new Example(true).run(dataFile);
         System.out.println("Complete. Press enter to exit.");
@@ -98,7 +99,6 @@ public class GettingStarted extends ProgramBase {
             // Create a simple pipeline to access the engine with.
             Pipeline pipeline = new DeviceDetectionPipelineBuilder()
                 .useOnPremise(dataFile, false)
-                .setAutoUpdate(false)
                 //.setShareUsage(false)
                 // Prefer low memory profile where all data streamed
                 // from disk on-demand. Experiment with other profiles.

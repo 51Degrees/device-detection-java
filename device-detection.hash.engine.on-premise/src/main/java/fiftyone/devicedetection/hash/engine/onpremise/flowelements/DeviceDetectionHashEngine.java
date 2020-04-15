@@ -23,9 +23,13 @@
 package fiftyone.devicedetection.hash.engine.onpremise.flowelements;
 
 import fiftyone.devicedetection.hash.engine.onpremise.data.DeviceDataHash;
+import fiftyone.devicedetection.hash.engine.onpremise.data.ProfileMetaDataHash;
 import fiftyone.devicedetection.hash.engine.onpremise.data.PropertyMetaDataHash;
+import fiftyone.devicedetection.hash.engine.onpremise.data.ValueMetaDataHash;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.ComponentIterable;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.ProfileIterable;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.PropertyIterable;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.ValueIterable;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.*;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.Date;
 import fiftyone.pipeline.core.data.EvidenceKeyFilter;
@@ -81,9 +85,39 @@ public class DeviceDetectionHashEngine
     }
 
     @Override
+    public List<FiftyOneAspectPropertyMetaData> getProperties() {
+        if (propertiesPopulated == false) {
+            synchronized (properties) {
+                if (propertiesPopulated == false) {
+                    properties.clear();
+                    List<FiftyOneAspectPropertyMetaData> newProperties = new ArrayList<>();
+
+                    try (PropertyIterable iterable = new PropertyIterable(
+                            this,
+                            newProperties,
+                            engine.getMetaData().getProperties())) {
+                        for (FiftyOneAspectPropertyMetaData property : iterable) {
+                            properties.add(property);
+                        }
+                    } catch (Exception e) {
+                        logger.error("Exception occurred while constructing properties.", e);
+                    }
+
+                    for (FiftyOneAspectPropertyMetaData property : getMetricProperties()) {
+                        newProperties.add(property);
+                    }
+
+                    propertiesPopulated = true;
+                }
+            }
+        }
+        return properties;
+    }
+
+    @Override
     public FiftyOneAspectPropertyMetaData getProperty(String name) {
         PropertyMetaDataSwig swigProperty =
-            engine.getMetaData().getProperties().getByKey(name);
+                engine.getMetaData().getProperties().getByKey(name);
         if (swigProperty != null) {
             return new PropertyMetaDataHash(this, swigProperty);
         }
@@ -99,7 +133,14 @@ public class DeviceDetectionHashEngine
 
     @Override
     public CloseableIterable<ProfileMetaData> getProfiles() {
-        throw new UnsupportedOperationException();
+        return new ProfileIterable(this, engine.getMetaData().getProfiles());
+    }
+
+    @Override
+    public ProfileMetaData getProfile(int profileId) {
+        return new ProfileMetaDataHash(
+                this,
+                engine.getMetaData().getProfiles().getByKey(profileId));
     }
 
     @Override
@@ -109,7 +150,15 @@ public class DeviceDetectionHashEngine
 
     @Override
     public CloseableIterable<ValueMetaData> getValues() {
-        throw new UnsupportedOperationException();
+        return new ValueIterable(this, engine.getMetaData().getValues());
+    }
+
+    @Override
+    public ValueMetaData getValue(String propertyName, String valueName) {
+        ValueMetaDataKeySwig key = new ValueMetaDataKeySwig(propertyName, valueName);
+        return new ValueMetaDataHash(
+                this,
+                engine.getMetaData().getValues().getByKey(key));
     }
 
     @Override
@@ -140,36 +189,6 @@ public class DeviceDetectionHashEngine
     @Override
     public EvidenceKeyFilter getEvidenceKeyFilter() {
         return evidenceKeyFilter;
-    }
-
-    @Override
-    public List<FiftyOneAspectPropertyMetaData> getProperties() {
-        if (propertiesPopulated == false) {
-            synchronized (properties) {
-                if (propertiesPopulated == false) {
-                    properties.clear();
-                    List<FiftyOneAspectPropertyMetaData> newProperties = new ArrayList<>();
-
-                    try (PropertyIterable iterable = new PropertyIterable(
-                        this,
-                        newProperties,
-                        engine.getMetaData().getProperties())) {
-                        for (FiftyOneAspectPropertyMetaData property : iterable) {
-                            properties.add(property);
-                        }
-                    } catch (Exception e) {
-                        logger.error("Exception occurred while constructing properties.", e);
-                    }
-
-                    for (FiftyOneAspectPropertyMetaData property : getMetricProperties()) {
-                        newProperties.add(property);
-                    }
-
-                    propertiesPopulated = true;
-                }
-            }
-        }
-        return properties;
     }
 
     @Override
@@ -338,7 +357,25 @@ public class DeviceDetectionHashEngine
                 "The matched User-Agents.",
                 null,
                 null,
-                null)
+                null),
+            new FiftyOneAspectPropertyMetaDataDefault(
+                    "Method",
+                    this,
+                    "Device Metrics",
+                    String.class,
+                    dataFileList,
+                    true,
+                    null,
+                    (byte)0,
+                    true,
+                    true,
+                    false,
+                    false,
+                    false,
+                    "Provides information about the algorithm that was used to perform detection for a particular User-Agent.",
+                    null,
+                    null,
+                    null)
         };
         return Arrays.asList(metricProperties);
     }
@@ -352,7 +389,7 @@ public class DeviceDetectionHashEngine
         super.addDataFile(dataFile);
         if (dataFile instanceof  FiftyOneDataFile) {
             FiftyOneDataFile fiftyOneDataFile = (FiftyOneDataFile)dataFile;
-            fiftyOneDataFile.setDataUpdateDownloadType("HashTrieV34");
+            fiftyOneDataFile.setDataUpdateDownloadType("HashV41");
         }
     }
 }

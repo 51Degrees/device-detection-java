@@ -29,8 +29,10 @@
                 <EndPoint>https://cloud.51degrees.com/api/v4</EndPoint>
                 <!-- Obtain a resource key for free at
                 https://configure.51degrees.com
-                Make sure to include the 'IsMobile' property as it is used
-                by this example. -->
+                Make sure to include the 'BrowserName','BrowserVendor',
+                'BrowserVersion','HardwareName','HardeareVendor',
+                'PlatformName','PlatformVendor','PlatformVersion'
+                properties as they are used by this example. -->
                 <ResourceKey>!!YOUR_RESOURCE_KEY!!</ResourceKey>
 
             </BuildParameters>
@@ -38,6 +40,13 @@
         </Element>
         <Element>
             <BuilderName>DeviceDetectionCloudEngine</BuilderName>
+        </Element>
+        <Element>
+            <BuilderName>JavaScriptBuilderElement</BuilderName>
+            <BuildParameters>
+                <Endpoint>/pipeline.web.examples.mvc/json</Endpoint>
+                <Protocol>http</Protocol>
+            </BuildParameters>
         </Element>
     </Elements>
 </PipelineOptions>
