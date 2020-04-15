@@ -22,6 +22,7 @@
 
 package fiftyone.devicedetection.cloud.flowelements;
 
+import fiftyone.devicedetection.cloud.data.DeviceDataCloud;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.devicedetection.shared.DeviceDataBase;
 import fiftyone.pipeline.core.data.FlowData;
@@ -34,7 +35,7 @@ import org.slf4j.Logger;
 
 import java.util.List;
 
-public class DeviceDataCloudInternal extends DeviceDataBase implements DeviceData {
+public class DeviceDataCloudInternal extends DeviceDataBase implements DeviceDataCloud {
     public DeviceDataCloudInternal (
         Logger logger,
         FlowData flowData,

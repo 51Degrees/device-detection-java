@@ -3,7 +3,7 @@
  * Copyright 2019 51 Degrees Mobile Experts Limited, 5 Charlotte Close,
  * Caversham, Reading, Berkshire, United Kingdom RG4 7BY.
  *
- * This Original Work is licensed under the European Union Public Licence (EUPL) 
+ * This Original Work is licensed under the European Union Public Licence (EUPL)
  * v.1.2 and is subject to its terms as set out below.
  *
  * If a copy of the EUPL was not distributed with this file, You can obtain
@@ -13,21 +13,25 @@
  * amended by the European Commission) shall be deemed incompatible for
  * the purposes of the Work and the provisions of the compatibility
  * clause in Article 5 of the EUPL shall not apply.
- * 
- * If using the Work as, or as part of, a network application, by 
+ *
+ * If using the Work as, or as part of, a network application, by
  * including the attribution notice(s) required under Article 5 of the EUPL
- * in the end user terms of the application under an appropriate heading, 
+ * in the end user terms of the application under an appropriate heading,
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
 package fiftyone.devicedetection.examples.cloud;
 
+import fiftyone.devicedetection.cloud.flowelements.DeviceDetectionCloudEngine;
 import fiftyone.devicedetection.examples.ExampleBase;
 import fiftyone.devicedetection.examples.ProgramBase;
 import fiftyone.devicedetection.shared.DeviceData;
+import fiftyone.pipeline.cloudrequestengine.data.CloudRequestData;
+import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder;
 import fiftyone.pipeline.core.configuration.PipelineOptions;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
+import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
 import fiftyone.pipeline.engines.fiftyone.flowelements.FiftyOnePipelineBuilder;
 
 import javax.xml.bind.JAXBContext;
@@ -100,16 +104,31 @@ public class ConfigureFromFile extends ProgramBase {
             // Bind the configuration to a pipeline options instance
             PipelineOptions options = (PipelineOptions) unmarshaller.unmarshal(file);
 
-            // Create a simple pipeline to access the engine with.
-            Pipeline pipeline = new FiftyOnePipelineBuilder()
-                .buildFromConfiguration(options);
+            if (options.elements.get(0).buildParameters.get("ResourceKey").toString().startsWith("!!")) {
+                println("You need to create a resource key at " +
+                        "https://configure.51degrees.com and paste it into this example.");
+                println("Make sure to include the 'IsMobile' " +
+                        "property as it is used by this example.");
+            }
+            else {
+                // Create a simple pipeline to access the engine with.
+                Pipeline pipeline = new FiftyOnePipelineBuilder()
+                        .buildFromConfiguration(options);
 
-            FlowData data = pipeline.createFlowData();
-            data.addEvidence(
-                "header.user-agent",
-                mobileUserAgent)
-                .process();
-            println("IsMobile: " + data.get(DeviceData.class).getIsMobile());
+                DeviceDetectionCloudEngine engine = pipeline.getElement(DeviceDetectionCloudEngine.class);
+                for (AspectPropertyMetaData property : engine.getProperties()) {
+                    println(property.getName());
+                }
+
+                FlowData data = pipeline.createFlowData();
+                data.addEvidence(
+                        "header.user-agent",
+                        mobileUserAgent)
+                        .process();
+                println("IsMobile: " + data.get(DeviceData.class).getIsMobile());
+                //println(data.get(CloudRequestData.class).getJsonResponse());
+                println(data.get(DeviceData.class).getBackCameraMegaPixels().getValue().toString());
+            }
         }
     }
 }

@@ -72,20 +72,40 @@ public class ConfigHashSwig extends ConfigDeviceDetectionSwig {
     DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_setConcurrency(swigCPtr, this, concurrency);
   }
 
+  public void setUsePerformanceGraph(boolean use) {
+    DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_setUsePerformanceGraph(swigCPtr, this, use);
+  }
+
+  public void setUsePredictiveGraph(boolean use) {
+    DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_setUsePredictiveGraph(swigCPtr, this, use);
+  }
+
+  public void setTraceRoute(boolean trace) {
+    DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_setTraceRoute(swigCPtr, this, trace);
+  }
+
   public CollectionConfigSwig getStrings() {
     return new CollectionConfigSwig(DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_getStrings(swigCPtr, this), true);
+  }
+
+  public CollectionConfigSwig getProperties() {
+    return new CollectionConfigSwig(DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_getProperties(swigCPtr, this), true);
+  }
+
+  public CollectionConfigSwig getValues() {
+    return new CollectionConfigSwig(DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_getValues(swigCPtr, this), true);
   }
 
   public CollectionConfigSwig getProfiles() {
     return new CollectionConfigSwig(DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_getProfiles(swigCPtr, this), true);
   }
 
-  public CollectionConfigSwig getDevices() {
-    return new CollectionConfigSwig(DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_getDevices(swigCPtr, this), true);
-  }
-
   public CollectionConfigSwig getNodes() {
     return new CollectionConfigSwig(DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_getNodes(swigCPtr, this), true);
+  }
+
+  public CollectionConfigSwig getProfileOffsets() {
+    return new CollectionConfigSwig(DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_getProfileOffsets(swigCPtr, this), true);
   }
 
   public int getDrift() {
@@ -96,8 +116,20 @@ public class ConfigHashSwig extends ConfigDeviceDetectionSwig {
     return DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_getDifference(swigCPtr, this);
   }
 
+  public boolean getUsePerformanceGraph() {
+    return DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_getUsePerformanceGraph(swigCPtr, this);
+  }
+
+  public boolean getUsePredictiveGraph() {
+    return DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_getUsePredictiveGraph(swigCPtr, this);
+  }
+
   public int getConcurrency() {
     return DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_getConcurrency(swigCPtr, this);
+  }
+
+  public boolean getTraceRoute() {
+    return DeviceDetectionHashEngineModuleJNI.ConfigHashSwig_getTraceRoute(swigCPtr, this);
   }
 
 }

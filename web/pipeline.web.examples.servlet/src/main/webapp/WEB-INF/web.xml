@@ -7,6 +7,10 @@
             <param-name>clientside-properties-enabled</param-name>
             <param-value>true</param-value>
         </init-param>
+        <init-param>
+            <param-name>config-file</param-name>
+            <param-value>/WEB-INF/51Degrees-Cloud.xml</param-value>
+        </init-param>
     </filter>
     <filter-mapping>
         <filter-name>Pipeline</filter-name>

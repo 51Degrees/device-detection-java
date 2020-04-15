@@ -50,7 +50,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * DeviceDetectionHashEngine engine = new DeviceDetectionHashEngineBuilder()
  *     .setAutoUpdate(false)
  *     .setPerformanceProfile(Constants.PerformanceProfiles.HighPerformance)
- *     .build("51Degrees-LiteV3.4.trie", false);
+ *     .build("51Degrees-LiteV4.1.hash", false);
  * ```
  *
  * 2. Start multiple threads to process a set of User-Agents, making a note of
@@ -86,7 +86,7 @@ public class Performance extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
         String dataFile = args.length > 0 ? args[0] :
-            getDefaultFilePath("51Degrees-LiteV3.4.trie").getAbsolutePath();
+            getDefaultFilePath("51Degrees-LiteV4.1.hash").getAbsolutePath();
         String uaFile = args.length > 1 ? args[1] :
             getDefaultFilePath("20000 User Agents.csv").getAbsolutePath();
         new Example(true).run(dataFile, uaFile, 10000);

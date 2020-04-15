@@ -176,7 +176,7 @@ public class Benchmark extends ProgramBase {
             }
         }
         if (dataFile == null) {
-            dataFile = getDefaultFilePath("51Degrees-LiteV3.4.trie").getAbsolutePath();
+            dataFile = getDefaultFilePath("51Degrees-LiteV4.1.hash").getAbsolutePath();
         }
 
         // execute the benchmarks now the data has been gathered

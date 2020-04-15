@@ -40,8 +40,4 @@ public class ProfileMetaDataSwig {
     return DeviceDetectionHashEngineModuleJNI.ProfileMetaDataSwig_getProfileId(swigCPtr, this);
   }
 
-  public long getSignatureCount() {
-    return DeviceDetectionHashEngineModuleJNI.ProfileMetaDataSwig_getSignatureCount(swigCPtr, this);
-  }
-
 }

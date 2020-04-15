@@ -5,14 +5,10 @@ SETLOCAL enabledelayedexpansion
 ECHO %1
 ECHO %2
 
-IF [%1]==[pattern] (SET API=Pattern)
-IF [%2]==[pattern] (SET API=Pattern)
 IF [%1]==[hash] (SET API=Hash)
 IF [%2]==[hash] (SET API=Hash)
 
-IF [%API%]==[Pattern] (
-  SET SRCOUT=%~dp0\device-detection.pattern.engine.on-premise\src\main\java\fiftyone\devicedetection\pattern\engine\onpremise
-) ELSE IF [%API%]==[Hash] (
+IF [%API%]==[Hash] (
   SET SRCOUT=%~dp0\device-detection.hash.engine.on-premise\src\main\java\fiftyone\devicedetection\hash\engine\onpremise
 ) ELSE (
   ECHO No API name supplied. Use pattern or hash as an argument.
@@ -22,9 +18,7 @@ IF [%API%]==[Pattern] (
 FOR %%X IN (swig.exe) DO (SET SWIG_EXE=%%~$PATH:X)
 IF DEFINED SWIG_EXE (
   ECHO SWIG auto generated code being rebuilt.
-  IF [%API%]==[Pattern] (
-    swig -c++ -java -package fiftyone.devicedetection.pattern.engine.onpremise.interop.swig -outdir %SRCOUT%\interop\swig -o %~dp0\Java_Pattern_Engine.cpp %~dp0\device-detection.pattern.engine.on-premise\pattern_java.i
-  ) ELSE IF [%API%]==[Hash] (
+  IF [%API%]==[Hash] (
     swig -c++ -java -package fiftyone.devicedetection.hash.engine.onpremise.interop.swig -outdir %SRCOUT%\interop\swig -o %~dp0\Java_Hash_Engine.cpp %~dp0\device-detection.hash.engine.on-premise\hash_java.i
   )
 ) ELSE (

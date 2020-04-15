@@ -26,18 +26,15 @@
     <Elements>
         <Element>
             <BuildParameters>
-                <EndPoint>https://cloud.51degrees.com/api/v4</EndPoint>
-                <!-- Obtain a resource key for free at
-                https://configure.51degrees.com
-                Make sure to include the 'IsMobile' property as it is used
-                by this example. -->
-                <ResourceKey>!!YOUR_RESOURCE_KEY!!</ResourceKey>
-
+                <AutoUpdate>false</AutoUpdate>
+                <CreateTempDataCopy>false</CreateTempDataCopy>
+                <DataFile>..\device-detection-cxx\device-detection-data\51Degrees-LiteV4.1.hash</DataFile>
+                <PerformanceProfile>LowMemory</PerformanceProfile>
             </BuildParameters>
-            <BuilderName>CloudRequestEngine</BuilderName>
+            <BuilderName>DeviceDetectionHashEngine</BuilderName>
         </Element>
         <Element>
-            <BuilderName>DeviceDetectionCloudEngine</BuilderName>
+            <BuilderName>JavaScriptBundlerElement</BuilderName>
         </Element>
     </Elements>
 </PipelineOptions>
