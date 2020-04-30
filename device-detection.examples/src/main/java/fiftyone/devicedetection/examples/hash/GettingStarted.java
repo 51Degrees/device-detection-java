@@ -25,7 +25,6 @@ package fiftyone.devicedetection.examples.hash;
 import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
 import fiftyone.devicedetection.examples.ExampleBase;
 import fiftyone.devicedetection.examples.ProgramBase;
-import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
@@ -84,7 +83,7 @@ public class GettingStarted extends ProgramBase {
     }
 
     public static class Example extends ExampleBase {
-        private String mobileUserAgent =
+        private final String mobileUserAgent =
             "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) " +
                 "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile" +
                 "/11D167 Safari/9537.53";

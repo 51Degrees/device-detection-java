@@ -79,10 +79,7 @@ public class DeviceDetectionCloudPipelineBuilder
 
         // Configure and build the device detection engine
         DeviceDetectionCloudEngineBuilder deviceDetectionEngineBuilder =
-            new DeviceDetectionCloudEngineBuilder(
-                loggerFactory,
-                httpClient,
-                cloudRequestEngine);
+            new DeviceDetectionCloudEngineBuilder(loggerFactory);
         if (lazyLoading) {
             deviceDetectionEngineBuilder.setLazyLoading(new LazyLoadingConfiguration(
                 (int) lazyLoadingTimeoutMillis));

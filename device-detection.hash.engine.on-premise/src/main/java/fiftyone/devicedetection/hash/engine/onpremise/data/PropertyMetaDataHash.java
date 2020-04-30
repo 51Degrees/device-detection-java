@@ -39,6 +39,10 @@ import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Hash on-premise implementation of the {@link FiftyOneAspectPropertyMetaData}
+ * interface.
+ */
 public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
 
     private final PropertyMetaDataSwig source;
@@ -59,9 +63,14 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
     private final List<String> dataFilesWherePresent;
     private final String type;
 
+    /**
+     * Construct a new instance.
+     * @param engine the engine creating the instance
+     * @param source the source metadata from the native engine
+     */
     public PropertyMetaDataHash(
-            DeviceDetectionHashEngine engine,
-            PropertyMetaDataSwig source) {
+        DeviceDetectionHashEngine engine,
+        PropertyMetaDataSwig source) {
         this.source = source;
         this.engine = engine;
         this.url = source.getUrl();
@@ -75,7 +84,8 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
         this.available = source.getAvailable();
         this.name = source.getName();
         this.category = source.getCategory();
-        this.dataFilesWherePresent = Swig.asUnmodifiableList(source.getDataFilesWherePresent());
+        this.dataFilesWherePresent = Swig.asUnmodifiableList(
+            source.getDataFilesWherePresent());
         type = source.getType();
     }
 

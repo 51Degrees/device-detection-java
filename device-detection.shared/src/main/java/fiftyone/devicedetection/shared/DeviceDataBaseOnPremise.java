@@ -35,38 +35,106 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import static fiftyone.pipeline.util.Types.getPrimativeTypeMap;
+import static fiftyone.pipeline.util.Types.getPrimitiveTypeMap;
 
+/**
+ * Base class used for all 51Degrees on-premise device detection results classes.
+ */
 public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
 
-    protected final Map<Class<?>, Class<?>> primativeTypes;
-    private Object dataLock = new Object();
-    private Object getLock = new Object();
+    protected final Map<Class<?>, Class<?>> primitiveTypes;
+    private final Object dataLock = new Object();
+    private final Object getLock = new Object();
     private boolean mapPopulated = false;
 
+    /**
+     * Constructs a new instance.
+     * @param logger used for logging
+     * @param flowData the {@link FlowData} instance this element data will be
+     *                 associated with
+     * @param engine the engine which created the instance
+     * @param missingPropertyService service used to determine the reason for
+     *                               a property value being missing
+     */
     protected DeviceDataBaseOnPremise(
         Logger logger,
         FlowData flowData,
         AspectEngine engine,
         MissingPropertyService missingPropertyService) {
         super(logger, flowData, engine, missingPropertyService);
-        primativeTypes = getPrimativeTypeMap();
+        primitiveTypes = getPrimitiveTypeMap();
     }
 
+    /**
+     * Determine whether a property is available to return values from the
+     * underlying results.
+     * @param propertyName name of the property to check
+     * @return true if the property is available
+     */
     protected abstract boolean propertyIsAvailable(String propertyName);
 
-    public abstract AspectPropertyValue<List<String>> getValues(String propertyName);
+    /**
+     * Get the values for the specified property as a {@link List<String>}. For
+     * on-premise engines, this is the raw form they are stored in the data file
+     * as.
+     * @param propertyName name of the property to get values for
+     * @return values as a list
+     */
+    public abstract AspectPropertyValue<List<String>> getValues(
+        String propertyName);
 
-    protected abstract AspectPropertyValue<String> getValueAsString(String propertyName);
+    /**
+     * Get the value for the specified property as a {@link String}.
+     * @param propertyName name of the property to the the value for
+     * @return value as a string
+     */
+    protected abstract AspectPropertyValue<String> getValueAsString(
+        String propertyName);
 
-    protected abstract AspectPropertyValue<Integer> getValueAsInteger(String propertyName);
+    /**
+     * Get the value for the specified property as an {@link Integer}. If the
+     * property cannot be represented as an {@link Integer}, then the result
+     * will have no value i.e. {@link AspectPropertyValue#hasValue()} == false.
+     * @param propertyName name of the property to get the value for
+     * @return value a an integer
+     */
+    protected abstract AspectPropertyValue<Integer> getValueAsInteger(
+        String propertyName);
 
-    protected abstract AspectPropertyValue<Boolean> getValueAsBool(String propertyName);
+    /**
+     * Get the value for the specified property as a {@link Boolean}. If the
+     * property cannot be represented as a {@link Boolean}, then the result
+     * will have no value i.e. {@link AspectPropertyValue#hasValue()} == false.
+     * @param propertyName name of the property to get the value for
+     * @return value a an integer
+     */
+    protected abstract AspectPropertyValue<Boolean> getValueAsBool(
+        String propertyName);
 
-    protected abstract AspectPropertyValue<Double> getValueAsDouble(String propertyName);
+    /**
+     * Get the value for the specified property as a {@link Double}. If the
+     * property cannot be represented as a {@link Double}, then the result
+     * will have no value i.e. {@link AspectPropertyValue#hasValue()} == false.
+     * @param propertyName name of the property to get the value for
+     * @return value a an integer
+     */
+    protected abstract AspectPropertyValue<Double> getValueAsDouble(
+        String propertyName);
 
-    protected abstract AspectPropertyValue<JavaScript> getValueAsJavaScript(String propertyName);
+    /**
+     * Get the value for the specified property as a {@link JavaScript}.
+     * @param propertyName name of the property to the the value for
+     * @return value as a JavaScript
+     */
+    protected abstract AspectPropertyValue<JavaScript> getValueAsJavaScript(
+        String propertyName);
 
+    /**
+     * By default, the base map will not be populated as doing so is a fairly
+     * expensive operation. Instead, we override the AsDictionary method to
+     * populate the dictionary on-demand.
+     * @return the data
+     */
     @Override
     public Map<String, Object> asKeyMap() {
         if (mapPopulated == false) {
@@ -74,11 +142,13 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
                 if (mapPopulated == false) {
                     Map<String, Object> map = new TreeMap<>(
                         String.CASE_INSENSITIVE_ORDER);
-                    for (ElementPropertyMetaData property : getPipline()
+                    for (ElementPropertyMetaData property : getPipeline()
                         .getElementAvailableProperties()
                         .get(getEngines().get(0).getElementDataKey()).values()) {
                         map.put(property.getName().toLowerCase(),
-                            getAs(property.getName(), AspectPropertyValue.class, property.getType()));
+                            getAs(property.getName(),
+                                AspectPropertyValue.class,
+                                property.getType()));
                     }
                     populateFromMap(map);
                     mapPopulated = true;
@@ -90,10 +160,16 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
         return super.asKeyMap();
     }
 
+    /**
+     * Get the {@link Class} representing the type values a property contains
+     * from its name.
+     * @param propertyName name of the property
+     * @return value type, or {@link Object} if unknown
+     */
     protected Class getPropertyType(String propertyName) {
         Class type = Object.class;
         Map<String, ElementPropertyMetaData> properties =
-            getPipline().getElementAvailableProperties()
+            getPipeline().getElementAvailableProperties()
                 .get(getEngines().get(0).getElementDataKey());
         if (properties != null) {
             ElementPropertyMetaData property = properties.get(propertyName);
@@ -105,7 +181,10 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
     }
 
     @Override
-    protected <T> TryGetResult<T> tryGetValue(String key, Class<T> type, Class<?>... parameterisedTypes) {
+    protected <T> TryGetResult<T> tryGetValue(
+        String key,
+        Class<T> type,
+        Class<?>... parameterisedTypes) {
         TryGetResult<T> result = new TryGetResult<>();
         if (mapPopulated == true) {
             // If the complete set of values has been populated
@@ -149,7 +228,7 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
                     try {
                         T value;
                         if (type.isPrimitive()) {
-                            value = (T) primativeTypes.get(type).cast(obj);
+                            value = (T) primitiveTypes.get(type).cast(obj);
                         } else {
                             value = type.cast(obj);
                         }
@@ -158,12 +237,13 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
                         throw new ClassCastException(
                             "Expected property '" + key + "' to be of " +
                                 "type '" + type.getSimpleName() + "' but it is " +
-                                "'" + obj.getClass().getSimpleName() + "'");
+                                "'" +
+                                (obj == null ? "null" : obj.getClass().getSimpleName()) +
+                                "'");
                     }
                 }
             }
         }
         return result;
     }
-
 }

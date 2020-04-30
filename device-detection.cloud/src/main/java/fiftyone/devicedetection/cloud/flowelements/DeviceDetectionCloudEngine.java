@@ -48,12 +48,22 @@ import java.util.Objects;
 import java.util.TreeMap;
 import org.json.JSONArray;
 
+/**
+ * Engine that takes the JSON response from the {@link CloudRequestEngine} and
+ * uses it populate a {@link DeviceDataCloud} instance for easier consumption.
+ */
 public class DeviceDetectionCloudEngine
     extends CloudAspectEngineBase<DeviceDataCloud> {
     private List<AspectPropertyMetaData> aspectProperties;
     private String dataSourceTier;
     private CloudRequestEngine cloudRequestEngine;
 
+    /**
+     * Construct a new instance of the {@link DeviceDetectionCloudEngine}.
+     * @param logger logger instance to use for logging
+     * @param deviceDataFactory the factory to use when creating a
+     *                          {@link DeviceDataCloud} instance
+     */
     public DeviceDetectionCloudEngine(
         Logger logger,
         ElementDataFactory<DeviceDataCloud> deviceDataFactory) {
@@ -93,7 +103,8 @@ public class DeviceDetectionCloudEngine
                     "corrected.");
         }
         else {
-            CloudRequestData requestData = data.getFromElement(cloudRequestEngine);
+            CloudRequestData requestData =
+                data.getFromElement(cloudRequestEngine);
             String json = "";
             json = requestData.getJsonResponse();
 
@@ -101,7 +112,8 @@ public class DeviceDetectionCloudEngine
             JSONObject jsonObj = new JSONObject(json);
             JSONObject deviceObj = jsonObj.getJSONObject("device");
 
-            Map<String, Object> deviceMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+            Map<String, Object> deviceMap =
+                new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
             for (AspectPropertyMetaData property : getProperties()) {
                 String type = property.getType().getSimpleName();
@@ -166,6 +178,13 @@ public class DeviceDetectionCloudEngine
         super.addPipeline(pipeline);
     }
 
+    /**
+     * Load all aspect property meta data using the properties returned by the
+     * cloud engine ({@link CloudRequestEngine#getPublicProperties()}.
+     * @param engine cloud request engine
+     * @return true if the properties were successfully loaded into
+     * {@link #aspectProperties}
+     */
     private boolean loadAspectProperties(CloudRequestEngine engine) {
         Map<String, AccessiblePropertyMetaData.ProductMetaData> map =
             engine.getPublicProperties();
@@ -195,8 +214,18 @@ public class DeviceDetectionCloudEngine
             return false;
         }
     }
-    
-    private AspectPropertyValue<Integer> getIntegerAspectPropertyValue(JSONObject deviceObj, AspectPropertyMetaData property) {
+
+    /**
+     * Get the integer representation of a value from the cloud engine's JSON
+     * response, and wrap it in an {@link AspectPropertyValue}.
+     * @param deviceObj to get the value from
+     * @param property to get the value of
+     * @return {@link AspectPropertyValue} with a parsed value, or the reason
+     * for the value not being present
+     */
+    private AspectPropertyValue<Integer> getIntegerAspectPropertyValue(
+        JSONObject deviceObj,
+        AspectPropertyMetaData property) {
         String key = property.getName().toLowerCase();
         AspectPropertyValue<Integer> intValue = new AspectPropertyValueDefault<>();
         if(deviceObj.isNull(key)){
@@ -220,7 +249,17 @@ public class DeviceDetectionCloudEngine
         return doubleValue;
     }
 
-    private AspectPropertyValue<Boolean> getBooleanAspectPropertyValue(JSONObject deviceObj, AspectPropertyMetaData property) {
+    /**
+     * Get the boolean representation of a value from the cloud engine's JSON
+     * response, and wrap it in an {@link AspectPropertyValue}.
+     * @param deviceObj to get the value from
+     * @param property to get the value of
+     * @return {@link AspectPropertyValue} with a parsed value, or the reason
+     * for the value not being present
+     */
+    private AspectPropertyValue<Boolean> getBooleanAspectPropertyValue(
+        JSONObject deviceObj,
+        AspectPropertyMetaData property) {
         String key = property.getName().toLowerCase();
         AspectPropertyValue<Boolean> booleanValue = new AspectPropertyValueDefault<>();
         if(deviceObj.isNull(key)){
@@ -231,8 +270,18 @@ public class DeviceDetectionCloudEngine
         }
         return booleanValue;
     }
-    
-    private AspectPropertyValue<List<String>> getListAspectPropertyValue(JSONObject deviceObj, AspectPropertyMetaData property){
+
+    /**
+     * Get the string list representation of a value from the cloud engine's
+     * JSON response, and wrap it in an {@link AspectPropertyValue}.
+     * @param deviceObj to get the value from
+     * @param property to get the value of
+     * @return {@link AspectPropertyValue} with a parsed value, or the reason
+     * for the value not being present
+     */
+    private AspectPropertyValue<List<String>> getListAspectPropertyValue(
+        JSONObject deviceObj,
+        AspectPropertyMetaData property){
         String key = property.getName().toLowerCase();
         AspectPropertyValue<List<String>> listValue = new AspectPropertyValueDefault<>();
         if(deviceObj.isNull(key))
@@ -250,8 +299,18 @@ public class DeviceDetectionCloudEngine
         }
         return listValue;
     }
-    
-    private AspectPropertyValue<JavaScript> getJavaScriptAspectPropertyValue(JSONObject deviceObj, AspectPropertyMetaData property){
+
+    /**
+     * Get the JavaScript representation of a value from the cloud engine's JSON
+     * response, and wrap it in an {@link AspectPropertyValue}.
+     * @param deviceObj to get the value from
+     * @param property to get the value of
+     * @return {@link AspectPropertyValue} with a parsed value, or the reason
+     * for the value not being present
+     */
+    private AspectPropertyValue<JavaScript> getJavaScriptAspectPropertyValue(
+        JSONObject deviceObj,
+        AspectPropertyMetaData property){
         String key = property.getName().toLowerCase();
         AspectPropertyValue<JavaScript> jsValue = new AspectPropertyValueDefault<>();
         if(deviceObj.isNull(key)){
@@ -261,8 +320,18 @@ public class DeviceDetectionCloudEngine
         }
         return jsValue;
     }
-    
-    private AspectPropertyValue<String> getStringAspectPropertyValue(JSONObject deviceObj, AspectPropertyMetaData property){
+
+    /**
+     * Get the string representation of a value from the cloud engine's JSON
+     * response, and wrap it in an {@link AspectPropertyValue}.
+     * @param deviceObj to get the value from
+     * @param property to get the value of
+     * @return {@link AspectPropertyValue} with a parsed value, or the reason
+     * for the value not being present
+     */
+    private AspectPropertyValue<String> getStringAspectPropertyValue(
+        JSONObject deviceObj,
+        AspectPropertyMetaData property){
         String key = property.getName().toLowerCase();
         AspectPropertyValue<String> stringValue = new AspectPropertyValueDefault<>();
         if(deviceObj.isNull(key)){
@@ -273,11 +342,25 @@ public class DeviceDetectionCloudEngine
         }
         return stringValue;
     }
-    
-    private String getNoValueReason(JSONObject nullValueReasonsObj, String key){
-        return tryToGet(nullValueReasonsObj, key + "nullreason").toString();
+
+    /**
+     * Get the reason for the value of a property not being present in the cloud
+     * engine's JSON response.
+     * @param deviceObj to get the null reason from
+     * @param key to get the null reason from
+     * @return the reason for the missing property
+     */
+    private String getNoValueReason(JSONObject deviceObj, String key){
+        Object reason = tryToGet(deviceObj, key + "nullreason");
+        return reason == null ? null : reason.toString();
     }
-    
+
+    /**
+     * Try to get a value from a JSON object.
+     * @param jsonObj to get the value from
+     * @param key to get the value of
+     * @return the value or null
+     */
     private Object tryToGet(JSONObject jsonObj, String key) {
         if (jsonObj.has(key))
             return jsonObj.opt(key);

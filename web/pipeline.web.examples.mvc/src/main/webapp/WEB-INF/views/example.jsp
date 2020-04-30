@@ -13,8 +13,8 @@
 
 <div id="content">
     <p>
-        Hardware Vendor: ${hardwareVendor.HasValue ? hardwareVendor.Value : "Unknown " + hardwareVendor.getNoValueMessage()}<br />
-        Hardware Name: ${hardwareName.hasValue() ? stringJoin(hardwareName.getValue(), ", ") : "Unknown " +  hardwareName.getNoValueMessage()}<br />
+        Hardware Vendor: ${hardwareVendor.hasValue() ? hardwareVendor.getValue() : "Unknown " + hardwareVendor.getNoValueMessage()}<br />
+        Hardware Name: ${hardwareName.hasValue() ? hardwareName.getValue() : "Unknown " +  hardwareName.getNoValueMessage()}<br />
         Device Type: ${deviceType.hasValue() ? deviceType.getValue() : "Unknown " +  deviceType.getNoValueMessage()}<br />
         Platform Vendor: ${platformVendor.hasValue() ? platformVendor.getValue() : "Unknown " +  platformVendor.getNoValueMessage()}<br />
         Platform Name: ${platformName.hasValue() ? platformName.getValue() : "Unknown " +  platformName.getNoValueMessage()}<br />

@@ -22,25 +22,48 @@
 
 package fiftyone.devicedetection.shared.flowelements;
 
+import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.engines.fiftyone.flowelements.FiftyOneAspectEngine;
 import fiftyone.pipeline.engines.fiftyone.flowelements.FiftyOneOnPremiseAspectEngineBuilderBase;
 import fiftyone.pipeline.engines.services.DataUpdateService;
 import org.slf4j.ILoggerFactory;
+import org.slf4j.LoggerFactory;
 
+/**
+ * Base builder class for 51Degrees on-premise device detection engines.
+ * @param <TBuilder> the specific builder type to use as the return type from
+ *                  the fluent builder methods
+ * @param <TEngine> the type of the engine that this builder will build
+ */
 public abstract class OnPremiseDeviceDetectionEngineBuilderBase<
     TBuilder extends OnPremiseDeviceDetectionEngineBuilderBase<TBuilder, TEngine>,
     TEngine extends FiftyOneAspectEngine>
     extends FiftyOneOnPremiseAspectEngineBuilderBase<TBuilder, TEngine> {
 
+    /**
+     * Default constructor which uses the {@link ILoggerFactory} implementation
+     * returned by {@link LoggerFactory#getILoggerFactory()}.
+     */
     public OnPremiseDeviceDetectionEngineBuilderBase() {
         super();
     }
 
+    /**
+     * Construct a new instance using the {@link ILoggerFactory} supplied.
+     * @param loggerFactory the logger factory to use
+     */
     public OnPremiseDeviceDetectionEngineBuilderBase(
         ILoggerFactory loggerFactory) {
         super(loggerFactory);
     }
 
+    /**
+     * Construct a new instance using the {@link ILoggerFactory} and
+     * {@link DataUpdateService} supplied.
+     * @param loggerFactory the logger factory to use
+     * @param dataUpdateService the {@link DataUpdateService} to use when
+     *                          automatic updates happen on the data file
+     */
     public OnPremiseDeviceDetectionEngineBuilderBase(
         ILoggerFactory loggerFactory,
         DataUpdateService dataUpdateService) {
@@ -63,8 +86,8 @@ public abstract class OnPremiseDeviceDetectionEngineBuilderBase<
      * properties without set values. If set to true, a non-matching
      * User-Agent will cause the 'default profiles' to be returned. This
      * means that properties will always have values (i.e. no need to
-     * check .HasValue) but some may be inaccurate. By default, this is
-     * false.
+     * check {@link AspectPropertyValue#hasValue()}) but some may be inaccurate.
+     * By default, this is false.
      * @param allow true if results with no matched hash nodes should be
      *              considered valid
      * @return this builder

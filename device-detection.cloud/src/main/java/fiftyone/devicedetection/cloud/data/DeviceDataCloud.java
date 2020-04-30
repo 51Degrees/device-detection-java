@@ -24,6 +24,9 @@ package fiftyone.devicedetection.cloud.data;
 
 import fiftyone.devicedetection.shared.DeviceData;
 
+/**
+ * Cloud specific interface for {@link DeviceData}.
+ */
 public interface DeviceDataCloud extends DeviceData {
 
 }

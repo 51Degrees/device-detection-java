@@ -27,37 +27,19 @@ import fiftyone.pipeline.engines.data.AspectPropertyValue;
 
 import java.util.List;
 
+/**
+ * Hash specific interface for {@link DeviceData}.
+ */
 public interface DeviceDataHash extends DeviceData {
 
+    /**
+     * Get the values for the specified property as a {@link List<String>}. For
+     * on-premise engines, this is the raw form they are stored in the data file
+     * as.
+     * @param propertyName name of the property to get values for
+     * @return values as a list
+     */
     AspectPropertyValue<List<String>> getValues(String propertyName);
 
-    /**
-     * The method used to determine the result from the evidence
-     * provided e.g. exact or predictive. Where multiple items of evidence
-     * are supplied, this returns the worst matching method that was used
-     * for an evidence item.
-     */
-    AspectPropertyValue<String> getMethod();
-
-    /**
-     * The total difference in matching hash values found in the evidence.
-     * The higher this value, the less accurate the results should be
-     * considered.
-     */
-    AspectPropertyValue<Integer> getDifference();
-
-    /**
-     * Returns the maximum drift for a matched substring from the character
-     * position where it was expected to be found.The higher this value, the
-     * less accurate the results should be considered.
-     */
-    AspectPropertyValue<Integer> getDrift();
-
-    /**
-     * Returns the number of hash nodes matched within the evidence.
-     */
-    AspectPropertyValue<Integer> getMatchedNodes();
-
-    AspectPropertyValue<Integer> getIterations();
 
 }

@@ -24,37 +24,31 @@ package fiftyone.devicedetection.cloud.flowelements;
 
 import fiftyone.devicedetection.cloud.data.DeviceDataCloud;
 import fiftyone.pipeline.annotations.ElementBuilder;
-import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngine;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.data.factories.ElementDataFactory;
 import fiftyone.pipeline.core.flowelements.FlowElement;
 import fiftyone.pipeline.engines.flowelements.CloudAspectEngineBuilderBase;
-import fiftyone.pipeline.engines.services.HttpClient;
-import fiftyone.pipeline.engines.services.HttpClientDefault;
 import fiftyone.pipeline.engines.services.MissingPropertyServiceDefault;
 import org.slf4j.ILoggerFactory;
 
 import java.util.List;
 
-@ElementBuilder
+/**
+ * Builder for the {@link DeviceDetectionCloudEngine}. All options for the engine
+ * should be set here.
+ */
+@ElementBuilder(alternateName = "CloudDeviceDetection")
 public class DeviceDetectionCloudEngineBuilder
     extends CloudAspectEngineBuilderBase<
             DeviceDetectionCloudEngineBuilder,
             DeviceDetectionCloudEngine> {
-    private HttpClient httpClient;
-    private CloudRequestEngine cloudRequestEngine;
 
+    /**
+     * Construct a new instance using the {@link ILoggerFactory} supplied.
+     * @param loggerFactory the logger factory to use
+     */
     public DeviceDetectionCloudEngineBuilder(ILoggerFactory loggerFactory) {
-        this(loggerFactory, new HttpClientDefault(), null);
-    }
-
-    public DeviceDetectionCloudEngineBuilder(
-        ILoggerFactory loggerFactory,
-        HttpClient httpClient,
-        CloudRequestEngine engine) {
         super(loggerFactory);
-        this.httpClient = httpClient;
-        this.cloudRequestEngine = engine;
     }
 
     @Override
@@ -64,11 +58,16 @@ public class DeviceDetectionCloudEngineBuilder
             new DeviceDataCloudFactory(loggerFactory));
     }
 
+    /**
+     * Build an engine using the current options.
+     * @return new instance
+     */
     public DeviceDetectionCloudEngine build() throws Exception {
         return buildEngine();
     }
 
-    private static class DeviceDataCloudFactory implements ElementDataFactory<DeviceDataCloud> {
+    private static class DeviceDataCloudFactory
+        implements ElementDataFactory<DeviceDataCloud> {
 
         private final ILoggerFactory loggerFactory;
 
@@ -77,7 +76,9 @@ public class DeviceDetectionCloudEngineBuilder
         }
 
         @Override
-        public DeviceDataCloud create(FlowData flowData, FlowElement<DeviceDataCloud, ?> engine) {
+        public DeviceDataCloud create(
+            FlowData flowData,
+            FlowElement<DeviceDataCloud, ?> engine) {
             return new DeviceDataCloudInternal(
                 loggerFactory.getLogger(DeviceDataCloud.class.getName()),
                 flowData,

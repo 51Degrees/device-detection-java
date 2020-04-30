@@ -1,6 +1,5 @@
 package fiftyone.devicedetection.cloud.flowelements;
 
-import fiftyone.devicedetection.cloud.data.DeviceDataCloud;
 import fiftyone.devicedetection.cloud.data.MultiDeviceDataCloud;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.cloudrequestengine.flowelements.PropertyKeyedCloudEngineBase;

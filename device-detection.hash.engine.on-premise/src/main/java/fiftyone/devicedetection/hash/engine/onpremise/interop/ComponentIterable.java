@@ -29,13 +29,22 @@ import fiftyone.pipeline.engines.fiftyone.data.CollectionIterableBase;
 import fiftyone.pipeline.engines.fiftyone.data.ComponentMetaData;
 
 
+/**
+ * Class which adds the {@link Iterable} and {@link AutoCloseable} interfaces to
+ * a native collection representing {@link ComponentMetaData}s.
+ */
 public class ComponentIterable
     extends CollectionIterableBase<ComponentMetaData> {
 
-    private ComponentMetaDataCollectionSwig collection;
+    private final ComponentMetaDataCollectionSwig collection;
 
-    private DeviceDetectionHashEngine engine;
+    private final DeviceDetectionHashEngine engine;
 
+    /**
+     * Create a new instance.
+     * @param engine the engine which the meta data relates to
+     * @param collection the native collection of components
+     */
     public ComponentIterable(
         DeviceDetectionHashEngine engine,
         ComponentMetaDataCollectionSwig collection) {

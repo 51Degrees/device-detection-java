@@ -53,14 +53,14 @@ public class TacLookup extends ProgramBase {
             // Make sure to include the 'HardwareVendor' and 'HardwareModel'
             // properties as they are used by this example.
             "!!YOUR_RESOURCE_KEY!!";
-        new fiftyone.devicedetection.examples.cloud.TacLookup.Example(true).run(resourceKey);
+        new TacLookup.Example(true).run(resourceKey);
         System.out.println("Complete. Press enter to exit.");
         System.in.read();
     }
 
     public static class Example extends ExampleBase {
-        private static String TAC = "35925406";
-        private static String TAC2 = "86386802";
+        private static final String TAC = "35925406";
+        private static final String TAC2 = "86386802";
 
         public Example(boolean printOutput) {
             super(printOutput);

@@ -100,6 +100,7 @@ public class MetaData extends ProgramBase {
                          .build(dataFile, false)) {
                 for (FiftyOneAspectPropertyMetaData property :
                     engine.getProperties()) {
+
                     printf("%s (%s) - %s%n",
                         property.getName(),
                         property.getType().getSimpleName(),

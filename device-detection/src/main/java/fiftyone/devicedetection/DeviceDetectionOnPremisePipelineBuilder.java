@@ -54,8 +54,8 @@ public class DeviceDetectionOnPremisePipelineBuilder
         Constants.PerformanceProfiles.Balanced;
     private Enums.DeviceDetectionAlgorithm algorithm =
         Enums.DeviceDetectionAlgorithm.Hash;
-    private DataUpdateService dataUpdateService;
-    private HttpClient httpClient;
+    private final DataUpdateService dataUpdateService;
+    private final HttpClient httpClient;
 
     DeviceDetectionOnPremisePipelineBuilder(
         DataUpdateService dataUpdateService,
@@ -158,7 +158,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
      * properties without set values. If set to true, a non-matching
      * User-Agent will cause the 'default profiles' to be returned. This
      * means that properties will always have values (i.e. no need to
-     * check .HasValue) but some may be inaccurate. By default, this is
+     * check .hasValue) but some may be inaccurate. By default, this is
      * false.
      * @param allow true if results with no matched hash nodes should be
      *              considered valid
@@ -171,7 +171,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
 
     @Override
     public Pipeline build() throws Exception {
-        AspectEngine deviceDetectionEngine = null;
+        AspectEngine deviceDetectionEngine;
 
         // Create the device detection engine based on the configuration.
         switch (algorithm) {
@@ -232,7 +232,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
         }
 
         // Build the engine
-        TEngine engine = null;
+        TEngine engine;
         if (filename != null && filename.isEmpty() == false) {
             engine = builder.build(filename, createTempDataCopy);
         } else if (engineData != null) {

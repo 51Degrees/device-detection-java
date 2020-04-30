@@ -14,7 +14,7 @@ import java.util.List;
 public class HardwareProfileCloudEngineBuilder extends AspectEngineBuilderBase<
     HardwareProfileCloudEngineBuilder,
     HardwareProfileCloudEngine> {
-    private ILoggerFactory loggerFactory;
+    private final ILoggerFactory loggerFactory;
 
     public HardwareProfileCloudEngineBuilder(ILoggerFactory loggerFactory) {
         this.loggerFactory = loggerFactory;
