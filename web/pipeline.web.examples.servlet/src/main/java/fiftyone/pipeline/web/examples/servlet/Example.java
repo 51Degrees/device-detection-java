@@ -67,7 +67,11 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *         <BuilderName>DeviceDetectionCloudEngine</BuilderName>
  *         </Element>
  *         <Element>
- *             <BuilderName>JavaScriptBundlerElement</BuilderName>
+ *             <BuilderName>JavaScriptBuilderElement</BuilderName>
+ *             <BuildParameters>
+ *                 <Endpoint>/pipeline.web.examples.mvc/json</Endpoint>
+ *                 <Protocol>http</Protocol>
+ *             </BuildParameters>
  *         </Element>
  *     </Elements>
  * </PipelineOptions>
@@ -92,7 +96,11 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *             <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
  *         </Element>
  *         <Element>
- *             <BuilderName>JavaScriptBundlerElement</BuilderName>
+ *             <BuilderName>JavaScriptBuilderElement</BuilderName>
+ *             <BuildParameters>
+ *                 <Endpoint>/pipeline.web.examples.servlet/json</Endpoint>
+ *                 <Protocol>http</Protocol>
+ *             </BuildParameters>
  *         </Element>
  *     </Elements>
  * </PipelineOptions>

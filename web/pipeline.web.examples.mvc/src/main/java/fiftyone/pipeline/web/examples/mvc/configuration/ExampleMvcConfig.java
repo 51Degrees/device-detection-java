@@ -68,7 +68,11 @@ import static fiftyone.pipeline.web.mvc.components.FiftyOneInterceptor.enableCli
  *         <BuilderName>DeviceDetectionCloudEngine</BuilderName>
  *         </Element>
  *         <Element>
- *             <BuilderName>JavaScriptBundlerElement</BuilderName>
+ *             <BuilderName>JavaScriptBuilderElement</BuilderName>
+ *             <BuildParameters>
+ *                 <Endpoint>/pipeline.web.examples.mvc/json</Endpoint>
+ *                 <Protocol>http</Protocol>
+ *             </BuildParameters>
  *         </Element>
  *     </Elements>
  * </PipelineOptions>
@@ -93,7 +97,11 @@ import static fiftyone.pipeline.web.mvc.components.FiftyOneInterceptor.enableCli
  *             <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
  *         </Element>
  *         <Element>
- *             <BuilderName>JavaScriptBundlerElement</BuilderName>
+ *             <BuilderName>JavaScriptBuilderElement</BuilderName>
+ *             <BuildParameters>
+ *                 <Endpoint>/pipeline.web.examples.mvc/json</Endpoint>
+ *                 <Protocol>http</Protocol>
+ *             </BuildParameters>
  *         </Element>
  *     </Elements>
  * </PipelineOptions>
