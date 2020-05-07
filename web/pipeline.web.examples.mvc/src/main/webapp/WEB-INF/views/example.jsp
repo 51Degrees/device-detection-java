@@ -40,15 +40,15 @@
             var text = document.createTextNode("Updated information from client-side evidence:");
             para.appendChild(text);
             para.appendChild(br);
-            text = document.createTextNode("Hardware Name: " + data.device.HardwareName.join(","));
+            text = document.createTextNode("Hardware Name: " + data.device.hardwarename.join(","));
             br = document.createElement("br");
             para.appendChild(text);
             para.appendChild(br);
-            text = document.createTextNode("Screen width (pixels): " + data.device.ScreenPixelsWidth);
+            text = document.createTextNode("Screen width (pixels): " + data.device.screenpixelswidth);
             br = document.createElement("br");
             para.appendChild(text);
             para.appendChild(br);
-            text = document.createTextNode("Screen height (pixels): " + data.device.ScreenPixelsHeight);
+            text = document.createTextNode("Screen height (pixels): " + data.device.screenpixelsheight);
             br = document.createElement("br");
             para.appendChild(text);
             para.appendChild(br);

@@ -240,15 +240,15 @@ public class Example extends HttpServlet {
             "            var text = document.createTextNode(\"Updated information from client-side evidence:\");\n" +
             "            para.appendChild(text);\n" +
             "            para.appendChild(br);\n" +
-            "            text = document.createTextNode(\"Hardware Name: \" + data.device.HardwareName.join(\",\"));\n" +
+            "            text = document.createTextNode(\"Hardware Name: \" + data.device.hardwarename.join(\",\"));\n" +
             "            br = document.createElement(\"br\");\n" +
             "            para.appendChild(text);\n" +
             "            para.appendChild(br);\n" +
-            "            text = document.createTextNode(\"Screen width (pixels): \" + data.device.ScreenPixelsWidth);\n" +
+            "            text = document.createTextNode(\"Screen width (pixels): \" + data.device.screenpixelswidth);\n" +
             "            br = document.createElement(\"br\");\n" +
             "            para.appendChild(text);\n" +
             "            para.appendChild(br);\n" +
-            "            text = document.createTextNode(\"Screen height (pixels): \" + data.device.ScreenPixelsHeight);\n" +
+            "            text = document.createTextNode(\"Screen height (pixels): \" + data.device.screenpixelsheight);\n" +
             "            br = document.createElement(\"br\");\n" +
             "            para.appendChild(text);\n" +
             "            para.appendChild(br);\n" +
