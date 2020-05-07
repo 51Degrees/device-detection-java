@@ -31,9 +31,9 @@ import org.slf4j.LoggerFactory;
 
 public class DeviceDetectionPipelineBuilder {
 
-    protected ILoggerFactory loggerFactory;
-    private DataUpdateService dataUpdateService;
-    private HttpClient httpClient;
+    protected final ILoggerFactory loggerFactory;
+    private final DataUpdateService dataUpdateService;
+    private final HttpClient httpClient;
 
     public DeviceDetectionPipelineBuilder() {
         this(LoggerFactory.getILoggerFactory());

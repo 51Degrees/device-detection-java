@@ -31,13 +31,22 @@ import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 
 import java.util.List;
 
+/**
+ * Class which adds the {@link Iterable} and {@link AutoCloseable} interfaces to
+ * a native collection representing {@link FiftyOneAspectPropertyMetaData}s.
+ */
 public class PropertyIterable
     extends CollectionIterableCachedBase<FiftyOneAspectPropertyMetaData> {
 
-    private PropertyMetaDataCollectionSwig collection;
+    private final PropertyMetaDataCollectionSwig collection;
 
-    private DeviceDetectionHashEngine engine;
+    private final DeviceDetectionHashEngine engine;
 
+    /**
+     * Create a new instance.
+     * @param engine the engine which the meta data relates to
+     * @param collection the native collection of properties
+     */
     public PropertyIterable(
         DeviceDetectionHashEngine engine,
         List<FiftyOneAspectPropertyMetaData> list,

@@ -79,7 +79,7 @@ public class GettingStarted extends ProgramBase {
     }
 
     public static class Example extends ExampleBase {
-        private String mobileUserAgent =
+        private final String mobileUserAgent =
             "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) " +
                 "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile" +
                 "/11D167 Safari/9537.53";
@@ -105,6 +105,7 @@ public class GettingStarted extends ProgramBase {
                         .useLazyLoading(1000)
                         .setAutoCloseElements(true)
                         .build();
+
 
                 FlowData data = pipeline.createFlowData();
                 data.addEvidence(

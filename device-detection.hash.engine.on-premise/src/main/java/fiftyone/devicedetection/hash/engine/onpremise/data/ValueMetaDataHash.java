@@ -29,12 +29,20 @@ import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
 
 import java.io.IOException;
 
+/**
+ * Hash on-premise implementation of the {@link ValueMetaData} interface.
+ */
 public class ValueMetaDataHash implements ValueMetaData {
 
     private final ValueMetaDataSwig source;
 
     private final DeviceDetectionHashEngine engine;
 
+    /**
+     * Construct a new instance.
+     * @param engine the engine creating the instance
+     * @param source the source metadata from the native engine
+     */
     public ValueMetaDataHash(
             DeviceDetectionHashEngine engine,
             ValueMetaDataSwig source) {
@@ -45,8 +53,8 @@ public class ValueMetaDataHash implements ValueMetaData {
     @Override
     public FiftyOneAspectPropertyMetaData getProperty() {
         return new PropertyMetaDataHash(
-                engine,
-                engine.getMetaData().getPropertyForValue(source));
+            engine,
+            engine.getMetaData().getPropertyForValue(source));
     }
 
     @Override
@@ -79,7 +87,7 @@ public class ValueMetaDataHash implements ValueMetaData {
 
     public boolean equals(ValueMetaData other) {
         return getProperty().equals(other.getProperty()) &&
-                getName().equals(other.getName());
+            getName().equals(other.getName());
     }
 
     @Override

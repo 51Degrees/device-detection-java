@@ -165,7 +165,7 @@ public class Comparison extends ProgramBase {
     static LinkedList<Request> readUserAgents(String userAgentFile)
         throws IOException {
         String line;
-        LinkedList<Request> requests = new LinkedList<Request>();
+        LinkedList<Request> requests = new LinkedList<>();
         BufferedReader bufferedReader = new BufferedReader(
             new FileReader(userAgentFile));
         while ((line = bufferedReader.readLine()) != null) {
@@ -252,12 +252,7 @@ public class Comparison extends ProgramBase {
                     writeDouble(bufferedWriter, field.getDouble(result));
                 }
             }
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(Comparison.class.getName()).log(
-                Level.SEVERE,
-                null,
-                ex);
-        } catch (IllegalAccessException ex) {
+        } catch (IllegalArgumentException | IllegalAccessException ex) {
             Logger.getLogger(Comparison.class.getName()).log(
                 Level.SEVERE,
                 null,
@@ -407,12 +402,12 @@ public class Comparison extends ProgramBase {
      * Runs one of more comparison operations writing the results back out
      * to the list of requests.
      *
-     * @param userAgentsFile      path to csv file containing User-Agents
-     * @param fiftyOneDegreesFile path to 51Degrees provider data file
-     * @param wurflFile           path to WURFL data file
-     * @param deviceAtlasFile     path to DeviceAtlas data file
-     * @param csvOutputFile       path to csv output file for storing results of comparison
-     * @param numberOfThreads     number of concurrent threads
+     * @param userAgentsFile              path to csv file containing User-Agents
+     * @param fiftyoneDegreesHashTrieFile path to 51Degrees provider data file
+     * @param wurflFile                   path to WURFL data file
+     * @param deviceAtlasFile             path to DeviceAtlas data file
+     * @param csvOutputFile               path to csv output file for storing results of comparison
+     * @param numberOfThreads             number of concurrent threads
      */
     private static void runComparisons(
         String userAgentsFile,
@@ -430,7 +425,7 @@ public class Comparison extends ProgramBase {
         }
 
         // Initialise the data for all the different providers.
-        ArrayList<String> providerNames = new ArrayList<String>();
+        ArrayList<String> providerNames = new ArrayList<>();
         LinkedList<Request> requests = readUserAgents(userAgentsFile);
         int cacheSize = (int) (requests.size() * CACHE_MULTIPLIER);
 
@@ -465,7 +460,7 @@ public class Comparison extends ProgramBase {
 
     /**
      * Instantiates this class and starts
-     * {@link #runComparisons(String, String, String, String, String, String, int)}
+     * {@link #runComparisons(String, String, String, String, String, int)}
      * with parameters from the command line. When run from the command line
      * the first and last file arguments must be a file of User-Agents and the
      * file that the comparison results will be written to. Files between the
@@ -510,13 +505,13 @@ public class Comparison extends ProgramBase {
                 "At least 2 valid files need to be provided");
         }
 
-        /**
-         * Execute the comparison now the data has been gathered.
-         *
-         * NOTE: Modify the following code to test with Device Atlas,
-         * WURFL, and 51Degrees Hash Trie, replace null with the path
-         * to the corresponding data file.
-         **/
+        /*
+          Execute the comparison now the data has been gathered.
+
+          NOTE: Modify the following code to test with Device Atlas,
+          WURFL, and 51Degrees Hash Trie, replace null with the path
+          to the corresponding data file.
+         */
         runComparisons(
             otherFiles.get(0), // The file containing User-Agents
             hashFile, // The 51Degrees Hash Trie data file
@@ -617,7 +612,7 @@ public class Comparison extends ProgramBase {
         ResultIterator(LinkedList<Request> requests) {
             long localTotal = 0;
             SortedMap<Float, LinkedList<Result>> map =
-                new TreeMap<Float, LinkedList<Result>>();
+                new TreeMap<>();
 
             // calculate the total number of detections to perform
             for (Request request : requests) {
@@ -637,7 +632,7 @@ public class Comparison extends ProgramBase {
             }
 
             // set the queue
-            this.queue = new LinkedList<LinkedList<Result>>();
+            this.queue = new LinkedList<>();
             for (Entry<Float, LinkedList<Result>> entry : map.entrySet()) {
                 queue.add(entry.getValue());
             }
@@ -767,7 +762,7 @@ public class Comparison extends ProgramBase {
         Request(String userAgentString, int frequency) {
             this.userAgentString = userAgentString;
             this.frequency = frequency;
-            results = new LinkedList<Result>();
+            results = new LinkedList<>();
         }
     }
 
@@ -787,8 +782,8 @@ public class Comparison extends ProgramBase {
         // private GeneralWURFLEngine wurfl;
 
         WurflProvider(String dataFile, int cacheSize) {
-            /** UNCOMMENT FOR WURFL **/
-            /**
+            /* UNCOMMENT FOR WURFL **/
+            /*
              this.wurfl = new GeneralWURFLEngine(dataFile);
              this.wurfl.setEngineTarget(EngineTarget.accuracy);
 
@@ -798,26 +793,26 @@ public class Comparison extends ProgramBase {
 
              // load method is available on API version 1.8.1.0 and above
              wurfl.load();
-             **/
+             */
         }
 
         @Override
         public void calculateResult(String userAgent, Result result)
             throws Exception {
-            /** UNCOMMENT FOR WURFL **/
-            /**
+            /* UNCOMMENT FOR WURFL **/
+            /*
              Device device = this.wurfl.getDeviceForRequest(userAgent);
              result.isMobile = device.getCapabilityAsBool("is_wireless_device");
              result.hardwareVendor = device.getCapability("brand_name");
              result.hardwareModel = device.getCapability("model_name");
              result.deviceType = device.getCapability("form_factor");
              result.difference = -1;
-             **/
+             */
         }
 
         @Override
         public void close() throws IOException {
-            /** UNCOMMENT FOR WURFL **/
+            /* UNCOMMENT FOR WURFL **/
             //this.wurfl = null;
         }
     }
@@ -839,11 +834,11 @@ public class Comparison extends ProgramBase {
         //private DeviceApi da;
 
         DeviceAtlasProvider(String dataFile, int cacheSize) {
-            /** UNCOMMENT FOR DEVICE ATLAS **/
-            /**
+            /* UNCOMMENT FOR DEVICE ATLAS **/
+            /*
              this.da = new DeviceApi();
              this.da.loadDataFromFile(dataFile);
-             **/
+             */
 
             // Some configuration of a User-Agent cache may be possible to
             // improve performance in the second pass.
@@ -852,20 +847,20 @@ public class Comparison extends ProgramBase {
         @Override
         public void calculateResult(String userAgent, Result result)
             throws Exception {
-            /** UNCOMMENT FOR DEVICE ATLAS **/
-            /**
+            /* UNCOMMENT FOR DEVICE ATLAS **/
+            /*
              Properties properties = this.da.getProperties(userAgent);
              result.isMobile = properties.get("mobileDevice").asBoolean();
              result.hardwareVendor = properties.get("vendor").asString();
              result.hardwareModel = properties.get("model").asString();
              result.deviceType = properties.get("primaryHardwareType").asString();
              result.difference = -1;
-             **/
+             */
         }
 
         @Override
         public void close() throws IOException {
-            /** UNCOMMENT FOR DEVICE ATLAS **/
+            /* UNCOMMENT FOR DEVICE ATLAS **/
             //this.da = null;
         }
     }
@@ -880,7 +875,7 @@ public class Comparison extends ProgramBase {
         private final ElementPropertyMetaData browserVersion;
         private final ElementPropertyMetaData deviceType;
         private Pipeline pipeline;
-        private OnPremiseAspectEngine<T, ?> engine;
+        private final OnPremiseAspectEngine<T, ?> engine;
 
         FiftyOneDegreesBaseProvider(OnPremiseAspectEngine<T, ?> engine)
             throws Exception {
@@ -938,7 +933,7 @@ public class Comparison extends ProgramBase {
             try {
                 pipeline.close();
             } catch (Exception e) {
-
+                // Do nothing.
             }
         }
     }
@@ -974,15 +969,15 @@ public class Comparison extends ProgramBase {
      */
     static class BrowsCapProvider implements ComparisonProvider {
 
-        /** UNCOMMENT FOR BROWSCAP **/
+        /* UNCOMMENT FOR BROWSCAP **/
         /**
          * private LoadingCache<String, Capabilities> cache;
          * private UserAgentParser browscap;
          **/
 
         BrowsCapProvider(int cacheSize) throws Exception {
-            /** UNCOMMENT FOR BROWSCAP **/
-            /**
+            /* UNCOMMENT FOR BROWSCAP **/
+            /*
              this.cache = new LruLoadingCache<>(
              cacheSize,
              new ValueLoader<String, Capabilities>() {
@@ -991,14 +986,14 @@ public class Comparison extends ProgramBase {
             }
             });
              this.browscap = new UserAgentService().loadParser();
-             **/
+             */
         }
 
         @Override
         public void calculateResult(String userAgent, Result result)
             throws Exception {
-            /** UNCOMMENT FOR BROWSCAP **/
-            /**
+            /* UNCOMMENT FOR BROWSCAP **/
+            /*
              Capabilities capabilities = this.cache.get(userAgent);
              String deviceType = capabilities.getDeviceType();
              result.isMobile = deviceType.equals("Mobile Phone") ||
@@ -1009,16 +1004,16 @@ public class Comparison extends ProgramBase {
              result.hardwareVendor = UNSUPPORTED_VALUE;
              result.hardwareModel = UNSUPPORTED_VALUE;
              result.difference = -1;
-             **/
+             */
         }
 
         @Override
         public void close() throws IOException {
-            /** UNCOMMENT FOR BROWSCAP **/
-            /**
+            /* UNCOMMENT FOR BROWSCAP **/
+            /*
              this.cache = null;
              this.browscap = null;
-             **/
+             */
         }
     }
 
@@ -1067,9 +1062,6 @@ public class Comparison extends ProgramBase {
                     }
                     result = cp.queue.poll(1, TimeUnit.SECONDS);
                 }
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Comparison.class.getName()).log(
-                    Level.SEVERE, null, ex);
             } catch (Exception ex) {
                 Logger.getLogger(Comparison.class.getName()).log(
                     Level.SEVERE,

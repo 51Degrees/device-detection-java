@@ -23,10 +23,8 @@
 package fiftyone.devicedetection.cloud.flowelements;
 
 import fiftyone.devicedetection.cloud.data.DeviceDataCloud;
-import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.devicedetection.shared.DeviceDataBase;
 import fiftyone.pipeline.core.data.FlowData;
-import fiftyone.pipeline.core.data.TryGetResult;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.engines.data.AspectPropertyValueDefault;
 import fiftyone.pipeline.engines.flowelements.AspectEngine;
@@ -35,8 +33,23 @@ import org.slf4j.Logger;
 
 import java.util.List;
 
-public class DeviceDataCloudInternal extends DeviceDataBase implements DeviceDataCloud {
-    public DeviceDataCloudInternal (
+/**
+ * Internal implementation of the {@link DeviceDataCloud} interface. This can
+ * only be constructed by the {@link DeviceDetectionCloudEngine}.
+ */
+public class DeviceDataCloudInternal
+    extends DeviceDataBase
+    implements DeviceDataCloud {
+    /**
+     * Constructs a new instance.
+     * @param logger used for logging
+     * @param flowData the {@link FlowData} instance this element data will be
+     *                 associated with
+     * @param engine the engine which created the instance
+     * @param missingPropertyService service used to determine the reason for
+     *                               a property value being missing
+     */
+    DeviceDataCloudInternal (
         Logger logger,
         FlowData flowData,
         AspectEngine engine,

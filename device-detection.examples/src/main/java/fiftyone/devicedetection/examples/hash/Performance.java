@@ -123,8 +123,8 @@ public class Performance extends ProgramBase {
         private AtomicInteger isMobileTrue;
         private AtomicInteger isMobileFalse;
         private AtomicInteger isMobileUnknown;
-        private int maxDistinctUAs = 10000;
-        private int threadCount = 4;
+        private final int maxDistinctUAs = 10000;
+        private final int threadCount = 4;
 
         private void run(String uaFile, int count, Pipeline pipeline) throws Exception {
             this.uaFile = uaFile;
@@ -190,9 +190,9 @@ public class Performance extends ProgramBase {
 
             private final Iterable<String> userAgents;
             private final Pipeline pipeline;
-            AtomicInteger isMobileTrue;
-            AtomicInteger isMobileFalse;
-            AtomicInteger isMobileUnknown;
+            final AtomicInteger isMobileTrue;
+            final AtomicInteger isMobileFalse;
+            final AtomicInteger isMobileUnknown;
             private final boolean calibration;
 
             public PerformanceCallable(

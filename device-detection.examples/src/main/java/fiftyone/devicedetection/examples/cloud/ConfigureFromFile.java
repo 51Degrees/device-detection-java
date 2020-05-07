@@ -26,8 +26,6 @@ import fiftyone.devicedetection.cloud.flowelements.DeviceDetectionCloudEngine;
 import fiftyone.devicedetection.examples.ExampleBase;
 import fiftyone.devicedetection.examples.ProgramBase;
 import fiftyone.devicedetection.shared.DeviceData;
-import fiftyone.pipeline.cloudrequestengine.data.CloudRequestData;
-import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder;
 import fiftyone.pipeline.core.configuration.PipelineOptions;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
@@ -87,7 +85,7 @@ public class ConfigureFromFile extends ProgramBase {
     }
 
     public static class Example extends ExampleBase {
-        private String mobileUserAgent =
+        private final String mobileUserAgent =
             "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) " +
                 "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile" +
                 "/11D167 Safari/9537.53";

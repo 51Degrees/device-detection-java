@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
 import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 
@@ -68,7 +67,11 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *         <BuilderName>DeviceDetectionCloudEngine</BuilderName>
  *         </Element>
  *         <Element>
- *             <BuilderName>JavaScriptBundlerElement</BuilderName>
+ *             <BuilderName>JavaScriptBuilderElement</BuilderName>
+ *             <BuildParameters>
+ *                 <Endpoint>/pipeline.web.examples.mvc/json</Endpoint>
+ *                 <Protocol>http</Protocol>
+ *             </BuildParameters>
  *         </Element>
  *     </Elements>
  * </PipelineOptions>
@@ -93,7 +96,11 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *             <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
  *         </Element>
  *         <Element>
- *             <BuilderName>JavaScriptBundlerElement</BuilderName>
+ *             <BuilderName>JavaScriptBuilderElement</BuilderName>
+ *             <BuildParameters>
+ *                 <Endpoint>/pipeline.web.examples.servlet/json</Endpoint>
+ *                 <Protocol>http</Protocol>
+ *             </BuildParameters>
  *         </Element>
  *     </Elements>
  * </PipelineOptions>
@@ -241,15 +248,15 @@ public class Example extends HttpServlet {
             "            var text = document.createTextNode(\"Updated information from client-side evidence:\");\n" +
             "            para.appendChild(text);\n" +
             "            para.appendChild(br);\n" +
-            "            text = document.createTextNode(\"Hardware Name: \" + data.device.HardwareName.join(\",\"));\n" +
+            "            text = document.createTextNode(\"Hardware Name: \" + data.device.hardwarename.join(\",\"));\n" +
             "            br = document.createElement(\"br\");\n" +
             "            para.appendChild(text);\n" +
             "            para.appendChild(br);\n" +
-            "            text = document.createTextNode(\"Screen width (pixels): \" + data.device.ScreenPixelsWidth);\n" +
+            "            text = document.createTextNode(\"Screen width (pixels): \" + data.device.screenpixelswidth);\n" +
             "            br = document.createElement(\"br\");\n" +
             "            para.appendChild(text);\n" +
             "            para.appendChild(br);\n" +
-            "            text = document.createTextNode(\"Screen height (pixels): \" + data.device.ScreenPixelsHeight);\n" +
+            "            text = document.createTextNode(\"Screen height (pixels): \" + data.device.screenpixelsheight);\n" +
             "            br = document.createElement(\"br\");\n" +
             "            para.appendChild(text);\n" +
             "            para.appendChild(br);\n" +
