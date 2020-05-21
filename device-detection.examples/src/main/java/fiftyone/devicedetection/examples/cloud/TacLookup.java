@@ -45,6 +45,47 @@ import java.util.List;
 import static fiftyone.devicedetection.shared.Constants.EVIDENCE_QUERY_TAC_KEY;
 import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 
+/**
+ * @example cloud/TacLookup.java
+ *
+ * TAC model lookup example of using 51Degrees device detection.
+ *
+ * The example shows how to:
+ *
+ * 1. Build a new Pipeline to use cloud hardware profile engine.
+ * ```
+ * CloudRequestEngine cloudEngine =
+ *     new CloudRequestEngineBuilder(loggerFactory, httpClient)
+ *     .setResourceKey(resourceKey)
+ *     .build();
+ * HardwareProfileCloudEngine propertyKeyedEngine =
+ *     new HardwareProfileCloudEngineBuilder(loggerFactory)
+ *     .build();
+ * Pipeline pipeline = new PipelineBuilder(loggerFactory)
+ *     .addFlowElement(cloudEngine)
+ *     .addFlowElement(propertyKeyedEngine)
+ *     .build())
+ * ```
+ *
+ * 2. Create a new FlowData instance ready to be populated with evidence for the
+ * Pipeline.
+ * ```
+ * FlowData data = pipeline.createFlowData();
+ * ```
+ *
+ * 3. Process a TAC string to retrieve the values associated with the device for
+ * the selected properties.
+ * ```
+ * data.addEvidence(EVIDENCE_QUERY_TAC_KEY, tac)
+ *     .process();
+ * ```
+ *
+ * 4. Extract the value of a property as a string from the results.
+ * ```
+ * MultiDeviceDataCloud profiles = data.get(MultiDeviceDataCloud.class().getProfiles();
+ * println("IsMobile: " + profiles.get(0).getIsMobile());
+ * ```
+ */
 public class TacLookup extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
