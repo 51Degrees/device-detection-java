@@ -170,35 +170,6 @@ stages:
         options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -DcreateChecksum=true'
         jdkVersionOption: '1.8'
 
-    - task: Maven@1
-      displayName: 'Maven deploy internal'
-      inputs:
-        mavenPomFile: 'pom.xml'
-        goals: deploy
-        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase)'
-        publishJUnitResults: false
-        jdkVersionOption: '1.8'
-
-    - task: DownloadSecureFile@1
-      displayName: 'Download Staging settings.xml'
-      name: stagingsettings
-      inputs:
-        secureFile: 'stagingsettings.xml'
-
-    - task: Bash@3
-      inputs:
-        targetType: 'inline'
-        script: 'cp $(stagingsettings.secureFilePath) /tmp/settings.xml'
-        
-    - task: Maven@1
-      displayName: 'Maven deploy staging'
-      inputs:
-        mavenPomFile: 'pom.xml'
-        goals: deploy
-        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase)'
-        publishJUnitResults: false
-        jdkVersionOption: '1.8'
-
     # Add a tag to the git repository with the version number of
     # the package that has just been published
     - task: ATP.ATP-GitTag.GitTag.GitTag@5
@@ -214,7 +185,7 @@ stages:
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
       inputs:
         SourceFolder: '$(build.sourcesdirectory)'
-        Contents: '**/*.jar'
+        Contents: '**/*'
         TargetFolder: '$(build.artifactstagingdirectory)'
 
     - task: Bash@3
