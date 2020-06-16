@@ -37,7 +37,10 @@ import java.io.FileWriter;
 /**
  * @example hash/OfflineProcessing.java
  *
- * Offline processing example of using 51Degrees device detection.
+ * Offline processing example of using the 51Degrees device detection 'Hash'
+ * algorithm to batch process a file of User-Agents and store the output.
+ *
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/OfflineProcessing.java).
  *
  * The example shows how to:
  *

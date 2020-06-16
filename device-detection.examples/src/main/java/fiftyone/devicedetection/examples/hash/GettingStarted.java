@@ -34,43 +34,49 @@ import fiftyone.pipeline.engines.data.AspectPropertyValue;
 /**
  * @example hash/GettingStarted.java
  *
- * Getting started example of using 51Degrees device detection.
+ * Getting started example of using the 51Degrees device detection 'Hash'
+ * algorithm to determine whether a given User-Agent corresponds to a mobile
+ * device or not.
  *
- * The example shows how to:
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/GettingStarted.java).
  *
- * 1. Build a new Pipeline to use an on-premise Hash engine with the low memory
- * performance profile.
+ * This example requires a local data file. Free data files can be acquired by
+ * pulling the submodules under this repository or from the
+ * [device-detection-data](https://github.com/51Degrees/device-detection-data)
+ * GitHub repository.
+ *
+ * Build the device detection pipeline using the builder that comes with the
+ * fiftyone.devicedetection package and pass in the desired settings. Additional
+ * flow elements / engines can be added before the build() method is called if
+ * needed.
+ *
  * ```
+ *
  * Pipeline pipeline = new DeviceDetectionPipelineBuilder()
- *     .useOnPremise("51Degrees-LiteV4.1.hash", false)
- *     .setAutoUpdate(false)
+ *     .useOnPremise(dataFile, false)
  *     .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
- *     .build();
+ *     .build()
+ *
  * ```
  *
- * 2. Create a new FlowData instance ready to be populated with evidence for the
- * Pipeline.
- * ```
- * FlowData data = pipeline.createFlowData();
- * ```
+ * A pipeline can create a flow data element which is where evidence is added
+ * (for example from a device web request). This evidence is then processed by
+ * the pipeline through the flow data's `process()` method.
  *
- * 3. Process a single HTTP User-Agent string to retrieve the values associated
- * with the User-Agent for the selected properties.
- * ```
- * data.addEvidence("header.user-agent", mobileUserAgent)
- *     .process();
- * ```
+ * Here is an example of a function that checks if a User-Agent is a mobile
+ * device. In some cases the IsMobile value is not meaningful so instead of
+ * returning a default, a .hasValue() check can be made.
  *
- * 4. Extract the value of a property as a string from the results.
  * ```
- * AspectPropertyValue<Boolean> isMobile =
- *     data.get(DeviceData.class).getIsMobile();
+ * AspectPropertyValue<Boolean> isMobile = data.get(DeviceData.class).getIsMobile();
  * if (isMobile.hasValue()) {
  *     println("IsMobile: " + isMobile.getValue());
+ * } else {
+ *     println("IsMobile: " + isMobile.getNoValueMessage());
  * }
+ *
  * ```
  */
-
 public class GettingStarted extends ProgramBase {
 
     public static void main(String[] args) throws Exception {

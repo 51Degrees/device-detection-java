@@ -38,7 +38,38 @@ import java.io.File;
 /**
  * @example hash/ConfigureFromFile.java
  *
- * Configure from file example of using 51Degrees device detection.
+ * This example shows how to configure a pipeline from a configuration file
+ * using the pipeline builder's buildFromConfiguration method.
+ *
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/ConfigureFromFile.java).
+ *
+ * This example requires a local data file. Free data files can be acquired by
+ * pulling the submodules under this repository or from the
+ * [device-detection-data](https://github.com/51Degrees/device-detection-data)
+ * GitHub repository.
+ *
+ * The configuration file used here is:
+ *
+ * ```
+ * <PipelineOptions>
+ *     <Elements>
+ *         <Element>
+ *             <BuildParameters>
+ *                 <AutoUpdate>false</AutoUpdate>
+ *                 <CreateTempDataCopy>false</CreateTempDataCopy>
+ *                 <DataFile>..\device-detection-cxx\device-detection-data\51Degrees-LiteV4.1.hash</DataFile>
+ *                 <PerformanceProfile>LowMemory</PerformanceProfile>
+ *                 </BuildParameters>
+ *                 <BuilderName>DeviceDetectionHashEngine</BuilderName>
+ *             </BuildParameters>
+ *         </Element>
+ *         <Element>
+ *             <BuilderName>JavaScriptBundlerElement</BuilderName>
+ *         </Element>
+ *     </Elements>
+ * </PipelineOptions>
+ *
+ * ```
  *
  * The example shows how to:
  *
@@ -69,7 +100,7 @@ import java.io.File;
  *     .process();
  * ```
  *
- * 5. Extract the value of a property as a string from the results.
+ * 5. Extract the value of a property from the results.
  * ```
  * println("IsMobile: " + data.get(DeviceData.class).getIsMobile());
  * ```
