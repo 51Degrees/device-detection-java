@@ -39,7 +39,38 @@ import java.io.File;
 /**
  * @example cloud/ConfigureFromFile.java
  *
- * Configure from file example of using 51Degrees device detection.
+ * This example shows how to configure a pipeline from a configuration file
+ * using the pipeline builder's buildFromConfiguration method.
+ *
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/cloud/ConfigureFromFile.java).
+ *
+ * To run this example, you will need to create a **resource key**.
+ * The resource key is used as short-hand to store the particular set of
+ * properties you are interested in as well as any associated license keys
+ * that entitle you to increased request limits and/or paid-for properties.
+ *
+ * You can create a resource key using the 51Degrees [Configurator](https://configure.51degrees.com).
+ *
+ * The configuration file used here is:
+ *
+ * ```
+ *
+ * <PipelineOptions>
+ *     <Elements>
+ *         <Element>
+ *             <BuildParameters>
+ *                 <EndPoint>https://cloud.51degrees.com/api/v4</EndPoint>
+ *                 <ResourceKey>!!YOUR_RESOURCE_KEY!!</ResourceKey>
+ *             </BuildParameters>
+ *             <BuilderName>CloudRequestEngine</BuilderName>
+ *         </Element>
+ *         <Element>
+ *             <BuilderName>DeviceDetectionCloudEngine</BuilderName>
+ *         </Element>
+ *     </Elements>
+ * </PipelineOptions>
+ *
+ * ```
  *
  * The example shows how to:
  *

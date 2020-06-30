@@ -33,7 +33,10 @@ import fiftyone.pipeline.engines.Constants;
 /**
  * @example hash/MatchMetrics.java
  *
- * Match Metrics example of using 51Degrees device detection.
+ * Match metrics example of using the 51Degrees device detection 'Hash'
+ * algorithm to determine the quality of a match via the metric properties.
+ *
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/MatchMetrics.java).
  *
  * The example shows how to:
  *

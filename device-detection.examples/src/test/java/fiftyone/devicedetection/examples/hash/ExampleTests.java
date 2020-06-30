@@ -23,17 +23,17 @@
 package fiftyone.devicedetection.examples.hash;
 
 import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
-import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder;
 import fiftyone.devicedetection.shared.testhelpers.Utils;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.io.File;
 
-import static fiftyone.common.testhelpers.ClassPath.addToClassPath;
 import static fiftyone.devicedetection.shared.testhelpers.Constants.HASH_DATA_FILE_NAME;
 import static fiftyone.devicedetection.shared.testhelpers.Constants.UA_FILE_NAME;
 
+@RunWith(BuilderClassPathTestRunner.class)
 public class ExampleTests {
     private static final String dataFile =
         Utils.getFilePath(HASH_DATA_FILE_NAME).getAbsolutePath();
@@ -70,8 +70,6 @@ public class ExampleTests {
 
     @Test
     public void ConfigureFromFile_Hash() throws Exception {
-        addToClassPath(DeviceDetectionHashEngineBuilder.class);
-        addToClassPath(ConfigureFromFile.class);
         ConfigureFromFile.Example configureFromFile = new ConfigureFromFile.Example(false);
         configureFromFile.run();
     }

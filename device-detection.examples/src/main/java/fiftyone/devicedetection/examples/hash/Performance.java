@@ -41,7 +41,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @example hash/Performance.java
  *
- * Performance example of using 51Degrees device detection.
+ * Performance example of using the 51Degrees device detection 'Hash'
+ * algorithm to measure the performance of the pipeline.
+ *
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/Performance.java).
  *
  * The example shows how to:
  *

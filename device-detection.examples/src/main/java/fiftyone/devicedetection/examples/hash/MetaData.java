@@ -32,7 +32,15 @@ import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 /**
  * @example hash/MetaData.java
  *
- * Metadata example of using 51Degrees device detection.
+ * This example shows how to get properties from a pipeline's processed flow data
+ * based on their metadata, the getProperties() method and also additional meta
+ * data properties on device detection data.
+ *
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/MetaData.java).
+ * This example requires a local data file. Free data files can be acquired by
+ * pulling the submodules under this repository or from the
+ * [device-detection-data](https://github.com/51Degrees/device-detection-data)
+ * GitHub repository.
  *
  * The example shows how to:
  *

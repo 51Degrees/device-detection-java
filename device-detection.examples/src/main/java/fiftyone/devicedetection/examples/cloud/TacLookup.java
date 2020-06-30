@@ -48,42 +48,105 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 /**
  * @example cloud/TacLookup.java
  *
- * TAC model lookup example of using 51Degrees device detection.
+ * Example of using the 51Degrees cloud service to lookup details of a device
+ * based on its TAC.
  *
- * The example shows how to:
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/cloud/TacLookup.java).
  *
- * 1. Build a new Pipeline to use cloud hardware profile engine.
+ * To run this example, you will need to create a **resource key**.
+ * The resource key is used as short-hand to store the particular set of
+ * properties you are interested in as well as any associated license keys
+ * that entitle you to increased request limits and/or paid-for properties.
+ *
+ * You can create a resource key using the 51Degrees [Configurator](https://configure.51degrees.com).
+ * Make sure to include the HardwareVendor, HardwareModel and HardwareName
+ * properties as they are used by this example.
+ *
+ * Create a cloud request engine. This will make the HTTP calls to the
+ * 51Degrees cloud service.
+ * Add your resource key here.
+ *
  * ```
+ *
  * CloudRequestEngine cloudEngine =
  *     new CloudRequestEngineBuilder(loggerFactory, httpClient)
  *     .setResourceKey(resourceKey)
  *     .build();
- * HardwareProfileCloudEngine propertyKeyedEngine =
+ *
+ * ```
+ *
+ * Create the 'hardware-profile' cloud engine.
+ * This will expose the response from received by the cloud request engine
+ * in a more user-friendly format.
+ *
+ * ```
+ *
+ * HardwareProfileCloudEngine hardwareProfileEngine =
  *     new HardwareProfileCloudEngineBuilder(loggerFactory)
  *     .build();
+ *
+ * ```
+ *
+ * Build a pipeline with engines that we've created
+ *
+ * ```
+ *
  * Pipeline pipeline = new PipelineBuilder(loggerFactory)
  *     .addFlowElement(cloudEngine)
- *     .addFlowElement(propertyKeyedEngine)
- *     .build())
+ *     .addFlowElement(hardwareProfileEngine)
+ *     .build();
+ *
  * ```
  *
- * 2. Create a new FlowData instance ready to be populated with evidence for the
- * Pipeline.
- * ```
- * FlowData data = pipeline.createFlowData();
+ * After creating a flowdata instance, add the TAC as evidence.
+ *
  * ```
  *
- * 3. Process a TAC string to retrieve the values associated with the device for
- * the selected properties.
- * ```
- * data.addEvidence(EVIDENCE_QUERY_TAC_KEY, tac)
- *     .process();
+ * flowData.addEvidence("query.tac", tac);
+ *
  * ```
  *
- * 4. Extract the value of a property as a string from the results.
+ * The result is an array containing the details of any devices that match
+ * the specified TAC.
+ * The code in this example iterates through this array, outputting the
+ * vendor and model of each matching device.
+ *
  * ```
- * MultiDeviceDataCloud profiles = data.get(MultiDeviceDataCloud.class().getProfiles();
- * println("IsMobile: " + profiles.get(0).getIsMobile());
+ *
+ * for (DeviceData device : result.getProfiles()) {
+ *     AspectPropertyValue<String> vendor = device.getHardwareVendor();
+ *     AspectPropertyValue<List<String>> name = device.getHardwareName();
+ *     AspectPropertyValue<String> model = device.getHardwareModel();
+ *
+ *     if (vendor.hasValue() &&
+ *         model.hasValue() &&
+ *         name.hasValue()) {
+ *         println("\t" + vendor.getValue() +
+ *         " " + stringJoin(name.getValue(), ",") +
+ *         " (" + model.getValue() + ")");
+ *     }
+ *     else {
+ *         println(vendor.getNoValueMessage());
+ *     }
+ * }
+ *
+ * ```
+ *
+ * Example output:
+ *
+ * ```
+ * This example shows the details of devices associated with a given 'Type Allocation Code' or 'TAC'.
+ * More background information on TACs can be found through various online sources such as Wikipedia: https://en.wikipedia.org/wiki/Type_Allocation_Code
+ * ----------------------------------------
+ * Which devices are associated with the TAC '86386802'?
+ * Coolpad 5217 (5217)
+ * Coolpad 5200 (5200)
+ * Coolpad 5310 (5310)
+ * Coolpad 5311 (5311)
+ * Coolpad 5315 (5315)
+ * Coolpad CoolPad Unknown (CoolPad Unknown)
+ * Which devices are associated with the TAC '35925406'?
+ * Apple iPhone 6 (A1586)
  * ```
  */
 public class TacLookup extends ProgramBase {
@@ -131,15 +194,15 @@ public class TacLookup extends ProgramBase {
                         new CloudRequestEngineBuilder(loggerFactory, httpClient)
                         .setResourceKey(resourceKey)
                         .build();
-                     // Create the property-keyed engine to process the
+                     // Create the hardware profile engine to process the
                      // response from the request engine.
-                     HardwareProfileCloudEngine propertyKeyedEngine =
+                     HardwareProfileCloudEngine hardwareProfileEngine =
                          new HardwareProfileCloudEngineBuilder(loggerFactory)
                      .build();
                      // Create the pipeline using the engines.
                      Pipeline pipeline = new PipelineBuilder(loggerFactory)
                         .addFlowElement(cloudEngine)
-                        .addFlowElement(propertyKeyedEngine)
+                        .addFlowElement(hardwareProfileEngine)
                         .build()) {
                     // Pass a TAC into the pipeline and list the matching devices.
                     analyseTac(TAC, pipeline);

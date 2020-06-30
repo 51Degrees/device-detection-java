@@ -34,35 +34,46 @@ import fiftyone.pipeline.engines.data.AspectPropertyValue;
 /**
  * @example cloud/GettingStarted.java
  *
- * Getting started example of using 51Degrees device detection.
+ * Getting started example of using the 51Degrees Device Detection Cloud to determine whether a given User-Agent corresponds to a mobile device or not.
  *
- * The example shows how to:
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/cloud/GettingStarted.java).
  *
- * 1. Build a new Pipeline to use cloud device detection engine.
+ * To run this example, you will need to create a **resource key**.
+ * The resource key is used as short-hand to store the particular set of
+ * properties you are interested in as well as any associated license keys
+ * that entitle you to increased request limits and/or paid-for properties.
+ *
+ * You can create a resource key using the 51Degrees [Configurator](https://configure.51degrees.com).
+ *
+ * Build the device detection pipeline using the builder that comes with the
+ * fiftyone.devicedetection package and pass in the desired settings. Additional
+ * flow elements / engines can be added before the build() method is called if
+ * needed.
+ *
  * ```
+ *
  * Pipeline pipeline = new DeviceDetectionPipelineBuilder()
- *     .useCloud(url)
- *     .useLazyLoading(1000)
- *     .setAutoCloseElements(true)
- *     .build();
+ *     .useCloud(resourceKey)
+ *     .build()
+ *
  * ```
  *
- * 2. Create a new FlowData instance ready to be populated with evidence for the
- * Pipeline.
- * ```
- * FlowData data = pipeline.createFlowData();
- * ```
+ * A pipeline can create a flow data element which is where evidence is added
+ * (for example from a device web request). This evidence is then processed by
+ * the pipeline through the flow data's `process()` method.
  *
- * 3. Process a single HTTP User-Agent string to retrieve the values associated
- * with the User-Agent for the selected properties.
- * ```
- * data.addEvidence("header.user-agent", mobileUserAgent)
- *     .process();
- * ```
+ * Here is an example of a function that checks if a User-Agent is a mobile
+ * device. In some cases the IsMobile value is not meaningful so instead of
+ * returning a default, a .hasValue() check can be made.
  *
- * 4. Extract the value of a property as a string from the results.
  * ```
- * println("IsMobile: " + data.get(DeviceData.class).getIsMobile());
+ * AspectPropertyValue<Boolean> isMobile = data.get(DeviceData.class).getIsMobile();
+ * if (isMobile.hasValue()) {
+ *     println("IsMobile: " + isMobile.getValue());
+ * } else {
+ *     println("IsMobile: " + isMobile.getNoValueMessage());
+ * }
+ *
  * ```
  */
 

@@ -48,42 +48,107 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 /**
  * @example cloud/NativeModelLookup.java
  *
- * Native model lookup example of using 51Degrees device detection.
+ * Example of using the 51Degrees cloud service to lookup details of a device
+ * based on its native model name.
  *
- * The example shows how to:
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/cloud/NativeModelLookup.java).
  *
- * 1. Build a new Pipeline to use cloud hardware profile engine.
+ * To run this example, you will need to create a **resource key**.
+ * The resource key is used as short-hand to store the particular set of
+ * properties you are interested in as well as any associated license keys
+ * that entitle you to increased request limits and/or paid-for properties.
+ *
+ * You can create a resource key using the 51Degrees [Configurator](https://configure.51degrees.com).
+ * Make sure to include the HardwareVendor, HardwareModel and HardwareName
+ * properties as they are used by this example.
+ *
+ * Create a cloud request engine. This will make the HTTP calls to the
+ * 51Degrees cloud service.
+ * Add your resource key here.
+ *
  * ```
+ *
  * CloudRequestEngine cloudEngine =
  *     new CloudRequestEngineBuilder(loggerFactory, httpClient)
  *     .setResourceKey(resourceKey)
  *     .build();
- * HardwareProfileCloudEngine propertyKeyedEngine =
+ *
+ * ```
+ *
+ * Create the 'hardware-profile' cloud engine.
+ * This will expose the response from received by the cloud request engine
+ * in a more user-friendly format.
+ *
+ * ```
+ *
+ * HardwareProfileCloudEngine hardwareProfileEngine =
  *     new HardwareProfileCloudEngineBuilder(loggerFactory)
  *     .build();
+ *
+ * ```
+ *
+ * Build a pipeline with engines that we've created
+ *
+ * ```
+ *
  * Pipeline pipeline = new PipelineBuilder(loggerFactory)
  *     .addFlowElement(cloudEngine)
- *     .addFlowElement(propertyKeyedEngine)
- *     .build())
+ *     .addFlowElement(hardwareProfileEngine)
+ *     .build();
+ *
  * ```
  *
- * 2. Create a new FlowData instance ready to be populated with evidence for the
- * Pipeline.
- * ```
- * FlowData data = pipeline.createFlowData();
+ * After creating a flowdata instance, add the native model name as evidence.
+ *
  * ```
  *
- * 3. Process a native model string to retrieve the values associated with the
- * device for the selected properties.
- * ```
- * data.addEvidence(EVIDENCE_QUERY_NATIVE_MODEL_KEY, nativeModel)
- *     .process();
+ * flowData.addEvidence("query.nativemodel", nativemodel);
+ *
  * ```
  *
- * 4. Extract the value of a property as a string from the results.
+ * The result is an array containing the details of any devices that match
+ * the specified native model name.
+ * The code in this example iterates through this array, outputting the
+ * vendor and model of each matching device.
+ *
  * ```
- * MultiDeviceDataCloud profiles = data.get(MultiDeviceDataCloud.class().getProfiles();
- * println("IsMobile: " + profiles.get(0).getIsMobile());
+ *
+ * for (DeviceData device : result.getProfiles()) {
+ *     AspectPropertyValue<String> vendor = device.getHardwareVendor();
+ *     AspectPropertyValue<List<String>> name = device.getHardwareName();
+ *     AspectPropertyValue<String> model = device.getHardwareModel();
+ *
+ *     if (vendor.hasValue() &&
+ *         model.hasValue() &&
+ *         name.hasValue()) {
+ *         println("\t" + vendor.getValue() +
+ *         " " + stringJoin(name.getValue(), ",") +
+ *         " (" + model.getValue() + ")");
+ *     }
+ *     else {
+ *         println(vendor.getNoValueMessage());
+ *     }
+ * }
+ *
+ * ```
+ *
+ * Example output:
+ *
+ * ```
+ * This example finds the details of devices from the 'native model name'.
+ * The native model name can be retrieved by code running on the device (For example, a mobile app).
+ * For Android devices, see https://developer.android.com/reference/android/os/Build#MODEL
+ * For iOS devices, see https://gist.github.com/soapyigu/c99e1f45553070726f14c1bb0a54053b#file-machinename-swift
+ * ----------------------------------------
+ * Which devices are associated with the native model name 'SC-03L'?
+ * Samsung Galaxy S10 (SC-03L)
+ * Which devices are associated with the native model name 'iPhone11,8'?
+ * Apple iPhone XR (iPhone XR)
+ * Apple iPhone XR (A1984)
+ * Apple iPhone XR (A2105)
+ * Apple iPhone XR (A2106)
+ * Apple iPhone XR (A2107)
+ * Apple iPhone XR (A2108)
  * ```
  */
 public class NativeModelLookup extends ProgramBase {
@@ -134,15 +199,15 @@ public class NativeModelLookup extends ProgramBase {
                         new CloudRequestEngineBuilder(loggerFactory, httpClient)
                         .setResourceKey(resourceKey)
                         .build();
-                     // Create the property-keyed engine to process the
+                     // Create the hardware profile engine to process the
                      // response from the request engine.
-                     HardwareProfileCloudEngine propertyKeyedEngine =
+                     HardwareProfileCloudEngine hardwareProfileEngine =
                          new HardwareProfileCloudEngineBuilder(loggerFactory)
                      .build();
                      // Create the pipeline using the engines.
                      Pipeline pipeline = new PipelineBuilder(loggerFactory)
                         .addFlowElement(cloudEngine)
-                        .addFlowElement(propertyKeyedEngine)
+                        .addFlowElement(hardwareProfileEngine)
                         .build()) {
                     // Pass a TAC into the pipeline and list the matching devices.
                     analyseNativeModel(nativemodel1, pipeline);

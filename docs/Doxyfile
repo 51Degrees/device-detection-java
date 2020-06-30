@@ -822,7 +822,6 @@ INPUT                  = ../device-detection/src/main \
                          ../device-detection.cloud/src/main \
                          ../device-detection.examples/src/main \
                          ../device-detection.hash.engine.on-premise/src/main \
-                         ../device-detection.pattern.engine.on-premise/src/main \
                          ../device-detection.shared/src/main \
                          ../README.md \
                          ../web
