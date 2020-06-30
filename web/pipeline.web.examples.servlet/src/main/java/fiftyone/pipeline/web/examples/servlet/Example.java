@@ -134,7 +134,7 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *
  * 4. User the results contained in the flow data to display something on a page, and
  * optionally add the client-side code to improve detection accuracy on devices like iPhones.
- * ```{java}
+ * {@code
  * public class Example extends HttpServlet {
  *     ...
  *     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -165,7 +165,7 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *     }
  *     ...
  * }
- * ```
+ * }
  *
  * ## Servlet
  */
