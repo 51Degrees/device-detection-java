@@ -34,6 +34,7 @@ import fiftyone.pipeline.core.exceptions.PipelineConfigurationException;
 import fiftyone.pipeline.core.flowelements.FlowElement;
 import fiftyone.pipeline.engines.Constants.PerformanceProfiles;
 import fiftyone.pipeline.engines.data.AspectEngineDataFile;
+import fiftyone.pipeline.engines.fiftyone.data.FiftyOneDataFile;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneDataFileDefault;
 import fiftyone.pipeline.engines.services.DataUpdateService;
 import fiftyone.pipeline.engines.services.MissingPropertyServiceDefault;
@@ -55,6 +56,8 @@ public class DeviceDetectionHashEngineBuilder
     DeviceDetectionHashEngineBuilder,
     DeviceDetectionHashEngine> {
 
+    private final String dataDownloadType = "HashV41";
+    
     /**
      * Native configuration instance for this engine.
      */
@@ -199,6 +202,16 @@ public class DeviceDetectionHashEngineBuilder
         config.setDrift(drift);
         return this;
     }
+    
+    /**
+     * The default value to use for the 'Type' parameter when sending
+     * a request to the Distributor
+     * @return default data download type;
+     */
+    @Override
+    protected String getDefaultDataDownloadType() {
+        return dataDownloadType;
+    }
 
     @Override
     protected DeviceDetectionHashEngine newEngine(List<String> properties) {
@@ -236,11 +249,6 @@ public class DeviceDetectionHashEngineBuilder
             new RequiredPropertiesConfigSwig(propertiesSwig),
             new HashDataFactory(loggerFactory),
             tempDir);
-    }
-
-    @Override
-    protected AspectEngineDataFile newAspectEngineDataFile() {
-        return new FiftyOneDataFileDefault();
     }
 
     private static class HashDataFactory implements
