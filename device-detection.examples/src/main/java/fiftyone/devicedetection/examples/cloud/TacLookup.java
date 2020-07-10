@@ -48,89 +48,13 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 /**
  * @example cloud/TacLookup.java
  *
- * Example of using the 51Degrees cloud service to lookup details of a device
- * based on its TAC.
+ * @include{doc} example-tac-lookup-cloud.txt
  *
  * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/cloud/TacLookup.java).
  *
- * To run this example, you will need to create a **resource key**.
- * The resource key is used as short-hand to store the particular set of
- * properties you are interested in as well as any associated license keys
- * that entitle you to increased request limits and/or paid-for properties.
- *
- * You can create a resource key using the 51Degrees [Configurator](https://configure.51degrees.com).
+ * @include{doc} example-require-resourcekey.txt
  * Make sure to include the HardwareVendor, HardwareModel and HardwareName
  * properties as they are used by this example.
- *
- * Create a cloud request engine. This will make the HTTP calls to the
- * 51Degrees cloud service.
- * Add your resource key here.
- *
- * ```
- *
- * CloudRequestEngine cloudEngine =
- *     new CloudRequestEngineBuilder(loggerFactory, httpClient)
- *     .setResourceKey(resourceKey)
- *     .build();
- *
- * ```
- *
- * Create the 'hardware-profile' cloud engine.
- * This will expose the response from received by the cloud request engine
- * in a more user-friendly format.
- *
- * ```
- *
- * HardwareProfileCloudEngine hardwareProfileEngine =
- *     new HardwareProfileCloudEngineBuilder(loggerFactory)
- *     .build();
- *
- * ```
- *
- * Build a pipeline with engines that we've created
- *
- * ```
- *
- * Pipeline pipeline = new PipelineBuilder(loggerFactory)
- *     .addFlowElement(cloudEngine)
- *     .addFlowElement(hardwareProfileEngine)
- *     .build();
- *
- * ```
- *
- * After creating a flowdata instance, add the TAC as evidence.
- *
- * ```
- *
- * flowData.addEvidence("query.tac", tac);
- *
- * ```
- *
- * The result is an array containing the details of any devices that match
- * the specified TAC.
- * The code in this example iterates through this array, outputting the
- * vendor and model of each matching device.
- *
- * ```
- *
- * for (DeviceData device : result.getProfiles()) {
- *     AspectPropertyValue<String> vendor = device.getHardwareVendor();
- *     AspectPropertyValue<List<String>> name = device.getHardwareName();
- *     AspectPropertyValue<String> model = device.getHardwareModel();
- *
- *     if (vendor.hasValue() &&
- *         model.hasValue() &&
- *         name.hasValue()) {
- *         println("\t" + vendor.getValue() +
- *         " " + stringJoin(name.getValue(), ",") +
- *         " (" + model.getValue() + ")");
- *     }
- *     else {
- *         println(vendor.getNoValueMessage());
- *     }
- * }
- *
- * ```
  *
  * Example output:
  *
@@ -189,18 +113,21 @@ public class TacLookup extends ProgramBase {
                 ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
                 HttpClient httpClient = new HttpClientDefault();
 
-                // Create the cloud request engine
+                // Create a cloud request engine. This will make the HTTP calls to the
+                // 51Degrees cloud service.
+                // Add your resource key here.
                 try (CloudRequestEngine cloudEngine =
                         new CloudRequestEngineBuilder(loggerFactory, httpClient)
                         .setResourceKey(resourceKey)
                         .build();
-                     // Create the hardware profile engine to process the
-                     // response from the request engine.
-                     HardwareProfileCloudEngine hardwareProfileEngine =
-                         new HardwareProfileCloudEngineBuilder(loggerFactory)
-                     .build();
-                     // Create the pipeline using the engines.
-                     Pipeline pipeline = new PipelineBuilder(loggerFactory)
+                    // Create the 'hardware-profile' cloud engine.
+                    // This will expose the response from received by the cloud request engine
+                    // in a more user-friendly format.
+                    HardwareProfileCloudEngine hardwareProfileEngine =
+                        new HardwareProfileCloudEngineBuilder(loggerFactory)
+                    .build();
+                    // Create the pipeline using the engines.
+                    Pipeline pipeline = new PipelineBuilder(loggerFactory)
                         .addFlowElement(cloudEngine)
                         .addFlowElement(hardwareProfileEngine)
                         .build()) {
@@ -214,11 +141,14 @@ public class TacLookup extends ProgramBase {
         void analyseTac(String tac, Pipeline pipeline) throws NoValueException {
             // Create the FlowData instance.
             FlowData data = pipeline.createFlowData();
-            // Add the TAC as evidence.
+            // After creating a flowdata instance, add the TAC as evidence.
             data.addEvidence(EVIDENCE_QUERY_TAC_KEY, tac);
             // Process the supplied evidence.
             data.process();
-            // Get result data from the flow data.
+            // The result is an array containing the details of any devices that match
+            // the specified TAC.
+            // The code in this example iterates through this array, outputting the
+            // vendor and model of each matching device.
             MultiDeviceDataCloud result = data.get(MultiDeviceDataCloud.class);
             printf("Which devices are associated with the TAC '%s'?\n", tac);
             for (DeviceData device : result.getProfiles()) {

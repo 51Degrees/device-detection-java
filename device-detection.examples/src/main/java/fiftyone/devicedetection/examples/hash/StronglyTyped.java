@@ -31,6 +31,16 @@ import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.Constants;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 
+
+/**
+ * @example hash/StronglyTyped.java
+ *
+ * @include{doc} example-strongly-typed-hash.txt
+ *
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/Performance.java).
+ * 
+ * @include{doc} example-require-datafile.txt
+ */
 public class StronglyTyped extends ProgramBase {
 
     public static void main(String[] args) throws Exception {

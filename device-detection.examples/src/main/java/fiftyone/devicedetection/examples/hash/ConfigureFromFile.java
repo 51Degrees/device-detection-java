@@ -38,72 +38,15 @@ import java.io.File;
 /**
  * @example hash/ConfigureFromFile.java
  *
- * This example shows how to configure a pipeline from a configuration file
- * using the pipeline builder's buildFromConfiguration method.
+ * @include{doc} example-configure-from-file-hash.txt
  *
  * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/ConfigureFromFile.java).
  *
- * This example requires a local data file. Free data files can be acquired by
- * pulling the submodules under this repository or from the
- * [device-detection-data](https://github.com/51Degrees/device-detection-data)
- * GitHub repository.
+ * @include{doc} example-reqiure-datafile.txt
  *
  * The configuration file used here is:
- *
- * ```
- * <PipelineOptions>
- *     <Elements>
- *         <Element>
- *             <BuildParameters>
- *                 <AutoUpdate>false</AutoUpdate>
- *                 <CreateTempDataCopy>false</CreateTempDataCopy>
- *                 <DataFile>..\device-detection-cxx\device-detection-data\51Degrees-LiteV4.1.hash</DataFile>
- *                 <PerformanceProfile>LowMemory</PerformanceProfile>
- *                 </BuildParameters>
- *                 <BuilderName>DeviceDetectionHashEngine</BuilderName>
- *             </BuildParameters>
- *         </Element>
- *         <Element>
- *             <BuilderName>JavaScriptBundlerElement</BuilderName>
- *         </Element>
- *     </Elements>
- * </PipelineOptions>
- *
- * ```
- *
- * The example shows how to:
- *
- * 1. Create a Pipeline configuration from an XML file.
- * ```
- * File file = new File("hash.xml");
- * JAXBContext jaxbContext = JAXBContext.newInstance(PipelineOptions.class);
- * Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
- * PipelineOptions options = (PipelineOptions) unmarshaller.unmarshal(file);
- * ```
- *
- * 2. Build a new Pipeline from the configuration.
- * ```
- * Pipeline pipeline = new FiftyOnePipelineBuilder()
- *     .buildFromConfiguration(options);
- * ```
- *
- * 3. Create a new FlowData instance ready to be populated with evidence for the
- * Pipeline.
- * ```
- * FlowData data = pipeline.createFlowData();
- * ```
- *
- * 4. Process a single HTTP User-Agent string to retrieve the values associated
- * with the User-Agent for the selected properties.
- * ```
- * data.addEvidence("header.User-Agent", mobileUserAgent)
- *     .process();
- * ```
- *
- * 5. Extract the value of a property from the results.
- * ```
- * println("IsMobile: " + data.get(DeviceData.class).getIsMobile());
- * ```
+ * 
+ * @include src/main/resources/hash.xml
  */
 
 public class ConfigureFromFile extends ProgramBase {
@@ -125,21 +68,29 @@ public class ConfigureFromFile extends ProgramBase {
         }
 
         public void run() throws Exception {
-            // Create the configuration object
+            // Create the configuration object from an XML file
             File file = new File(getClass().getClassLoader().getResource("hash.xml").getFile());
             JAXBContext jaxbContext = JAXBContext.newInstance(PipelineOptions.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             // Bind the configuration to a pipeline options instance
             PipelineOptions options = (PipelineOptions) unmarshaller.unmarshal(file);
 
-            // Create a simple pipeline to access the engine with.
+            // Build a new Pipeline from the configuration.
             Pipeline pipeline = new FiftyOnePipelineBuilder()
                 .buildFromConfiguration(options);
+
+            // Create a new FlowData instance ready to be populated with evidence for the
+            // Pipeline.
             FlowData data = pipeline.createFlowData();
+
+            // Process a single HTTP User-Agent string to retrieve the values associated
+            // with the User-Agent for the selected properties.
             data.addEvidence(
                 "header.user-agent",
                 mobileUserAgent)
                 .process();
+
+            // Extract the value of a property from the results.
             AspectPropertyValue<Boolean> isMobile =
                 data.get(DeviceData.class).getIsMobile();
             if (isMobile.hasValue()) {

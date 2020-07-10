@@ -33,62 +33,11 @@ import fiftyone.pipeline.engines.Constants;
 /**
  * @example hash/MatchMetrics.java
  *
- * Match metrics example of using the 51Degrees device detection 'Hash'
- * algorithm to determine the quality of a match via the metric properties.
+ * @include{doc} example-match-metrics-hash.xml
  *
  * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/MatchMetrics.java).
- *
- * The example shows how to:
- *
- * 1. Build a new Pipeline to use an on-premise Hash engine with the low memory
- * performance profile.
- * ```
- * Pipeline pipeline = new DeviceDetectionPipelineBuilder()
- *     .useOnPremise("51Degrees-LiteV4.1.hash", false)
- *     .setAutoUpdate(false)
- *     .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
- *     .build();
- * ```
- *
- * 2. Create a new FlowData instance ready to be populated with evidence for the
- * Pipeline.
- * ```
- * FlowData data = pipeline.createFlowData();
- * ```
- *
- * 3. Process a single HTTP User-Agent string to retrieve the values associated
- * with the User-Agent for the selected properties.
- * ```
- * data.addEvidence("header.user-agent", mobileUserAgent)
- *     .process();
- * ```
- *
- * 4. Obtain drift: The maximum drift for a matched substring from the character
- * position where it was expected to be found. The maximum drift to allow when
- * finding a match can be set through the configuration structure.
- * ```
- * println("Drift: " + data.get(DeviceDataHash.class).getDrift());
- * ```
- *
- * 5. Obtain difference: The total difference in hash code values between the
- * matched substrings and the actual substrings. The maximum difference to allow
- * when finding a match can be set through the configuration structure.
- * ```
- * println("Difference: " + data.get(DeviceDataHash.class).getDifference());
- * ```
- *
- * 6. Obtain iteration count: The number of iterations required to get the device
- * offset in the devices collection in the graph of nodes. This is indicative of
- * the time taken to fetch the result.
- * ```
- * println("Iterations: " + data.get(DeviceDataHash.class).getIterations());
- * ```
- *
- * 7. Obtain the matched User-Agent: the matched substrings in the User-Agent
- * separated with underscored.
- * ```
- * println("User-Agent: " + data.get(DeviceDataHash.class).getUserAgents().get());
- * ```
+ * 
+ * @include{doc} example-require-datafile.txt
  */
 
 public class MatchMetrics extends ProgramBase {
@@ -115,7 +64,8 @@ public class MatchMetrics extends ProgramBase {
         public void run(String dataFile) throws Exception {
             println("Constructing pipeline with engine " +
                 "from file " + dataFile);
-            // Create a simple pipeline to access the engine with.
+            // Build a new Pipeline to use an on-premise Hash engine with the low memory
+            // performance profile.
             Pipeline pipeline = new DeviceDetectionPipelineBuilder()
                 .useOnPremise(dataFile, false)
                 .setAutoUpdate(false)
@@ -126,7 +76,13 @@ public class MatchMetrics extends ProgramBase {
                 //.setShareUsage(false)
                 //.setPerformanceProfile(Constants.PerformanceProfiles.Balanced)
                 .build();
+
+            // Create a new FlowData instance ready to be populated with evidence for the
+            // Pipeline.
             FlowData data = pipeline.createFlowData();
+
+            // Process a single HTTP User-Agent string to retrieve the values associated
+            // with the User-Agent for the selected properties.
             data.addEvidence(
                 "header.user-agent",
                 mobileUserAgent)
@@ -134,10 +90,23 @@ public class MatchMetrics extends ProgramBase {
 
             DeviceDataHash device = data.get(DeviceDataHash.class);
             println("User-Agent:         " + mobileUserAgent);
+            // Obtain the matched User-Agent: the matched substrings in the User-Agent
+            // separated with underscored.
             println("Matched User-Agent: " + device.getUserAgents().getValue().get(0));
+            // Obtains the matched Device ID: the IDs of the matched profiles separated 
+            // with hyphens.
             println("Id: " + device.getDeviceId().getValue());
+            // Obtain difference: The total difference in hash code values between the
+            // matched substrings and the actual substrings. The maximum difference to allow
+            // when finding a match can be set through the configuration structure.
             println("Difference: " + device.getDifference().getValue());
+            // Obtain drift: The maximum drift for a matched substring from the character
+            // position where it was expected to be found. The maximum drift to allow when
+            // finding a match can be set through the configuration structure.
             println("Drift: " + device.getDrift().getValue());
+            // Obtain iteration count: The number of iterations required to get the device
+            // offset in the devices collection in the graph of nodes. This is indicative of
+            // the time taken to fetch the result.
             println("Iterations: " + device.getIterations().getValue());
         }
     }
