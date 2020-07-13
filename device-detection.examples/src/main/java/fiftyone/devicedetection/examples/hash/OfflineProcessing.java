@@ -37,50 +37,11 @@ import java.io.FileWriter;
 /**
  * @example hash/OfflineProcessing.java
  *
- * Offline processing example of using the 51Degrees device detection 'Hash'
- * algorithm to batch process a file of User-Agents and store the output.
+ * @include{doc} example-offline-processing-hash.txt
  *
  * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/OfflineProcessing.java).
- *
- * The example shows how to:
- *
- * 1. Build a new on-premise Hash engine with the low memory performance profile.
- * ```
- * DeviceDetectionHashEngine engine = new DeviceDetectionHashEngineBuilder()
- *     .setAutoUpdate(false)
- *     .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
- *     .build("51Degrees-LiteV4.1.hash", false);
- * ```
- *
- * 2. Read a batch of User-Agent strings from a file.
- * ```
- * BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFile));
- * for (int i = 0; i < nLines; i++) {
- *     String userAgentString = bufferedReader.readLine();
- * }
- * ```
- *
- * 3. Process each User-Agent using the Pipeline.
- * ```
- * FlowData flowData = pipeline.createFlowData();
- * flowData.addEvidence("header.user-agent", userAgentString)
- *     .process();
- * DeviceData device = flowData.get(DeviceData.class);
- * ```
- *
- * 4. Create a new CSV file to write the results of the processing to.
- * ```
- * FileWriter fileWriter = new FileWriter(outputFile);
- * ```
- *
- * 5. Write the values of any required properties to the output file for later.
- * ```
- * fileWriter.write(userAgentString +
- *     "," + device.getIsMobile() +
- *     "," + device.getPlatformName() +
- *     "," + device.getPlatformVersion() +
- *     "\n");
- * ```
+ * 
+ * @include{doc} example-require-datafile.txt
  */
 public class OfflineProcessing extends ProgramBase {
 
@@ -109,7 +70,7 @@ public class OfflineProcessing extends ProgramBase {
 
             println("Constructing pipeline with engine " +
                 "from file " + dataFile);
-            // Create a simple pipeline to access the engine with.
+            // Build a new on-premise Hash engine with the low memory performance profile.
             Pipeline pipeline = new DeviceDetectionPipelineBuilder()
                 .useOnPremise(dataFile, false)
                 .setAutoUpdate(false)
@@ -121,10 +82,13 @@ public class OfflineProcessing extends ProgramBase {
                 //.setPerformanceProfile(Constants.PerformanceProfiles.Balanced)
                 .build();
 
+            // Read a batch of User-Agent strings from a file.
             try (BufferedReader bufferedReader =
                      new BufferedReader(new FileReader(inputFile));
+                 // Create a new CSV file to write the results of the processing to.
                  FileWriter fileWriter = new FileWriter(outputFile)) {
 
+                // Process each User-Agent using the Pipeline.
                 for (int i = 0; i < 20; i++) {
                     // read next line
                     String userAgentString = bufferedReader.readLine();
@@ -137,8 +101,8 @@ public class OfflineProcessing extends ProgramBase {
 
                     DeviceData device = flowData.get(DeviceData.class);
 
-                    // get some property values from the match
-                    // write result to file
+                    // Write the values of any required properties 
+                    // to the output file for later.
                     fileWriter.write(userAgentString +
                         "," + device.getIsMobile() +
                         "," + device.getPlatformName() +

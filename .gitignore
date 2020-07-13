@@ -24,3 +24,9 @@ hs_err_pid*
 
 **/target
 .idea
+
+# vscode files
+**/.project
+**/.classpath
+**/.settings/*.*
+4.1/*

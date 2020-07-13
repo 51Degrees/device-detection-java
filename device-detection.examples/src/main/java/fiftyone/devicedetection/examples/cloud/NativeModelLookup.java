@@ -48,17 +48,11 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 /**
  * @example cloud/NativeModelLookup.java
  *
- * Example of using the 51Degrees cloud service to lookup details of a device
- * based on its native model name.
+ * @include{doc} example-native-model-lookup-cloud.txt
  *
  * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/cloud/NativeModelLookup.java).
  *
- * To run this example, you will need to create a **resource key**.
- * The resource key is used as short-hand to store the particular set of
- * properties you are interested in as well as any associated license keys
- * that entitle you to increased request limits and/or paid-for properties.
- *
- * You can create a resource key using the 51Degrees [Configurator](https://configure.51degrees.com).
+ * @include{doc} example-require-resourcekey.txt
  * Make sure to include the HardwareVendor, HardwareModel and HardwareName
  * properties as they are used by this example.
  *

@@ -41,48 +41,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @example hash/Performance.java
  *
- * Performance example of using the 51Degrees device detection 'Hash'
- * algorithm to measure the performance of the pipeline.
+ * @include{doc} example-performance-hash.txt
  *
  * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/Performance.java).
- *
- * The example shows how to:
- *
- * 1. Build a new on-premise Hash engine with the high performance profile.
- * ```
- * DeviceDetectionHashEngine engine = new DeviceDetectionHashEngineBuilder()
- *     .setAutoUpdate(false)
- *     .setPerformanceProfile(Constants.PerformanceProfiles.HighPerformance)
- *     .build("51Degrees-LiteV4.1.hash", false);
- * ```
- *
- * 2. Start multiple threads to process a set of User-Agents, making a note of
- * the time at which processing was started.
- * ```
- * ReportIterable iterable = new ReportIterable(list, count, maxDistinctUAs, 40);
- * List<Callable<Void>> callables = new ArrayList<>();
- * for (int i = 0; i < threadCount; i++) {
- *     callables.add(new PerformanceCallable(iterable, pipeline, isMobileTrue, isMobileFalse));
- * }
- * ExecutorService service = Executors.newFixedThreadPool(threadCount);
- * long start = System.currentTimeMillis();
- * List<Future<Void>> results = service.invokeAll(callables);
- * ```
- *
- * 3. Wait for all processing to finish, and make a note of the time elapsed
- * since the processing was started.
- * ```
- * List<Future<Void>> results = service.invokeAll(callables);
- * for (Future<Void> result : results) {
- *     result.get();
- * }
- * long time = System.currentTimeMillis() - start;
- * ```
- *
- * 4. Output the average time to process a single User-Agent.
- * ```
- * println("Average " + (double) time / (double) count + "ms per User-Agent");
- * ```
+ * 
+ * @include{doc} example-require-datafile.txt
  */
 
 public class Performance extends ProgramBase {
@@ -106,7 +69,7 @@ public class Performance extends ProgramBase {
         public void run(String dataFile, String uaFile, int count) throws Exception {
             println("Constructing pipeline with engine " +
                 "from file " + dataFile);
-            // Create a simple pipeline to access the engine with.
+            // Build a new on-premise Hash engine with the high performance profile.
             Pipeline pipeline = new DeviceDetectionPipelineBuilder()
                 .useOnPremise(dataFile, false)
                 .setAutoUpdate(false)
@@ -143,6 +106,7 @@ public class Performance extends ProgramBase {
                 println();
                 println("Processing");
                 long time = runThreads(false);
+                // Output the average time to process a single User-Agent.
                 double detectionsPerSecond = (double) (count * threadCount * 1000) / (double) (time - calibrationTime);
                 println();
                 printf("Average %.2f detections per second using %d threads (%2f per thread)\n",
@@ -168,6 +132,9 @@ public class Performance extends ProgramBase {
             for (String userAgent : getUserAgents(uaFile, count)) {
                 userAgents.add(userAgent);
             }
+            
+            // Start multiple threads to process a set of User-Agents, making a note of
+            // the time at which processing was started.
             List<Callable<Void>> callables = new ArrayList<>();
             for (int i = 0; i < threadCount; i++) {
                 callables.add(new PerformanceCallable(
@@ -180,6 +147,9 @@ public class Performance extends ProgramBase {
             }
             ExecutorService service = Executors.newFixedThreadPool(threadCount);
             long start = System.currentTimeMillis();
+
+            // Wait for all processing to finish, and make a note of the time elapsed
+            // since the processing was started.
             List<Future<Void>> results = service.invokeAll(callables);
             for (Future<Void> result : results) {
                 result.get();

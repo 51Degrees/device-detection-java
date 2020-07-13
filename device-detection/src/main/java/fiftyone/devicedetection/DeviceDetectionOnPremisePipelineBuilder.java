@@ -37,9 +37,12 @@ import fiftyone.pipeline.engines.services.HttpClient;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Builder used to create pipelines with an on-premise
+ * device detection engine.
+ */
 public class DeviceDetectionOnPremisePipelineBuilder
     extends PrePackagedPipelineBuilderBase<DeviceDetectionOnPremisePipelineBuilder> {
-
 
     protected boolean shareUsageEnabled = true;
     private String filename;
@@ -48,7 +51,11 @@ public class DeviceDetectionOnPremisePipelineBuilder
     private int concurrency = -1;
     private Integer difference = null;
     private Boolean allowUnmatched = null;
-    private boolean autoUpdateEnabled = true;
+    private Boolean autoUpdateEnabled = null;
+    private Boolean dataFileSystemWatcher = null;
+    private Boolean dataUpdateOnStartup = null;
+    private Long updatePollingInterval = null;
+    private Long updateRandomisationMax = null;
     private String dataUpdateLicenseKey = null;
     private Constants.PerformanceProfiles performanceProfile =
         Constants.PerformanceProfiles.Balanced;
@@ -75,6 +82,14 @@ public class DeviceDetectionOnPremisePipelineBuilder
         this.httpClient = httpClient;
     }
 
+    /**
+     * Set the filename of the device detection data file that the
+     * engine should use.
+     * @param filename The data file.
+     * @param createTempDataCopy
+     * @return This builder instance.
+     * @throws Exception Thrown if the filename has an unknown extension.
+     */
     DeviceDetectionOnPremisePipelineBuilder setFilename(
         String filename,
         boolean createTempDataCopy) throws Exception {
@@ -95,6 +110,13 @@ public class DeviceDetectionOnPremisePipelineBuilder
         return this;
     }
 
+    /**
+     * Set the byte array to use as a data source when 
+     * creating the engine.
+     * @param data The entire device detection data file as a byte array.
+     * @param algorithm The detection algorithm that the supplied data supports.
+     * @return This builder instance.
+     */
     DeviceDetectionOnPremisePipelineBuilder setEngineData(
         byte[] data,
         Enums.DeviceDetectionAlgorithm algorithm) {
@@ -103,24 +125,137 @@ public class DeviceDetectionOnPremisePipelineBuilder
         return this;
     }
 
+    /**
+     * Set share usage enabled/disabled.
+     * Defaults to enabled.
+     * @param enabled True to enable usage sharing. False to disable.
+     * @return This builder instance.
+     */
     public DeviceDetectionOnPremisePipelineBuilder setShareUsage(
         boolean enabled) {
         shareUsageEnabled = enabled;
         return this;
     }
 
+    /**
+     * Enable/Disable auto update.
+     * Defaults to enabled.
+     * If enabled, the auto update system will automatically download
+     * and apply new data files for device detection.
+     * @param enabled True to enable auto update. False to disable.
+     * @return This builder instance.
+     */
     public DeviceDetectionOnPremisePipelineBuilder setAutoUpdate(
         boolean enabled) {
         autoUpdateEnabled = enabled;
         return this;
     }
+    
+    /**
+     * The DataUpdateService has the ability to watch a 
+     * file on disk and refresh the engine as soon as that file is 
+     * updated.
+     * This setting enables/disables that feature.
+     * @param enabled True to enable file system watcher. False to disable.
+     * @return This builder instance.
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setDataFileSystemWatcher(
+        boolean enabled) {
+        dataFileSystemWatcher = enabled;
+        return this;
+    }
+    
+    
+    /**
+     * Enable/Disable update on startup.
+     * Defaults to enabled.
+     * If enabled, the auto update system will be used to check for
+     * an update before the device detection engine is created.
+     * If an update is available, it will be downloaded and applied
+     * before the pipeline is built and returned for use so this may 
+     * take some time.
+     * @param enabled True to enable update on startup. False to disable.
+     * @return This builder instance.
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setDataUpdateOnStartup(
+        boolean enabled) {
+        dataUpdateOnStartup = enabled;
+        return this;
+    }
+    
+    /**
+     * Set the time between checks for a new data file made by the 
+     * DataUpdateService in seconds.
+     * Default = 30 minutes.
+     * @param pollingIntervalSeconds The number of seconds between checks.
+     * @return This builder instance.
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setUpdatePollingInterval(
+        int pollingIntervalSeconds) {
+        
+        updatePollingInterval = (long)pollingIntervalSeconds * 1000;
+        return this;
+    }
+    
+    /**
+     * Set the time between checks for a new data file made by the 
+     * DataUpdateService in milliseconds.
+     * @param pollingIntervalMillis The number of milliseconds between checks.
+     * @return This builder instance.
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setUpdatePollingIntervalMillis(
+        long pollingIntervalMillis) {
+        updatePollingInterval = pollingIntervalMillis;
+        return this;
+    }
+    
+    /**
+     * A random element can be added to the DataUpdateService polling interval.
+     * This option sets the maximum length of this random addition.
+     * Default = 10 minutes.
+     * @param randomisationMaxSeconds The maximum time added to the data update 
+     * polling interval in seconds.
+     * @return This builder instance.
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setUpdateRandomisationMax(
+        int randomisationMaxSeconds) {
+        updateRandomisationMax = (long)randomisationMaxSeconds * 1000;
+        return this;
+    }
+    
+    /**
+     * A random element can be added to the DataUpdateService polling interval.
+     * This option sets the maximum length of this random addition.
+     * Default = 10 minutes.
+     * @param randomisationMaxMillis The maximum time added to the data update 
+     * polling interval in milliseconds.
+     * @return This builder instance.
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setUpdateRandomisationMaxMillis(
+        long randomisationMaxMillis) {
+        updateRandomisationMax = randomisationMaxMillis;
+        return this;
+    }
 
+    /**
+     * Set the license key used when checking for new 
+     * device detection data files.
+     * Defaults to null.
+     * @param key The license key.
+     * @return This builder instance.
+     */
     public DeviceDetectionOnPremisePipelineBuilder setDataUpdateLicenseKey(
         String key) {
         dataUpdateLicenseKey = key;
         return this;
     }
 
+    /**
+     * Set the performance profile for the device detection engine.
+     * Defaults to balanced.
+     * @param profile The performance profile to use.
+     * @return This builder instance.
+     */
     public DeviceDetectionOnPremisePipelineBuilder setPerformanceProfile(
         Constants.PerformanceProfiles profile) {
         performanceProfile = profile;
@@ -169,6 +304,11 @@ public class DeviceDetectionOnPremisePipelineBuilder
         return this;
     }
 
+    /**
+     * Build and return a pipeline that can perform device detection.
+     * @return
+     * @throws Exception 
+     */
     @Override
     public Pipeline build() throws Exception {
         AspectEngine deviceDetectionEngine;
@@ -201,6 +341,17 @@ public class DeviceDetectionOnPremisePipelineBuilder
         return super.build();
     }
 
+    /**
+     * Private method used to set configuration options common to 
+     * both hash and pattern engines and build the engine.
+     * @param <TBuilder> The type of the builder. Can be inferred from the 
+     * builder parameter.
+     * @param <TEngine> The type of the engine. Can be inferred from the builder
+     * parameter.
+     * @param builder The builder to configure.
+     * @return A new device detection engine instance.
+     * @throws Exception 
+     */
     private <TBuilder extends OnPremiseDeviceDetectionEngineBuilderBase<TBuilder, TEngine>,
         TEngine extends FiftyOneAspectEngine>
     TEngine configureAndBuild(
@@ -210,11 +361,32 @@ public class DeviceDetectionOnPremisePipelineBuilder
             CacheConfiguration cacheConfig = new CacheConfiguration(resultsCacheSize);
             builder.setCache(cacheConfig);
         }
-        // Configure auto update
-        builder.setAutoUpdate(autoUpdateEnabled);
+        
+        // Configure auto update.
+        if(autoUpdateEnabled != null) {
+            builder.setAutoUpdate(autoUpdateEnabled);
+        }
+        // Configure file system watcher.
+        if(dataFileSystemWatcher != null) {
+            builder.setDataFileSystemWatcher(dataFileSystemWatcher);
+        }
+        // Configure update on startup.
+        if(dataUpdateOnStartup != null) {
+        builder.setDataUpdateOnStartup(dataUpdateOnStartup);
+        }
+        // Configure update polling interval.
+        if(updatePollingInterval != null) {
+        builder.setUpdatePollingInterval(updatePollingInterval);
+        }
+        // Configure update polling interval randomisation.
+        if(updateRandomisationMax != null) {
+        builder.setUpdateRandomisationMax(updateRandomisationMax);
+        }
+        // Configure data update license key.
         if (dataUpdateLicenseKey != null) {
             builder.setDataUpdateLicenseKey(dataUpdateLicenseKey);
         }
+        
         // Configure performance profile
         builder.setPerformanceProfile(performanceProfile);
 

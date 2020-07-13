@@ -193,7 +193,8 @@ public class DeviceDetectionHashEngine
     public java.util.Date getDataFilePublishedDate(String dataFileIdentifier) {
         Date value = engine.getPublishedTime();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(value.getYear(), value.getMonth(), value.getDay());
+        // java.util.Calendar month is 0 based where January = 0 
+        calendar.set(value.getYear(), value.getMonth() -1, value.getDay());
         return calendar.getTime();
     }
 
@@ -201,7 +202,8 @@ public class DeviceDetectionHashEngine
     public java.util.Date getDataFileUpdateAvailableTime(String dataFileIdentifier) {
         Date value = engine.getUpdateAvailableTime();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(value.getYear(), value.getMonth(), value.getDay());
+        // java.util.Calendar month is 0 based where January = 0 
+        calendar.set(value.getYear(), value.getMonth() - 1, value.getDay());
         return calendar.getTime();
     }
 
