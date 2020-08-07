@@ -61,11 +61,4 @@ public class ExampleController {
         model.addAttribute("browserVersion", device.getBrowserVersion());
         return "example";
     }
-
-    @RequestMapping(path = "json", method = RequestMethod.POST)
-    public String post(ModelMap model, HttpServletRequest request) {
-        FlowData data = flowDataProvider.getFlowData(request);
-        model.addAttribute("json", data.get(JsonBuilderData.class).getJson());
-        return "json";
-    }
 }

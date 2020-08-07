@@ -13,15 +13,16 @@
 
 <div id="content">
     <p>
-        Hardware Vendor: ${hardwareVendor.hasValue() ? hardwareVendor.getValue() : "Unknown " + hardwareVendor.getNoValueMessage()}<br />
-        Hardware Name: ${hardwareName.hasValue() ? hardwareName.getValue() : "Unknown " +  hardwareName.getNoValueMessage()}<br />
-        Device Type: ${deviceType.hasValue() ? deviceType.getValue() : "Unknown " +  deviceType.getNoValueMessage()}<br />
-        Platform Vendor: ${platformVendor.hasValue() ? platformVendor.getValue() : "Unknown " +  platformVendor.getNoValueMessage()}<br />
-        Platform Name: ${platformName.hasValue() ? platformName.getValue() : "Unknown " +  platformName.getNoValueMessage()}<br />
-        Platform Version: ${platformVersion.hasValue() ? platformVersion.getValue() : "Unknown " +  platformVersion.getNoValueMessage()}<br />
-        Browser Vendor: ${browserVendor.hasValue() ? browserVendor.getValue() : "Unknown " +  browserVendor.getNoValueMessage()}<br />
-        Browser Name: ${browserName.hasValue() ? browserName.getValue() : "Unknown " +  browserName.getNoValueMessage()}<br />
-        Browser Version: ${browserVersion.hasValue() ? browserVersion.getValue() : "Unknown " +  browserVersion.getNoValueMessage()}
+        Hardware Vendor: ${hardwareVendor.hasValue() ? hardwareVendor.getValue() : "Unknown: ".concat(hardwareVendor.getNoValueMessage())}<br />
+        Hardware Name: ${hardwareName.hasValue() ? hardwareName.getValue() : "Unknown: ".concat(hardwareName.getNoValueMessage())}<br />
+        Device Type: ${deviceType.hasValue() ? deviceType.getValue() : "Unknown: ".concat(deviceType.getNoValueMessage())}<br />
+        Platform Vendor: ${platformVendor.hasValue() ? platformVendor.getValue() : "Unknown: ".concat(platformVendor.getNoValueMessage())}<br />
+        Platform Name: ${platformName.hasValue() ? platformName.getValue() : "Unknown: ".concat(platformName.getNoValueMessage())}<br />
+        Platform Version: ${platformVersion.hasValue() ? platformVersion.getValue() : "Unknown: ".concat(platformVersion.getNoValueMessage())}<br />
+        Browser Vendor: ${browserVendor.hasValue() ? browserVendor.getValue() : "Unknown: ".concat(browserVendor.getNoValueMessage())}<br />
+        Browser Name: ${browserName.hasValue() ? browserName.getValue() : "Unknown: ".concat(browserName.getNoValueMessage())}<br />
+        Browser Version: ${browserVersion.hasValue() ? browserVersion.getValue() : "Unknown: ".concat(browserVersion.getNoValueMessage())}<br />
+        Device JavaScript : ${javascripthardwareprofile.hasValue() ? javascripthardwareprofile.getValue() : "Unknown: ".concat(javascripthardwareprofile.getNoValueMessage())}
     </p>
 </div>
 
