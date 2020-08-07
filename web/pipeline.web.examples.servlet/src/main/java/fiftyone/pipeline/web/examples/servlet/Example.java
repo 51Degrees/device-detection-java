@@ -66,13 +66,6 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *         <Element>
  *         <BuilderName>DeviceDetectionCloudEngine</BuilderName>
  *         </Element>
- *         <Element>
- *             <BuilderName>JavaScriptBuilderElement</BuilderName>
- *             <BuildParameters>
- *                 <Endpoint>/pipeline.web.examples.mvc/json</Endpoint>
- *                 <Protocol>http</Protocol>
- *             </BuildParameters>
- *         </Element>
  *     </Elements>
  * </PipelineOptions>
  * ```
@@ -94,13 +87,6 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *                 <PerformanceProfile>LowMemory</PerformanceProfile>
  *             </BuildParameters>
  *             <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
- *         </Element>
- *         <Element>
- *             <BuilderName>JavaScriptBuilderElement</BuilderName>
- *             <BuildParameters>
- *                 <Endpoint>/pipeline.web.examples.servlet/json</Endpoint>
- *                 <Protocol>http</Protocol>
- *             </BuildParameters>
  *         </Element>
  *     </Elements>
  * </PipelineOptions>
@@ -172,17 +158,6 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 public class Example extends HttpServlet {
 
     FlowDataProviderCore flowDataProvider = new FlowDataProviderCore.Default();
-
-    private void processPost(
-        HttpServletRequest request,
-        HttpServletResponse response) throws IOException {
-        FlowData data = flowDataProvider.getFlowData(request);
-
-        response.setContentType("application/json");
-        try (PrintWriter out = response.getWriter()) {
-            out.print(data.get(JsonBuilderData.class).getJson());
-        }
-    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -287,20 +262,6 @@ public class Example extends HttpServlet {
         } catch (NoValueException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processPost(request, response);
     }
 
     /**

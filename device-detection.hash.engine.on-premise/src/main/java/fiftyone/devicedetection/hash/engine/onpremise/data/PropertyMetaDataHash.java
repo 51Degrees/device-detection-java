@@ -253,4 +253,14 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
     public void close() throws IOException {
         source.delete();
     }
+
+    @Override
+    public boolean getDelayExecution() {
+        return false;
+    }
+
+    @Override
+    public List<String> getEvidenceProperties() {
+        return null;
+    }
 }

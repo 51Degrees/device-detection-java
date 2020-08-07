@@ -35,6 +35,15 @@ import org.slf4j.Logger;
 import java.util.List;
 public abstract class DeviceDataBase extends AspectDataBase implements DeviceData
 {
+/**
+ * Constructor.
+ * @param logger used for logging
+ * @param flowData the {@link FlowData} instance this element data will be
+ *                 associated with
+ * @param engine the engine which created the instance
+ * @param missingPropertyService service used to determine the reason for
+ *                               a property value being missing
+ */
 	protected DeviceDataBase(
 		Logger logger,
 		FlowData flowData,
@@ -1178,10 +1187,55 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Double> getSecondScreenInchesDiagonal() { return getAs("secondscreeninchesdiagonal", AspectPropertyValue.class, Double.class); }
 	/**
+	 * Refers to the width of the device's second screen in inches. This property will return the value 'N/A' for desktop or for devices which do not have a second screen.
+	 */
+	@Override
+	public AspectPropertyValue<Double> getSecondScreenInchesWidth() { return getAs("secondscreenincheswidth", AspectPropertyValue.class, Double.class); }
+	/**
 	 * Indicates the width of the device's second screen in pixels. This property is not applicable for a device that does not have a second screen.
 	 */
 	@Override
 	public AspectPropertyValue<Integer> getSecondScreenPixelsWidth() { return getAs("secondscreenpixelswidth", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Indicates the diagonal size of the device's second screen in inches rounded to the nearest whole number. This property will return the value 'N/A' for desktop or for devices which do not have a second screen.
+	 */
+	@Override
+	public AspectPropertyValue<Integer> getSecondScreenInchesDiagonalRounded() { return getAs("secondscreeninchesdiagonalrounded", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Indicates the area of the device's second screen in square inches rounded to the nearest whole number. This property will return the value 'N/A' for desktop or for devices which do not have a second screen.
+	 */
+	@Override
+	public AspectPropertyValue<Integer> getSecondScreenInchesSquare() { return getAs("secondscreeninchessquare", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Refers to the height of the device's second screen in inches. This property will return 'N/A' for desktops or for devices which do not have a second screen.
+	 */
+	@Override
+	public AspectPropertyValue<Double> getSecondScreenInchesHeight() { return getAs("secondscreeninchesheight", AspectPropertyValue.class, Double.class); }
+	/**
+	 * Refers to the diagonal size of the second screen of the device in millimetres. This property will return 'N/A' for desktops or for devices which do not have a second screen.
+	 */
+	@Override
+	public AspectPropertyValue<Double> getSecondScreenMMDiagonal() { return getAs("secondscreenmmdiagonal", AspectPropertyValue.class, Double.class); }
+	/**
+	 * Indicate the diagonal size of the device's second screen in millimetres rounded to the nearest whole number. This property will return the value 'N/A' for desktop or for devices which do not have a second screen.
+	 */
+	@Override
+	public AspectPropertyValue<Integer> getSecondScreenMMDiagonalRounded() { return getAs("secondscreenmmdiagonalrounded", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Refers to the second screen height of the device in millimetres. This property will return 'N/A' for desktops or for devices which do not have a second screen.
+	 */
+	@Override
+	public AspectPropertyValue<Double> getSecondScreenMMHeight() { return getAs("secondscreenmmheight", AspectPropertyValue.class, Double.class); }
+	/**
+	 * Indicates the area of the device's second screen in square millimetres rounded to the nearest whole number. This property will return the value  'N/A' for desktop or for devices which do not have a second screen.
+	 */
+	@Override
+	public AspectPropertyValue<Integer> getSecondScreenMMSquare() { return getAs("secondscreenmmsquare", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Refers to the second screen width of the device in millimetres. This property will return 'N/A' for desktops or for devices which do not have a second screen.
+	 */
+	@Override
+	public AspectPropertyValue<Double> getSecondScreenMMWidth() { return getAs("secondscreenmmwidth", AspectPropertyValue.class, Double.class); }
 	/**
 	 * Indicates the height of the device's second screen in pixels. This property is not applicable for a device that does not have a second screen.
 	 */
@@ -1206,12 +1260,27 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	 * Indicates if the browser supports the WebP image format.
 	 */
 	@Override
-	public AspectPropertyValue<String> getWebP() { return getAs("webp", AspectPropertyValue.class, String.class); }
+	public AspectPropertyValue<Boolean> getWebP() { return getAs("webp", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates the number of screens the device has. This property is not applicable for a device that does not have a screen.
 	 */
 	@Override
 	public AspectPropertyValue<Integer> getNumberOfScreens() { return getAs("numberofscreens", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Indicates if the browser supports HTTP version 2.
+	 */
+	@Override
+	public AspectPropertyValue<Boolean> getHttp2() { return getAs("http2", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates if the browser can prefetch resources without executing them.
+	 */
+	@Override
+	public AspectPropertyValue<Boolean> getPreload() { return getAs("preload", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates the browser supports JPEG 2000 image format.
+	 */
+	@Override
+	public AspectPropertyValue<Boolean> getJpeg2000() { return getAs("jpeg2000", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates the number of hash nodes matched within the evidence.
 	 */

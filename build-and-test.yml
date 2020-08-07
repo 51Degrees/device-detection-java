@@ -48,6 +48,13 @@ steps:
   workingDirectory: 'device-detection-cxx/device-detection-data'
   displayName: 'Fetch LFS Data Files'
 
+- bash: |
+    sudo apt-get -y install \
+      gcc-multilib \
+      g++-multilib
+  displayName: 'Install gcc-multilib and g++-multilib packages'
+  condition: contains(variables['imageName'], 'ubuntu')
+
 - task: MavenAuthenticate@0
   inputs:
     artifactsFeeds: 'pipeline-insider'

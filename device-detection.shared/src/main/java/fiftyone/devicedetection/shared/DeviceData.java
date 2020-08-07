@@ -31,6 +31,10 @@ import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import java.util.List;
 // This interface sits at the top of the name space in order to make
 // life easier for consumers.
+/**
+ * Interface exposing typed accessors for properties related to a device
+ * returned by a device detection engine.
+ */
 public interface DeviceData extends AspectData
 {
 	/**
@@ -450,6 +454,10 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Double> getHtmlVersion();
 	/**
+	 * Indicates if the browser supports HTTP version 2.
+	 */
+	AspectPropertyValue<Boolean> getHttp2();
+	/**
 	 * Indicates if the browser supports HTTP Live Streaming, also known as HLS.
 	 */
 	AspectPropertyValue<String> getHttpLiveStreaming();
@@ -585,6 +593,10 @@ public interface DeviceData extends AspectData
 	 * Indicates which JavaScript version the browser uses. The number refers to JavaScript versioning, not ECMAscript or Jscript. If the browser doesn't support JavaScript then 'NotSupported' value is returned.
 	 */
 	AspectPropertyValue<String> getJavascriptVersion();
+	/**
+	 * Indicates the browser supports JPEG 2000 image format.
+	 */
+	AspectPropertyValue<Boolean> getJpeg2000();
 	/**
 	 * Refers to the grade of the level the device has with the jQuery Mobile Framework, as posted by jQuery.
 	 */
@@ -726,6 +738,10 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getPostMessage();
 	/**
+	 * Indicates if the browser can prefetch resources without executing them.
+	 */
+	AspectPropertyValue<Boolean> getPreload();
+	/**
 	 * Indicates a price range describing the recommended retail price of the device at the date of release, inclusive of tax (where applicable).  Prices are in United States Dollars (USD); if the price is not originally in USD it will be converted to USD using the relevant exchange rate at the time of launch. Prices are for the SIM-free version of the device (if applicable). In cases where there are several versions of the same model of the device, the price will reflect the device that was used to populate the specifications.
 	 */
 	AspectPropertyValue<String> getPriceBand();
@@ -833,6 +849,42 @@ public interface DeviceData extends AspectData
 	 * Indicates the diagonal size of the device's second screen in inches. This property is not applicable for a device that does not have a second screen.
 	 */
 	AspectPropertyValue<Double> getSecondScreenInchesDiagonal();
+	/**
+	 * Indicates the diagonal size of the device's second screen in inches rounded to the nearest whole number. This property will return the value 'N/A' for desktop or for devices which do not have a second screen.
+	 */
+	AspectPropertyValue<Integer> getSecondScreenInchesDiagonalRounded();
+	/**
+	 * Refers to the height of the device's second screen in inches. This property will return 'N/A' for desktops or for devices which do not have a second screen.
+	 */
+	AspectPropertyValue<Double> getSecondScreenInchesHeight();
+	/**
+	 * Indicates the area of the device's second screen in square inches rounded to the nearest whole number. This property will return the value 'N/A' for desktop or for devices which do not have a second screen.
+	 */
+	AspectPropertyValue<Integer> getSecondScreenInchesSquare();
+	/**
+	 * Refers to the width of the device's second screen in inches. This property will return the value 'N/A' for desktop or for devices which do not have a second screen.
+	 */
+	AspectPropertyValue<Double> getSecondScreenInchesWidth();
+	/**
+	 * Refers to the diagonal size of the second screen of the device in millimetres. This property will return 'N/A' for desktops or for devices which do not have a second screen.
+	 */
+	AspectPropertyValue<Double> getSecondScreenMMDiagonal();
+	/**
+	 * Indicate the diagonal size of the device's second screen in millimetres rounded to the nearest whole number. This property will return the value 'N/A' for desktop or for devices which do not have a second screen.
+	 */
+	AspectPropertyValue<Integer> getSecondScreenMMDiagonalRounded();
+	/**
+	 * Refers to the second screen height of the device in millimetres. This property will return 'N/A' for desktops or for devices which do not have a second screen.
+	 */
+	AspectPropertyValue<Double> getSecondScreenMMHeight();
+	/**
+	 * Indicates the area of the device's second screen in square millimetres rounded to the nearest whole number. This property will return the value  'N/A' for desktop or for devices which do not have a second screen.
+	 */
+	AspectPropertyValue<Integer> getSecondScreenMMSquare();
+	/**
+	 * Refers to the second screen width of the device in millimetres. This property will return 'N/A' for desktops or for devices which do not have a second screen.
+	 */
+	AspectPropertyValue<Double> getSecondScreenMMWidth();
 	/**
 	 * Indicates the height of the device's second screen in pixels. This property is not applicable for a device that does not have a second screen.
 	 */
@@ -980,7 +1032,7 @@ public interface DeviceData extends AspectData
 	/**
 	 * Indicates if the browser supports the WebP image format.
 	 */
-	AspectPropertyValue<String> getWebP();
+	AspectPropertyValue<Boolean> getWebP();
 	/**
 	 * Indicates if the browser supports background workers in JavaScript.
 	 */
