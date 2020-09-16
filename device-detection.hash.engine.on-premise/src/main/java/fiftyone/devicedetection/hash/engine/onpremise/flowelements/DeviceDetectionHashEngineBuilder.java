@@ -202,7 +202,38 @@ public class DeviceDetectionHashEngineBuilder
         config.setDrift(drift);
         return this;
     }
-    
+
+    /**
+     * Set whether or not the performance optimized graph is used
+     * for processing. When processing evidence, the performance
+     * graph is optimised to find an answer as quick as possible.
+     * However, this can be at the expense of finding the best
+     * match for evidence which was not in the training data. If
+     * the predictive graph is also enabled, it will be used
+     * next if there was no match in the performance graph.
+     * @param use true if the performance graph should be used
+     * @return this builder
+     */
+    public DeviceDetectionHashEngineBuilder setUsePerformanceGraph(boolean use) {
+        config.setUsePerformanceGraph(use);
+        return this;
+    }
+
+    /**
+     * Set whether or not the predictive optimized graph is used
+     * for processing. When processing evidence, the predictive
+     * graph is optimised to find the best answer for evidence
+     * which was not in the training data. However, this is at the
+     * expense of processing time, as more possibilities are taken into
+     * consideration.
+     * @param use true if the predictive graph should be used
+     * @return this builder
+     */
+    public DeviceDetectionHashEngineBuilder setUsePredictiveGraph(boolean use) {
+        config.setUsePredictiveGraph(use);
+        return this;
+    }
+
     /**
      * The default value to use for the 'Type' parameter when sending
      * a request to the Distributor

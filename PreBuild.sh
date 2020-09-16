@@ -85,6 +85,7 @@ if [ "$API" = "Hash" ]; then
         g++ $M $GXXARGS $SRCHASH/ProfileMetaDataCollectionHash.cpp -o obj/ProfileMetaDataCollectionHash.o
         g++ $M $GXXARGS $SRCHASH/PropertyMetaDataBuilderHash.cpp -o obj/PropertyMetaDataBuilderHash.o
         g++ $M $GXXARGS $SRCHASH/PropertyMetaDataCollectionForComponentHash.cpp -o obj/PropertyMetaDataForComponentHash.o
+        g++ $M $GXXARGS $SRCHASH/PropertyMetaDataCollectionForPropertyHash.cpp -o obj/PropertyMetaDataForPropertyHash.o
         g++ $M $GXXARGS $SRCHASH/PropertyMetaDataCollectionHash.cpp -o obj/PropertyMetaDataCollectionHash.o
         g++ $M $GXXARGS $SRCHASH/ResultsHash.cpp -o obj/ResultsHash.o
         g++ $M $GXXARGS $SRCHASH/ValueMetaDataBuilderHash.cpp -o obj/ValueMetaDataBuilderHash.o
