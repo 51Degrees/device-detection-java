@@ -22,6 +22,7 @@
 
 package fiftyone.devicedetection;
 
+import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder;
 import fiftyone.devicedetection.shared.flowelements.OnPremiseDeviceDetectionEngineBuilderBase;
 import fiftyone.pipeline.core.exceptions.PipelineConfigurationException;
@@ -51,6 +52,9 @@ public class DeviceDetectionOnPremisePipelineBuilder
     private int concurrency = -1;
     private Integer difference = null;
     private Boolean allowUnmatched = null;
+    private Integer drift = null;
+    private Boolean usePerformanceGraph = null;
+    private Boolean usePredictiveGraph = null;
     private Boolean autoUpdateEnabled = null;
     private Boolean dataFileSystemWatcher = null;
     private Boolean dataUpdateOnStartup = null;
@@ -305,6 +309,49 @@ public class DeviceDetectionOnPremisePipelineBuilder
     }
 
     /**
+     * Set the maximum drift to allow when matching hashes. If the
+     * drift is exceeded, the result is considered invalid and
+     * values will not be returned. By default this is 0.
+     * @param drift to set
+     * @return this builder
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setDrift(int drift) {
+        this.drift = drift;
+        return this;
+    }
+
+    /**
+     * Set whether or not the performance optimized graph is used
+     * for processing. When processing evidence, the performance
+     * graph is optimised to find an answer as quick as possible.
+     * However, this can be at the expense of finding the best
+     * match for evidence which was not in the training data. If
+     * the predictive graph is also enabled, it will be used
+     * next if there was no match in the performance graph.
+     * @param use true if the performance graph should be used
+     * @return this builder
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setUsePerformanceGraph(boolean use) {
+        this.usePerformanceGraph = use;
+        return this;
+    }
+
+    /**
+     * Set whether or not the predictive optimized graph is used
+     * for processing. When processing evidence, the predictive
+     * graph is optimised to find the best answer for evidence
+     * which was not in the training data. However, this is at the
+     * expense of processing time, as more possibilities are taken into
+     * consideration.
+     * @param use true if the predictive graph should be used
+     * @return this builder
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setUsePredictiveGraph(boolean use) {
+        this.usePredictiveGraph = use;
+        return this;
+    }
+
+    /**
      * Build and return a pipeline that can perform device detection.
      * @return
      * @throws Exception 
@@ -344,18 +391,12 @@ public class DeviceDetectionOnPremisePipelineBuilder
     /**
      * Private method used to set configuration options common to 
      * both hash and pattern engines and build the engine.
-     * @param <TBuilder> The type of the builder. Can be inferred from the 
-     * builder parameter.
-     * @param <TEngine> The type of the engine. Can be inferred from the builder
-     * parameter.
      * @param builder The builder to configure.
      * @return A new device detection engine instance.
      * @throws Exception 
      */
-    private <TBuilder extends OnPremiseDeviceDetectionEngineBuilderBase<TBuilder, TEngine>,
-        TEngine extends FiftyOneAspectEngine>
-    TEngine configureAndBuild(
-        OnPremiseDeviceDetectionEngineBuilderBase<TBuilder, TEngine> builder) throws Exception {
+    private DeviceDetectionHashEngine configureAndBuild(
+        DeviceDetectionHashEngineBuilder builder) throws Exception {
         // Configure caching
         if (resultsCache) {
             CacheConfiguration cacheConfig = new CacheConfiguration(resultsCacheSize);
@@ -402,9 +443,21 @@ public class DeviceDetectionOnPremisePipelineBuilder
         if (allowUnmatched != null) {
             builder.setAllowUnmatched(allowUnmatched);
         }
+        // Configure drift
+        if (drift != null) {
+            builder.setDrift(drift);
+        }
+        // Configure performance graph
+        if (usePerformanceGraph != null) {
+            builder.setUsePerformanceGraph(usePerformanceGraph);
+        }
+        // Configure predictive graph
+        if (usePredictiveGraph != null) {
+            builder.setUsePredictiveGraph(usePredictiveGraph);
+        }
 
         // Build the engine
-        TEngine engine;
+        DeviceDetectionHashEngine engine;
         if (filename != null && filename.isEmpty() == false) {
             engine = builder.build(filename, createTempDataCopy);
         } else if (engineData != null) {
