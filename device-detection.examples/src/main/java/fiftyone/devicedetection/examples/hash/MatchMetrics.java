@@ -29,12 +29,13 @@ import fiftyone.devicedetection.hash.engine.onpremise.data.DeviceDataHash;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.Constants;
+import java.util.Map;
 
 /**
  * @example hash/MatchMetrics.java
  *
- * @include{doc} example-match-metrics-hash.xml
- *
+ * @include{doc} example-match-metrics-hash.txt
+ * 
  * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/MatchMetrics.java).
  * 
  * @include{doc} example-require-datafile.txt
@@ -53,9 +54,9 @@ public class MatchMetrics extends ProgramBase {
 
     public static class Example extends ExampleBase {
         private final String mobileUserAgent =
-            "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) " +
-                "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile" +
-                "/11D167 Safari/9537.53";
+            "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) " +
+            "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.83 " +
+            "Mobile Safari/537.36";
 
         public Example(boolean printOutput) {
             super(printOutput);
@@ -64,50 +65,86 @@ public class MatchMetrics extends ProgramBase {
         public void run(String dataFile) throws Exception {
             println("Constructing pipeline with engine " +
                 "from file " + dataFile);
-            // Build a new Pipeline to use an on-premise Hash engine with the low memory
-            // performance profile.
+
+            // Build a new Pipeline to use an on-premise Hash engine with the
+            // low memory performance profile.
             Pipeline pipeline = new DeviceDetectionPipelineBuilder()
                 .useOnPremise(dataFile, false)
                 .setAutoUpdate(false)
-                // Prefer low memory profile where all data streamed
-                // from disk on-demand. Experiment with other profiles.
-                //.setPerformanceProfile(Constants.PerformanceProfiles.HighPerformance)
+                // Prefer low memory profile where all data streamed from disk 
+                // on-demand. Experiment with other profiles.
                 .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
-                //.setShareUsage(false)
+                //.setPerformanceProfile(Constants.PerformanceProfiles.HighPerformance)
                 //.setPerformanceProfile(Constants.PerformanceProfiles.Balanced)
+                // Disable share usage for this example.
+                .setShareUsage(false)
+                // Include the IsMobile property in the results. Notice how the
+                // components related to OS, Browser and Crawler will not be
+                // provided in the results.
+                .setProperty("IsMobile")
+                // Uncomment BrowserName to include Browser component profile ID
+                // in the device ID value.
+                //.setProperty("BrowserName")
+                // If using the full on-premise data file this property will be
+                // present in the data file. See https://51degrees.com/pricing
+                .setProperty("HardwareName")
+                // Only use the predictive graph to better handle variances 
+                // between the training data and the target User-Agent string.
+                // For a more detailed description of the differences between
+                // performance and predictive, see 
+                // <a href="https://51degrees.com/documentation/4.1/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Performance">Hash Algorithm</a>
+                .setUsePredictiveGraph(true)
+                .setUsePerformanceGraph(false)
                 .build();
 
-            // Create a new FlowData instance ready to be populated with evidence for the
-            // Pipeline.
+            // Create a new FlowData instance ready to be populated with 
+            // evidence for the Pipeline.
             FlowData data = pipeline.createFlowData();
 
-            // Process a single HTTP User-Agent string to retrieve the values associated
-            // with the User-Agent for the selected properties.
+            // Process a single HTTP User-Agent string to retrieve the values 
+            // associated with the User-Agent for the selected properties.
             data.addEvidence(
                 "header.user-agent",
                 mobileUserAgent)
                 .process();
-
+ 
             DeviceDataHash device = data.get(DeviceDataHash.class);
             println("User-Agent:         " + mobileUserAgent);
-            // Obtain the matched User-Agent: the matched substrings in the User-Agent
-            // separated with underscored.
-            println("Matched User-Agent: " + device.getUserAgents().getValue().get(0));
-            // Obtains the matched Device ID: the IDs of the matched profiles separated 
-            // with hyphens.
+            // Obtain the matched User-Agent: the matched substrings in the
+            // User-Agent separated with underscored.
+            println("Matched User-Agent: " + 
+                    device.getUserAgents().getValue().get(0));
+            // Obtains the matched Device ID: the IDs of the matched profiles 
+            // separated with hyphens. Notice how the value changes depending
+            // on the properties that are used with the builder. Profile IDs are 
+            // replaced with zeros when there are no properties associated with
+            // the corresponding component available.
             println("Id: " + device.getDeviceId().getValue());
-            // Obtain difference: The total difference in hash code values between the
-            // matched substrings and the actual substrings. The maximum difference to allow
-            // when finding a match can be set through the configuration structure.
+            // Obtain difference: The total difference in hash code values 
+            // between the matched substrings and the actual substrings. The 
+            // maximum difference to allow when finding a match can be set 
+            // through the configuration structure.
             println("Difference: " + device.getDifference().getValue());
-            // Obtain drift: The maximum drift for a matched substring from the character
-            // position where it was expected to be found. The maximum drift to allow when
-            // finding a match can be set through the configuration structure.
+            // Obtain drift: The maximum drift for a matched substring from the
+            // character position where it was expected to be found. The maximum
+            // drift to allow when finding a match can be set through the 
+            // configuration structure.
             println("Drift: " + device.getDrift().getValue());
-            // Obtain iteration count: The number of iterations required to get the device
-            // offset in the devices collection in the graph of nodes. This is indicative of
-            // the time taken to fetch the result.
+            // Obtain iteration count: The number of iterations required to get
+            // the device offset in the devices collection in the graph of 
+            // nodes. This is indicative of the time taken to fetch the result.
             println("Iterations: " + device.getIterations().getValue());
+            // Output the method that was used to obtain the result. Play with 
+            // the setUsePredictiveGraph and setUsePerformanceGraph values to
+            // see the different results.
+            println("Method: " + device.getMethod().getValue());
+            // Use the dictionary of key value pairs to output all the available 
+            // values. Slightly less efficient than the strongly typed 
+            // accessors.
+            Map<String, Object> entries = device.asKeyMap();
+            for (Map.Entry<String, Object> entry : entries.entrySet()) {
+                println(entry.getKey() + ": " + entry.getValue());
+            }
         }
     }
 }

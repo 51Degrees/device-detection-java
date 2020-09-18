@@ -38,6 +38,9 @@ import fiftyone.pipeline.engines.services.HttpClient;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Builder used to create pipelines with an on-premise
  * device detection engine.
@@ -55,6 +58,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
     private Integer drift = null;
     private Boolean usePerformanceGraph = null;
     private Boolean usePredictiveGraph = null;
+    private List<String> properties = new ArrayList();
     private Boolean autoUpdateEnabled = null;
     private Boolean dataFileSystemWatcher = null;
     private Boolean dataUpdateOnStartup = null;
@@ -168,8 +172,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
         dataFileSystemWatcher = enabled;
         return this;
     }
-    
-    
+
     /**
      * Enable/Disable update on startup.
      * Defaults to enabled.
@@ -328,6 +331,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
      * match for evidence which was not in the training data. If
      * the predictive graph is also enabled, it will be used
      * next if there was no match in the performance graph.
+     * @see <a href="https://51degrees.com/documentation/4.1/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Performance">Hash Algorithm</a>*
      * @param use true if the performance graph should be used
      * @return this builder
      */
@@ -343,11 +347,23 @@ public class DeviceDetectionOnPremisePipelineBuilder
      * which was not in the training data. However, this is at the
      * expense of processing time, as more possibilities are taken into
      * consideration.
+     * @see <a href="https://51degrees.com/documentation/4.1/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
      * @param use true if the predictive graph should be used
      * @return this builder
      */
     public DeviceDetectionOnPremisePipelineBuilder setUsePredictiveGraph(boolean use) {
         this.usePredictiveGraph = use;
+        return this;
+    }
+
+    /**
+     * Add a property to the list of properties that the engine will populate in
+     * the response. By default all properties will be populated.
+     * @param property the property that we want the engine to populate
+     * @return this builder
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setProperty(String property) {
+        this.properties.add(property);
         return this;
     }
 
@@ -413,21 +429,26 @@ public class DeviceDetectionOnPremisePipelineBuilder
         }
         // Configure update on startup.
         if(dataUpdateOnStartup != null) {
-        builder.setDataUpdateOnStartup(dataUpdateOnStartup);
+            builder.setDataUpdateOnStartup(dataUpdateOnStartup);
         }
         // Configure update polling interval.
         if(updatePollingInterval != null) {
-        builder.setUpdatePollingInterval(updatePollingInterval);
+            builder.setUpdatePollingInterval(updatePollingInterval);
         }
         // Configure update polling interval randomisation.
         if(updateRandomisationMax != null) {
-        builder.setUpdateRandomisationMax(updateRandomisationMax);
+            builder.setUpdateRandomisationMax(updateRandomisationMax);
         }
         // Configure data update license key.
         if (dataUpdateLicenseKey != null) {
             builder.setDataUpdateLicenseKey(dataUpdateLicenseKey);
         }
-        
+        // Configure the available properties.
+        if (properties.size() > 0) {
+            for (String property : properties) {
+                builder.setProperty(property);
+            }
+        }
         // Configure performance profile
         builder.setPerformanceProfile(performanceProfile);
 
