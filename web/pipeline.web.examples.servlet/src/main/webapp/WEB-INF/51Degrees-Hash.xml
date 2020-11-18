@@ -33,8 +33,5 @@
             </BuildParameters>
             <BuilderName>DeviceDetectionHashEngine</BuilderName>
         </Element>
-        <Element>
-            <BuilderName>JavaScriptBundlerElement</BuilderName>
-        </Element>
     </Elements>
 </PipelineOptions>

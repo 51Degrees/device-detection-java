@@ -7,126 +7,75 @@ pr:
 
 trigger: none
 
-stages:
-
-- stage: Build_Windows
-  dependsOn: []
-  jobs:
-  - job: Build
-    pool:
-      vmImage: 'vs2017-win2016'
-
-    steps:
-
-    - checkout: self
-      submodules: recursive
-      lfs: true
-      persistCredentials: true
-
-    - powershell: |
-        git lfs install
-        ls
-        git -c http.https://51degrees.visualstudio.com.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" lfs fetch
-        git -c http.https://51degrees.visualstudio.com.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" lfs checkout
-        ls
-      workingDirectory: 'device-detection-cxx/device-detection-data'
-      displayName: 'Fetch LFS Data Files'
-
-    - task: MavenAuthenticate@0
-      inputs:
-        artifactsFeeds: 'pipeline-insider'
-
-    - task: Maven@1
-      displayName: 'Maven test'
-      inputs:
-        mavenPomFile: 'pom.xml'
-        goals: 'clean test'
-        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url)'
-        jdkVersionOption: '1.8'
-
-    - task: CopyFiles@2
-      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-      inputs:
-        SourceFolder: '$(build.sourcesdirectory)'
-        Contents: '**/*.jar'
-        TargetFolder: '$(build.artifactstagingdirectory)'
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: drop'
-      inputs:
-        PathtoPublish: '$(build.artifactstagingdirectory)'
-
-- stage: Build_Mac
-  dependsOn: []
-  jobs:
-  - job: Build
-    pool:
-      vmImage: 'macOS-10.14'
-
-    steps:
-
-    - checkout: self
-      submodules: recursive
-      lfs: true
-
-    - task: MavenAuthenticate@0
-      inputs:
-        artifactsFeeds: 'pipeline-insider'
-
-    - task: Maven@1
-      displayName: 'Maven test'
-      inputs:
-        mavenPomFile: 'pom.xml'
-        goals: 'clean test'
-        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url)'
-        jdkVersionOption: '1.8'
+strategy:
+  matrix:
+    linux-JDK8:
+      imageName: 'ubuntu-latest'
+      jdkVersion: '1.8'
+    linux-JDK11:
+      imageName: 'ubuntu-latest'
+      jdkVersion: '1.11'
+    mac-JDK8:
+      imageName: 'macos-latest'
+      jdkVersion: '1.8'
+    mac-JDK11:
+      imageName: 'macos-latest'
+      jdkVersion: '1.11'
+    windows-JDK8:
+      imageName: 'vs2017-win2016'
+      jdkVersion: '1.8'
+    windows-JDK11:
+      imageName: 'vs2017-win2016'
+      jdkVersion: '1.11'
 
 
-    - task: CopyFiles@2
-      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-      inputs:
-        SourceFolder: '$(build.sourcesdirectory)'
-        Contents: '**/*.jar'
-        TargetFolder: '$(build.artifactstagingdirectory)'
+pool:
+  vmImage: $(imageName)
 
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: drop'
-      inputs:
-        PathtoPublish: '$(build.artifactstagingdirectory)'
+steps:
 
-- stage: Build_Linux
-  dependsOn: []
-  jobs:
-  - job: Build
-    pool:
-      vmImage: 'ubuntu-16.04'
+- checkout: self
+  submodules: recursive
+  lfs: true
+  persistCredentials: true
 
-    steps:
+- powershell: |
+    git lfs install
+    ls
+    git -c http.https://51degrees.visualstudio.com.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" lfs fetch
+    git -c http.https://51degrees.visualstudio.com.extraheader="AUTHORIZATION: bearer $(System.AccessToken)" lfs checkout
+    ls
+  workingDirectory: 'device-detection-cxx/device-detection-data'
+  displayName: 'Fetch LFS Data Files'
 
-    - checkout: self
-      submodules: recursive
-      lfs: true
+- bash: |
+    sudo apt-get -y install \
+      gcc-multilib \
+      g++-multilib
+  displayName: 'Install gcc-multilib and g++-multilib packages'
+  condition: contains(variables['imageName'], 'ubuntu')
 
-    - task: MavenAuthenticate@0
-      inputs:
-        artifactsFeeds: 'pipeline-insider'
+- task: MavenAuthenticate@0
+  inputs:
+    artifactsFeeds: 'pipeline-insider'
 
-    - task: Maven@1
-      displayName: 'Maven test'
-      inputs:
-        mavenPomFile: 'pom.xml'
-        goals: 'clean test'
-        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url)'
-        jdkVersionOption: '1.8'
+- task: Maven@1
+  displayName: 'Maven test'
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean test'
+    options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url)'
+    jdkVersionOption: $(jdkVersion)
+    testRunTitle: '$(imageName)-$(jdkVersion)'
 
-    - task: CopyFiles@2
-      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-      inputs:
-        SourceFolder: '$(build.sourcesdirectory)'
-        Contents: '**/*.jar'
-        TargetFolder: '$(build.artifactstagingdirectory)'
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)'
+    Contents: '**/*.jar'
+    TargetFolder: '$(build.artifactstagingdirectory)'
 
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: drop'
-      inputs:
-        PathtoPublish: '$(build.artifactstagingdirectory)'
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'

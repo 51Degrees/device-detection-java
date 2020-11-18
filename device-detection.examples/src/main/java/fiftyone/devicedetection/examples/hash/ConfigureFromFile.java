@@ -38,41 +38,15 @@ import java.io.File;
 /**
  * @example hash/ConfigureFromFile.java
  *
- * Configure from file example of using 51Degrees device detection.
+ * @include{doc} example-configure-from-file-hash.txt
  *
- * The example shows how to:
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/ConfigureFromFile.java).
  *
- * 1. Create a Pipeline configuration from an XML file.
- * ```
- * File file = new File("hash.xml");
- * JAXBContext jaxbContext = JAXBContext.newInstance(PipelineOptions.class);
- * Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
- * PipelineOptions options = (PipelineOptions) unmarshaller.unmarshal(file);
- * ```
+ * @include{doc} example-reqiure-datafile.txt
  *
- * 2. Build a new Pipeline from the configuration.
- * ```
- * Pipeline pipeline = new FiftyOnePipelineBuilder()
- *     .buildFromConfiguration(options);
- * ```
- *
- * 3. Create a new FlowData instance ready to be populated with evidence for the
- * Pipeline.
- * ```
- * FlowData data = pipeline.createFlowData();
- * ```
- *
- * 4. Process a single HTTP User-Agent string to retrieve the values associated
- * with the User-Agent for the selected properties.
- * ```
- * data.addEvidence("header.User-Agent", mobileUserAgent)
- *     .process();
- * ```
- *
- * 5. Extract the value of a property as a string from the results.
- * ```
- * println("IsMobile: " + data.get(DeviceData.class).getIsMobile());
- * ```
+ * The configuration file used here is:
+ * 
+ * @include src/main/resources/hash.xml
  */
 
 public class ConfigureFromFile extends ProgramBase {
@@ -84,7 +58,7 @@ public class ConfigureFromFile extends ProgramBase {
     }
 
     public static class Example extends ExampleBase {
-        private String mobileUserAgent =
+        private final String mobileUserAgent =
             "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) " +
                 "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile" +
                 "/11D167 Safari/9537.53";
@@ -94,21 +68,29 @@ public class ConfigureFromFile extends ProgramBase {
         }
 
         public void run() throws Exception {
-            // Create the configuration object
+            // Create the configuration object from an XML file
             File file = new File(getClass().getClassLoader().getResource("hash.xml").getFile());
             JAXBContext jaxbContext = JAXBContext.newInstance(PipelineOptions.class);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             // Bind the configuration to a pipeline options instance
             PipelineOptions options = (PipelineOptions) unmarshaller.unmarshal(file);
 
-            // Create a simple pipeline to access the engine with.
+            // Build a new Pipeline from the configuration.
             Pipeline pipeline = new FiftyOnePipelineBuilder()
                 .buildFromConfiguration(options);
+
+            // Create a new FlowData instance ready to be populated with evidence for the
+            // Pipeline.
             FlowData data = pipeline.createFlowData();
+
+            // Process a single HTTP User-Agent string to retrieve the values associated
+            // with the User-Agent for the selected properties.
             data.addEvidence(
                 "header.user-agent",
                 mobileUserAgent)
                 .process();
+
+            // Extract the value of a property from the results.
             AspectPropertyValue<Boolean> isMobile =
                 data.get(DeviceData.class).getIsMobile();
             if (isMobile.hasValue()) {

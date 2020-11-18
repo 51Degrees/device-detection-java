@@ -31,6 +31,16 @@ import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.Constants;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 
+
+/**
+ * @example hash/StronglyTyped.java
+ *
+ * @include{doc} example-strongly-typed-hash.txt
+ *
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/Performance.java).
+ * 
+ * @include{doc} example-require-datafile.txt
+ */
 public class StronglyTyped extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
@@ -43,7 +53,7 @@ public class StronglyTyped extends ProgramBase {
     }
 
     public static class Example extends ExampleBase {
-        private String mobileUserAgent =
+        private final String mobileUserAgent =
             "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) " +
                 "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile" +
                 "/11D167 Safari/9537.53";

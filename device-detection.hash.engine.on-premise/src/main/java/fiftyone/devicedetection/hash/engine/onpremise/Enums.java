@@ -1,13 +1,13 @@
 package fiftyone.devicedetection.hash.engine.onpremise;
 
 public class Enums {
-    public enum MatchMethods
-    {
+    /**
+     * Enumeration of possible match methods used by the Hash engine.
+     */
+    public enum MatchMethods {
         NONE,
-        EXACT,
         PERFORMANCE,
         COMBINED,
         PREDICTIVE
     }
-
 }

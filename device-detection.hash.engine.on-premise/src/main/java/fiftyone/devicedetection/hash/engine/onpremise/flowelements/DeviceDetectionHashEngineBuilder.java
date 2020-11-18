@@ -34,6 +34,7 @@ import fiftyone.pipeline.core.exceptions.PipelineConfigurationException;
 import fiftyone.pipeline.core.flowelements.FlowElement;
 import fiftyone.pipeline.engines.Constants.PerformanceProfiles;
 import fiftyone.pipeline.engines.data.AspectEngineDataFile;
+import fiftyone.pipeline.engines.fiftyone.data.FiftyOneDataFile;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneDataFileDefault;
 import fiftyone.pipeline.engines.services.DataUpdateService;
 import fiftyone.pipeline.engines.services.MissingPropertyServiceDefault;
@@ -45,22 +46,48 @@ import java.util.List;
 
 import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 
+/**
+ * Builder for the {@link DeviceDetectionHashEngine}. All options for the engine
+ * should be set here.
+ */
 @ElementBuilder(alternateName = "HashDeviceDetection")
 public class DeviceDetectionHashEngineBuilder
-    extends OnPremiseDeviceDetectionEngineBuilderBase<DeviceDetectionHashEngineBuilder, DeviceDetectionHashEngine> {
+    extends OnPremiseDeviceDetectionEngineBuilderBase<
+    DeviceDetectionHashEngineBuilder,
+    DeviceDetectionHashEngine> {
 
-    private ConfigHashSwig config = new ConfigHashSwig();
+    private final String dataDownloadType = "HashV41";
+    
+    /**
+     * Native configuration instance for this engine.
+     */
+    private final ConfigHashSwig config = new ConfigHashSwig();
 
+    /**
+     * Default constructor which uses the {@link ILoggerFactory} implementation
+     * returned by {@link LoggerFactory#getILoggerFactory()}.
+     */
     public DeviceDetectionHashEngineBuilder() {
         super(LoggerFactory.getILoggerFactory());
         config.setConcurrency(Runtime.getRuntime().availableProcessors());
     }
 
+    /**
+     * Construct a new instance using the {@link ILoggerFactory} supplied.
+     * @param loggerFactory the logger factory to use
+     */
     public DeviceDetectionHashEngineBuilder(ILoggerFactory loggerFactory) {
         super(loggerFactory, null);
         config.setConcurrency(Runtime.getRuntime().availableProcessors());
     }
 
+    /**
+     * Construct a new instance using the {@link ILoggerFactory} and
+     * {@link DataUpdateService} supplied.
+     * @param loggerFactory the logger factory to use
+     * @param dataUpdateService the {@link DataUpdateService} to use when
+     *                          automatic updates happen on the data file
+     */
     public DeviceDetectionHashEngineBuilder(
         ILoggerFactory loggerFactory,
         DataUpdateService dataUpdateService) {
@@ -68,17 +95,34 @@ public class DeviceDetectionHashEngineBuilder
         config.setConcurrency(Runtime.getRuntime().availableProcessors());
     }
 
+    /**
+     * Set whether or not an existing temp file should be used if one is found
+     * in the temp directory.
+     * @param reuse true if an existing file should be used
+     * @return this builder
+     */
     public DeviceDetectionHashEngineBuilder setReuseTempFile(boolean reuse) {
         config.setReuseTempFile(reuse);
         return this;
     }
 
+    /**
+     * Set whether or not the matched characters of the User-Agent should
+     * be stored to be returned in the results.
+     * @param update true if the matched User-Agent should be stored
+     * @return this builder
+     */
     public DeviceDetectionHashEngineBuilder setUpdateMatchedUserAgent(
         boolean update) {
         config.setUpdateMatchedUserAgent(update);
         return this;
     }
 
+    /**
+     * Set the performance profile to use when constructing the data set.
+     * @param profileName name of the profile to use
+     * @return this builder
+     */
     public DeviceDetectionHashEngineBuilder setPerformanceProfile(
         String profileName) {
         PerformanceProfiles profile;
@@ -97,7 +141,8 @@ public class DeviceDetectionHashEngineBuilder
             }
             throw new IllegalArgumentException(
                 "'" + profileName + "' is not a valid performance profile. " +
-                    "Available profiles are " + stringJoin(available, ", ") + ".");
+                    "Available profiles are " +
+                    stringJoin(available, ", ") + ".");
         }
     }
 
@@ -122,8 +167,8 @@ public class DeviceDetectionHashEngineBuilder
                 break;
             default:
                 throw new IllegalArgumentException(
-                    "The performance profile '" + profile.name() + "' is not valid " +
-                        "for a DeviceDetectionHashEngine.");
+                    "The performance profile '" + profile.name() +
+                        "' is not valid for a DeviceDetectionHashEngine.");
         }
         return this;
     }
@@ -146,9 +191,59 @@ public class DeviceDetectionHashEngineBuilder
         return this;
     }
 
+    /**
+     * Set the maximum drift to allow when matching hashes. If the drift is
+     * exceeded, the result is considered invalid and values will not be
+     * returned. By default this is 0.
+     * @param drift to set
+     * @return this builder
+     */
     public DeviceDetectionHashEngineBuilder setDrift(int drift) {
         config.setDrift(drift);
         return this;
+    }
+
+    /**
+     * Set whether or not the performance optimized graph is used
+     * for processing. When processing evidence, the performance
+     * graph is optimised to find an answer as quick as possible.
+     * However, this can be at the expense of finding the best
+     * match for evidence which was not in the training data. If
+     * the predictive graph is also enabled, it will be used
+     * next if there was no match in the performance graph.
+     * @see <a href="https://51degrees.com/documentation/4.1/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
+     * @param use true if the performance graph should be used
+     * @return this builder
+     */
+    public DeviceDetectionHashEngineBuilder setUsePerformanceGraph(boolean use) {
+        config.setUsePerformanceGraph(use);
+        return this;
+    }
+
+    /**
+     * Set whether or not the predictive optimized graph is used
+     * for processing. When processing evidence, the predictive
+     * graph is optimised to find the best answer for evidence
+     * which was not in the training data. However, this is at the
+     * expense of processing time, as more possibilities are taken into
+     * consideration.
+     * @see <a href="https://51degrees.com/documentation/4.1/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
+     * @param use true if the predictive graph should be used
+     * @return this builder
+     */
+    public DeviceDetectionHashEngineBuilder setUsePredictiveGraph(boolean use) {
+        config.setUsePredictiveGraph(use);
+        return this;
+    }
+
+    /**
+     * The default value to use for the 'Type' parameter when sending
+     * a request to the Distributor
+     * @return default data download type;
+     */
+    @Override
+    protected String getDefaultDataDownloadType() {
+        return dataDownloadType;
     }
 
     @Override
@@ -179,9 +274,7 @@ public class DeviceDetectionHashEngineBuilder
         }
 
         VectorStringSwig propertiesSwig = new VectorStringSwig();
-        for (String property : properties) {
-            propertiesSwig.add(property);
-        }
+        propertiesSwig.addAll(properties);
         return new DeviceDetectionHashEngine(
             loggerFactory.getLogger(DeviceDetectionHashEngine.class.getName()),
             dataFile,
@@ -191,12 +284,8 @@ public class DeviceDetectionHashEngineBuilder
             tempDir);
     }
 
-    @Override
-    protected AspectEngineDataFile newAspectEngineDataFile() {
-        return new FiftyOneDataFileDefault();
-    }
-
-    private static class HashDataFactory implements ElementDataFactory<DeviceDataHash> {
+    private static class HashDataFactory implements
+        ElementDataFactory<DeviceDataHash> {
 
         private final ILoggerFactory loggerFactory;
 
@@ -205,7 +294,9 @@ public class DeviceDetectionHashEngineBuilder
         }
 
         @Override
-        public DeviceDataHash create(FlowData flowData, FlowElement<DeviceDataHash, ?> engine) {
+        public DeviceDataHash create(
+            FlowData flowData,
+            FlowElement<DeviceDataHash, ?> engine) {
             return new DeviceDataHashDefault(
                 loggerFactory.getLogger(DeviceDataHash.class.getName()),
                 flowData,

@@ -28,7 +28,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Static methods to help interoperability through the SWIG layer to C++.
+ */
 public class Swig {
+    /**
+     * Copy the values in the native string vector to a {@link List}.
+     * @param vector native instance to copy
+     * @return list with values from the vector
+     */
     public static List<String> asList(VectorStringSwig vector) {
         List<String> result = new ArrayList<>();
         long size = vector.size();
@@ -38,15 +46,24 @@ public class Swig {
         return result;
     }
 
+    /**
+     * The same as {@link #asList(VectorStringSwig)} but makes the returned list
+     * unmodifiable.
+     * @param vector native instance to copy
+     * @return unmodifiable list with values from the vector
+     */
     public static List<String> asUnmodifiableList(VectorStringSwig vector) {
         return Collections.unmodifiableList(asList(vector));
     }
 
+    /**
+     * Copy the values in the {@link List} to a new native string vector.
+     * @param list the list to copy
+     * @return new native vector with values from the list
+     */
     public static VectorStringSwig asVector(List<String> list) {
         VectorStringSwig vector = new VectorStringSwig();
-        for (String string : list) {
-            vector.add(string);
-        }
+        vector.addAll(list);
         return vector;
     }
 }

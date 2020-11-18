@@ -57,7 +57,7 @@ import static fiftyone.pipeline.web.mvc.components.FiftyOneInterceptor.enableCli
  *                 <!-- Obtain a resource key for free at
  *                 https://configure.51degrees.com
  *                 Make sure to include the 'BrowserName','BrowserVendor',
- *                 'BrowserVersion','HardwareName','HardeareVendor',
+ *                 'BrowserVersion','HardwareName','HardwareVendor',
  *                 'PlatformName','PlatformVendor','PlatformVersion'
  *                 properties as they are used by this example. -->
  *                 <ResourceKey>!!YOUR_RESOURCE_KEY!!</ResourceKey>
@@ -66,9 +66,6 @@ import static fiftyone.pipeline.web.mvc.components.FiftyOneInterceptor.enableCli
  *         </Element>
  *         <Element>
  *         <BuilderName>DeviceDetectionCloudEngine</BuilderName>
- *         </Element>
- *         <Element>
- *             <BuilderName>JavaScriptBundlerElement</BuilderName>
  *         </Element>
  *     </Elements>
  * </PipelineOptions>
@@ -91,9 +88,6 @@ import static fiftyone.pipeline.web.mvc.components.FiftyOneInterceptor.enableCli
  *                 <PerformanceProfile>LowMemory</PerformanceProfile>
  *             </BuildParameters>
  *             <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
- *         </Element>
- *         <Element>
- *             <BuilderName>JavaScriptBundlerElement</BuilderName>
  *         </Element>
  *     </Elements>
  * </PipelineOptions>

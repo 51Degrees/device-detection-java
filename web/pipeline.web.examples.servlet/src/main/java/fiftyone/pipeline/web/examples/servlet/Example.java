@@ -36,7 +36,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
 
 import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 
@@ -67,9 +66,6 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *         <Element>
  *         <BuilderName>DeviceDetectionCloudEngine</BuilderName>
  *         </Element>
- *         <Element>
- *             <BuilderName>JavaScriptBundlerElement</BuilderName>
- *         </Element>
  *     </Elements>
  * </PipelineOptions>
  * ```
@@ -91,9 +87,6 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *                 <PerformanceProfile>LowMemory</PerformanceProfile>
  *             </BuildParameters>
  *             <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
- *         </Element>
- *         <Element>
- *             <BuilderName>JavaScriptBundlerElement</BuilderName>
  *         </Element>
  *     </Elements>
  * </PipelineOptions>
@@ -158,23 +151,13 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *     }
  *     ...
  * }
+ * }
  *
  * ## Servlet
  */
 public class Example extends HttpServlet {
 
     FlowDataProviderCore flowDataProvider = new FlowDataProviderCore.Default();
-
-    private void processPost(
-        HttpServletRequest request,
-        HttpServletResponse response) throws IOException {
-        FlowData data = flowDataProvider.getFlowData(request);
-
-        response.setContentType("application/json");
-        try (PrintWriter out = response.getWriter()) {
-            out.print(data.get(JsonBuilderData.class).getJson());
-        }
-    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -241,15 +224,15 @@ public class Example extends HttpServlet {
             "            var text = document.createTextNode(\"Updated information from client-side evidence:\");\n" +
             "            para.appendChild(text);\n" +
             "            para.appendChild(br);\n" +
-            "            text = document.createTextNode(\"Hardware Name: \" + data.device.HardwareName.join(\",\"));\n" +
+            "            text = document.createTextNode(\"Hardware Name: \" + data.device.hardwarename.join(\",\"));\n" +
             "            br = document.createElement(\"br\");\n" +
             "            para.appendChild(text);\n" +
             "            para.appendChild(br);\n" +
-            "            text = document.createTextNode(\"Screen width (pixels): \" + data.device.ScreenPixelsWidth);\n" +
+            "            text = document.createTextNode(\"Screen width (pixels): \" + data.device.screenpixelswidth);\n" +
             "            br = document.createElement(\"br\");\n" +
             "            para.appendChild(text);\n" +
             "            para.appendChild(br);\n" +
-            "            text = document.createTextNode(\"Screen height (pixels): \" + data.device.ScreenPixelsHeight);\n" +
+            "            text = document.createTextNode(\"Screen height (pixels): \" + data.device.screenpixelsheight);\n" +
             "            br = document.createElement(\"br\");\n" +
             "            para.appendChild(text);\n" +
             "            para.appendChild(br);\n" +
@@ -279,20 +262,6 @@ public class Example extends HttpServlet {
         } catch (NoValueException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processPost(request, response);
     }
 
     /**

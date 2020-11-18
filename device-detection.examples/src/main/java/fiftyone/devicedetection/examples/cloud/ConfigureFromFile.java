@@ -26,8 +26,6 @@ import fiftyone.devicedetection.cloud.flowelements.DeviceDetectionCloudEngine;
 import fiftyone.devicedetection.examples.ExampleBase;
 import fiftyone.devicedetection.examples.ProgramBase;
 import fiftyone.devicedetection.shared.DeviceData;
-import fiftyone.pipeline.cloudrequestengine.data.CloudRequestData;
-import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder;
 import fiftyone.pipeline.core.configuration.PipelineOptions;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
@@ -41,41 +39,15 @@ import java.io.File;
 /**
  * @example cloud/ConfigureFromFile.java
  *
- * Configure from file example of using 51Degrees device detection.
+ * @include{doc} example-configure-from-file-cloud.txt
  *
- * The example shows how to:
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/cloud/ConfigureFromFile.java).
  *
- * 1. Create a Pipeline configuration from an XML file.
- * ```
- * File file = new File("cloud.xml");
- * JAXBContext jaxbContext = JAXBContext.newInstance(PipelineOptions.class);
- * Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
- * PipelineOptions options = (PipelineOptions) unmarshaller.unmarshal(file);
- * ```
+ * @include{doc} example-require-resourcekey.txt
  *
- * 2. Build a new Pipeline from the configuration.
- * ```
- * Pipeline pipeline = new FiftyOnePipelineBuilder()
- *     .buildFromConfiguration(options);
- * ```
+ * The configuration file used here is:
  *
- * 3. Create a new FlowData instance ready to be populated with evidence for the
- * Pipeline.
- * ```
- * FlowData data = pipeline.createFlowData();
- * ```
- *
- * 4. Process a single HTTP User-Agent string to retrieve the values associated
- * with the User-Agent for the selected properties.
- * ```
- * data.addEvidence("header.User-Agent", mobileUserAgent)
- *     .process();
- * ```
- *
- * 5. Extract the value of a property as a string from the results.
- * ```
- * println("IsMobile: " + data.get(DeviceData.class).getIsMobile());
- * ```
+ * @include src/main/resources/cloud.xml
  */
 
 public class ConfigureFromFile extends ProgramBase {
@@ -87,7 +59,7 @@ public class ConfigureFromFile extends ProgramBase {
     }
 
     public static class Example extends ExampleBase {
-        private String mobileUserAgent =
+        private final String mobileUserAgent =
             "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) " +
                 "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile" +
                 "/11D167 Safari/9537.53";
@@ -120,13 +92,19 @@ public class ConfigureFromFile extends ProgramBase {
                     println(property.getName());
                 }
 
+                // Create a new FlowData instance ready to be populated with evidence for the
+                // Pipeline.
                 FlowData data = pipeline.createFlowData();
+
+                // Process a single HTTP User-Agent string to retrieve the values associated
+                // with the User-Agent for the selected properties.
                 data.addEvidence(
                         "header.user-agent",
                         mobileUserAgent)
                         .process();
+                // Extract the value of a property from the results.
                 println("IsMobile: " + data.get(DeviceData.class).getIsMobile());
-                //println(data.get(CloudRequestData.class).getJsonResponse());
+                // Extract the value of a property as a string from the results.
                 println(data.get(DeviceData.class).getBackCameraMegaPixels().getValue().toString());
             }
         }

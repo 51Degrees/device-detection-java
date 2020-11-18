@@ -28,32 +28,16 @@ import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetecti
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder;
 import fiftyone.pipeline.engines.Constants;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
+import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
 
 /**
  * @example hash/MetaData.java
  *
- * Metadata example of using 51Degrees device detection.
+ * @include{doc} example-metadata-hash.txt
  *
- * The example shows how to:
- *
- * 1. Build a new on-premise Hash engine with the low memory performance profile.
- * ```
- * DeviceDetectionHashEngine engine = new DeviceDetectionHashEngineBuilder()
- *     .setAutoUpdate(false)
- *     .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
- *     .build("51Degrees-LiteV4.1.hash", false);
- * ```
- *
- * 2. Iterate over all properties in the data file, printing the name, value type,
- * and description for each one.
- * ```
- * for (FiftyOneAspectPropertyMetaData property : engine.getProperties()) {
- *     printf("%s (%s) - %s%n",
- *         property.getName(),
- *         property.getType().getSimpleName(),
- *         property.getDescription());
- * }
- * ```
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/MetaData.java).
+ * 
+ * @include{doc} example-require-datafile.txt
  */
 
 public class MetaData extends ProgramBase {
@@ -68,11 +52,6 @@ public class MetaData extends ProgramBase {
     }
 
     public static class Example extends ExampleBase {
-        private String mobileUserAgent =
-            "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) " +
-                "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile" +
-                "/11D167 Safari/9537.53";
-
         public Example(boolean printOutput) {
             super(printOutput);
         }
@@ -89,6 +68,7 @@ public class MetaData extends ProgramBase {
         public void run(String dataFile) throws Exception {
             println("Constructing pipeline with engine " +
                 "from file " + dataFile);
+            // Build a new on-premise Hash engine with the low memory performance profile.
             try (DeviceDetectionHashEngine engine =
                      new DeviceDetectionHashEngineBuilder()
                          .setAutoUpdate(false)
@@ -98,12 +78,42 @@ public class MetaData extends ProgramBase {
                          .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
                          //.setPerformanceProfile(ConstantsPerformanceProfiles.Balanced)
                          .build(dataFile, false)) {
+                // Iterate over all properties in the data file, printing the name, value type,
+                // and description for each one.
                 for (FiftyOneAspectPropertyMetaData property :
                     engine.getProperties()) {
+
                     printf("%s (%s) - %s%n",
                         property.getName(),
                         property.getType().getSimpleName(),
                         property.getDescription());
+
+                    // Next, output a list of the possible values this 
+                    // property can have.
+                    // Most properties in the Device Metrics category do
+                    // not have defined values so exclude them.
+                    if (property.getCategory() != "Device Metrics") {
+                        StringBuilder values = new StringBuilder("Possible values: ");
+                        int numValues = 0;
+                        for(ValueMetaData value : property.getValues()) {
+                            if(numValues <= 20) {
+                                // add value
+                                values.append(truncateToNl(value.getName()));
+                                // add description if exists
+                                if (value.getDescription().isEmpty() == false)
+                                {
+                                    values.append(value.getDescription());
+                                }
+                                values.append(",");
+                            }
+                            numValues++;
+                        }
+                        if (numValues > 20)
+                        {
+                            values.append(" + " + (numValues - 20) + " more ...");
+                        }
+                        println(values.toString());
+                    }
                 }
             }
         }

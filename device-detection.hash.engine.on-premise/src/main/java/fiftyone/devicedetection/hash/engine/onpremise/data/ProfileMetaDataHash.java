@@ -22,8 +22,6 @@
 
 package fiftyone.devicedetection.hash.engine.onpremise.data;
 
-import fiftyone.devicedetection.hash.engine.onpremise.data.ComponentMetaDataHash;
-import fiftyone.devicedetection.hash.engine.onpremise.data.ValueMetaDataHash;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.ValueIterable;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.*;
@@ -37,15 +35,23 @@ import java.util.List;
 
 import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 
+/**
+ * Hash on-premise implementation of the {@link ProfileMetaData} interface.
+ */
 public class ProfileMetaDataHash implements ProfileMetaData {
 
     private final ProfileMetaDataSwig source;
 
     private final DeviceDetectionHashEngine engine;
 
+    /**
+     * Construct a new instance.
+     * @param engine the engine creating the instance
+     * @param source the source metadata from the native engine
+     */
     public ProfileMetaDataHash(
-            DeviceDetectionHashEngine engine,
-            ProfileMetaDataSwig source) {
+        DeviceDetectionHashEngine engine,
+        ProfileMetaDataSwig source) {
         this.engine = engine;
         this.source = source;
     }
@@ -70,7 +76,8 @@ public class ProfileMetaDataHash implements ProfileMetaData {
         long size = values.getSize();
         for (long i = 0; i < size; i++) {
             ValueMetaDataSwig value = values.getByIndex(i);
-            PropertyMetaDataSwig valueProperty = engine.getMetaData().getPropertyForValue(value);
+            PropertyMetaDataSwig valueProperty = engine.getMetaData()
+                .getPropertyForValue(value);
             if (propertyName.equalsIgnoreCase(valueProperty.getName())) {
                 result.add(new ValueMetaDataHash(engine, value));
             } else {
@@ -87,17 +94,13 @@ public class ProfileMetaDataHash implements ProfileMetaData {
         ValueMetaData result = null;
         ValueMetaDataCollectionSwig values =
                 engine.getMetaData().getValuesForProfile(source);
-        ValueMetaDataSwig value = values.getByKey(new ValueMetaDataKeySwig(propertyName, valueName));
+        ValueMetaDataSwig value = values.getByKey(
+            new ValueMetaDataKeySwig(propertyName, valueName));
         if (value != null) {
             result = new ValueMetaDataHash(engine, value);
         }
         values.delete();
         return result;
-    }
-
-    @Override
-    public int getSignatureCount() {
-        throw new UnsupportedOperationException();
     }
 
     @Override

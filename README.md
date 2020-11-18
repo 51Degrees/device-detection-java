@@ -1,8 +1,8 @@
 # 51Degrees Device Detection Engines
 
-![51Degrees](https://51degrees.com/DesktopModules/FiftyOne/Distributor/Logo.ashx?utm_source=github&utm_medium=repository&utm_content=readme_main&utm_campaign=java-open-source "Data rewards the curious") **Java Device Detection**
+![51Degrees](https://51degrees.com/img/logo.png?utm_source=github&utm_medium=repository&utm_content=readme_main&utm_campaign=java-open-source "Data rewards the curious") **Java Device Detection**
 
-[Developer Documentation](https://docs.51degrees.com?utm_source=github&utm_medium=repository&utm_content=documentation&utm_campaign=java-open-source "developer documentation")
+[Developer Documentation](https://51degrees.com/device-detection-java/4.1/index.html?utm_source=github&utm_medium=repository&utm_content=documentation&utm_campaign=java-open-source "developer documentation")
 
 ## Introduction
 
@@ -11,6 +11,16 @@ This repository contains the device detection engines for the Java implementatio
 ## Pre-requesites
 
 JDK 7 or later.
+
+Git Large File System (LFS) for sub module `device-detection-cxx\device-detection-data`
+
+### Submodules
+
+Run the following from the Git terminal to obtain all sub modules.
+
+```
+git submodule update --init --recursive 
+```
 
 ### Build dependencies
 
@@ -49,7 +59,6 @@ On linux make sure you have the Java 7 JDK installed, Maven and Gcc.
 |Performance|The examples demonstrates the performance of the HighPerformance device detection configuration.|Hash / Pattern|
 |StronglyTyped|This tutorial demonstrates how to return results for the IsMobile property value as a boolean rather than a string.|Hash / Pattern|
 
-
 ### Servlet
 Using the 51Degrees cloud service, this example shows how to use 51Degrees Pipeline to extend HttpServlet to provide device detection capabilities. 
 
@@ -84,7 +93,6 @@ Clone this respository and navigate to the root and run:
 ```
 mvn install
 ```
-
 
 ## Tests
 

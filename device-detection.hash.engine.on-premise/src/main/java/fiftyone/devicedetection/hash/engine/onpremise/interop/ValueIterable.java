@@ -28,13 +28,22 @@ import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaData
 import fiftyone.pipeline.engines.fiftyone.data.CollectionIterableBase;
 import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
 
+/**
+ * Class which adds the {@link Iterable} and {@link AutoCloseable} interfaces to
+ * a native collection representing {@link ValueMetaData}s.
+ */
 public class ValueIterable
         extends CollectionIterableBase<ValueMetaData> {
 
-    private DeviceDetectionHashEngine engine;
+    private final DeviceDetectionHashEngine engine;
 
-    private ValueMetaDataCollectionSwig collection;
+    private final ValueMetaDataCollectionSwig collection;
 
+    /**
+     * Create a new instance.
+     * @param engine the engine which the meta data relates to
+     * @param collection the native collection of values
+     */
     public ValueIterable(
             DeviceDetectionHashEngine engine,
             ValueMetaDataCollectionSwig collection) {

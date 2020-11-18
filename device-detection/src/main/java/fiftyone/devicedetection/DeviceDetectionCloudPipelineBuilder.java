@@ -32,11 +32,22 @@ import fiftyone.pipeline.engines.flowelements.CloudPipelineBuilderBase;
 import fiftyone.pipeline.engines.services.HttpClient;
 import org.slf4j.ILoggerFactory;
 
+/**
+ * Builder used to create pipelines with an cloud-based 
+ * device detection engine.
+ */
 public class DeviceDetectionCloudPipelineBuilder
     extends CloudPipelineBuilderBase<DeviceDetectionCloudPipelineBuilder> {
 
     private final HttpClient httpClient;
 
+    /**
+     * Internal Constructor.
+     * This builder should only be created through the 
+     * DeviceDetectionPipelineBuilder
+     * @param loggerFactory
+     * @param httpClient 
+     */
     public DeviceDetectionCloudPipelineBuilder(
         ILoggerFactory loggerFactory,
         HttpClient httpClient) {
@@ -44,6 +55,13 @@ public class DeviceDetectionCloudPipelineBuilder
         this.httpClient = httpClient;
     }
 
+    /**
+     * Build the pipeline using the configured values.
+     * @return A new pipeline instance that contains a cloud request engine for 
+     * making requests to the 51Degrees cloud service and a 
+     * DeviceDetectionCloudEngine to interpret the device detection results.
+     * @throws Exception 
+     */
     @Override
     public Pipeline build() throws Exception {
         // Configure and build the cloud request engine
@@ -79,10 +97,7 @@ public class DeviceDetectionCloudPipelineBuilder
 
         // Configure and build the device detection engine
         DeviceDetectionCloudEngineBuilder deviceDetectionEngineBuilder =
-            new DeviceDetectionCloudEngineBuilder(
-                loggerFactory,
-                httpClient,
-                cloudRequestEngine);
+            new DeviceDetectionCloudEngineBuilder(loggerFactory);
         if (lazyLoading) {
             deviceDetectionEngineBuilder.setLazyLoading(new LazyLoadingConfiguration(
                 (int) lazyLoadingTimeoutMillis));

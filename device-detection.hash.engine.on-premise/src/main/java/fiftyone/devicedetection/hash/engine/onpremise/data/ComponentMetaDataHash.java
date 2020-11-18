@@ -35,6 +35,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Hash on-premise implementation of the {@link ComponentMetaData} interface.
+ */
 public class ComponentMetaDataHash implements ComponentMetaData {
 
     private final ComponentMetaDataSwig source;
@@ -43,6 +46,11 @@ public class ComponentMetaDataHash implements ComponentMetaData {
 
     private final List<FiftyOneAspectPropertyMetaData> properties = new ArrayList<>();
 
+    /**
+     * Construct a new instance.
+     * @param engine the engine creating the instance
+     * @param source the source metadata from the native engine
+     */
     public ComponentMetaDataHash(
             DeviceDetectionHashEngine engine,
             ComponentMetaDataSwig source) {
@@ -63,23 +71,23 @@ public class ComponentMetaDataHash implements ComponentMetaData {
     @Override
     public ProfileMetaData getDefaultProfile() {
         return new ProfileMetaDataHash(
-                engine,
-                engine.getMetaData().getDefaultProfileForComponent(source));
+            engine,
+            engine.getMetaData().getDefaultProfileForComponent(source));
     }
 
     @Override
     public Iterable<FiftyOneAspectPropertyMetaData> getProperties() {
         return new PropertyIterable(
-                engine,
-                properties,
-                engine.getMetaData().getPropertiesForComponent(source));
+            engine,
+            properties,
+            engine.getMetaData().getPropertiesForComponent(source));
     }
 
     @Override
     public FiftyOneAspectPropertyMetaData getProperty(String propertyName) {
         FiftyOneAspectPropertyMetaData result = null;
         PropertyMetaDataCollectionSwig components =
-                engine.getMetaData().getPropertiesForComponent(source);
+            engine.getMetaData().getPropertiesForComponent(source);
         PropertyMetaDataSwig value = components.getByKey(propertyName);
         if (value != null) {
             result = new PropertyMetaDataHash(engine, value);

@@ -24,7 +24,6 @@ package fiftyone.pipeline.web.examples.mvc.controller;
 
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
-import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.jsonbuilder.data.JsonBuilderData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +33,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import fiftyone.pipeline.web.mvc.components.FlowDataProvider;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -62,12 +60,5 @@ public class ExampleController {
         model.addAttribute("browserName", device.getBrowserName());
         model.addAttribute("browserVersion", device.getBrowserVersion());
         return "example";
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String post(ModelMap model, HttpServletRequest request) {
-        FlowData data = flowDataProvider.getFlowData(request);
-        model.addAttribute("json", data.get(JsonBuilderData.class).getJson());
-        return "json";
     }
 }

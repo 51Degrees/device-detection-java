@@ -28,13 +28,22 @@ import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ProfileMetaDa
 import fiftyone.pipeline.engines.fiftyone.data.CollectionIterableBase;
 import fiftyone.pipeline.engines.fiftyone.data.ProfileMetaData;
 
+/**
+ * Class which adds the {@link Iterable} and {@link AutoCloseable} interfaces to
+ * a native collection representing {@link ProfileMetaData}s.
+ */
 public class ProfileIterable
         extends CollectionIterableBase<ProfileMetaData> {
 
-    private ProfileMetaDataCollectionSwig collection;
+    private final ProfileMetaDataCollectionSwig collection;
 
-    private DeviceDetectionHashEngine engine;
+    private final DeviceDetectionHashEngine engine;
 
+    /**
+     * Create a new instance.
+     * @param engine the engine which the meta data relates to
+     * @param collection the native collection of profiles
+     */
     public ProfileIterable(
             DeviceDetectionHashEngine engine,
             ProfileMetaDataCollectionSwig collection) {

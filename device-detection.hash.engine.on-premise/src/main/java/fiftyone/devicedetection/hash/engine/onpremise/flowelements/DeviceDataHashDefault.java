@@ -42,15 +42,35 @@ import java.util.List;
 
 import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 
+/**
+ * Internal implementation of the {@link DeviceDataHash} interface. This can
+ * only be constructed by the {@link DeviceDetectionHashEngine}.
+ */
 public class DeviceDataHashDefault
     extends DeviceDataBaseOnPremise
     implements DeviceDataHash {
-    // Pre-populate this to avoid calling the method every time.
+    /**
+     * Pre-populated list of match methods. This to avoid calling the
+     * '.values()' method every time.
+     */
     private static final Enums.MatchMethods[] matchMethods =
             Enums.MatchMethods.values();
 
+    /**
+     * List of native results which make up this result instance. Usually, this
+     * will only be one.
+     */
     private final List<ResultsHashSwig> resultsList = new ArrayList<>();
 
+    /**
+     * Constructs a new instance.
+     * @param logger used for logging
+     * @param flowData the {@link FlowData} instance this element data will be
+     *                 associated with
+     * @param engine the engine which created the instance
+     * @param missingPropertyService service used to determine the reason for
+     *                               a property value being missing
+     */
     DeviceDataHashDefault(
         Logger logger,
         FlowData flowData,
@@ -59,10 +79,20 @@ public class DeviceDataHashDefault
         super(logger, flowData, engine, missingPropertyService);
     }
 
+    /**
+     * Add the native results to the list of results contained in this instance.
+     * @param results the results to add
+     */
     void setResults(ResultsHashSwig results) {
         resultsList.add(results);
     }
 
+    /**
+     * Get the first native results in {@link #resultsList} which contains
+     * values for the requested property.
+     * @param propertyName name of the requested property
+     * @return native results containing values, or null if none were found
+     */
     private ResultsHashSwig getResultsContainingProperty(String propertyName) {
         for (ResultsHashSwig results : resultsList) {
             if (results.containsProperty(propertyName, propertyName.length())) {
@@ -72,6 +102,10 @@ public class DeviceDataHashDefault
         return null;
     }
 
+    /**
+     * Get the device id from the native results.
+     * @return device id
+     */
     private AspectPropertyValue<String> getDeviceIdInternal() {
         if (resultsList.size() == 1) {
             // Only one Engine has added results, so return the device
@@ -106,6 +140,10 @@ public class DeviceDataHashDefault
         }
     }
 
+    /**
+     * Get the difference from the native results.
+     * @return difference
+     */
     private AspectPropertyValue<Integer> getDifferenceInternal() {
         int total = 0;
         for (ResultsHashSwig results : resultsList) {
@@ -114,6 +152,10 @@ public class DeviceDataHashDefault
         return new AspectPropertyValueDefault<>(total);
     }
 
+    /**
+     * Get the drift from the native results.
+     * @return drift
+     */
     private AspectPropertyValue<Integer> getDriftInternal() {
         int result = Integer.MAX_VALUE;
         for (ResultsHashSwig results : resultsList) {
@@ -124,6 +166,10 @@ public class DeviceDataHashDefault
         return new AspectPropertyValueDefault<>(result);
     }
 
+    /**
+     * Get the number of iterations from the native results.
+     * @return iterations
+     */
     private AspectPropertyValue<Integer> getIterationsInternal() {
         int result = 0;
         for (ResultsHashSwig results : resultsList) {
@@ -132,6 +178,10 @@ public class DeviceDataHashDefault
         return new AspectPropertyValueDefault<>(result);
     }
 
+    /**
+     * Get the number of matched nodes from the native results.
+     * @return matched nodes
+     */
     private AspectPropertyValue<Integer> getMatchedNodesInternal() {
         int result = 0;
         for (ResultsHashSwig results : resultsList) {
@@ -140,6 +190,10 @@ public class DeviceDataHashDefault
         return new AspectPropertyValueDefault<>(result);
     }
 
+    /**
+     * Get the match method from the native results.
+     * @return match method
+     */
     private AspectPropertyValue<String> getMethodInternal() {
         int result = 0;
         for (ResultsHashSwig results : resultsList) {
@@ -150,6 +204,10 @@ public class DeviceDataHashDefault
         return new AspectPropertyValueDefault<>(matchMethods[result].name());
     }
 
+    /**
+     * Get the matched User-Agent strings from the native results.
+     * @return matched User-Agents
+     */
     private AspectPropertyValue<List<String>> getUserAgentsInternal() {
         List<String> result = new ArrayList<>();
         for (ResultsHashSwig results : resultsList) {
@@ -164,26 +222,6 @@ public class DeviceDataHashDefault
     }
 
     @Override
-    public AspectPropertyValue<Integer> getDrift() {
-        return getAs("Drift", AspectPropertyValue.class, Integer.class);
-    }
-
-    @Override
-    public AspectPropertyValue<Integer> getIterations() {
-        return getAs("Iterations", AspectPropertyValue.class, Integer.class);
-    }
-
-    @Override
-    public AspectPropertyValue<Integer> getMatchedNodes() {
-        return getAs("MatchedNodes", AspectPropertyValue.class, Integer.class);
-    }
-
-    @Override
-    public AspectPropertyValue<String> getMethod() {
-        return getAs("Method", AspectPropertyValue.class, String.class);
-    }
-
-    @Override
     protected boolean propertyIsAvailable(String propertyName) {
         for (ResultsHashSwig results : resultsList) {
             if (results.containsProperty(propertyName, propertyName.length())) {
@@ -195,12 +233,16 @@ public class DeviceDataHashDefault
 
     @Override
     public AspectPropertyValue<List<String>> getValues(String propertyName) {
-        AspectPropertyValue<List<String>> result = new AspectPropertyValueDefault<>();
+        AspectPropertyValue<List<String>> result =
+            new AspectPropertyValueDefault<>();
         ResultsHashSwig results = getResultsContainingProperty(propertyName);
         if (results != null) {
-            VectorStringValuesSwig value = results.getValues(propertyName, propertyName.length());
+            VectorStringValuesSwig value = results.getValues(
+                propertyName,
+                propertyName.length());
             if (value.hasValue()) {
-                result.setValue(Collections.unmodifiableList(Swig.asList(value.getValue())));
+                result.setValue(Collections.unmodifiableList(
+                    Swig.asList(value.getValue())));
             }
             else {
                 result.setNoValueMessage(value.getNoValueMessage());
@@ -214,7 +256,9 @@ public class DeviceDataHashDefault
         AspectPropertyValue<String> result = new AspectPropertyValueDefault<>();
         ResultsHashSwig results = getResultsContainingProperty(propertyName);
         if (results != null) {
-            StringValueSwig value = results.getValueAsString(propertyName, propertyName.length());
+            StringValueSwig value = results.getValueAsString(
+                propertyName,
+                propertyName.length());
             if (value.hasValue()) {
                 result.setValue(value.getValue());
             }
@@ -226,11 +270,15 @@ public class DeviceDataHashDefault
     }
 
     @Override
-    protected AspectPropertyValue<JavaScript> getValueAsJavaScript(String propertyName) {
-        AspectPropertyValue<JavaScript> result = new AspectPropertyValueDefault<>();
+    protected AspectPropertyValue<JavaScript> getValueAsJavaScript(
+        String propertyName) {
+        AspectPropertyValue<JavaScript> result =
+            new AspectPropertyValueDefault<>();
         ResultsHashSwig results = getResultsContainingProperty(propertyName);
         if (results != null) {
-            StringValueSwig value = results.getValueAsString(propertyName, propertyName.length());
+            StringValueSwig value = results.getValueAsString(
+                propertyName,
+                propertyName.length());
             if (value.hasValue()) {
                 result.setValue(new JavaScript(value.getValue()));
             }
@@ -242,11 +290,14 @@ public class DeviceDataHashDefault
     }
 
     @Override
-    protected AspectPropertyValue<Integer> getValueAsInteger(String propertyName) {
+    protected AspectPropertyValue<Integer> getValueAsInteger(
+        String propertyName) {
         AspectPropertyValue<Integer> result = new AspectPropertyValueDefault<>();
         ResultsHashSwig results = getResultsContainingProperty(propertyName);
         if (results != null) {
-            IntegerValueSwig value = results.getValueAsInteger(propertyName, propertyName.length());
+            IntegerValueSwig value = results.getValueAsInteger(
+                propertyName,
+                propertyName.length());
             if (value.hasValue()) {
                 result.setValue(value.getValue());
             }
@@ -262,7 +313,9 @@ public class DeviceDataHashDefault
         AspectPropertyValue<Boolean> result = new AspectPropertyValueDefault<>();
         ResultsHashSwig results = getResultsContainingProperty(propertyName);
         if (results != null) {
-            BoolValueSwig value = results.getValueAsBool(propertyName, propertyName.length());
+            BoolValueSwig value = results.getValueAsBool(
+                propertyName,
+                propertyName.length());
             if (value.hasValue()) {
                 result.setValue(value.getValue());
             }
@@ -278,7 +331,9 @@ public class DeviceDataHashDefault
         AspectPropertyValue<Double> result = new AspectPropertyValueDefault<>();
         ResultsHashSwig results = getResultsContainingProperty(propertyName);
         if (results != null) {
-            DoubleValueSwig value = results.getValueAsDouble(propertyName, propertyName.length());
+            DoubleValueSwig value = results.getValueAsDouble(
+                propertyName,
+                propertyName.length());
             if (value.hasValue()) {
                 result.setValue(value.getValue());
             }
@@ -290,7 +345,10 @@ public class DeviceDataHashDefault
     }
 
     @Override
-    protected <T> TryGetResult<T> tryGetValue(String key, Class<T> type, Class<?>... parameterisedTypes) {
+    protected <T> TryGetResult<T> tryGetValue(
+        String key,
+        Class<T> type,
+        Class<?>... parameterisedTypes) {
         TryGetResult<T> result = super.tryGetValue(key, type, parameterisedTypes);
 
         if (result.hasValue() == false) {
@@ -324,7 +382,7 @@ public class DeviceDataHashDefault
                 try {
                     T value;
                     if (type.isPrimitive()) {
-                        value = (T) primativeTypes.get(type).cast(obj);
+                        value = (T) primitiveTypes.get(type).cast(obj);
                     } else {
                         value = type.cast(obj);
                     }

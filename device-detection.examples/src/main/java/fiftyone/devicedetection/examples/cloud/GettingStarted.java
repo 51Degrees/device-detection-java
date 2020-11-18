@@ -34,36 +34,11 @@ import fiftyone.pipeline.engines.data.AspectPropertyValue;
 /**
  * @example cloud/GettingStarted.java
  *
- * Getting started example of using 51Degrees device detection.
+ * @include{doc} example-getting-started-cloud.txt
  *
- * The example shows how to:
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/cloud/GettingStarted.java).
  *
- * 1. Build a new Pipeline to use cloud device detection engine.
- * ```
- * Pipeline pipeline = new DeviceDetectionPipelineBuilder()
- *     .useCloud(url)
- *     .useLazyLoading(1000)
- *     .setAutoCloseElements(true)
- *     .build();
- * ```
- *
- * 2. Create a new FlowData instance ready to be populated with evidence for the
- * Pipeline.
- * ```
- * FlowData data = pipeline.createFlowData();
- * ```
- *
- * 3. Process a single HTTP User-Agent string to retrieve the values associated
- * with the User-Agent for the selected properties.
- * ```
- * data.addEvidence("header.user-agent", mobileUserAgent)
- *     .process();
- * ```
- *
- * 4. Extract the value of a property as a string from the results.
- * ```
- * println("IsMobile: " + data.get(DeviceData.class).getIsMobile());
- * ```
+ * @include{doc} example-require-resourcekey.txt
  */
 
 public class GettingStarted extends ProgramBase {
@@ -79,7 +54,7 @@ public class GettingStarted extends ProgramBase {
     }
 
     public static class Example extends ExampleBase {
-        private String mobileUserAgent =
+        private final String mobileUserAgent =
             "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) " +
                 "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile" +
                 "/11D167 Safari/9537.53";
@@ -98,7 +73,10 @@ public class GettingStarted extends ProgramBase {
             else {
                 println("Constructing pipeline with cloud engine " +
                         "with resource key: " + resourceKey);
-                // Create a simple pipeline to access the engine with.
+                // Build the device detection pipeline using the builder that comes with the
+                // fiftyone.devicedetection package and pass in the desired settings. Additional
+                // flow elements / engines can be added before the build() method is called if
+                // needed.
                 Pipeline pipeline = new DeviceDetectionPipelineBuilder()
                         // Obtain a resource key from https://configure.51degrees.com
                         .useCloud(resourceKey)
@@ -106,12 +84,19 @@ public class GettingStarted extends ProgramBase {
                         .setAutoCloseElements(true)
                         .build();
 
+                // A pipeline can create a flow data element which is where evidence is added
+                // (for example from a device web request). This evidence is then processed by
+                // the pipeline through the flow data's `process()` method.
                 FlowData data = pipeline.createFlowData();
                 data.addEvidence(
                         "header.user-agent",
                         mobileUserAgent)
                         .process();
 
+                        
+                // Here is an example of a function that checks if a User-Agent is a mobile
+                // device. In some cases the IsMobile value is not meaningful so instead of
+                // returning a default, a .hasValue() check can be made.
                 AspectPropertyValue<Boolean> isMobile = data.get(DeviceData.class).getIsMobile();
                 if (isMobile.hasValue()) {
                     println("IsMobile: " + isMobile.getValue());

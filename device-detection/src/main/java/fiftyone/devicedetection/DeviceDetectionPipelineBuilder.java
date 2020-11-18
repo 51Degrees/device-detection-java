@@ -29,31 +29,73 @@ import fiftyone.pipeline.engines.services.HttpClientDefault;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Builder used to create a Pipeline with a device detection engine.
+ */
 public class DeviceDetectionPipelineBuilder {
 
-    protected ILoggerFactory loggerFactory;
-    private DataUpdateService dataUpdateService;
-    private HttpClient httpClient;
+    protected final ILoggerFactory loggerFactory;
+    private final DataUpdateService dataUpdateService;
+    private final HttpClient httpClient;
 
+    /**
+     * Constructor
+     */
     public DeviceDetectionPipelineBuilder() {
         this(LoggerFactory.getILoggerFactory());
     }
 
-
-    public DeviceDetectionPipelineBuilder(ILoggerFactory loggerFactory) {
+    /**
+     * Constructor
+     * @param loggerFactory The factory to use for creating loggers within the 
+     * pipeline.
+     */
+    public DeviceDetectionPipelineBuilder(
+            ILoggerFactory loggerFactory) {
         this(loggerFactory, new HttpClientDefault());
     }
 
+    /**
+     * Constructor
+     * @param loggerFactory The factory to use for creating loggers within the 
+     * pipeline.
+     * @param httpClient The HTTP Client to use within the pipeline.
+     */
     public DeviceDetectionPipelineBuilder(
         ILoggerFactory loggerFactory,
         HttpClient httpClient) {
+        this(loggerFactory, httpClient, new DataUpdateServiceDefault(
+            loggerFactory.getLogger(DataUpdateServiceDefault.class.getName()),
+            httpClient));
+    }
+    
+    /**
+     * Constructor
+     * @param loggerFactory The factory to use for creating loggers within the 
+     * pipeline.
+     * @param httpClient The HTTP Client to use within the pipeline.
+     * @param dataUpdateService The DataUpdateService to use when checking for 
+     * data updates.
+     */
+    public DeviceDetectionPipelineBuilder(
+        ILoggerFactory loggerFactory,
+        HttpClient httpClient,
+        DataUpdateService dataUpdateService) {
         this.httpClient = httpClient;
         this.loggerFactory = loggerFactory;
-        dataUpdateService = new DataUpdateServiceDefault(
-            loggerFactory.getLogger(DataUpdateServiceDefault.class.getName()),
-            httpClient);
+        this.dataUpdateService = dataUpdateService;
     }
 
+    /**
+     * Use a 51Degrees on-premise device detection engine to
+     * perform device detection.
+     * @param datafile The full path to the device detection data file.
+     * @param createTempDataCopy If true, the engine will create a temporary 
+     * copy of the data file rather than using the data file directly.
+     * @return A builder that can be used to configure and build a pipeline
+     * that will use the on-premise detection engine.
+     * @throws Exception Thrown if a required parameter is null.
+     */
     public DeviceDetectionOnPremisePipelineBuilder useOnPremise(
         String datafile,
         boolean createTempDataCopy) throws Exception {
@@ -66,6 +108,14 @@ public class DeviceDetectionPipelineBuilder {
         return builder;
     }
 
+    /**
+     * Use a 51Degrees on-premise device detection engine to
+     * perform device detection.
+     * @param data The device detection data file as a byte array.
+     * @param algorithm The detection algorithm that the supplied data supports.
+     * @return A builder that can be used to configure and build a pipeline
+     * that will use the on-premise detection engine.
+     */
     public DeviceDetectionOnPremisePipelineBuilder useOnPremise(
         byte[] data,
         Enums.DeviceDetectionAlgorithm algorithm) {
@@ -78,6 +128,13 @@ public class DeviceDetectionPipelineBuilder {
         return builder;
     }
 
+    /**
+     * Use the 51Degrees Cloud service to perform device detection.
+     * @param resourceKey The resource key to use when querying the cloud service. 
+     * Obtain one from https://configure.51degrees.com
+     * @return A builder that can be used to configure and build a pipeline
+     * that will use the cloud device detection engine.
+     */
     public DeviceDetectionCloudPipelineBuilder useCloud(String resourceKey) {
         DeviceDetectionCloudPipelineBuilder builder =
             new DeviceDetectionCloudPipelineBuilder(loggerFactory, httpClient);

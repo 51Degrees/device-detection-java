@@ -43,6 +43,11 @@ import org.slf4j.Logger;
 
 import java.util.*;
 
+/**
+ * Hash device detection engine. This engine takes User-Agents and other
+ * relevant HTTP headers and returns properties about the device which produced
+ * them e.g. DeviceType or ReleaseDate.
+ */
 public class DeviceDetectionHashEngine
     extends FiftyOneOnPremiseAspectEngineBase<DeviceDataHash, FiftyOneAspectPropertyMetaData> {
     private EngineHashSwig engine = null;
@@ -53,6 +58,19 @@ public class DeviceDetectionHashEngine
     private EvidenceKeyFilter evidenceKeyFilter;
     private volatile boolean propertiesPopulated = false;
 
+    /**
+     * Construct a new instance of the {@link DeviceDetectionHashEngine}.
+     * @param logger logger instance to use for logging
+     * @param dataFile data file to read the data set from
+     * @param config native configuration which was configured by the builder
+     * @param properties native required properties configuration which define
+     *                   the properties which the engine should be initialised
+     *                   with
+     * @param deviceDataFactory the factory to use when creating a
+     *                          {@link DeviceDataHash} instance
+     * @param tempDataFileDir the file where a temporary data file copy
+     *                        will be stored if one is created
+     */
     DeviceDetectionHashEngine(
         Logger logger,
         AspectEngineDataFile dataFile,
@@ -66,12 +84,16 @@ public class DeviceDetectionHashEngine
         addDataFile(dataFile);
     }
 
-    private static List<String> getKeysFromEngine(EngineDeviceDetectionSwig engine) {
+    /**
+     * Get the evidence keys from the native engine and add to a {@link List}.
+     * @param engine to get the keys from
+     * @return evidence keys list
+     */
+    private static List<String> getKeysFromEngine(
+        EngineDeviceDetectionSwig engine) {
         List<String> result = new ArrayList<>();
         VectorStringSwig keys = engine.getKeys();
-        for (int i = 0; i < keys.size(); i++) {
-            result.add(keys.get(i));
-        }
+        result.addAll(keys);
         return result;
     }
 
@@ -80,6 +102,10 @@ public class DeviceDetectionHashEngine
         return "device";
     }
 
+    /**
+     * Get the native meta data instance for this engine.
+     * @return native meta data
+     */
     public MetaDataSwig getMetaData() {
         return engine.getMetaData();
     }
@@ -90,22 +116,24 @@ public class DeviceDetectionHashEngine
             synchronized (properties) {
                 if (propertiesPopulated == false) {
                     properties.clear();
-                    List<FiftyOneAspectPropertyMetaData> newProperties = new ArrayList<>();
+                    List<FiftyOneAspectPropertyMetaData> newProperties =
+                        new ArrayList<>();
 
                     try (PropertyIterable iterable = new PropertyIterable(
                             this,
                             newProperties,
                             engine.getMetaData().getProperties())) {
-                        for (FiftyOneAspectPropertyMetaData property : iterable) {
+                        for (FiftyOneAspectPropertyMetaData property :
+                            iterable) {
                             properties.add(property);
                         }
                     } catch (Exception e) {
-                        logger.error("Exception occurred while constructing properties.", e);
+                        logger.error(
+                            "Exception occurred while constructing properties.",
+                            e);
                     }
 
-                    for (FiftyOneAspectPropertyMetaData property : getMetricProperties()) {
-                        newProperties.add(property);
-                    }
+                    newProperties.addAll(getMetricProperties());
 
                     propertiesPopulated = true;
                 }
@@ -165,7 +193,8 @@ public class DeviceDetectionHashEngine
     public java.util.Date getDataFilePublishedDate(String dataFileIdentifier) {
         Date value = engine.getPublishedTime();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(value.getYear(), value.getMonth(), value.getDay());
+        // java.util.Calendar month is 0 based where January = 0 
+        calendar.set(value.getYear(), value.getMonth() -1, value.getDay());
         return calendar.getTime();
     }
 
@@ -173,7 +202,8 @@ public class DeviceDetectionHashEngine
     public java.util.Date getDataFileUpdateAvailableTime(String dataFileIdentifier) {
         Date value = engine.getUpdateAvailableTime();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(value.getYear(), value.getMonth(), value.getDay());
+        // java.util.Calendar month is 0 based where January = 0 
+        calendar.set(value.getYear(), value.getMonth() - 1, value.getDay());
         return calendar.getTime();
     }
 
@@ -182,6 +212,11 @@ public class DeviceDetectionHashEngine
         return engine.getType();
     }
 
+    /**
+     * Used internally to populate the meta data returned by
+     * {@link #getDataFileMetaData()}.
+     * @return temp path
+     */
     private String getDataFileTempPath() {
         return engine == null ? null : engine.getDataFileTempPath();
     }
@@ -197,7 +232,10 @@ public class DeviceDetectionHashEngine
 
         if (dataFile.getDataFilePath() != null &&
             dataFile.getDataFilePath().isEmpty() == false) {
-            engine = new EngineHashSwig(dataFile.getDataFilePath(), config, propertiesConfigSwig);
+            engine = new EngineHashSwig(
+                dataFile.getDataFilePath(),
+                config,
+                propertiesConfigSwig);
         }
         else {
             engine.refreshData();
@@ -221,7 +259,8 @@ public class DeviceDetectionHashEngine
         EvidenceDeviceDetectionSwig relevantEvidence =
             new EvidenceDeviceDetectionSwig();
         List<String> keys = evidenceKeys;
-        for (Map.Entry<String, Object> evidenceItem : flowData.getEvidence().asKeyMap().entrySet()) {
+        for (Map.Entry<String, Object> evidenceItem :
+            flowData.getEvidence().asKeyMap().entrySet()) {
             boolean containsKey = false;
             for (String key : keys) {
                 if (key.equalsIgnoreCase(evidenceItem.getKey())) {
@@ -238,7 +277,8 @@ public class DeviceDetectionHashEngine
                     evidenceItem.getValue().toString().length());
             }
         }
-        ((DeviceDataHashDefault) deviceData).setResults(engine.process(relevantEvidence));
+        ((DeviceDataHashDefault) deviceData).setResults(
+            engine.process(relevantEvidence));
     }
 
     @Override
@@ -255,18 +295,26 @@ public class DeviceDetectionHashEngine
             String.CASE_INSENSITIVE_ORDER);
         propertiesPopulated = false;
         // Populate these data file properties from the native engine.
-        FiftyOneDataFile dataFileMetaData = (FiftyOneDataFile)getDataFileMetaData();
+        FiftyOneDataFile dataFileMetaData =
+            (FiftyOneDataFile)getDataFileMetaData();
         if (dataFileMetaData != null) {
-            dataFileMetaData.setDataPublishedDateTime(getDataFilePublishedDate());
-            dataFileMetaData.setUpdateAvailableTime(getDataFileUpdateAvailableTime());
+            dataFileMetaData.setDataPublishedDateTime(
+                getDataFilePublishedDate());
+            dataFileMetaData.setUpdateAvailableTime(
+                getDataFileUpdateAvailableTime());
             dataFileMetaData.setTempDataFilePath(getDataFileTempPath());
         }
     }
 
+    /**
+     * Get the match metric properties which are not defined in the data file.
+     * @return meta data for metric properties
+     */
     private List<FiftyOneAspectPropertyMetaData> getMetricProperties() {
         List<String> dataFileList = Arrays.asList(
             "Lite", "Premium", "Enterprise");
-        FiftyOneAspectPropertyMetaData[] metricProperties = new FiftyOneAspectPropertyMetaData[]{
+        FiftyOneAspectPropertyMetaData[] metricProperties =
+            new FiftyOneAspectPropertyMetaData[]{
 
             new FiftyOneAspectPropertyMetaDataDefault(
                 "MatchedNodes",
@@ -383,8 +431,9 @@ public class DeviceDetectionHashEngine
     @Override
     public void addDataFile(AspectEngineDataFile dataFile) {
         if (getDataFiles().size() >  0) {
-            throw new IllegalArgumentException("DeviceDetectionHashEngine already " +
-                "has a configured data source.");
+            throw new IllegalArgumentException(
+                "DeviceDetectionHashEngine already has a configured data " +
+                "source.");
         }
         super.addDataFile(dataFile);
         if (dataFile instanceof  FiftyOneDataFile) {
