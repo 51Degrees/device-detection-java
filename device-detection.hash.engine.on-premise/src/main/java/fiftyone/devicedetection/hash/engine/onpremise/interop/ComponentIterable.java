@@ -28,7 +28,6 @@ import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ComponentMeta
 import fiftyone.pipeline.engines.fiftyone.data.CollectionIterableBase;
 import fiftyone.pipeline.engines.fiftyone.data.ComponentMetaData;
 
-
 /**
  * Class which adds the {@link Iterable} and {@link AutoCloseable} interfaces to
  * a native collection representing {@link ComponentMetaData}s.

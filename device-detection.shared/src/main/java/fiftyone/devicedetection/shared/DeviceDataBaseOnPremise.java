@@ -74,7 +74,7 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
     protected abstract boolean propertyIsAvailable(String propertyName);
 
     /**
-     * Get the values for the specified property as a {@link List<String>}. For
+     * Get the values for the specified property as a {@link List}. For
      * on-premise engines, this is the raw form they are stored in the data file
      * as.
      * @param propertyName name of the property to get values for

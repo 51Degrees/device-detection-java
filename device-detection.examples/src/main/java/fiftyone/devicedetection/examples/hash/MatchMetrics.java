@@ -41,6 +41,9 @@ import java.util.Map;
  * @include{doc} example-require-datafile.txt
  */
 
+/**
+ * Match metrics example.
+ */
 public class MatchMetrics extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
@@ -97,53 +100,55 @@ public class MatchMetrics extends ProgramBase {
                 .setUsePerformanceGraph(false)
                 .build();
 
-            // Create a new FlowData instance ready to be populated with 
-            // evidence for the Pipeline.
-            FlowData data = pipeline.createFlowData();
+            // A try-with-resource block MUST be used for the FlowData instance.
+            // This ensures that native resources created by the device 
+            // detection engine are freed.
+            try (FlowData data = pipeline.createFlowData()) {
 
-            // Process a single HTTP User-Agent string to retrieve the values 
-            // associated with the User-Agent for the selected properties.
-            data.addEvidence(
-                "header.user-agent",
-                mobileUserAgent)
-                .process();
- 
-            DeviceDataHash device = data.get(DeviceDataHash.class);
-            println("User-Agent:         " + mobileUserAgent);
-            // Obtain the matched User-Agent: the matched substrings in the
-            // User-Agent separated with underscored.
-            println("Matched User-Agent: " + 
+                // Process a single HTTP User-Agent string to retrieve the values
+                // associated with the User-Agent for the selected properties.
+                data.addEvidence(
+                    "header.user-agent",
+                    mobileUserAgent)
+                    .process();
+
+                DeviceDataHash device = data.get(DeviceDataHash.class);
+                println("User-Agent:         " + mobileUserAgent);
+                // Obtain the matched User-Agent: the matched substrings in the
+                // User-Agent separated with underscored.
+                println("Matched User-Agent: " +
                     device.getUserAgents().getValue().get(0));
-            // Obtains the matched Device ID: the IDs of the matched profiles 
-            // separated with hyphens. Notice how the value changes depending
-            // on the properties that are used with the builder. Profile IDs are 
-            // replaced with zeros when there are no properties associated with
-            // the corresponding component available.
-            println("Id: " + device.getDeviceId().getValue());
-            // Obtain difference: The total difference in hash code values 
-            // between the matched substrings and the actual substrings. The 
-            // maximum difference to allow when finding a match can be set 
-            // through the configuration structure.
-            println("Difference: " + device.getDifference().getValue());
-            // Obtain drift: The maximum drift for a matched substring from the
-            // character position where it was expected to be found. The maximum
-            // drift to allow when finding a match can be set through the 
-            // configuration structure.
-            println("Drift: " + device.getDrift().getValue());
-            // Obtain iteration count: The number of iterations required to get
-            // the device offset in the devices collection in the graph of 
-            // nodes. This is indicative of the time taken to fetch the result.
-            println("Iterations: " + device.getIterations().getValue());
-            // Output the method that was used to obtain the result. Play with 
-            // the setUsePredictiveGraph and setUsePerformanceGraph values to
-            // see the different results.
-            println("Method: " + device.getMethod().getValue());
-            // Use the dictionary of key value pairs to output all the available 
-            // values. Slightly less efficient than the strongly typed 
-            // accessors.
-            Map<String, Object> entries = device.asKeyMap();
-            for (Map.Entry<String, Object> entry : entries.entrySet()) {
-                println(entry.getKey() + ": " + entry.getValue());
+                // Obtains the matched Device ID: the IDs of the matched profiles
+                // separated with hyphens. Notice how the value changes depending
+                // on the properties that are used with the builder. Profile IDs are
+                // replaced with zeros when there are no properties associated with
+                // the corresponding component available.
+                println("Id: " + device.getDeviceId().getValue());
+                // Obtain difference: The total difference in hash code values
+                // between the matched substrings and the actual substrings. The
+                // maximum difference to allow when finding a match can be set
+                // through the configuration structure.
+                println("Difference: " + device.getDifference().getValue());
+                // Obtain drift: The maximum drift for a matched substring from the
+                // character position where it was expected to be found. The maximum
+                // drift to allow when finding a match can be set through the
+                // configuration structure.
+                println("Drift: " + device.getDrift().getValue());
+                // Obtain iteration count: The number of iterations required to get
+                // the device offset in the devices collection in the graph of
+                // nodes. This is indicative of the time taken to fetch the result.
+                println("Iterations: " + device.getIterations().getValue());
+                // Output the method that was used to obtain the result. Play with
+                // the setUsePredictiveGraph and setUsePerformanceGraph values to
+                // see the different results.
+                println("Method: " + device.getMethod().getValue());
+                // Use the dictionary of key value pairs to output all the available
+                // values. Slightly less efficient than the strongly typed
+                // accessors.
+                Map<String, Object> entries = device.asKeyMap();
+                for (Map.Entry<String, Object> entry : entries.entrySet()) {
+                    println(entry.getKey() + ": " + entry.getValue());
+                }
             }
         }
     }

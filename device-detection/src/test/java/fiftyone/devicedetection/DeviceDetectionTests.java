@@ -161,22 +161,23 @@ public class DeviceDetectionTests {
                     @Override
                     public Void call() throws Exception {
                         for (String userAgent : userAgents.getRandomUserAgents(100)) {
-                            FlowData flowData = pipeline.createFlowData();
-                            flowData.addEvidence(
-                                EVIDENCE_HTTPHEADER_PREFIX +
-                                    EVIDENCE_SEPERATOR + "User-Agent",
-                                userAgent)
-                                .process();
-                            if (flowData.getErrors() != null) {
-                                assertEquals(
-                                    "Expected no errors but got " +
-                                        flowData.getErrors().size() + "\n" +
-                                        reportErrors(flowData.getErrors()),
-                                    0,
-                                    flowData.getErrors().size());
+                            try (FlowData flowData = pipeline.createFlowData()) {
+                                flowData.addEvidence(
+                                    EVIDENCE_HTTPHEADER_PREFIX +
+                                        EVIDENCE_SEPERATOR + "User-Agent",
+                                    userAgent)
+                                    .process();
+                                if (flowData.getErrors() != null) {
+                                    assertEquals(
+                                        "Expected no errors but got " +
+                                            flowData.getErrors().size() + "\n" +
+                                            reportErrors(flowData.getErrors()),
+                                        0,
+                                        flowData.getErrors().size());
+                                }
+                                DeviceData deviceData = flowData.get(DeviceData.class);
+                                Object result = deviceData.getIsMobile();
                             }
-                            DeviceData deviceData = flowData.get(DeviceData.class);
-                            Object result = deviceData.getIsMobile();
                         }
                         return null;
                     }

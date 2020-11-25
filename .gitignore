@@ -24,9 +24,13 @@ hs_err_pid*
 
 **/target
 .idea
+nbactions*.xml
 
 # vscode files
 **/.project
 **/.classpath
 **/.settings/*.*
-4.1/*
+4.*/*
+
+# netbeans files
+nbactions.xml

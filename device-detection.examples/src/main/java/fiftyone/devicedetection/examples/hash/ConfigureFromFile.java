@@ -49,6 +49,9 @@ import java.io.File;
  * @include src/main/resources/hash.xml
  */
 
+/**
+ * Configure from file example.
+ */
 public class ConfigureFromFile extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
@@ -79,24 +82,26 @@ public class ConfigureFromFile extends ProgramBase {
             Pipeline pipeline = new FiftyOnePipelineBuilder()
                 .buildFromConfiguration(options);
 
-            // Create a new FlowData instance ready to be populated with evidence for the
-            // Pipeline.
-            FlowData data = pipeline.createFlowData();
+            // A try-with-resource block MUST be used for the FlowData instance.
+            // This ensures that native resources created by the device 
+            // detection engine are freed.
+            try (FlowData data = pipeline.createFlowData()) {
 
-            // Process a single HTTP User-Agent string to retrieve the values associated
-            // with the User-Agent for the selected properties.
-            data.addEvidence(
-                "header.user-agent",
-                mobileUserAgent)
-                .process();
+                // Process a single HTTP User-Agent string to retrieve the values associated
+                // with the User-Agent for the selected properties.
+                data.addEvidence(
+                    "header.user-agent",
+                    mobileUserAgent)
+                    .process();
 
-            // Extract the value of a property from the results.
-            AspectPropertyValue<Boolean> isMobile =
-                data.get(DeviceData.class).getIsMobile();
-            if (isMobile.hasValue()) {
-                println("IsMobile: " + isMobile.getValue());
-            } else {
-                println(isMobile.getNoValueMessage());
+                // Extract the value of a property from the results.
+                AspectPropertyValue<Boolean> isMobile =
+                    data.get(DeviceData.class).getIsMobile();
+                if (isMobile.hasValue()) {
+                    println("IsMobile: " + isMobile.getValue());
+                } else {
+                    println(isMobile.getNoValueMessage());
+                }
             }
         }
     }

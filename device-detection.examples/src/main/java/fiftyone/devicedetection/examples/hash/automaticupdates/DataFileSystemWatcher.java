@@ -58,6 +58,10 @@ import org.slf4j.LoggerFactory;
  * Update completed. Status AUTO_UPDATE_SUCCESS
  * ```
  */
+
+/**
+ * Data file system watcher example.
+ */
 public class DataFileSystemWatcher extends ProgramBase {
 
     public static void main(String[] args) throws Exception {

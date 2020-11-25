@@ -26,7 +26,7 @@
     <Elements>
         <Element>
             <BuildParameters>
-                <EndPoint>https://cloud.51degrees.com/api/v4</EndPoint>
+                <EndPoint>http://cloud.51degrees.com/api/v4</EndPoint>
                 <!-- Obtain a resource key for free at
                 https://configure.51degrees.com
                 Make sure to include the 'BrowserName','BrowserVendor',

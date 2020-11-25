@@ -23,6 +23,10 @@
 
 %include "../device-detection-cxx/src/common-cxx/JavaTypes.i"
 
+nofinalize(EvidenceDeviceDetection);
+nofinalize(ResultsDeviceDetection);
+nofinalize(ResultsHash);
+
 %include "../device-detection-cxx/src/hash/hash.i"
 
 /* Avoid copying the key and value character by character and pass a pointer instead. */

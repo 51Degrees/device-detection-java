@@ -40,6 +40,4 @@ public interface DeviceDataHash extends DeviceData {
      * @return values as a list
      */
     AspectPropertyValue<List<String>> getValues(String propertyName);
-
-
 }
