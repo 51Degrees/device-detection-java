@@ -32,7 +32,13 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static org.junit.Assume.assumeTrue;
+
 public class MetaDataHashTests extends TestsBase {
+    private static final double expectedPropertiesSeconds = 0.1;
+    private static final double expectedValuesSeconds = 0.1;
+    private static final double expectedComponentsSeconds = 0.01;
+    private static final double expectedProfilesSeconds = 0.2;
 
     private ExecutorService executorService;
 
@@ -51,5 +57,77 @@ public class MetaDataHashTests extends TestsBase {
     @Test
     public void MetaData_Hash_Reload() throws ExecutionException, InterruptedException {
         fiftyone.devicedetection.shared.testhelpers.data.MetaDataTests.reload(getWrapper(), new MetaDataHasherHash(), executorService);
+    }
+
+    /**
+     * Check that the performance of the property metadata is as expected. As
+     * this is somewhat dependent on the environment, this test emits a failed
+     * assumption rather than failing.
+     */
+    @Test
+    public void MetaData_Performance_Properties() {
+        MetaDataHasherHash hasher = new MetaDataHasherHash();
+        long start = System.currentTimeMillis();
+        hasher.hashProperties(0, getWrapper());
+        double time = ((double)System.currentTimeMillis() - (double)start) /
+            (double)1000;
+        assumeTrue(
+            "Hashing took longer than expected " + time +
+                "s > " + expectedPropertiesSeconds + "s",
+            time < expectedPropertiesSeconds);
+    }
+
+    /**
+     * Check that the performance of the component metadata is as expected. As
+     * this is somewhat dependent on the environment, this test emits a failed
+     * assumption rather than failing.
+     */
+    @Test
+    public void MetaData_Performance_Components() {
+        MetaDataHasherHash hasher = new MetaDataHasherHash();
+        long start = System.currentTimeMillis();
+        hasher.hashComponents(0, getWrapper());
+        double time = ((double)System.currentTimeMillis() - (double)start) /
+            (double)1000;
+        assumeTrue(
+            "Hashing took longer than expected " + time +
+                "s > " + expectedComponentsSeconds + "s",
+            time < expectedComponentsSeconds);
+    }
+
+    /**
+     * Check that the performance of the value metadata is as expected. As
+     * this is somewhat dependent on the environment, this test emits a failed
+     * assumption rather than failing.
+     */
+    @Test
+    public void MetaData_Performance_Values() {
+        MetaDataHasherHash hasher = new MetaDataHasherHash();
+        long start = System.currentTimeMillis();
+        hasher.hashValues(0, getWrapper());
+        double time = ((double)System.currentTimeMillis() - (double)start) /
+            (double)1000;
+        assumeTrue(
+            "Hashing took longer than expected " + time +
+                "s > " + expectedValuesSeconds + "s",
+            time < expectedValuesSeconds);
+    }
+
+    /**
+     * Check that the performance of the profile metadata is as expected. As
+     * this is somewhat dependent on the environment, this test emits a failed
+     * assumption rather than failing.
+     */
+    @Test
+    public void MetaData_Performance_Profiles() {
+        MetaDataHasherHash hasher = new MetaDataHasherHash();
+        long start = System.currentTimeMillis();
+        hasher.hashProfiles(0, getWrapper());
+        double time = ((double)System.currentTimeMillis() - (double)start) /
+            (double)1000;
+        assumeTrue(
+            "Hashing took longer than expected " + time +
+                "s > " + expectedProfilesSeconds + "s",
+            time < expectedProfilesSeconds);
     }
 }

@@ -43,6 +43,10 @@ import java.io.FileWriter;
  * 
  * @include{doc} example-require-datafile.txt
  */
+
+/**
+ * Offline processing example.
+ */
 public class OfflineProcessing extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
@@ -93,21 +97,25 @@ public class OfflineProcessing extends ProgramBase {
                     // read next line
                     String userAgentString = bufferedReader.readLine();
 
-                    FlowData flowData = pipeline.createFlowData();
+                    // A try-with-resource block MUST be used for the FlowData
+                    // instance. This ensures that native resources created by 
+                    // the device detection engine are freed.
+                    try (FlowData flowData = pipeline.createFlowData()) {
 
-                    flowData.addEvidence("header.user-agent",
-                        userAgentString)
-                        .process();
+                        flowData.addEvidence("header.user-agent",
+                            userAgentString)
+                            .process();
 
-                    DeviceData device = flowData.get(DeviceData.class);
+                        DeviceData device = flowData.get(DeviceData.class);
 
-                    // Write the values of any required properties 
-                    // to the output file for later.
-                    fileWriter.write(userAgentString +
-                        "," + device.getIsMobile() +
-                        "," + device.getPlatformName() +
-                        "," + device.getPlatformVersion() +
-                        "\n");
+                        // Write the values of any required properties
+                        // to the output file for later.
+                        fileWriter.write(userAgentString +
+                            "," + device.getIsMobile() +
+                            "," + device.getPlatformName() +
+                            "," + device.getPlatformVersion() +
+                            "\n");
+                    }
                 }
             }
             println("Output written to " + outputFile);

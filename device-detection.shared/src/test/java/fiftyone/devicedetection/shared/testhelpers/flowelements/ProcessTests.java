@@ -37,82 +37,90 @@ public class ProcessTests {
     public static void noEvidence(
         Wrapper wrapper,
         DataValidator validator) throws Exception {
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data.process();
-        validator.validateData(data, false);
+        try (FlowData data = wrapper.getPipeline().createFlowData()) {
+            data.process();
+            validator.validateData(data, false);
+        }
     }
 
     public static void emptyUserAgent(
         Wrapper wrapper,
         DataValidator validator) throws Exception {
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data
-            .addEvidence("header.user-agent", "")
-            .process();
-        validator.validateData(data, false);
+        try (FlowData data = wrapper.getPipeline().createFlowData()) {
+            data
+                .addEvidence("header.user-agent", "")
+                .process();
+            validator.validateData(data, false);
+        }
     }
 
     public static void noHeaders(
         Wrapper wrapper,
         DataValidator validator) throws Exception {
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data
-            .addEvidence("irrelevant.evidence", "some evidence")
-            .process();
-        validator.validateData(data, false);
+        try (FlowData data = wrapper.getPipeline().createFlowData()) {
+            data
+                .addEvidence("irrelevant.evidence", "some evidence")
+                .process();
+            validator.validateData(data, false);
+        }
     }
 
     public static void noUsefulHeaders(
         Wrapper wrapper,
         DataValidator validator) throws Exception {
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data
-            .addEvidence("header.irrelevant-header", "some evidence")
-            .process();
-        validator.validateData(data, false);
+        try (FlowData data = wrapper.getPipeline().createFlowData()) {
+            data
+                .addEvidence("header.irrelevant-header", "some evidence")
+                .process();
+            validator.validateData(data, false);
+        }
     }
 
     public static void caseInsensitiveEvidenceKeys(
         Wrapper wrapper,
         DataValidator validator) throws Exception {
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data
-            .addEvidence("header.USER-AGENT", Constants.MobileUserAgent)
-            .process();
-        validator.validateData(data, true);
+        try (FlowData data = wrapper.getPipeline().createFlowData()) {
+            data
+                .addEvidence("header.USER-AGENT", Constants.MobileUserAgent)
+                .process();
+            validator.validateData(data, true);
+        }
     }
 
     public static void profileOverride(
         Wrapper wrapper,
         DataValidator validator) throws Exception {
         List<String> profileIds = Arrays.asList("12280", "17779", "17470", "18092");
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data
-            .addEvidence("header.user-agent", "some user agent")
-            .addEvidence("query.51D_ProfileIds", stringJoin(profileIds, "|"))
-            .process();
-        validator.validateProfileIds(data, profileIds);
+        try (FlowData data = wrapper.getPipeline().createFlowData()) {
+            data
+                .addEvidence("header.user-agent", "some user agent")
+                .addEvidence("query.51D_ProfileIds", stringJoin(profileIds, "|"))
+                .process();
+            validator.validateProfileIds(data, profileIds);
+        }
     }
 
     public static void profileOverrideNoHeaders(
         Wrapper wrapper,
         DataValidator validator) throws Exception {
         List<String> profileIds = Arrays.asList("12280", "17779", "17470", "18092");
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data
-            .addEvidence("query.51D_ProfileIds", stringJoin(profileIds, "|"))
-            .process();
-        validator.validateProfileIds(data, profileIds);
+        try (FlowData data = wrapper.getPipeline().createFlowData()) {
+            data
+                .addEvidence("query.51D_ProfileIds", stringJoin(profileIds, "|"))
+                .process();
+            validator.validateProfileIds(data, profileIds);
+        }
     }
 
     public static void deviceId(
         Wrapper wrapper,
         DataValidator validator) throws Exception {
         List<String> profileIds = Arrays.asList("12280", "17779", "17470", "18092");
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data
-            .addEvidence("query.51D_ProfileIds", stringJoin(profileIds, "-"))
-            .process();
-        validator.validateProfileIds(data, profileIds);
+        try (FlowData data = wrapper.getPipeline().createFlowData();) {
+            data
+                .addEvidence("query.51D_ProfileIds", stringJoin(profileIds, "-"))
+                .process();
+            validator.validateProfileIds(data, profileIds);
+        }
     }
 }

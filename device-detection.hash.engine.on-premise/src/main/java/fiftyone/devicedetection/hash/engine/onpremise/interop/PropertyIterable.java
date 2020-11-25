@@ -22,7 +22,6 @@
 
 package fiftyone.devicedetection.hash.engine.onpremise.interop;
 
-
 import fiftyone.devicedetection.hash.engine.onpremise.data.PropertyMetaDataHash;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.PropertyMetaDataCollectionSwig;

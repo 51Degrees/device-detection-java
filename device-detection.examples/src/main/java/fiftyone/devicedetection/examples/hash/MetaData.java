@@ -40,6 +40,9 @@ import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
  * @include{doc} example-require-datafile.txt
  */
 
+/**
+ * Meta data example.
+ */
 public class MetaData extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
@@ -70,14 +73,14 @@ public class MetaData extends ProgramBase {
                 "from file " + dataFile);
             // Build a new on-premise Hash engine with the low memory performance profile.
             try (DeviceDetectionHashEngine engine =
-                     new DeviceDetectionHashEngineBuilder()
-                         .setAutoUpdate(false)
-                         // Prefer low memory profile where all data streamed
-                         // from disk on-demand. Experiment with other profiles.
-                         //.setPerformanceProfile(ConstantsPerformanceProfiles.HighPerformance)
-                         .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
-                         //.setPerformanceProfile(ConstantsPerformanceProfiles.Balanced)
-                         .build(dataFile, false)) {
+                 new DeviceDetectionHashEngineBuilder()
+                     .setAutoUpdate(false)
+                     // Prefer low memory profile where all data streamed
+                     // from disk on-demand. Experiment with other profiles.
+                     //.setPerformanceProfile(ConstantsPerformanceProfiles.HighPerformance)
+                     .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
+                     //.setPerformanceProfile(ConstantsPerformanceProfiles.Balanced)
+                     .build(dataFile, false)) {
                 // Iterate over all properties in the data file, printing the name, value type,
                 // and description for each one.
                 for (FiftyOneAspectPropertyMetaData property :

@@ -64,7 +64,7 @@ public class ProfileMetaDataHash implements ProfileMetaData {
     @Override
     public CloseableIterable<ValueMetaData> getValues() {
         return new ValueIterable(engine,
-                engine.getMetaData().getValuesForProfile(source));
+            engine.getMetaData().getValuesForProfile(source));
     }
 
     @Override
@@ -72,7 +72,7 @@ public class ProfileMetaDataHash implements ProfileMetaData {
         List<ValueMetaData> result = new ArrayList<>();
 
         ValueMetaDataCollectionSwig values =
-                engine.getMetaData().getValuesForProfile(source);
+            engine.getMetaData().getValuesForProfile(source);
         long size = values.getSize();
         for (long i = 0; i < size; i++) {
             ValueMetaDataSwig value = values.getByIndex(i);
@@ -93,7 +93,7 @@ public class ProfileMetaDataHash implements ProfileMetaData {
     public ValueMetaData getValue(String propertyName, String valueName) {
         ValueMetaData result = null;
         ValueMetaDataCollectionSwig values =
-                engine.getMetaData().getValuesForProfile(source);
+            engine.getMetaData().getValuesForProfile(source);
         ValueMetaDataSwig value = values.getByKey(
             new ValueMetaDataKeySwig(propertyName, valueName));
         if (value != null) {
@@ -106,8 +106,8 @@ public class ProfileMetaDataHash implements ProfileMetaData {
     @Override
     public ComponentMetaData getComponent() {
         return new ComponentMetaDataHash(
-                engine,
-                engine.getMetaData().getComponentForProfile(source));
+            engine,
+            engine.getMetaData().getComponentForProfile(source));
     }
 
     @Override
@@ -115,7 +115,7 @@ public class ProfileMetaDataHash implements ProfileMetaData {
         List<ValueMetaData> values = new ArrayList<>();
         for (ValueMetaData value : getValues()) {
             if (value.getProperty().getDisplayOrder() > 0 &&
-                    value.getName().equalsIgnoreCase("N/A") == false) {
+                value.getName().equalsIgnoreCase("N/A") == false) {
                 values.add(value);
             }
         }
@@ -126,7 +126,7 @@ public class ProfileMetaDataHash implements ProfileMetaData {
             @Override
             public int compare(ValueMetaData o1, ValueMetaData o2) {
                 return o1.getProperty().getDisplayOrder() -
-                        o2.getProperty().getDisplayOrder();
+                    o2.getProperty().getDisplayOrder();
             }
         });
 

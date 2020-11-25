@@ -57,6 +57,10 @@ import org.slf4j.LoggerFactory;
  * Data file published date: 02/07/2020 00:00:00
  * ```
  */
+
+/**
+ * Update on startup example.
+ */
 public class UpdateOnStartUp extends ProgramBase {
 
     public static void main(String[] args) throws Exception {

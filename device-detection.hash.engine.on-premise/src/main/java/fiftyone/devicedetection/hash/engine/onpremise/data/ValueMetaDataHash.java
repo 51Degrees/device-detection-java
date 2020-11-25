@@ -23,7 +23,7 @@
 package fiftyone.devicedetection.hash.engine.onpremise.data;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
-import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataSwig;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.*;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
 
@@ -44,8 +44,8 @@ public class ValueMetaDataHash implements ValueMetaData {
      * @param source the source metadata from the native engine
      */
     public ValueMetaDataHash(
-            DeviceDetectionHashEngine engine,
-            ValueMetaDataSwig source) {
+        DeviceDetectionHashEngine engine,
+        ValueMetaDataSwig source) {
         this.engine = engine;
         this.source = source;
     }

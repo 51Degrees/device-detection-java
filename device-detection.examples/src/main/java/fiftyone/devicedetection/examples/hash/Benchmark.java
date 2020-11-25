@@ -213,8 +213,10 @@ public class Benchmark extends ProgramBase {
                         // the benchmark is for detection time only
                         long start = System.nanoTime();
 
-                        try {
-                            FlowData flowData = bm.pipeline.createFlowData();
+                        // A try-with-resource block MUST be used for the
+                        // FlowData instance. This ensures that native resources
+                        // created by the device detection engine are freed.
+                        try (FlowData flowData = bm.pipeline.createFlowData()) {
                             flowData
                                 .addEvidence("header.user-agent", userAgentString)
                                 .process();
@@ -290,12 +292,15 @@ public class Benchmark extends ProgramBase {
             Pipeline pipeline,
             String userAgentFile,
             int numberOfThreads) throws Exception {
-
-            FlowData f = pipeline.createFlowData();
-            f.addEvidence("header.user-agent", "test");
-            f.process();
-            DeviceData d = f.get(DeviceData.class);
-            d.getIsMobile();
+            // A try-with-resource block MUST be used for the FlowData instance.
+            // This ensures that native resources created by the device
+            // detection engine are freed.
+            try (FlowData f = pipeline.createFlowData()) {
+                f.addEvidence("header.user-agent", "test");
+                f.process();
+                DeviceData d = f.get(DeviceData.class);
+                d.getIsMobile();
+            }
             try {
                 if (new File(userAgentFile).exists() == false) {
                     throw new IllegalArgumentException(String.format(

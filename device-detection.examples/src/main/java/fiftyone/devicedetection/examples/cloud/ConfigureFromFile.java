@@ -50,6 +50,9 @@ import java.io.File;
  * @include src/main/resources/cloud.xml
  */
 
+/**
+ * Configure from file example.
+ */
 public class ConfigureFromFile extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
@@ -92,20 +95,23 @@ public class ConfigureFromFile extends ProgramBase {
                     println(property.getName());
                 }
 
-                // Create a new FlowData instance ready to be populated with evidence for the
-                // Pipeline.
-                FlowData data = pipeline.createFlowData();
+                // Create a new FlowData instance ready to be populated with 
+                // evidence for the Pipeline. A try-with-resource block MUST be 
+                // used for the FlowData instance. This ensures that native 
+                // resources created by the device detection engine are freed.
+                try (FlowData data = pipeline.createFlowData()) {
 
-                // Process a single HTTP User-Agent string to retrieve the values associated
-                // with the User-Agent for the selected properties.
-                data.addEvidence(
+                    // Process a single HTTP User-Agent string to retrieve the values associated
+                    // with the User-Agent for the selected properties.
+                    data.addEvidence(
                         "header.user-agent",
                         mobileUserAgent)
                         .process();
-                // Extract the value of a property from the results.
-                println("IsMobile: " + data.get(DeviceData.class).getIsMobile());
-                // Extract the value of a property as a string from the results.
-                println(data.get(DeviceData.class).getBackCameraMegaPixels().getValue().toString());
+                    // Extract the value of a property from the results.
+                    println("IsMobile: " + data.get(DeviceData.class).getIsMobile());
+                    // Extract the value of a property as a string from the results.
+                    println(data.get(DeviceData.class).getBackCameraMegaPixels().getValue().toString());
+                }
             }
         }
     }

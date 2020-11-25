@@ -22,15 +22,19 @@
 
 package fiftyone.devicedetection.examples;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ExampleBase {
 
@@ -43,21 +47,22 @@ public class ExampleBase {
     protected static Iterable<String> getUserAgents(
         String userAgentsFile,
         final int count) throws IOException {
-        List<String> userAgents = Files.readAllLines(
-            Paths.get(userAgentsFile),
-            Charset.defaultCharset());
-        return new UserAgentIterable(userAgents, count);
-
+        Path path = Paths.get(userAgentsFile);
+        if (Files.exists(path) == false) {
+            throw new IOException(String.format("File '%s' not found", path));
+        }
+        return new UserAgentIterable(path, count);
     }
 
     protected static Iterable<String> getUserAgents(
         String userAgentsFile,
         int count,
         int randomness) throws IOException {
-        List<String> userAgents = Files.readAllLines(
-            Paths.get(userAgentsFile),
-            Charset.defaultCharset());
-        return new UserAgentIterable(userAgents, count, randomness);
+        Path path = Paths.get(userAgentsFile);
+        if (Files.exists(path) == false) {
+            throw new IOException(String.format("File '%s' not found", path));
+        }
+        return new UserAgentIterable(path, count, randomness);
     }
 
     private static void addToMessage(StringBuilder message, String textToAdd, int depth) {
@@ -93,11 +98,10 @@ public class ExampleBase {
     }
 
     protected Iterable<String> report(
-        List<String> input,
+        Iterator<String> input,
         int count,
         int maxDistinctUAs,
         int marks) {
-
         return new ReportIterable(input, count, maxDistinctUAs, marks);
     }
 
@@ -116,15 +120,15 @@ public class ExampleBase {
 
     static class UserAgentIterable implements Iterable<String> {
 
-        private final List<String> userAgents;
+        private final Path userAgents;
         private final int count;
         private final int randomness;
 
-        public UserAgentIterable(List<String> userAgents, int count) {
+        public UserAgentIterable(Path userAgents, int count) {
             this(userAgents, count, 0);
         }
 
-        public UserAgentIterable(List<String> userAgents, int count, int randomness) {
+        public UserAgentIterable(Path userAgents, int count, int randomness) {
             this.userAgents = userAgents;
             this.count = count;
             this.randomness = randomness;
@@ -132,24 +136,32 @@ public class ExampleBase {
 
         @Override
         public Iterator<String> iterator() {
-            return new UserAgentIterator(userAgents, count, randomness);
+            try {
+                return new UserAgentIterator(userAgents, count, randomness);
+            } catch (IOException ex) {
+                Logger.getLogger(ExampleBase.class.getName())
+                        .log(Level.SEVERE, null, ex);
+            }
+            return null;
         }
 
         class UserAgentIterator implements Iterator<String> {
-            private final List<String> userAgents;
+            private final Path userAgents;
             private final int count;
             private final int randomness;
             private final Random random = new Random();
             private int returned = 0;
-            private int index = 0;
+            private FileReader reader = null;
+            private BufferedReader buffer = null;
 
             public UserAgentIterator(
-                List<String> userAgents,
+                Path userAgents,
                 int count,
-                int randomness) {
+                int randomness) throws FileNotFoundException, IOException {
                 this.userAgents = userAgents;
                 this.count = count;
                 this.randomness = randomness;
+                createReader();
             }
 
             @Override
@@ -159,43 +171,65 @@ public class ExampleBase {
 
             @Override
             public String next() {
-
-                if (index > this.userAgents.size()) {
-                    index = 0;
-                }
-                returned++;
-                String userAgent = this.userAgents.get(index++);
-
-                if (randomness > 0) {
-                    char[] array = userAgent.toCharArray();
-                    for (int i = 0; i < randomness; i++) {
-                        int index = random.nextInt(array.length - 1);
-                        array[index]++;
+                String userAgent = null;
+                if (randomness > 0 ) {
+                    int skip = random.nextInt(randomness);
+                    for (int i = 0; i < skip; i++) {
+                        try {
+                            nextLine();
+                        } catch (IOException ex) {
+                            Logger.getLogger(ExampleBase.class.getName())
+                                    .log(Level.SEVERE, null, ex);
+                        }
                     }
-                    userAgent = new String(array);
                 }
-
+                try {
+                    userAgent = nextLine();
+                    returned++;
+                } catch (IOException ex) {
+                    Logger.getLogger(ExampleBase.class.getName())
+                            .log(Level.SEVERE, null, ex);
+                }
                 return userAgent;
-
             }
 
             @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }
+            
+            private String nextLine() throws IOException {
+                String line = buffer.readLine();
+                if (line == null) {
+                    createReader();
+                    line = buffer.readLine();
+                }
+                return line;
+            }
+            
+            private void createReader() throws FileNotFoundException, IOException {
+                if (buffer != null) {
+                    buffer.close();
+                }
+                if (reader != null) {
+                    reader.close();
+                }
+                reader = new FileReader(userAgents.toFile());
+                buffer = new BufferedReader(reader);
+            }
         }
     }
 
     protected class ReportIterable implements Iterable<String> {
 
-        private final List<String> userAgents;
+        private final Iterator<String> userAgents;
         private final int count;
         private final double increment;
         private final int maxDistinctUAs;
         private final Random rnd = new Random();
         int current = 0;
 
-        public ReportIterable(List<String> input,
+        public ReportIterable(Iterator<String> input,
                               int count,
                               int maxDistinctUAs,
                               int marks) {
@@ -222,7 +256,7 @@ public class ExampleBase {
                             print("=");
                         }
                         current++;
-                        return userAgents.get(rnd.nextInt(maxDistinctUAs));
+                        return userAgents.next();
                     } else {
                         throw new IndexOutOfBoundsException();
                     }

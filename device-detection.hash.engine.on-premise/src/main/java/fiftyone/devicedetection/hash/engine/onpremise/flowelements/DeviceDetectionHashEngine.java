@@ -26,16 +26,14 @@ import fiftyone.devicedetection.hash.engine.onpremise.data.DeviceDataHash;
 import fiftyone.devicedetection.hash.engine.onpremise.data.ProfileMetaDataHash;
 import fiftyone.devicedetection.hash.engine.onpremise.data.PropertyMetaDataHash;
 import fiftyone.devicedetection.hash.engine.onpremise.data.ValueMetaDataHash;
-import fiftyone.devicedetection.hash.engine.onpremise.interop.ComponentIterable;
-import fiftyone.devicedetection.hash.engine.onpremise.interop.ProfileIterable;
-import fiftyone.devicedetection.hash.engine.onpremise.interop.PropertyIterable;
-import fiftyone.devicedetection.hash.engine.onpremise.interop.ValueIterable;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.*;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.*;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.Date;
 import fiftyone.pipeline.core.data.EvidenceKeyFilter;
 import fiftyone.pipeline.core.data.EvidenceKeyFilterWhitelist;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.data.factories.ElementDataFactory;
+import fiftyone.pipeline.engines.caching.FlowCache;
 import fiftyone.pipeline.engines.data.AspectEngineDataFile;
 import fiftyone.pipeline.engines.fiftyone.data.*;
 import fiftyone.pipeline.engines.fiftyone.flowelements.FiftyOneOnPremiseAspectEngineBase;
@@ -49,7 +47,8 @@ import java.util.*;
  * them e.g. DeviceType or ReleaseDate.
  */
 public class DeviceDetectionHashEngine
-    extends FiftyOneOnPremiseAspectEngineBase<DeviceDataHash, FiftyOneAspectPropertyMetaData> {
+    extends FiftyOneOnPremiseAspectEngineBase<DeviceDataHash,
+    FiftyOneAspectPropertyMetaData> {
     private EngineHashSwig engine = null;
     private final List<FiftyOneAspectPropertyMetaData> properties = new ArrayList<>();
     private final ConfigHashSwig config;
@@ -92,6 +91,9 @@ public class DeviceDetectionHashEngine
     private static List<String> getKeysFromEngine(
         EngineDeviceDetectionSwig engine) {
         List<String> result = new ArrayList<>();
+        // In this case, the vector does not need to be closed.
+        // The vector is a pointer to memory owned by the native engine, so the
+        // delete method actually doesn't call down to the native layer.
         VectorStringSwig keys = engine.getKeys();
         result.addAll(keys);
         return result;
@@ -144,66 +146,95 @@ public class DeviceDetectionHashEngine
 
     @Override
     public FiftyOneAspectPropertyMetaData getProperty(String name) {
-        PropertyMetaDataSwig swigProperty =
-                engine.getMetaData().getProperties().getByKey(name);
+        FiftyOneAspectPropertyMetaData result = null;
+        PropertyMetaDataCollectionSwig properties =
+            engine.getMetaData().getProperties();
+        PropertyMetaDataSwig swigProperty = properties.getByKey(name);
         if (swigProperty != null) {
-            return new PropertyMetaDataHash(this, swigProperty);
+            result = new PropertyMetaDataHash(this, swigProperty);
         }
+        properties.delete();
 
-        for (FiftyOneAspectPropertyMetaData property : getMetricProperties()) {
-            if (property.getName().equalsIgnoreCase(name)) {
-                return property;
+        if (result == null) {
+            for (FiftyOneAspectPropertyMetaData property : getMetricProperties()) {
+                if (property.getName().equalsIgnoreCase(name)) {
+                    return property;
+                }
             }
         }
 
-        return null;
+        return result;
     }
 
     @Override
     public CloseableIterable<ProfileMetaData> getProfiles() {
-        return new ProfileIterable(this, engine.getMetaData().getProfiles());
+        return new ProfileIterable(
+            this,
+            engine.getMetaData().getProfiles());
     }
 
     @Override
     public ProfileMetaData getProfile(int profileId) {
-        return new ProfileMetaDataHash(
-                this,
-                engine.getMetaData().getProfiles().getByKey(profileId));
+        ProfileMetaDataCollectionSwig profiles =
+            engine.getMetaData().getProfiles();
+        ProfileMetaDataSwig profile = profiles.getByKey(profileId);
+        profiles.delete();
+        return profile == null ?
+            null : new ProfileMetaDataHash(this, profile);
     }
 
     @Override
     public CloseableIterable<ComponentMetaData> getComponents() {
-        return new ComponentIterable(this, engine.getMetaData().getComponents());
+        return new ComponentIterable(
+            this,
+            engine.getMetaData().getComponents());
     }
 
     @Override
     public CloseableIterable<ValueMetaData> getValues() {
-        return new ValueIterable(this, engine.getMetaData().getValues());
+        return new ValueIterable(
+            this,
+            engine.getMetaData().getValues());
     }
 
     @Override
     public ValueMetaData getValue(String propertyName, String valueName) {
-        ValueMetaDataKeySwig key = new ValueMetaDataKeySwig(propertyName, valueName);
-        return new ValueMetaDataHash(
-                this,
-                engine.getMetaData().getValues().getByKey(key));
+        ValueMetaDataHash result = null;
+        ValueMetaDataKeySwig key = new ValueMetaDataKeySwig(
+            propertyName,
+            valueName);
+        ValueMetaDataCollectionSwig values =
+                 engine.getMetaData().getValues();
+        result = new ValueMetaDataHash(
+            this,
+            // this value is closed by the enclosing meta data.
+            values.getByKey(key));
+        values.delete();
+        key.delete();
+        return result;
     }
 
     @Override
     public java.util.Date getDataFilePublishedDate(String dataFileIdentifier) {
-        Date value = engine.getPublishedTime();
         Calendar calendar = Calendar.getInstance();
-        // java.util.Calendar month is 0 based where January = 0 
-        calendar.set(value.getYear(), value.getMonth() -1, value.getDay());
+        Date value = engine.getPublishedTime();
+        // java.util.Calendar month is 0 based where January = 0
+        calendar.set(
+            value.getYear(),
+            value.getMonth() - 1,
+            value.getDay());
         return calendar.getTime();
     }
 
     @Override
     public java.util.Date getDataFileUpdateAvailableTime(String dataFileIdentifier) {
-        Date value = engine.getUpdateAvailableTime();
         Calendar calendar = Calendar.getInstance();
-        // java.util.Calendar month is 0 based where January = 0 
-        calendar.set(value.getYear(), value.getMonth() - 1, value.getDay());
+        Date value = engine.getUpdateAvailableTime();
+        // java.util.Calendar month is 0 based where January = 0
+        calendar.set(
+            value.getYear(),
+            value.getMonth() - 1,
+            value.getDay());
         return calendar.getTime();
     }
 
@@ -256,33 +287,47 @@ public class DeviceDetectionHashEngine
 
     @Override
     protected void processEngine(FlowData flowData, DeviceDataHash deviceData) {
-        EvidenceDeviceDetectionSwig relevantEvidence =
-            new EvidenceDeviceDetectionSwig();
-        List<String> keys = evidenceKeys;
-        for (Map.Entry<String, Object> evidenceItem :
-            flowData.getEvidence().asKeyMap().entrySet()) {
-            boolean containsKey = false;
-            for (String key : keys) {
-                if (key.equalsIgnoreCase(evidenceItem.getKey())) {
-                    containsKey = true;
-                    break;
+        try (EvidenceDeviceDetectionSwig relevantEvidence =
+            new EvidenceDeviceDetectionSwig()) {
+            List<String> keys = evidenceKeys;
+            for (Map.Entry<String, Object> evidenceItem :
+                flowData.getEvidence().asKeyMap().entrySet()) {
+                boolean containsKey = false;
+                for (String key : keys) {
+                    if (key.equalsIgnoreCase(evidenceItem.getKey())) {
+                        containsKey = true;
+                        break;
+                    }
+                }
+
+                if (containsKey == true) {
+                    relevantEvidence.addFromBytes(
+                        evidenceItem.getKey(),
+                        evidenceItem.getKey().length(),
+                        evidenceItem.getValue().toString(),
+                        evidenceItem.getValue().toString().length());
                 }
             }
-
-            if (containsKey == true) {
-                relevantEvidence.addFromBytes(
-                    evidenceItem.getKey(),
-                    evidenceItem.getKey().length(),
-                    evidenceItem.getValue().toString(),
-                    evidenceItem.getValue().toString().length());
-            }
+            ((DeviceDataHashDefault) deviceData).setResults(
+                engine.process(relevantEvidence));
         }
-        ((DeviceDataHashDefault) deviceData).setResults(
-            engine.process(relevantEvidence));
     }
 
     @Override
     protected void unmanagedResourcesCleanup() {
+        if (propertiesPopulated) {
+            synchronized (properties) {
+                if (propertiesPopulated) {
+                    properties.clear();
+                }
+            }
+        }
+        if (config != null) {
+            config.delete();
+        }
+        if (propertiesConfigSwig != null) {
+            propertiesConfigSwig.delete();
+        }
         if (engine != null) {
             engine.delete();
         }
@@ -440,5 +485,13 @@ public class DeviceDetectionHashEngine
             FiftyOneDataFile fiftyOneDataFile = (FiftyOneDataFile)dataFile;
             fiftyOneDataFile.setDataUpdateDownloadType("HashV41");
         }
+    }
+
+    @Override
+    public void setCache(FlowCache cache) {
+        throw new UnsupportedOperationException(
+            "A results cache cannot be configured in the on-premise Hash engine. " +
+                "The overhead of having to manage native object lifetimes when " +
+                "a cache is enabled outweighs the benefit of the cache.");
     }
 }
