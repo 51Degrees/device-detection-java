@@ -832,6 +832,16 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<JavaScript> getJavascriptImageOptimiser() { return getAs("javascriptimageoptimiser", AspectPropertyValue.class, JavaScript.class); }
 	/**
+	 * Refers to the list of audio codecs in specific formats supported for Decode by the Web Browser. This list of codecs is supported for playback on a basic browser installation.
+	 */
+	@Override
+	public AspectPropertyValue<List<String>> getBrowserAudioCodecsDecode() { return getAs("browseraudiocodecsdecode", AspectPropertyValue.class, List.class); }
+	/**
+	 * Refers to the list of video codecs in specific formats supported for Decode by the Web Browser. This list of codecs is supported for playback on a basic browser installation.
+	 */
+	@Override
+	public AspectPropertyValue<List<String>> getBrowserVideoCodecsDecode() { return getAs("browservideocodecsdecode", AspectPropertyValue.class, List.class); }
+	/**
 	 * Indicates a price range describing the recommended retail price of the device at the date of release, inclusive of tax (where applicable).  Prices are in United States Dollars (USD); if the price is not originally in USD it will be converted to USD using the relevant exchange rate at the time of launch. Prices are for the SIM-free version of the device (if applicable). In cases where there are several versions of the same model of the device, the price will reflect the device that was used to populate the specifications.
 	 */
 	@Override
@@ -1057,6 +1067,16 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Double> getSecondFrontCameraMegaPixels() { return getAs("secondfrontcameramegapixels", AspectPropertyValue.class, Double.class); }
 	/**
+	 * Refers to the list of audio codecs in specific formats supported for Encode by the Web Browser. This list of codecs is supported for capture on a basic browser installation.
+	 */
+	@Override
+	public AspectPropertyValue<List<String>> getBrowserAudioCodecsEncode() { return getAs("browseraudiocodecsencode", AspectPropertyValue.class, List.class); }
+	/**
+	 * Refers to the list of video codecs in specific formats supported for Encode by the Web Browser. This list of codecs is supported for capture on a basic browser installation.
+	 */
+	@Override
+	public AspectPropertyValue<List<String>> getBrowserVideoCodecsEncode() { return getAs("browservideocodecsencode", AspectPropertyValue.class, List.class); }
+	/**
 	 * The Specific Absorbtion Rate (SAR) is a measure of the rate at which energy is absorbed by the human body when exposed by a radio frequency electromagnetic field. This property contains values in Watts per Kilogram (W/kg) in accordance with the Federal Communications Commission (FCC).
 	 */
 	@Override
@@ -1281,6 +1301,21 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	 */
 	@Override
 	public AspectPropertyValue<Boolean> getJpeg2000() { return getAs("jpeg2000", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates the name of the browser without the default OS or layout engine.
+	 */
+	@Override
+	public AspectPropertyValue<String> getBrowserFamily() { return getAs("browserfamily", AspectPropertyValue.class, String.class); }
+	/**
+	 * The ratio of the resolution in physical pixels to the resolution in CSS pixels. This is approximated by screen resolution and screen size when the value is not known.
+	 */
+	@Override
+	public AspectPropertyValue<Double> getPixelRatio() { return getAs("pixelratio", AspectPropertyValue.class, Double.class); }
+	/**
+	 * JavaScript that can override the property value found by the server using information on the client device. This property is applicable for browsers that support pixel ratio cookie.
+	 */
+	@Override
+	public AspectPropertyValue<JavaScript> getPixelRatioJavascript() { return getAs("pixelratiojavascript", AspectPropertyValue.class, JavaScript.class); }
 	/**
 	 * Indicates the number of hash nodes matched within the evidence.
 	 */
