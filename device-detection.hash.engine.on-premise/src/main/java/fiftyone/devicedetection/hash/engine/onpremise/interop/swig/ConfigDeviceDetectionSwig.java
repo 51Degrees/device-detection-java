@@ -22,7 +22,7 @@ public class ConfigDeviceDetectionSwig extends ConfigBaseSwig {
 
   @SuppressWarnings("deprecation")
   protected void finalize() {
-    delete();
+	delete();
   }
 
   public synchronized void delete() {

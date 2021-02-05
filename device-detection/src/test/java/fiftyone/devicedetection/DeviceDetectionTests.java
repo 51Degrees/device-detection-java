@@ -176,7 +176,7 @@ public class DeviceDetectionTests {
                                         flowData.getErrors().size());
                                 }
                                 DeviceData deviceData = flowData.get(DeviceData.class);
-                                Object result = deviceData.getIsMobile();
+                                deviceData.getIsMobile();
                             }
                         }
                         return null;
@@ -186,7 +186,7 @@ public class DeviceDetectionTests {
 
             List<Future<Void>> futures = service.invokeAll(callables);
 
-            for (Future future : futures) {
+            for (Future<Void> future : futures) {
                 future.get();
             }
         }

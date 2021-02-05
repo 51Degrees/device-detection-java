@@ -81,9 +81,11 @@ public class ValueTests {
                     }
                 }
             }
+            
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void valueTypes(Wrapper wrapper) throws Exception {
         try (FlowData data = wrapper.getPipeline().createFlowData()) {
             data.addEvidence("header.user-agent", Constants.MobileUserAgent)
@@ -92,7 +94,7 @@ public class ValueTests {
             for (FiftyOneAspectPropertyMetaData property :
                 (List<FiftyOneAspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
                 if (property.isAvailable()) {
-                    Class expectedType;
+                    Class<?> expectedType;
                     Object value = elementData.get(property.getName());
 
                     expectedType = property.getType();
@@ -103,12 +105,13 @@ public class ValueTests {
                             " but should have been " + expectedType.getSimpleName() +
                             ".",
                         expectedType.isAssignableFrom(
-                            ((AspectPropertyValue) value).getValue().getClass()));
+                            ((AspectPropertyValue<?>) value).getValue().getClass()));
                 }
             }
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void availableProperties(Wrapper wrapper) throws Exception {
         try (FlowData data = wrapper.getPipeline().createFlowData()) {
             data.addEvidence("header.user-agent", Constants.MobileUserAgent)
@@ -126,6 +129,7 @@ public class ValueTests {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public static void typedGetters(Wrapper wrapper) throws Exception {
         try (FlowData data = wrapper.getPipeline().createFlowData()) {
             data.addEvidence("header.user-agent", Constants.MobileUserAgent)
@@ -158,7 +162,7 @@ public class ValueTests {
                                     value);
                             } else {
                                 try {
-                                    Object value = classProperty.invoke(elementData);
+                                    classProperty.invoke(elementData);
                                     fail("The property getter for '" +
                                         property.getName() + "' " +
                                         "should have thrown a " +

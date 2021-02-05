@@ -15,6 +15,7 @@ public class ExampleHelper {
      * @param getter to use e.g. DeviceData.getIsMobile()
      * @return value
      */
+    @SuppressWarnings("rawtypes")
     public static AspectPropertyValue tryGet(
         HttpServlet servlet,
         PropertyGetter getter) {

@@ -52,5 +52,5 @@ public class ComponentMetaDataSwig implements AutoCloseable {
   public String getName() {
     return DeviceDetectionHashEngineModuleJNI.ComponentMetaDataSwig_getName(swigCPtr, this);
   }
-
+  
 }

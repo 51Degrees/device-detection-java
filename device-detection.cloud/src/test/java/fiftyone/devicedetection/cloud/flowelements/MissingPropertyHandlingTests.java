@@ -5,7 +5,6 @@ import fiftyone.devicedetection.cloud.data.DeviceDataCloud;
 import fiftyone.pipeline.cloudrequestengine.data.CloudRequestData;
 import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngine;
 import fiftyone.pipeline.core.data.FlowData;
-import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
 import fiftyone.pipeline.engines.data.AspectPropertyMetaDataDefault;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
@@ -13,8 +12,6 @@ import fiftyone.pipeline.engines.exceptions.PropertyMissingException;
 import fiftyone.pipeline.engines.services.MissingPropertyReason;
 import fiftyone.pipeline.engines.services.MissingPropertyResult;
 import fiftyone.pipeline.engines.services.MissingPropertyService;
-import org.json.JSONObject;
-import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.LoggerFactory;
 
@@ -69,6 +66,7 @@ public class MissingPropertyHandlingTests {
      * PropertyMissingException.
      * @throws Exception
      */
+    @SuppressWarnings("unused")
     @Test
     public void PropertyNotInResource() throws Exception {
         DeviceDetectionCloudEngine engine =
@@ -123,6 +121,11 @@ public class MissingPropertyHandlingTests {
 
     private static List<AspectPropertyMetaData> properties =
         new ArrayList<AspectPropertyMetaData>(){
+            /**
+             * Serializable class version number, which is used during deserialization
+             */
+            private static final long serialVersionUID = -819525441539357267L;
+
         {
             add(new AspectPropertyMetaDataDefault("platformname", null, null, String.class, null, true));
             add(new AspectPropertyMetaDataDefault("platformversion", null, null, String.class, null, true));

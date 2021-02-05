@@ -22,6 +22,8 @@
 
 package fiftyone.devicedetection.shared.flowelements;
 
+import fiftyone.pipeline.engines.data.AspectData;
+import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.engines.fiftyone.flowelements.FiftyOneAspectEngine;
 import fiftyone.pipeline.engines.fiftyone.flowelements.FiftyOneOnPremiseAspectEngineBuilderBase;
@@ -37,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class OnPremiseDeviceDetectionEngineBuilderBase<
     TBuilder extends OnPremiseDeviceDetectionEngineBuilderBase<TBuilder, TEngine>,
-    TEngine extends FiftyOneAspectEngine>
+    TEngine extends FiftyOneAspectEngine<? extends AspectData, ? extends AspectPropertyMetaData>>
     extends FiftyOneOnPremiseAspectEngineBuilderBase<TBuilder, TEngine> {
 
     /**

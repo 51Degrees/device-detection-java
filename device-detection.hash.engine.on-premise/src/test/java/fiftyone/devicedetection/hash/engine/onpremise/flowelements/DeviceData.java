@@ -1,29 +1,22 @@
 package fiftyone.devicedetection.hash.engine.onpremise.flowelements;
 
 import fiftyone.devicedetection.hash.engine.onpremise.TestsBase;
-import fiftyone.devicedetection.hash.engine.onpremise.data.DeviceDataHash;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.*;
 import fiftyone.devicedetection.shared.DeviceDataBase;
 import fiftyone.devicedetection.shared.DeviceDataBaseOnPremise;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.engines.Constants;
 import fiftyone.pipeline.engines.exceptions.PropertyMissingException;
-import fiftyone.pipeline.engines.flowelements.AspectEngine;
 import fiftyone.pipeline.engines.services.MissingPropertyReason;
 import fiftyone.pipeline.engines.services.MissingPropertyResult;
 import fiftyone.pipeline.engines.services.MissingPropertyService;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 import org.slf4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
@@ -69,7 +62,7 @@ public class DeviceData extends TestsBase {
 	            arg -> data);
 	        flowData.close();
 	        verify(results, times(1)).close();
-        }
+        }            
     }
 
     /**
@@ -226,7 +219,7 @@ public class DeviceData extends TestsBase {
 	        }
 	        verify(
 	            results, times(1))
-	            .containsProperty(anyString(), anyLong());
+	            .containsProperty(anyString(), anyLong());	        
         }
     }
 
@@ -316,10 +309,10 @@ public class DeviceData extends TestsBase {
 	            missingPropertyService);
 	
 	        ResultsHashSwig results = mock(ResultsHashSwig.class);
-	        data.setResults(results);
-	
-	        data.close();
-	
+	        data.setResults(results);       
+	        
+            data.close();
+            
 	        checkThrowsIllegalState(
 	            data,
 	            (d) -> d.get("ismobile"));

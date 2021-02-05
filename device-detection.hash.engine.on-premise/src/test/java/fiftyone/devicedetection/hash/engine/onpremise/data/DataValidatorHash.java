@@ -52,7 +52,7 @@ public class DataValidatorHash implements DataValidator {
                 engine.getProperties()) {
             if (property.isAvailable()) {
                 assertTrue(map.containsKey(property.getName()));
-                AspectPropertyValue value = (AspectPropertyValue)map.get(property.getName());
+                AspectPropertyValue<?> value = (AspectPropertyValue<?>)map.get(property.getName());
                 if (validEvidence) {
                     assertTrue(value.hasValue());
                 }

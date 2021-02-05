@@ -26,6 +26,7 @@ import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetecti
 import fiftyone.devicedetection.hash.engine.onpremise.interop.Swig;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.ValueIterable;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.*;
+import fiftyone.pipeline.core.data.ElementData;
 import fiftyone.pipeline.core.data.ElementPropertyMetaData;
 import fiftyone.pipeline.core.data.types.JavaScript;
 import fiftyone.pipeline.core.flowelements.FlowElement;
@@ -193,7 +194,7 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
     }
 
     @Override
-    public Class getType() {
+    public Class<?> getType() {
         switch (type) {
             case "string":
                 return String.class;
@@ -213,7 +214,7 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
     }
 
     @Override
-    public FlowElement getElement() {
+    public FlowElement<? extends ElementData, ? extends ElementPropertyMetaData> getElement() {
         return engine;
     }
 

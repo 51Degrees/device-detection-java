@@ -72,7 +72,7 @@ public class ProcessTests {
             data
                 .addEvidence("header.irrelevant-header", "some evidence")
                 .process();
-            validator.validateData(data, false);
+            validator.validateData(data, false);           
         }
     }
 
@@ -83,7 +83,7 @@ public class ProcessTests {
             data
                 .addEvidence("header.USER-AGENT", Constants.MobileUserAgent)
                 .process();
-            validator.validateData(data, true);
+            validator.validateData(data, true);            
         }
     }
 
@@ -96,7 +96,7 @@ public class ProcessTests {
                 .addEvidence("header.user-agent", "some user agent")
                 .addEvidence("query.51D_ProfileIds", stringJoin(profileIds, "|"))
                 .process();
-            validator.validateProfileIds(data, profileIds);
+            validator.validateProfileIds(data, profileIds);           
         }
     }
 
@@ -108,7 +108,7 @@ public class ProcessTests {
             data
                 .addEvidence("query.51D_ProfileIds", stringJoin(profileIds, "|"))
                 .process();
-            validator.validateProfileIds(data, profileIds);
+            validator.validateProfileIds(data, profileIds);            
         }
     }
 
@@ -120,7 +120,7 @@ public class ProcessTests {
             data
                 .addEvidence("query.51D_ProfileIds", stringJoin(profileIds, "-"))
                 .process();
-            validator.validateProfileIds(data, profileIds);
+            validator.validateProfileIds(data, profileIds);           
         }
     }
 }

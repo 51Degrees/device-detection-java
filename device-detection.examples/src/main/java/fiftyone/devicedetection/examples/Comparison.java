@@ -478,6 +478,7 @@ public class Comparison extends ProgramBase {
      * @throws IOException          if the data file cannot be accessed.
      * @throws InterruptedException if the comparison threads are interrupted.
      */
+    @SuppressWarnings("unused")
     public static void main(String[] args)
         throws Exception {
         int numberOfThreads = defaultNumberOfThreads;
@@ -944,12 +945,17 @@ public class Comparison extends ProgramBase {
                 // Do nothing.
             }
         }
+
+        public ElementPropertyMetaData getIsMobile() {
+            return isMobile;
+        }
     }
 
     /**
      * Loads all the data into initialised data structures. Fast with a longer
      * initialisation time.
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     static class FiftyOneDegreesHashMemoryProvider
         extends FiftyOneDegreesBaseProvider {
 

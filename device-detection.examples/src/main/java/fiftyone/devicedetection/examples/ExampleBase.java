@@ -226,7 +226,6 @@ public class ExampleBase {
         private final int count;
         private final double increment;
         private final int maxDistinctUAs;
-        private final Random rnd = new Random();
         int current = 0;
 
         public ReportIterable(Iterator<String> input,

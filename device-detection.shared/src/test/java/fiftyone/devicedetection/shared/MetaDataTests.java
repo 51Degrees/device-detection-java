@@ -66,7 +66,7 @@ public class MetaDataTests {
         int threadCount = 4;
         final int[] refreshes = {0};
         final AtomicBoolean done = new AtomicBoolean(false);
-        Future reloader = executorService.submit(new Runnable() {
+        Future<?> reloader = executorService.submit(new Runnable() {
             @Override
             public void run() {
                 while (done.get() == false) {

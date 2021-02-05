@@ -34,7 +34,7 @@ public class HardwareProfileCloudEngineBuilder extends AspectEngineBuilderBase<
                     return new MultiDeviceDataCloud(
                         loggerFactory.getLogger(MultiDeviceDataCloud.class.getSimpleName()),
                         flowData,
-                        (AspectEngine) flowElement,
+                        (AspectEngine<MultiDeviceDataCloud, ?>) flowElement,
                         MissingPropertyServiceDefault.getInstance());
                 }
             });

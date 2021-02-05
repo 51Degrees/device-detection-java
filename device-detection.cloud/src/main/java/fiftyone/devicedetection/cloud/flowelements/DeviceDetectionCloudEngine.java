@@ -163,8 +163,8 @@ public class DeviceDetectionCloudEngine
                     String actualKey = key
                         .replace("nullreason", "");
                     if (deviceMap.containsKey(actualKey) == false) {
-                        AspectPropertyValue nullValue =
-                            new AspectPropertyValueDefault();
+                        AspectPropertyValue<?> nullValue =
+                            new AspectPropertyValueDefault<Object>();
                         nullValue.setNoValueMessage(
                             deviceObj.optString(key, "Unknown"));
                         deviceMap.put(
