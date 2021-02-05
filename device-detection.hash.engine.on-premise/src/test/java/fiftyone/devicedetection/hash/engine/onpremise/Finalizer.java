@@ -5,8 +5,6 @@ import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-
-import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -16,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class Finalizer {
 
     @Parameterized.Parameter(0)
-    public Class clazz;
+    public Class<?> clazz;
     @Parameterized.Parameter(1)
     public boolean hasFinalizer;
     @Parameterized.Parameters(name = "{0} Finalizer={1}")
@@ -68,7 +66,7 @@ public class Finalizer {
      * @param currentClass
      * @throws ClassNotFoundException
      */
-    private void check(Class currentClass) throws ClassNotFoundException {
+    private void check(Class<?> currentClass) throws ClassNotFoundException {
         boolean result = false;
         try {
             if (currentClass.getDeclaredMethod("finalize") != null) {

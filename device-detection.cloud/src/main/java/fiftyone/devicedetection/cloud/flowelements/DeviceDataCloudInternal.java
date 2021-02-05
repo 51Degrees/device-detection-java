@@ -25,6 +25,8 @@ package fiftyone.devicedetection.cloud.flowelements;
 import fiftyone.devicedetection.cloud.data.DeviceDataCloud;
 import fiftyone.devicedetection.shared.DeviceDataBase;
 import fiftyone.pipeline.core.data.FlowData;
+import fiftyone.pipeline.engines.data.AspectData;
+import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.engines.data.AspectPropertyValueDefault;
 import fiftyone.pipeline.engines.flowelements.AspectEngine;
@@ -52,16 +54,16 @@ public class DeviceDataCloudInternal
     DeviceDataCloudInternal (
         Logger logger,
         FlowData flowData,
-        AspectEngine engine,
+        AspectEngine<? extends AspectData, ? extends AspectPropertyMetaData> engine,
         MissingPropertyService missingPropertyService) {
         super(logger, flowData, engine, missingPropertyService);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public AspectPropertyValue<List<String>> getUserAgents() {
         AspectPropertyValue<List<String>> value = new AspectPropertyValueDefault<>();
         List<String> val = this.getAs("useragents", List.class, String.class);
-        
         if(val == null){
             value.setNoValueMessage("User-Agents were not included in the result");
         } else {

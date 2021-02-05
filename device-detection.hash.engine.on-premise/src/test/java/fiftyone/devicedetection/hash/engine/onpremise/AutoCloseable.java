@@ -1,7 +1,6 @@
 package fiftyone.devicedetection.hash.engine.onpremise;
 
 import fiftyone.devicedetection.hash.engine.onpremise.data.DeviceDataHash;
-import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class AutoCloseable {
 
     @Parameterized.Parameter(0)
-    public Class clazz;
+    public Class<?> clazz;
     @Parameterized.Parameter(1)
     public boolean isAuocloseable;
     @Parameterized.Parameters(name = "{0} AutoCloseable={1}")

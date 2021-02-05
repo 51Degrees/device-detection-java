@@ -101,6 +101,7 @@
                     </execution>
                 </executions>
             </plugin>
+          	
         </plugins>
     </build>
 
@@ -138,4 +139,5 @@
         <connection>scm:git:git://github.com/51Degrees/device-detection-java.git</connection>
         <developerConnection>scm:git:info@51degrees.com:51Degrees/device-detection-java.git</developerConnection>
     </scm>
+    
 </project>

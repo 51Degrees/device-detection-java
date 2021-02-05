@@ -24,10 +24,6 @@ package fiftyone.pipeline.web.examples.mvc.controller;
 
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
-import fiftyone.pipeline.engines.data.AspectPropertyValue;
-import fiftyone.pipeline.jsonbuilder.data.JsonBuilderData;
-import org.slf4j.ILoggerFactory;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

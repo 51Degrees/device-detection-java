@@ -25,15 +25,12 @@ package fiftyone.pipeline.web.examples.servlet;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
-import fiftyone.pipeline.engines.exceptions.NoValueException;
-import fiftyone.pipeline.jsonbuilder.data.JsonBuilderData;
 import fiftyone.pipeline.web.services.FlowDataProviderCore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -162,6 +159,10 @@ import static fiftyone.pipeline.web.examples.servlet.ExampleHelper.tryGet;
  */
 public class Example extends HttpServlet {
 
+    /**
+     * Serializable class version number, which is used during deserialization.
+     */
+    private static final long serialVersionUID = 1734154705981153540L;
     FlowDataProviderCore flowDataProvider = new FlowDataProviderCore.Default();
 
     /**
@@ -173,90 +174,91 @@ public class Example extends HttpServlet {
      * @throws Exception if a servlet-specific error or an I/O error occurs
      * or if a value not available
      */
+    @SuppressWarnings("unchecked")
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         FlowData data = flowDataProvider.getFlowData(request);
-		DeviceData device = data.get(DeviceData.class);
-		response.setContentType("text/html;charset=UTF-8");
-		try (PrintWriter out = response.getWriter()) {
-			out.println("<!DOCTYPE html>");
-			out.println("<html>");
-			out.println("<head>");
-			out.println("<title>Servlet Example</title>");
-			out.println("</head>");
-			out.println("<body>");
-			out.println("<script src=\"/pipeline.web.examples.servlet/51Degrees.core.js\"></script>");
+        DeviceData device = data.get(DeviceData.class);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Example</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<script src=\"/pipeline.web.examples.servlet/51Degrees.core.js\"></script>");
 
-			AspectPropertyValue<String> hardwareVendor =
-				tryGet(this, () -> device.getHardwareVendor());
-			AspectPropertyValue<List<String>> hardwareName =
-				tryGet(this, () -> device.getHardwareName());
-			AspectPropertyValue<String> deviceType =
-				tryGet(this, () ->device.getDeviceType());
-			AspectPropertyValue<String> platformVendor =
-				tryGet(this, () -> device.getPlatformVendor());
-			AspectPropertyValue<String> platformName =
-				tryGet(this, () -> device.getPlatformName());
-			AspectPropertyValue<String> platformVersion =
-				tryGet(this, () -> device.getPlatformVersion());
-			AspectPropertyValue<String> browserVendor =
-				tryGet(this, () -> device.getBrowserVendor());
-			AspectPropertyValue<String> browserName =
-				tryGet(this, () -> device.getBrowserName());
-			AspectPropertyValue<String> browserVersion =
-				tryGet(this, () -> device.getBrowserVersion());
+            AspectPropertyValue<String> hardwareVendor =
+                tryGet(this, () -> device.getHardwareVendor());
+            AspectPropertyValue<List<String>> hardwareName =
+                tryGet(this, () -> device.getHardwareName());
+            AspectPropertyValue<String> deviceType =
+                tryGet(this, () ->device.getDeviceType());
+            AspectPropertyValue<String> platformVendor =
+                tryGet(this, () -> device.getPlatformVendor());
+            AspectPropertyValue<String> platformName =
+                tryGet(this, () -> device.getPlatformName());
+            AspectPropertyValue<String> platformVersion =
+                tryGet(this, () -> device.getPlatformVersion());
+            AspectPropertyValue<String> browserVendor =
+                tryGet(this, () -> device.getBrowserVendor());
+            AspectPropertyValue<String> browserName =
+                tryGet(this, () -> device.getBrowserName());
+            AspectPropertyValue<String> browserVersion =
+                tryGet(this, () -> device.getBrowserVersion());
 
 
-			out.println("<h2>Example</h2>\n" +
-			"\n" +
-			"<div id=\"content\">\n" +
-			"    <p>\n" +
-			"        Hardware Vendor: " + (hardwareVendor.hasValue() ? hardwareVendor.getValue() : "Unknown " + hardwareVendor.getNoValueMessage()) + "<br />\n" +
-			"        Hardware Name: " + (hardwareName.hasValue() ? stringJoin(hardwareName.getValue(), ",") : "Unknown " + hardwareName.getNoValueMessage()) +"<br />\n" +
-			"        Device Type: " + (deviceType.hasValue() ? deviceType.getValue() : "Unknown " + deviceType.getNoValueMessage()) + "<br />\n" +
-			"        Platform Vendor: " + (platformVendor.hasValue() ? platformVendor.getValue() : "Unknown " + platformVendor.getNoValueMessage()) + "<br />\n" +
-			"        Platform Name: " + (platformName.hasValue() ? platformName.getValue() : "Unknown " + platformName.getNoValueMessage()) + "<br />\n" +
-			"        Platform Version: " + (platformVersion.hasValue() ? platformVersion.getValue() : "Unknown " + platformVersion.getNoValueMessage()) + "<br />\n" +
-			"        Browser Vendor: " + (browserVendor.hasValue() ? browserVendor.getValue() : "Unknown " + browserVendor.getNoValueMessage()) + "<br />\n" +
-			"        Browser Name: " + (browserName.hasValue() ? browserName.getValue() : "Unknown " + browserName.getNoValueMessage()) + "<br />\n" +
-			"        Browser Version: " + (browserVersion.hasValue() ? browserVersion.getValue() : "Unknown " + browserVersion.getNoValueMessage()) + "\n" +
-			"    </p>\n" +
-			"</div>\n" +
-			"\n" +
-			"<script>\n" +
-			"    // This function will fire when the JSON data object is updated \n" +
-			"    // with information from the server.\n" +
-			"    // The sequence is:\n" +
-			"    // 1. Response contains JavaScript property 'getLatitude' that gets executed on the client\n" +
-			"    // 2. This triggers another call to the webserver that passes the location as evidence\n" +
-			"    // 3. The web server responds with new JSON data that contains the hemisphere based on the location.\n" +
-			"    // 4. The JavaScript integrates the new JSON data and fires the onChange callback below.\n" +
-			"    window.onload = function () {\n" +
-			"        fod.complete(function (data) {\n" +
-			"            var para = document.createElement(\"p\");\n" +
-			"            var br = document.createElement(\"br\");\n" +
-			"            var text = document.createTextNode(\"Updated information from client-side evidence:\");\n" +
-			"            para.appendChild(text);\n" +
-			"            para.appendChild(br);\n" +
-			"            text = document.createTextNode(\"Hardware Name: \" + data.device.hardwarename.join(\",\"));\n" +
-			"            br = document.createElement(\"br\");\n" +
-			"            para.appendChild(text);\n" +
-			"            para.appendChild(br);\n" +
-			"            text = document.createTextNode(\"Screen width (pixels): \" + data.device.screenpixelswidth);\n" +
-			"            br = document.createElement(\"br\");\n" +
-			"            para.appendChild(text);\n" +
-			"            para.appendChild(br);\n" +
-			"            text = document.createTextNode(\"Screen height (pixels): \" + data.device.screenpixelsheight);\n" +
-			"            br = document.createElement(\"br\");\n" +
-			"            para.appendChild(text);\n" +
-			"            para.appendChild(br);\n" +
-			"\n" +
-			"            var element = document.getElementById(\"content\");\n" +
-			"            element.appendChild(para);\n" +
-			"        });\n" +
-			"    }\n" +
-			"</script>");
-		}
+            out.println("<h2>Example</h2>\n" +
+            "\n" +
+            "<div id=\"content\">\n" +
+            "    <p>\n" +
+            "        Hardware Vendor: " + (hardwareVendor.hasValue() ? hardwareVendor.getValue() : "Unknown " + hardwareVendor.getNoValueMessage()) + "<br />\n" +
+            "        Hardware Name: " + (hardwareName.hasValue() ? stringJoin(hardwareName.getValue(), ",") : "Unknown " + hardwareName.getNoValueMessage()) +"<br />\n" +
+            "        Device Type: " + (deviceType.hasValue() ? deviceType.getValue() : "Unknown " + deviceType.getNoValueMessage()) + "<br />\n" +
+            "        Platform Vendor: " + (platformVendor.hasValue() ? platformVendor.getValue() : "Unknown " + platformVendor.getNoValueMessage()) + "<br />\n" +
+            "        Platform Name: " + (platformName.hasValue() ? platformName.getValue() : "Unknown " + platformName.getNoValueMessage()) + "<br />\n" +
+            "        Platform Version: " + (platformVersion.hasValue() ? platformVersion.getValue() : "Unknown " + platformVersion.getNoValueMessage()) + "<br />\n" +
+            "        Browser Vendor: " + (browserVendor.hasValue() ? browserVendor.getValue() : "Unknown " + browserVendor.getNoValueMessage()) + "<br />\n" +
+            "        Browser Name: " + (browserName.hasValue() ? browserName.getValue() : "Unknown " + browserName.getNoValueMessage()) + "<br />\n" +
+            "        Browser Version: " + (browserVersion.hasValue() ? browserVersion.getValue() : "Unknown " + browserVersion.getNoValueMessage()) + "\n" +
+            "    </p>\n" +
+            "</div>\n" +
+            "\n" +
+            "<script>\n" +
+            "    // This function will fire when the JSON data object is updated \n" +
+            "    // with information from the server.\n" +
+            "    // The sequence is:\n" +
+            "    // 1. Response contains JavaScript property 'getLatitude' that gets executed on the client\n" +
+            "    // 2. This triggers another call to the webserver that passes the location as evidence\n" +
+            "    // 3. The web server responds with new JSON data that contains the hemisphere based on the location.\n" +
+            "    // 4. The JavaScript integrates the new JSON data and fires the onChange callback below.\n" +
+            "    window.onload = function () {\n" +
+            "        fod.complete(function (data) {\n" +
+            "            var para = document.createElement(\"p\");\n" +
+            "            var br = document.createElement(\"br\");\n" +
+            "            var text = document.createTextNode(\"Updated information from client-side evidence:\");\n" +
+            "            para.appendChild(text);\n" +
+            "            para.appendChild(br);\n" +
+            "            text = document.createTextNode(\"Hardware Name: \" + data.device.hardwarename.join(\",\"));\n" +
+            "            br = document.createElement(\"br\");\n" +
+            "            para.appendChild(text);\n" +
+            "            para.appendChild(br);\n" +
+            "            text = document.createTextNode(\"Screen width (pixels): \" + data.device.screenpixelswidth);\n" +
+            "            br = document.createElement(\"br\");\n" +
+            "            para.appendChild(text);\n" +
+            "            para.appendChild(br);\n" +
+            "            text = document.createTextNode(\"Screen height (pixels): \" + data.device.screenpixelsheight);\n" +
+            "            br = document.createElement(\"br\");\n" +
+            "            para.appendChild(text);\n" +
+            "            para.appendChild(br);\n" +
+            "\n" +
+            "            var element = document.getElementById(\"content\");\n" +
+            "            element.appendChild(para);\n" +
+            "        });\n" +
+            "    }\n" +
+            "</script>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -273,7 +275,7 @@ public class Example extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ServletException se) {
-        	throw se;
+            throw se;
         } catch (Exception e) {
             e.printStackTrace();
         }

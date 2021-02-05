@@ -372,7 +372,8 @@ public class DeviceDataHashDefault
         return result;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected <T> TryGetResult<T> tryGetValue(
         String key,
         Class<T> type,

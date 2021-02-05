@@ -63,4 +63,24 @@
             <url>https://opensource.org/licenses/EUPL-1.2</url>
         </license>
     </licenses>
+    
+    <build>
+    <plugins>
+         <plugin>
+   		<groupId>org.apache.maven.plugins</groupId>
+  		<artifactId>maven-compiler-plugin</artifactId>
+  		<version>${maven-compiler-plugin.version}</version>
+        <configuration>
+            <source>${maven.compiler.source}</source>
+            <target>${maven.compiler.target}</target>
+            <showWarnings>true</showWarnings>
+            <compilerArgs>
+                <arg>-Xlint:all,-try,-options</arg>
+                <arg>-Werror</arg>
+            </compilerArgs>
+        </configuration>
+        </plugin>		
+    </plugins>
+    </build>
+   
 </project>

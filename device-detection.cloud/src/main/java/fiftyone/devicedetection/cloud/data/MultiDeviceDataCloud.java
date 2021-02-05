@@ -2,7 +2,9 @@ package fiftyone.devicedetection.cloud.data;
 
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
+import fiftyone.pipeline.engines.data.AspectData;
 import fiftyone.pipeline.engines.data.AspectDataBase;
+import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
 import fiftyone.pipeline.engines.data.MultiProfileData;
 import fiftyone.pipeline.engines.flowelements.AspectEngine;
 import fiftyone.pipeline.engines.services.MissingPropertyService;
@@ -32,7 +34,7 @@ public class MultiDeviceDataCloud
     public MultiDeviceDataCloud(
         Logger logger,
         FlowData flowData,
-        AspectEngine engine) {
+        AspectEngine<? extends AspectData, ? extends AspectPropertyMetaData> engine) {
         super(logger, flowData, engine);
         this.put(DEVICE_LIST_KEY, new ArrayList<DeviceData>());
     }
@@ -50,7 +52,7 @@ public class MultiDeviceDataCloud
     public MultiDeviceDataCloud(
         Logger logger,
         FlowData flowData,
-        AspectEngine engine,
+        AspectEngine<? extends AspectData, ? extends AspectPropertyMetaData> engine,
         MissingPropertyService missingPropertyService) {
         super(logger, flowData, engine, missingPropertyService);
         this.put(DEVICE_LIST_KEY, new ArrayList<DeviceData>());
@@ -70,6 +72,7 @@ public class MultiDeviceDataCloud
      * Internal methof to get the list of devices form the underlying data.
      * @return
      */
+    @SuppressWarnings("unchecked")
     private List<DeviceData> getDeviceList() {
         return (List<DeviceData>)this.get(DEVICE_LIST_KEY);
     }

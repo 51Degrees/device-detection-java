@@ -23,7 +23,7 @@ public class ValueMetaDataSwig implements AutoCloseable {
 
   @SuppressWarnings("deprecation")
   protected void finalize() {
-    delete();
+	delete();
   }
 
   public synchronized void delete() {
