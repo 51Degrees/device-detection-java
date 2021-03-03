@@ -90,6 +90,9 @@
                             <arguments>
                                 <argument>hash</argument>
                             </arguments>
+                            <successCodes>
+                                <successCode>0</successCode>
+                            </successCodes>
                         </configuration>
                         <goals>
                             <goal>exec</goal>

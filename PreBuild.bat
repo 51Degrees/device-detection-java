@@ -12,7 +12,7 @@ IF [%API%]==[Hash] (
   SET SRCOUT=%~dp0\device-detection.hash.engine.on-premise\src\main\java\fiftyone\devicedetection\hash\engine\onpremise
 ) ELSE (
   ECHO No API name supplied. Use pattern or hash as an argument.
-  GOTO end
+  exit /B 1
 )
 
 FOR %%X IN (swig.exe) DO (SET SWIG_EXE=%%~$PATH:X)
@@ -64,9 +64,11 @@ FOR %%X IN (msbuild.exe) DO (SET MSBUILD_EXE=%%~$PATH:X)
 IF DEFINED MSBUILD_EXE (
   FOR %%P IN (x64, x86) DO (
     msbuild %~dp0/VisualStudio/DeviceDetectionEngines.sln /t:FiftyOne_DeviceDetection_%API%_Java /p:Configuration=Release /p:"Platform=%%P"
+	IF %errorlevel% neq 0 exit /B 1
   )
 ) ELSE (
   @ECHO MSBUILD not found. Native windows libraries can not be built.
+  exit /B 1
 )
 
 :end
