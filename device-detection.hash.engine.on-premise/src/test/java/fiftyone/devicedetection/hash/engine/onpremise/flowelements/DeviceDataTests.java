@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
-public class DeviceData extends TestsBase {
+public class DeviceDataTests extends TestsBase {
 
     private static final Logger logger = mock(Logger.class);
 

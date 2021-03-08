@@ -23,14 +23,13 @@
 package fiftyone.devicedetection.hash.engine.onpremise.flowelements;
 
 import fiftyone.devicedetection.hash.engine.onpremise.TestsBase;
-import fiftyone.devicedetection.hash.engine.onpremise.data.DataValidatorHash;
-import fiftyone.devicedetection.shared.testhelpers.flowelements.ProcessTests;
+import fiftyone.devicedetection.shared.testhelpers.flowelements.EvidenceKeyTests;
 import fiftyone.pipeline.engines.Constants;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class Process extends TestsBase {
+public class EvidenceKeysTests extends TestsBase {
 
     @Before
     public void init() throws Exception {
@@ -43,42 +42,22 @@ public class Process extends TestsBase {
     }
 
     @Test
-    public void Process_Hash_NoEvidence() throws Exception {
-        ProcessTests.noEvidence(getWrapper(), new DataValidatorHash(getWrapper().getEngine()));
+    public void EvidenceKeys_Hash_ContainsUserAgent() {
+        EvidenceKeyTests.containsUserAgent(getWrapper());
     }
 
     @Test
-    public void Process_Hash_EmptyUserAgent() throws Exception {
-        ProcessTests.emptyUserAgent(getWrapper(), new DataValidatorHash(getWrapper().getEngine()));
+    public void EvidenceKeys_Hash_ContainsHeaderNames() {
+        EvidenceKeyTests.containsHeaderNames(getWrapper());
     }
 
     @Test
-    public void Process_Hash_NoHeaders() throws Exception {
-        ProcessTests.noHeaders(getWrapper(), new DataValidatorHash(getWrapper().getEngine()));
+    public void EvidenceKeys_Hash_ContainsOverrides() {
+        EvidenceKeyTests.containsOverrides(getWrapper());
     }
 
     @Test
-    public void Process_Hash_NoUsefulHeaders() throws Exception {
-        ProcessTests.noUsefulHeaders(getWrapper(), new DataValidatorHash(getWrapper().getEngine()));
-    }
-
-    @Test
-    public void Process_Hash_CaseInsensitiveKeys() throws Exception {
-        ProcessTests.caseInsensitiveEvidenceKeys(getWrapper(), new DataValidatorHash(getWrapper().getEngine()));
-    }
-
-    @Test
-    public void Process_Hash_ProfileOverride() throws Exception {
-        ProcessTests.profileOverride(getWrapper(), new DataValidatorHash(getWrapper().getEngine()));
-    }
-
-    @Test
-    public void Process_Hash_ProfileOverrideNoHeaders() throws Exception {
-        ProcessTests.profileOverrideNoHeaders(getWrapper(), new DataValidatorHash(getWrapper().getEngine()));
-    }
-
-    @Test
-    public void Process_Hash_DeviceId() throws Exception {
-        ProcessTests.deviceId(getWrapper(), new DataValidatorHash(getWrapper().getEngine()));
+    public void EvidenceKeys_Hash_CaseInsensitiveKeys() {
+        EvidenceKeyTests.caseInsensitiveKeys(getWrapper());
     }
 }

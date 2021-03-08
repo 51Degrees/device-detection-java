@@ -357,7 +357,7 @@ public class DeviceDetectionHashEngine
      */
     private List<FiftyOneAspectPropertyMetaData> getMetricProperties() {
         List<String> dataFileList = Arrays.asList(
-            "Lite", "Premium", "Enterprise");
+            "Lite", "Premium", "Enterprise", "TAC");
         FiftyOneAspectPropertyMetaData[] metricProperties =
             new FiftyOneAspectPropertyMetaData[]{
 

@@ -71,6 +71,7 @@ public class MetaDataTests {
             @Override
             public void run() {
                 while (done.get() == false) {
+                    synchronized(refreshes) {
                     wrapper.getEngine().refreshData(wrapper.getEngine().getDataFileMetaData().getIdentifier());
                     refreshes[0]++;
                     try {
@@ -79,6 +80,7 @@ public class MetaDataTests {
 
                     }
                 }
+               }
             }
         });
         List<Future<Integer>> threads = startHashingThreads(
