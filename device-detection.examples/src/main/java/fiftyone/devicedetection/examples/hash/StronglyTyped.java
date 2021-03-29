@@ -41,6 +41,10 @@ import fiftyone.pipeline.engines.data.AspectPropertyValue;
  * 
  * @include{doc} example-require-datafile.txt
  */
+
+/**
+ * Strongly typed example.
+ */
 public class StronglyTyped extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
@@ -67,7 +71,7 @@ public class StronglyTyped extends ProgramBase {
             println("Constructing pipeline with engine " +
                 "from file " + dataFile);
             // Create a simple pipeline to access the engine with.
-            try (Pipeline pipeline = builder
+            Pipeline pipeline = builder
                 .useOnPremise(dataFile, false)
                 .setAutoUpdate(false)
                 // Prefer low memory profile where all data streamed
@@ -76,8 +80,12 @@ public class StronglyTyped extends ProgramBase {
                 .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
                 //.setShareUsage(false)
                 //.setPerformanceProfile(Constants.PerformanceProfiles.Balanced)
-                .build()) {
-                FlowData data = pipeline.createFlowData();
+                .build();
+            
+            // A try-with-resource block MUST be used for the FlowData instance.
+            // This ensures that native resources created by the device 
+            // detection engine are freed.            
+            try (FlowData data = pipeline.createFlowData()) {
                 data.addEvidence(
                     "header.user-agent",
                     mobileUserAgent)

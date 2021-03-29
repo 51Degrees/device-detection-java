@@ -6,7 +6,6 @@ import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 
-import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBContext;
 import java.net.URL;
 import java.net.URLClassLoader;

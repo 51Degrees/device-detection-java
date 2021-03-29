@@ -117,6 +117,10 @@ import java.util.logging.Logger;
  * <p>
  * <!-- tutorial -->
  */
+
+/**
+ * Comparison example.
+ */
 public class Comparison extends ProgramBase {
 
     // the default number of threads if one is not provided.
@@ -474,6 +478,7 @@ public class Comparison extends ProgramBase {
      * @throws IOException          if the data file cannot be accessed.
      * @throws InterruptedException if the comparison threads are interrupted.
      */
+    @SuppressWarnings("unused")
     public static void main(String[] args)
         throws Exception {
         int numberOfThreads = defaultNumberOfThreads;
@@ -909,23 +914,27 @@ public class Comparison extends ProgramBase {
         @Override
         public void calculateResult(String userAgent, Result result)
             throws Exception {
-            FlowData flowData = pipeline.createFlowData();
-            flowData.addEvidence("header.user-agent",
-                userAgent)
-                .process();
-            DeviceData device = flowData.getFromElement(engine);
-            result.isMobile = device.getIsMobile().getValue();
-            result.browserName = browserName != null ?
-                device.getBrowserName().getValue() : UNSUPPORTED_VALUE;
-            result.browserVersion = browserVersion != null ?
-                device.getBrowserVersion().getValue() : UNSUPPORTED_VALUE;
-            result.hardwareVendor = hardwareVendor != null ?
-                device.getHardwareVendor().getValue() : UNSUPPORTED_VALUE;
-            result.hardwareModel = hardwareModel != null ?
-                device.getHardwareModel().getValue() : UNSUPPORTED_VALUE;
-            result.deviceType = deviceType != null ?
-                device.getDeviceType().getValue() : UNSUPPORTED_VALUE;
-            result.difference = device.getDifference().getValue();
+            // A try-with-resource block MUST be used for the FlowData instance.
+            // This ensures that native resources created by the device
+            // detection engine are freed.
+            try (FlowData flowData = pipeline.createFlowData()) {
+                flowData.addEvidence("header.user-agent",
+                    userAgent)
+                    .process();
+                DeviceData device = flowData.getFromElement(engine);
+                result.isMobile = device.getIsMobile().getValue();
+                result.browserName = browserName != null ?
+                    device.getBrowserName().getValue() : UNSUPPORTED_VALUE;
+                result.browserVersion = browserVersion != null ?
+                    device.getBrowserVersion().getValue() : UNSUPPORTED_VALUE;
+                result.hardwareVendor = hardwareVendor != null ?
+                    device.getHardwareVendor().getValue() : UNSUPPORTED_VALUE;
+                result.hardwareModel = hardwareModel != null ?
+                    device.getHardwareModel().getValue() : UNSUPPORTED_VALUE;
+                result.deviceType = deviceType != null ?
+                    device.getDeviceType().getValue() : UNSUPPORTED_VALUE;
+                result.difference = device.getDifference().getValue();
+            }
         }
 
         @Override
@@ -936,12 +945,17 @@ public class Comparison extends ProgramBase {
                 // Do nothing.
             }
         }
+
+        public ElementPropertyMetaData getIsMobile() {
+            return isMobile;
+        }
     }
 
     /**
      * Loads all the data into initialised data structures. Fast with a longer
      * initialisation time.
      */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     static class FiftyOneDegreesHashMemoryProvider
         extends FiftyOneDegreesBaseProvider {
 

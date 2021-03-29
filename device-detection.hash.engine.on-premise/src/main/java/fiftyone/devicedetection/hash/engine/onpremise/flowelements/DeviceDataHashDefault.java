@@ -32,7 +32,6 @@ import fiftyone.pipeline.core.data.TryGetResult;
 import fiftyone.pipeline.core.data.types.JavaScript;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.engines.data.AspectPropertyValueDefault;
-import fiftyone.pipeline.engines.flowelements.AspectEngine;
 import fiftyone.pipeline.engines.services.MissingPropertyService;
 import org.slf4j.Logger;
 
@@ -48,7 +47,13 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  */
 public class DeviceDataHashDefault
     extends DeviceDataBaseOnPremise
-    implements DeviceDataHash {
+    implements DeviceDataHash, AutoCloseable {
+
+    /**
+     * True if the {@link #close()} method has been called.
+     */
+    private boolean closed = false;
+
     /**
      * Pre-populated list of match methods. This to avoid calling the
      * '.values()' method every time.
@@ -74,17 +79,30 @@ public class DeviceDataHashDefault
     DeviceDataHashDefault(
         Logger logger,
         FlowData flowData,
-        AspectEngine engine,
+        DeviceDetectionHashEngine engine,
         MissingPropertyService missingPropertyService) {
         super(logger, flowData, engine, missingPropertyService);
     }
-
+    
     /**
      * Add the native results to the list of results contained in this instance.
      * @param results the results to add
      */
     void setResults(ResultsHashSwig results) {
+        checkState();
         resultsList.add(results);
+    }
+
+    /**
+     * Get a single native results instance. If there is only one available,
+     * that is what is returned. If there are more, then the first one which
+     * contains values for the requested property is returned.
+     * @param propertyName used to select results from list
+     * @return single native results instance
+     */
+    private ResultsHashSwig getSingleResults(String propertyName) {
+        return resultsList.size() == 1 ?
+            resultsList.get(0) : getResultsContainingProperty(propertyName);
     }
 
     /**
@@ -223,6 +241,7 @@ public class DeviceDataHashDefault
 
     @Override
     protected boolean propertyIsAvailable(String propertyName) {
+        checkState();
         for (ResultsHashSwig results : resultsList) {
             if (results.containsProperty(propertyName, propertyName.length())) {
                 return true;
@@ -233,19 +252,23 @@ public class DeviceDataHashDefault
 
     @Override
     public AspectPropertyValue<List<String>> getValues(String propertyName) {
+        checkState();
         AspectPropertyValue<List<String>> result =
             new AspectPropertyValueDefault<>();
-        ResultsHashSwig results = getResultsContainingProperty(propertyName);
+        ResultsHashSwig results = getSingleResults(propertyName);
         if (results != null) {
-            VectorStringValuesSwig value = results.getValues(
+            try (VectorStringValuesSwig value = results.getValues(
                 propertyName,
-                propertyName.length());
-            if (value.hasValue()) {
-                result.setValue(Collections.unmodifiableList(
-                    Swig.asList(value.getValue())));
-            }
-            else {
-                result.setNoValueMessage(value.getNoValueMessage());
+                propertyName.length())) {
+                if (value.hasValue()) {
+                    try (VectorStringSwig vector = value.getValue()) {
+                        result.setValue(Collections.unmodifiableList(
+                            Swig.asList(vector)));
+                    }
+                }
+                else {
+                    result.setNoValueMessage(value.getNoValueMessage());
+                }
             }
         }
         return result;
@@ -254,16 +277,17 @@ public class DeviceDataHashDefault
     @Override
     protected AspectPropertyValue<String> getValueAsString(String propertyName) {
         AspectPropertyValue<String> result = new AspectPropertyValueDefault<>();
-        ResultsHashSwig results = getResultsContainingProperty(propertyName);
+        ResultsHashSwig results = getSingleResults(propertyName);
         if (results != null) {
-            StringValueSwig value = results.getValueAsString(
+            try (StringValueSwig value = results.getValueAsString(
                 propertyName,
-                propertyName.length());
-            if (value.hasValue()) {
-                result.setValue(value.getValue());
-            }
-            else {
-                result.setNoValueMessage(value.getNoValueMessage());
+                propertyName.length())) {
+                if (value.hasValue()) {
+                    result.setValue(value.getValue());
+                }
+                else {
+                    result.setNoValueMessage(value.getNoValueMessage());
+                }
             }
         }
         return result;
@@ -274,16 +298,17 @@ public class DeviceDataHashDefault
         String propertyName) {
         AspectPropertyValue<JavaScript> result =
             new AspectPropertyValueDefault<>();
-        ResultsHashSwig results = getResultsContainingProperty(propertyName);
+        ResultsHashSwig results = getSingleResults(propertyName);
         if (results != null) {
-            StringValueSwig value = results.getValueAsString(
+            try (StringValueSwig value = results.getValueAsString(
                 propertyName,
-                propertyName.length());
-            if (value.hasValue()) {
-                result.setValue(new JavaScript(value.getValue()));
-            }
-            else {
-                result.setNoValueMessage(value.getNoValueMessage());
+                propertyName.length())) {
+                if (value.hasValue()) {
+                    result.setValue(new JavaScript(value.getValue()));
+                }
+                else {
+                    result.setNoValueMessage(value.getNoValueMessage());
+                }
             }
         }
         return result;
@@ -293,16 +318,17 @@ public class DeviceDataHashDefault
     protected AspectPropertyValue<Integer> getValueAsInteger(
         String propertyName) {
         AspectPropertyValue<Integer> result = new AspectPropertyValueDefault<>();
-        ResultsHashSwig results = getResultsContainingProperty(propertyName);
+        ResultsHashSwig results = getSingleResults(propertyName);
         if (results != null) {
-            IntegerValueSwig value = results.getValueAsInteger(
+            try (IntegerValueSwig value = results.getValueAsInteger(
                 propertyName,
-                propertyName.length());
-            if (value.hasValue()) {
-                result.setValue(value.getValue());
-            }
-            else {
-                result.setNoValueMessage(value.getNoValueMessage());
+                propertyName.length())) {
+                if (value.hasValue()) {
+                    result.setValue(value.getValue());
+                }
+                else {
+                    result.setNoValueMessage(value.getNoValueMessage());
+                }
             }
         }
         return result;
@@ -311,16 +337,17 @@ public class DeviceDataHashDefault
     @Override
     protected AspectPropertyValue<Boolean> getValueAsBool(String propertyName) {
         AspectPropertyValue<Boolean> result = new AspectPropertyValueDefault<>();
-        ResultsHashSwig results = getResultsContainingProperty(propertyName);
+        ResultsHashSwig results = getSingleResults(propertyName);
         if (results != null) {
-            BoolValueSwig value = results.getValueAsBool(
+            try (BoolValueSwig value = results.getValueAsBool(
                 propertyName,
-                propertyName.length());
-            if (value.hasValue()) {
-                result.setValue(value.getValue());
-            }
-            else {
-                result.setNoValueMessage(value.getNoValueMessage());
+                propertyName.length())) {
+                if (value.hasValue()) {
+                    result.setValue(value.getValue());
+                }
+                else {
+                    result.setNoValueMessage(value.getNoValueMessage());
+                }
             }
         }
         return result;
@@ -329,26 +356,29 @@ public class DeviceDataHashDefault
     @Override
     protected AspectPropertyValue<Double> getValueAsDouble(String propertyName) {
         AspectPropertyValue<Double> result = new AspectPropertyValueDefault<>();
-        ResultsHashSwig results = getResultsContainingProperty(propertyName);
+        ResultsHashSwig results = getSingleResults(propertyName);
         if (results != null) {
-            DoubleValueSwig value = results.getValueAsDouble(
+            try (DoubleValueSwig value = results.getValueAsDouble(
                 propertyName,
-                propertyName.length());
-            if (value.hasValue()) {
-                result.setValue(value.getValue());
-            }
-            else {
-                result.setNoValueMessage(value.getNoValueMessage());
+                propertyName.length())) {
+                if (value.hasValue()) {
+                    result.setValue(value.getValue());
+                }
+                else {
+                    result.setNoValueMessage(value.getNoValueMessage());
+                }
             }
         }
         return result;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected <T> TryGetResult<T> tryGetValue(
         String key,
         Class<T> type,
         Class<?>... parameterisedTypes) {
+        checkState();
         TryGetResult<T> result = super.tryGetValue(key, type, parameterisedTypes);
 
         if (result.hasValue() == false) {
@@ -398,11 +428,26 @@ public class DeviceDataHashDefault
         return result;
     }
 
+    private void checkState() {
+        if (closed == true) {
+            throw new IllegalStateException("The DeviceDataHash instance has " +
+                "been closed, and cannot be used. Any result processing should " +
+                "be carried out within a 'try-with-resource' block which " +
+                "closes the FlowData and any AutoCloseable elements.");
+        }
+    }
+
     @Override
-    protected void finalize() throws Throwable {
-        for (ResultsHashSwig results : resultsList) {
-            if (results != null) {
-                results.delete();
+    public void close() {
+        closed = true;
+        for (ResultsHashSwig result : resultsList) {
+            try {
+                result.close();
+            } catch (Exception e) {
+                logger.error("Failed to close native results instance. " +
+                    "A DeviceDataHash instance contains native unmanaged " +
+                    "memory which needs to be closed. Failing to close " +
+                    "could lead to memory leaks.", e);
             }
         }
     }

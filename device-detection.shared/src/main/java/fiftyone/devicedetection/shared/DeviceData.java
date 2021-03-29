@@ -62,6 +62,14 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getBlobBuilder();
 	/**
+	 * Refers to the list of audio codecs in specific formats supported for Decode by the Web Browser. This list of codecs is supported for playback on a basic browser installation.
+	 */
+	AspectPropertyValue<List<String>> getBrowserAudioCodecsDecode();
+	/**
+	 * Refers to the list of audio codecs in specific formats supported for Encode by the Web Browser. This list of codecs is supported for capture on a basic browser installation.
+	 */
+	AspectPropertyValue<List<String>> getBrowserAudioCodecsEncode();
+	/**
 	 * Indicates the age in months of the browser since the BrowserDiscontinuedYear and BrowserDiscontinuedMonth.
 	 */
 	AspectPropertyValue<Integer> getBrowserDiscontinuedAge();
@@ -73,6 +81,10 @@ public interface DeviceData extends AspectData
 	 * The year in which further development of the browser version is stopped by the browser vendor.  This occurs when a new stable version of the brower is released.
 	 */
 	AspectPropertyValue<Integer> getBrowserDiscontinuedYear();
+	/**
+	 * Indicates the name of the browser without the default OS or layout engine.
+	 */
+	AspectPropertyValue<String> getBrowserFamily();
 	/**
 	 * Indicates the name of the browser. Many mobile browsers, by default, come with an operating system (OS). Unless specifically named, these browsers are named after the accompanying OS and/or the layout engine. 
 	 */
@@ -117,6 +129,14 @@ public interface DeviceData extends AspectData
 	 * Indicates the version or subversion of the browser.
 	 */
 	AspectPropertyValue<String> getBrowserVersion();
+	/**
+	 * Refers to the list of video codecs in specific formats supported for Decode by the Web Browser. This list of codecs is supported for playback on a basic browser installation.
+	 */
+	AspectPropertyValue<List<String>> getBrowserVideoCodecsDecode();
+	/**
+	 * Refers to the list of video codecs in specific formats supported for Encode by the Web Browser. This list of codecs is supported for capture on a basic browser installation.
+	 */
+	AspectPropertyValue<List<String>> getBrowserVideoCodecsEncode();
 	/**
 	 * Indicates the list of camera types the device has. If the device has a rotating camera, this property refers to both front and back facing cameras.
 	 */
@@ -681,6 +701,14 @@ public interface DeviceData extends AspectData
 	 * Indicates the power consumption of the device while switched on. This property is applicable only for TVs.
 	 */
 	AspectPropertyValue<Integer> getOnPowerConsumption();
+	/**
+	 * The ratio of the resolution in physical pixels to the resolution in CSS pixels. This is approximated by screen resolution and screen size when the value is not known.
+	 */
+	AspectPropertyValue<Double> getPixelRatio();
+	/**
+	 * JavaScript that can override the property value found by the server using information on the client device. This property is applicable for browsers that support pixel ratio cookie.
+	 */
+	AspectPropertyValue<JavaScript> getPixelRatioJavascript();
 	/**
 	 * Indicates the age in months of the operating system since the PlatformReleaseYear and PlatformReleaseMonth.
 	 */

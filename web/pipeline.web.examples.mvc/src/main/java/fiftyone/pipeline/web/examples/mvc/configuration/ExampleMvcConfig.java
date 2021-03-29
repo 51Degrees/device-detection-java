@@ -170,15 +170,20 @@ import static fiftyone.pipeline.web.mvc.components.FiftyOneInterceptor.enableCli
  *         model.addAttribute("browser", device.getBrowserVendor() + " " + device.getBrowserName() + " " + device.getBrowserVersion());
  *         model.addAttribute("device", device.getHardwareVendor() + " " + device.getHardwareName());
  *         model.addAttribute("os", device.getPlatformVendor() + " " + device.getPlatformName() + " " + device.getPlatformVersion());
+ *
  *         return "example";
  *     }
  *     ...
  * ```
  * ## Controller
- 
+ *
  * @include mvc/controller/ExampleController.java
  *
  * ## Config
+ */
+
+/**
+ * MVC Example.
  */
 @EnableWebMvc
 @Configuration

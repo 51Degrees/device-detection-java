@@ -55,8 +55,10 @@ if [[ -z "${JAVA_HOME}" ]]; then
   { echo >&2 "JAVA_HOME is undefined. Aborting."; exit 1; }
 fi
 
-rm -r obj/
-mkdir obj
+if [[ -d obj ]]; then
+  rm -r obj/
+fi
+  mkdir obj
 
 if [ "$API" = "Hash" ]; then
 
@@ -126,7 +128,9 @@ if [ "$API" = "Hash" ]; then
         gcc $M $GCCARGS $SRCCM/evidence.c -o obj/evidence.o
         gcc $M $GCCARGS $SRCCM/exceptionsc.c -o obj/exceptionsc.o
         gcc $M $GCCARGS $SRCCM/file.c -o obj/file.o
+        gcc $M $GCCARGS $SRCCM/float.c -o obj/float.o
         gcc $M $GCCARGS $SRCCM/headers.c -o obj/headers.o
+        gcc $M $GCCARGS $SRCCM/ip.c -o obj/ip.o
         gcc $M $GCCARGS $SRCCM/list.c -o obj/list.o
         gcc $M $GCCARGS $SRCCM/memory.c -o obj/memory.o
         gcc $M $GCCARGS $SRCCM/overrides.c -o obj/overrides.o

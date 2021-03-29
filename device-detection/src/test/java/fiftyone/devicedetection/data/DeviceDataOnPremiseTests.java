@@ -28,6 +28,8 @@ import fiftyone.pipeline.core.data.ElementPropertyMetaDataDefault;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.data.types.JavaScript;
 import fiftyone.pipeline.core.flowelements.Pipeline;
+import fiftyone.pipeline.engines.data.AspectData;
+import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.engines.data.AspectPropertyValueDefault;
 import fiftyone.pipeline.engines.exceptions.NoValueException;
@@ -53,11 +55,11 @@ public class DeviceDataOnPremiseTests {
     private static String testPropertyName = "testproperty";
     private Logger logger;
     private FlowData flowData;
-    private AspectEngine engine;
+    private AspectEngine<? extends AspectData, ? extends AspectPropertyMetaData> engine;
     private Pipeline pipeline;
     private MissingPropertyService missingPropertyService;
 
-    private void setupElementProperties(Class type) {
+    private void setupElementProperties(Class<?> type) {
         Map<String, ElementPropertyMetaData> properties = new HashMap<>();
         ElementPropertyMetaData property = new ElementPropertyMetaDataDefault(
             testPropertyName,
@@ -74,6 +76,7 @@ public class DeviceDataOnPremiseTests {
             .thenReturn(elementProperties);
     }
 
+    @SuppressWarnings("unchecked")
     @Before
     public void init() {
         logger = mock(Logger.class);
@@ -98,12 +101,12 @@ public class DeviceDataOnPremiseTests {
 
         Object value = results.get(testPropertyName);
         assertTrue(AspectPropertyValue.class.isAssignableFrom(value.getClass()));
-        assertEquals(expected, ((AspectPropertyValue)value).getValue());
+        assertEquals(expected, ((AspectPropertyValue<?>)value).getValue());
         Map<String, Object> map = results.asKeyMap();
         assertTrue(map.containsKey(testPropertyName));
         Object mapValue = map.get(testPropertyName);
         assertTrue(AspectPropertyValue.class.isAssignableFrom(mapValue.getClass()));
-        assertEquals(expected, ((AspectPropertyValue)mapValue).getValue());
+        assertEquals(expected, ((AspectPropertyValue<?>)mapValue).getValue());
     }
 
     @Test
@@ -120,12 +123,12 @@ public class DeviceDataOnPremiseTests {
 
         Object value = results.get(testPropertyName);
         assertTrue(AspectPropertyValue.class.isAssignableFrom(value.getClass()));
-        assertEquals(expected, ((AspectPropertyValue)value).getValue());
+        assertEquals(expected, ((AspectPropertyValue<?>)value).getValue());
         Map<String, Object> map = results.asKeyMap();
         assertTrue(map.containsKey(testPropertyName));
         Object mapValue = map.get(testPropertyName);
         assertTrue(AspectPropertyValue.class.isAssignableFrom(mapValue.getClass()));
-        assertEquals(expected, ((AspectPropertyValue)mapValue).getValue());
+        assertEquals(expected, ((AspectPropertyValue<?>)mapValue).getValue());
     }
 
     @Test
@@ -142,12 +145,12 @@ public class DeviceDataOnPremiseTests {
 
         Object value = results.get(testPropertyName);
         assertTrue(AspectPropertyValue.class.isAssignableFrom(value.getClass()));
-        assertEquals(expected, ((AspectPropertyValue)value).getValue());
+        assertEquals(expected, ((AspectPropertyValue<?>)value).getValue());
         Map<String, Object> map = results.asKeyMap();
         assertTrue(map.containsKey(testPropertyName));
         Object mapValue = map.get(testPropertyName);
         assertTrue(AspectPropertyValue.class.isAssignableFrom(mapValue.getClass()));
-        assertEquals(expected, ((AspectPropertyValue)mapValue).getValue());
+        assertEquals(expected, ((AspectPropertyValue<?>)mapValue).getValue());
     }
 
     @Test
@@ -164,12 +167,12 @@ public class DeviceDataOnPremiseTests {
 
         Object value = results.get(testPropertyName);
         assertTrue(AspectPropertyValue.class.isAssignableFrom(value.getClass()));
-        assertEquals(expected, ((AspectPropertyValue)value).getValue());
+        assertEquals(expected, ((AspectPropertyValue<?>)value).getValue());
         Map<String, Object> map = results.asKeyMap();
         assertTrue(map.containsKey(testPropertyName));
         Object mapValue = map.get(testPropertyName);
         assertTrue(AspectPropertyValue.class.isAssignableFrom(mapValue.getClass()));
-        assertEquals(expected, ((AspectPropertyValue)mapValue).getValue());
+        assertEquals(expected, ((AspectPropertyValue<?>)mapValue).getValue());
     }
 
     @Test
@@ -186,12 +189,12 @@ public class DeviceDataOnPremiseTests {
 
         Object value = results.get(testPropertyName);
         assertTrue(AspectPropertyValue.class.isAssignableFrom(value.getClass()));
-        assertEquals(expected, ((AspectPropertyValue)value).getValue());
+        assertEquals(expected, ((AspectPropertyValue<?>)value).getValue());
         Map<String, Object> map = results.asKeyMap();
         assertTrue(map.containsKey(testPropertyName));
         Object mapValue = map.get(testPropertyName);
         assertTrue(AspectPropertyValue.class.isAssignableFrom(mapValue.getClass()));
-        assertEquals(expected, ((AspectPropertyValue)mapValue).getValue());
+        assertEquals(expected, ((AspectPropertyValue<?>)mapValue).getValue());
     }
 
     @Test
@@ -209,12 +212,12 @@ public class DeviceDataOnPremiseTests {
 
         Object value = results.get(testPropertyName);
         assertTrue(AspectPropertyValue.class.isAssignableFrom(value.getClass()));
-        assertEquals(expected, ((AspectPropertyValue)value).getValue());
+        assertEquals(expected, ((AspectPropertyValue<?>)value).getValue());
         Map<String, Object> map = results.asKeyMap();
         assertTrue(map.containsKey(testPropertyName));
         Object mapValue = map.get(testPropertyName);
         assertTrue(AspectPropertyValue.class.isAssignableFrom(mapValue.getClass()));
-        assertEquals(expected, ((AspectPropertyValue)mapValue).getValue());
+        assertEquals(expected, ((AspectPropertyValue<?>)mapValue).getValue());
     }
 
     private class TestResults<T> extends DeviceDataBaseOnPremise {
@@ -223,7 +226,7 @@ public class DeviceDataOnPremiseTests {
         TestResults(
             Logger logger,
             FlowData flowData,
-            AspectEngine engine,
+            AspectEngine<? extends AspectData, ? extends AspectPropertyMetaData> engine,
             MissingPropertyService missingPropertyService,
             Object value) {
             super(logger, flowData, engine, missingPropertyService);
@@ -286,6 +289,7 @@ public class DeviceDataOnPremiseTests {
             }
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         public AspectPropertyValue<List<String>> getValues(String propertyName) {
             if (propertyName.equals(testPropertyName)) {

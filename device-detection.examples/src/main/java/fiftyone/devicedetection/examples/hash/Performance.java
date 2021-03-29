@@ -48,6 +48,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @include{doc} example-require-datafile.txt
  */
 
+/**
+ * Performance example.
+ */
 public class Performance extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
@@ -66,21 +69,28 @@ public class Performance extends ProgramBase {
             super(printOutput);
         }
 
-        public void run(String dataFile, String uaFile, int count) throws Exception {
+        public void run(String dataFile, String uaFile, int count) 
+                throws Exception {
             println("Constructing pipeline with engine " +
                 "from file " + dataFile);
-            // Build a new on-premise Hash engine with the high performance profile.
-            Pipeline pipeline = new DeviceDetectionPipelineBuilder()
+            
+            // Build and run a new on-premise Hash engine with the max 
+            // performance profile which loads all the available device data 
+            // into memory.
+            run(uaFile, count, new DeviceDetectionPipelineBuilder()
                 .useOnPremise(dataFile, false)
                 .setAutoUpdate(false)
+                .setShareUsage(false)
                 // Prefer low memory profile where all data streamed
                 // from disk on-demand. Experiment with other profiles.
-                .setPerformanceProfile(Constants.PerformanceProfiles.HighPerformance)
+                .setPerformanceProfile(
+                        Constants.PerformanceProfiles.MaxPerformance)
                 //.setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
-                .setShareUsage(false)
                 //.setPerformanceProfile(Constants.PerformanceProfiles.Balanced)
-                .build();
-            run(uaFile, count, pipeline);
+                .setUsePredictiveGraph(false)
+                .setUsePerformanceGraph(true)
+                .setConcurrency(threadCount)
+                .build());
         }
 
         private String uaFile;
@@ -92,53 +102,52 @@ public class Performance extends ProgramBase {
         private final int maxDistinctUAs = 10000;
         private final int threadCount = 4;
 
-        private void run(String uaFile, int count, Pipeline pipeline) throws Exception {
+        private void run(String uaFile, int count, Pipeline pipeline) 
+                throws Exception {
             this.uaFile = uaFile;
             this.count = count;
             this.pipeline = pipeline;
-            try {
-                println("Processing " + count + " User-Agents from " + uaFile);
-                println("The " + count + " process calls will use a " +
-                    "maximum of " + maxDistinctUAs + " distinct User-Agents");
+            println("Processing " + count + " User-Agents from " + uaFile);
+            println("The " + count + " process calls will use a " +
+                "maximum of " + maxDistinctUAs + " distinct User-Agents");
 
-                println("Callibrating");
-                long calibrationTime = runThreads(true);
-                println();
-                println("Processing");
-                long time = runThreads(false);
-                // Output the average time to process a single User-Agent.
-                double detectionsPerSecond = (double) (count * threadCount * 1000) / (double) (time - calibrationTime);
-                println();
-                printf("Average %.2f detections per second using %d threads (%2f per thread)\n",
-                    detectionsPerSecond,
-                    threadCount,
-                    detectionsPerSecond / threadCount);
-                printf("%4f ms per User-Agent effective (%4f actual)\n",
-                    1000 / detectionsPerSecond,
-                    (1000 * threadCount) / detectionsPerSecond);
-                println("IsMobile = True  : " + isMobileTrue.get());
-                println("IsMobile = False : " + isMobileFalse.get());
-                println("IsMobile = Unknwon : " + isMobileUnknown.get());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            println("Calibrating");
+            long calibrationTime = runThreads(true);
+            println();
+            println("Processing");
+            long time = runThreads(false);
+            // Output the average time to process a single User-Agent.
+            double detectionsPerSecond = (double)(count * threadCount) / 
+                    (double)((time - calibrationTime) / (double)1000);
+            println();
+            printf("Average %.2f detections per second using %d threads " +
+                   "(%2f per thread)\n",
+                detectionsPerSecond,
+                threadCount,
+                detectionsPerSecond / threadCount);
+            printf("%4f ms per User-Agent effective (%4f actual)\n",
+                1000 / detectionsPerSecond,
+                (1000 * threadCount) / detectionsPerSecond);
+            println("IsMobile = True  : " + isMobileTrue.get());
+            println("IsMobile = False : " + isMobileFalse.get());
+            println("IsMobile = Unknown : " + isMobileUnknown.get());
         }
 
-        private long runThreads(boolean calibration) throws IOException, InterruptedException, ExecutionException {
+        private long runThreads(boolean calibration) 
+                throws IOException, InterruptedException, ExecutionException {
             isMobileTrue = new AtomicInteger(0);
             isMobileFalse = new AtomicInteger(0);
             isMobileUnknown = new AtomicInteger(0);
-            List<String> userAgents = new ArrayList<>();
-            for (String userAgent : getUserAgents(uaFile, count)) {
-                userAgents.add(userAgent);
-            }
             
-            // Start multiple threads to process a set of User-Agents, making a note of
-            // the time at which processing was started.
+            // Start multiple threads to process a set of User-Agents, making a
+            // note of the time at which processing was started.
             List<Callable<Void>> callables = new ArrayList<>();
             for (int i = 0; i < threadCount; i++) {
                 callables.add(new PerformanceCallable(
-                    new ReportIterable(userAgents, count, maxDistinctUAs, 40 / threadCount),
+                    new ReportIterable(
+                            getUserAgents(uaFile, count).iterator(),
+                            count,
+                            maxDistinctUAs, 40 / threadCount),
                     pipeline,
                     isMobileTrue,
                     isMobileFalse,
@@ -148,15 +157,14 @@ public class Performance extends ProgramBase {
             ExecutorService service = Executors.newFixedThreadPool(threadCount);
             long start = System.currentTimeMillis();
 
-            // Wait for all processing to finish, and make a note of the time elapsed
-            // since the processing was started.
+            // Wait for all processing to finish, and make a note of the time 
+            // elapsed since the processing was started.
             List<Future<Void>> results = service.invokeAll(callables);
             for (Future<Void> result : results) {
                 result.get();
             }
             service.shutdown();
             return System.currentTimeMillis() - start;
-
         }
 
         private static class PerformanceCallable implements Callable<Void> {
@@ -194,26 +202,32 @@ public class Performance extends ProgramBase {
                         isMobileFalse.incrementAndGet();
                     }
                     else {
-                        FlowData data = pipeline.createFlowData();
-                        // Add the User-Agent as evidence to the flow data.
-                        data.addEvidence("header.User-Agent", userAgent)
-                            .process();
+                        
+                        // A try-with-resource block MUST be used for  the 
+                        // FlowData instance. This ensures that native resources
+                        // created by the device detection engine are freed.
+                        try (FlowData data = pipeline.createFlowData()) {
+                            
+                            // Add the User-Agent as evidence to the flow data.
+                            data.addEvidence("header.User-Agent", userAgent)
+                                .process();
 
-                        // Get the device from the engine.
-                        DeviceData device = data.get(DeviceData.class);
-                        // Update the counters depending on the IsMobile
-                        // result.
-                        AspectPropertyValue<Boolean> isMobile =
-                            device.getIsMobile();
-                        if (isMobile.hasValue()) {
-                            if (isMobile.getValue()) {
-                                isMobileTrue.incrementAndGet();
+                            // Get the device from the engine.
+                            DeviceData device =
+                                data.get(DeviceData.class);
+                            // Update the counters depending on the IsMobile
+                            // result.
+                            AspectPropertyValue<Boolean> isMobile =
+                                device.getIsMobile();
+                            if (isMobile.hasValue()) {
+                                if (isMobile.getValue()) {
+                                    isMobileTrue.incrementAndGet();
+                                } else {
+                                    isMobileFalse.incrementAndGet();
+                                }
                             } else {
-                                isMobileFalse.incrementAndGet();
+                                isMobileUnknown.incrementAndGet();
                             }
-                        }
-                        else {
-                            isMobileUnknown.incrementAndGet();
                         }
                     }
                 }

@@ -25,10 +25,8 @@ package fiftyone.devicedetection.hash.engine.onpremise.data;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.Swig;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.ValueIterable;
-import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.PropertyMetaDataSwig;
-import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataCollectionSwig;
-import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataKeySwig;
-import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ValueMetaDataSwig;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.*;
+import fiftyone.pipeline.core.data.ElementData;
 import fiftyone.pipeline.core.data.ElementPropertyMetaData;
 import fiftyone.pipeline.core.data.types.JavaScript;
 import fiftyone.pipeline.core.flowelements.FlowElement;
@@ -132,15 +130,15 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
     @Override
     public ComponentMetaData getComponent() {
         return new ComponentMetaDataHash(
-                engine,
-                engine.getMetaData().getComponentForProperty(source));
+            engine,
+            engine.getMetaData().getComponentForProperty(source));
     }
 
     @Override
     public Iterable<ValueMetaData> getValues() {
         return new ValueIterable(
-                engine,
-                engine.getMetaData().getValuesForProperty(source));
+            engine,
+            engine.getMetaData().getValuesForProperty(source));
     }
 
     @Override
@@ -148,10 +146,10 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
         ValueMetaData result = null;
 
         ValueMetaDataCollectionSwig values =
-                engine.getMetaData().getValuesForProperty(source);
+            engine.getMetaData().getValuesForProperty(source);
         try {
             ValueMetaDataSwig value = values.getByKey(
-                    new ValueMetaDataKeySwig(getName(), valueName));
+                new ValueMetaDataKeySwig(getName(), valueName));
             if (value != null) {
                 result = new ValueMetaDataHash(engine, value);
             }
@@ -164,10 +162,10 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
     @Override
     public ValueMetaData getDefaultValue() {
         ValueMetaDataSwig value =
-                engine.getMetaData().getDefaultValueForProperty(source);
+            engine.getMetaData().getDefaultValueForProperty(source);
         return value == null ?
-                null :
-                new ValueMetaDataHash(engine, value);
+            null :
+            new ValueMetaDataHash(engine, value);
     }
 
     @Override
@@ -196,7 +194,7 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
     }
 
     @Override
-    public Class getType() {
+    public Class<?> getType() {
         switch (type) {
             case "string":
                 return String.class;
@@ -216,7 +214,7 @@ public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
     }
 
     @Override
-    public FlowElement getElement() {
+    public FlowElement<? extends ElementData, ? extends ElementPropertyMetaData> getElement() {
         return engine;
     }
 

@@ -52,15 +52,15 @@ public class ComponentMetaDataHash implements ComponentMetaData {
      * @param source the source metadata from the native engine
      */
     public ComponentMetaDataHash(
-            DeviceDetectionHashEngine engine,
-            ComponentMetaDataSwig source) {
+        DeviceDetectionHashEngine engine,
+        ComponentMetaDataSwig source) {
         this.engine = engine;
         this.source = source;
     }
 
     @Override
     public byte getComponentId() {
-        return (byte) source.getComponentIdAsInt();
+        return source.getComponentId();
     }
 
     @Override

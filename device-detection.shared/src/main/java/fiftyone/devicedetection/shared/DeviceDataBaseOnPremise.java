@@ -26,6 +26,8 @@ import fiftyone.pipeline.core.data.ElementPropertyMetaData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.data.TryGetResult;
 import fiftyone.pipeline.core.data.types.JavaScript;
+import fiftyone.pipeline.engines.data.AspectData;
+import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.engines.flowelements.AspectEngine;
 import fiftyone.pipeline.engines.services.MissingPropertyService;
@@ -59,7 +61,7 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
     protected DeviceDataBaseOnPremise(
         Logger logger,
         FlowData flowData,
-        AspectEngine engine,
+        AspectEngine<? extends AspectData, ? extends AspectPropertyMetaData> engine,
         MissingPropertyService missingPropertyService) {
         super(logger, flowData, engine, missingPropertyService);
         primitiveTypes = getPrimitiveTypeMap();
@@ -74,7 +76,7 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
     protected abstract boolean propertyIsAvailable(String propertyName);
 
     /**
-     * Get the values for the specified property as a {@link List<String>}. For
+     * Get the values for the specified property as a {@link List}. For
      * on-premise engines, this is the raw form they are stored in the data file
      * as.
      * @param propertyName name of the property to get values for
@@ -166,8 +168,9 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
      * @param propertyName name of the property
      * @return value type, or {@link Object} if unknown
      */
-    protected Class getPropertyType(String propertyName) {
-        Class type = Object.class;
+    @SuppressWarnings("unchecked")
+    protected Class<Object> getPropertyType(String propertyName) {
+        Class<Object> type = Object.class;
         Map<String, ElementPropertyMetaData> properties =
             getPipeline().getElementAvailableProperties()
                 .get(getEngines().get(0).getElementDataKey());
@@ -180,6 +183,7 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
         return type;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected <T> TryGetResult<T> tryGetValue(
         String key,
@@ -197,8 +201,8 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
             // properties so just get the one we want.
             if (propertyIsAvailable(key)) {
                 if (type.equals(Object.class)) {
-                    type = (Class)AspectPropertyValue.class;
-                    parameterisedTypes = new Class[]{ getPropertyType(key) };
+                    type = (Class<T>)AspectPropertyValue.class;
+                    parameterisedTypes = new Class<?>[]{ getPropertyType(key) };
                 }
                 synchronized (getLock) {
                     Object obj = null;

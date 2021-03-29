@@ -24,12 +24,11 @@ package fiftyone.devicedetection;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder;
-import fiftyone.devicedetection.shared.flowelements.OnPremiseDeviceDetectionEngineBuilderBase;
 import fiftyone.pipeline.core.exceptions.PipelineConfigurationException;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.Constants;
-import fiftyone.pipeline.engines.configuration.CacheConfiguration;
-import fiftyone.pipeline.engines.fiftyone.flowelements.FiftyOneAspectEngine;
+import fiftyone.pipeline.engines.data.AspectData;
+import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
 import fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilder;
 import fiftyone.pipeline.engines.flowelements.AspectEngine;
 import fiftyone.pipeline.engines.flowelements.PrePackagedPipelineBuilderBase;
@@ -58,7 +57,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
     private Integer drift = null;
     private Boolean usePerformanceGraph = null;
     private Boolean usePredictiveGraph = null;
-    private List<String> properties = new ArrayList();
+    private final List<String> properties = new ArrayList<String>();
     private Boolean autoUpdateEnabled = null;
     private Boolean dataFileSystemWatcher = null;
     private Boolean dataUpdateOnStartup = null;
@@ -374,7 +373,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
      */
     @Override
     public Pipeline build() throws Exception {
-        AspectEngine deviceDetectionEngine;
+        AspectEngine<? extends AspectData, ? extends AspectPropertyMetaData> deviceDetectionEngine;
 
         // Create the device detection engine based on the configuration.
         switch (algorithm) {
@@ -413,12 +412,6 @@ public class DeviceDetectionOnPremisePipelineBuilder
      */
     private DeviceDetectionHashEngine configureAndBuild(
         DeviceDetectionHashEngineBuilder builder) throws Exception {
-        // Configure caching
-        if (resultsCache) {
-            CacheConfiguration cacheConfig = new CacheConfiguration(resultsCacheSize);
-            builder.setCache(cacheConfig);
-        }
-        
         // Configure auto update.
         if(autoUpdateEnabled != null) {
             builder.setAutoUpdate(autoUpdateEnabled);

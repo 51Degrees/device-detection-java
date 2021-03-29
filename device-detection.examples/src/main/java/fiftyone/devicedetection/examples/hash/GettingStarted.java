@@ -40,6 +40,10 @@ import fiftyone.pipeline.engines.data.AspectPropertyValue;
  *
  * @include{doc} example-require-datafile.txt
  */
+
+/**
+ * Getting started example.
+ */
 public class GettingStarted extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
@@ -78,24 +82,27 @@ public class GettingStarted extends ProgramBase {
                 //.setPerformanceProfile(Constants.PerformanceProfiles.Balanced)
                 .build();
             
-            // A pipeline can create a flow data element which is where evidence is added
-            // (for example from a device web request). This evidence is then processed by
-            // the pipeline through the flow data's `process()` method.
-            FlowData data = pipeline.createFlowData();
-            data.addEvidence(
-                "header.user-agent",
-                mobileUserAgent)
-                .process();
+            // A pipeline can create a flow data element which is where evidence
+            // is added (for example from a device web request). This evidence 
+            // is then processed by the pipeline through the flow data's 
+            // `process()` method. A try-with-resource block MUST be used for 
+            // the FlowData instance. This ensures that native resources created
+            // by the device detection engine are freed.
+            try (FlowData data = pipeline.createFlowData()) {
+                data.addEvidence(
+                    "header.user-agent",
+                    mobileUserAgent)
+                    .process();
 
-            // Here is an example of a function that checks if a User-Agent is a mobile
-            // device. In some cases the IsMobile value is not meaningful so instead of
-            // returning a default, a .hasValue() check can be made.
-            AspectPropertyValue<Boolean> isMobile = data.get(DeviceData.class).getIsMobile();
-            if (isMobile.hasValue()) {
-                println("IsMobile: " + isMobile.getValue());
-            }
-            else {
-                println(isMobile.getNoValueMessage());
+                // Here is an example of a function that checks if a User-Agent is a mobile
+                // device. In some cases the IsMobile value is not meaningful so instead of
+                // returning a default, a .hasValue() check can be made.
+                AspectPropertyValue<Boolean> isMobile = data.get(DeviceData.class).getIsMobile();
+                if (isMobile.hasValue()) {
+                    println("IsMobile: " + isMobile.getValue());
+                } else {
+                    println(isMobile.getNoValueMessage());
+                }
             }
         }
     }

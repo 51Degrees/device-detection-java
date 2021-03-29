@@ -55,6 +55,10 @@ import org.slf4j.LoggerFactory;
  * Data file published date: Wed Aug 05 09:40:14 BST 2020
  * ```
  */
+
+/**
+ * Update polling interval example.
+ */
 public class UpdatePollingInterval extends ProgramBase {
 
     public static void main(String[] args) throws Exception {

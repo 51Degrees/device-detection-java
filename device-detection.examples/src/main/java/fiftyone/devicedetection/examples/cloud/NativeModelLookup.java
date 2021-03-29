@@ -34,7 +34,6 @@ import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.core.flowelements.PipelineBuilder;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
-import fiftyone.pipeline.engines.exceptions.NoValueException;
 import fiftyone.pipeline.engines.services.HttpClient;
 import fiftyone.pipeline.engines.services.HttpClientDefault;
 import org.slf4j.ILoggerFactory;
@@ -145,6 +144,10 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  * Apple iPhone XR (A2108)
  * ```
  */
+
+/**
+ * Native model lookup example.
+ */
 public class NativeModelLookup extends ProgramBase {
 
     public static void main(String[] args) throws Exception {
@@ -210,31 +213,33 @@ public class NativeModelLookup extends ProgramBase {
             }
         }
 
-        void analyseNativeModel(String nativeModel, Pipeline pipeline) throws NoValueException {
-            // Create the FlowData instance.
-            FlowData data = pipeline.createFlowData();
-            // Add the native model key as evidence.
-            data.addEvidence(EVIDENCE_QUERY_NATIVE_MODEL_KEY, nativeModel);
-            // Process the supplied evidence.
-            data.process();
-            // Get result data from the flow data.
-            MultiDeviceDataCloud result = data.get(MultiDeviceDataCloud.class);
-            printf("Which devices are associated with the " +
-                "native model name '%s'?\n", nativeModel);
-            for (DeviceData device : result.getProfiles()) {
-                AspectPropertyValue<String> vendor = device.getHardwareVendor();
-                AspectPropertyValue<List<String>> name = device.getHardwareName();
-                AspectPropertyValue<String> model = device.getHardwareModel();
+        void analyseNativeModel(String nativeModel, Pipeline pipeline) throws Exception {
+            // Create the FlowData instance. A try-with-resource block MUST be
+            // used for the FlowData instance. This ensures that native resources
+            // created by the device detection engine are freed.
+            try (FlowData data = pipeline.createFlowData()) {
+                // Add the native model key as evidence.
+                data.addEvidence(EVIDENCE_QUERY_NATIVE_MODEL_KEY, nativeModel);
+                // Process the supplied evidence.
+                data.process();
+                // Get result data from the flow data.
+                MultiDeviceDataCloud result = data.get(MultiDeviceDataCloud.class);
+                printf("Which devices are associated with the " +
+                    "native model name '%s'?\n", nativeModel);
+                for (DeviceData device : result.getProfiles()) {
+                    AspectPropertyValue<String> vendor = device.getHardwareVendor();
+                    AspectPropertyValue<List<String>> name = device.getHardwareName();
+                    AspectPropertyValue<String> model = device.getHardwareModel();
 
-                if (vendor.hasValue() &&
-                    model.hasValue() &&
-                    name.hasValue()) {
-                    println("\t" + vendor.getValue() +
-                        " " + stringJoin(name.getValue(), ",") +
-                        " (" + model.getValue() + ")");
-                }
-                else {
-                    println(vendor.getNoValueMessage());
+                    if (vendor.hasValue() &&
+                        model.hasValue() &&
+                        name.hasValue()) {
+                        println("\t" + vendor.getValue() +
+                            " " + stringJoin(name.getValue(), ",") +
+                            " (" + model.getValue() + ")");
+                    } else {
+                        println(vendor.getNoValueMessage());
+                    }
                 }
             }
         }

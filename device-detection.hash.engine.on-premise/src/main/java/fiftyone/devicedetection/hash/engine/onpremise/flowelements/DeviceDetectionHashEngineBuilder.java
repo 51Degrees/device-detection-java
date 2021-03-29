@@ -33,9 +33,8 @@ import fiftyone.pipeline.core.data.factories.ElementDataFactory;
 import fiftyone.pipeline.core.exceptions.PipelineConfigurationException;
 import fiftyone.pipeline.core.flowelements.FlowElement;
 import fiftyone.pipeline.engines.Constants.PerformanceProfiles;
+import fiftyone.pipeline.engines.configuration.CacheConfiguration;
 import fiftyone.pipeline.engines.data.AspectEngineDataFile;
-import fiftyone.pipeline.engines.fiftyone.data.FiftyOneDataFile;
-import fiftyone.pipeline.engines.fiftyone.data.FiftyOneDataFileDefault;
 import fiftyone.pipeline.engines.services.DataUpdateService;
 import fiftyone.pipeline.engines.services.MissingPropertyServiceDefault;
 import org.slf4j.ILoggerFactory;
@@ -57,7 +56,7 @@ public class DeviceDetectionHashEngineBuilder
     DeviceDetectionHashEngine> {
 
     private final String dataDownloadType = "HashV41";
-    
+   
     /**
      * Native configuration instance for this engine.
      */
@@ -236,6 +235,16 @@ public class DeviceDetectionHashEngineBuilder
         return this;
     }
 
+    @Override
+    public DeviceDetectionHashEngineBuilder setCache(
+        CacheConfiguration cacheConfiguration) {
+        throw new UnsupportedOperationException(
+            "A results cache cannot be configured in the on-premise Hash " +
+            "engine. The overhead of having to manage native object " + 
+            "lifetimes when a cache is enabled outweighs the benefit of the " +
+            "cache.");
+    }
+
     /**
      * The default value to use for the 'Type' parameter when sending
      * a request to the Distributor
@@ -267,19 +276,22 @@ public class DeviceDetectionHashEngineBuilder
         config.setUseUpperPrefixHeaders(false);
         if (dataFile.getConfiguration().getCreateTempDataCopy() &&
             tempDir != null && tempDir.isEmpty() == false) {
-            VectorStringSwig tempDirs = new VectorStringSwig();
-            tempDirs.add(tempDir);
-            config.setTempDirectories(tempDirs);
-            config.setUseTempFile(true);
+            try (VectorStringSwig tempDirs = new VectorStringSwig()) {
+                tempDirs.add(tempDir);
+                config.setTempDirectories(tempDirs);
+                config.setUseTempFile(true);
+            }
         }
-
-        VectorStringSwig propertiesSwig = new VectorStringSwig();
-        propertiesSwig.addAll(properties);
+        RequiredPropertiesConfigSwig requiredProperties;
+        try (VectorStringSwig propertiesSwig = new VectorStringSwig()) {
+            propertiesSwig.addAll(properties);
+            requiredProperties = new RequiredPropertiesConfigSwig(propertiesSwig);
+        }
         return new DeviceDetectionHashEngine(
             loggerFactory.getLogger(DeviceDetectionHashEngine.class.getName()),
             dataFile,
             config,
-            new RequiredPropertiesConfigSwig(propertiesSwig),
+            requiredProperties,
             new HashDataFactory(loggerFactory),
             tempDir);
     }

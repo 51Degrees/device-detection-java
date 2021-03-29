@@ -54,9 +54,9 @@ import org.json.JSONArray;
  */
 public class DeviceDetectionCloudEngine
     extends CloudAspectEngineBase<DeviceDataCloud> {
-    private List<AspectPropertyMetaData> aspectProperties;
+    List<AspectPropertyMetaData> aspectProperties;
     private String dataSourceTier;
-    private CloudRequestEngine cloudRequestEngine;
+    CloudRequestEngine cloudRequestEngine;
 
     /**
      * Construct a new instance of the {@link DeviceDetectionCloudEngine}.
@@ -153,6 +153,24 @@ public class DeviceDetectionCloudEngine
                             property.getName(),
                             getStringAspectPropertyValue(deviceObj, property));
                             break;
+                }
+            }
+
+            // Add no value messages for any properties which have not yet been
+            // populated.
+            for (String key : deviceObj.keySet()) {
+                if (key.endsWith("nullreason")) {
+                    String actualKey = key
+                        .replace("nullreason", "");
+                    if (deviceMap.containsKey(actualKey) == false) {
+                        AspectPropertyValue<?> nullValue =
+                            new AspectPropertyValueDefault<Object>();
+                        nullValue.setNoValueMessage(
+                            deviceObj.optString(key, "Unknown"));
+                        deviceMap.put(
+                            actualKey,
+                            nullValue);
+                    }
                 }
             }
 

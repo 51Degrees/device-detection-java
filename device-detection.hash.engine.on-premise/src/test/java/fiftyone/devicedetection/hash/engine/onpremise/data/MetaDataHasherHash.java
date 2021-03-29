@@ -29,7 +29,6 @@ import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.ProfileMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
 
-import static org.junit.Assert.fail;
 
 public class MetaDataHasherHash implements MetaDataHasher {
 

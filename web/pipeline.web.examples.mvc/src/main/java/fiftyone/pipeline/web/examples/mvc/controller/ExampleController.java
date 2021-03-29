@@ -24,7 +24,6 @@ package fiftyone.pipeline.web.examples.mvc.controller;
 
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
-import fiftyone.pipeline.jsonbuilder.data.JsonBuilderData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,6 +32,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import fiftyone.pipeline.web.mvc.components.FlowDataProvider;
 
 import javax.servlet.http.HttpServletRequest;
+
+import static fiftyone.pipeline.web.examples.mvc.controller.ExampleHelper.tryGet;
 
 @Controller
 @RequestMapping("/")
@@ -45,20 +46,31 @@ public class ExampleController {
         this.flowDataProvider = flowDataProvider;
     }
 
+
     @RequestMapping(method = RequestMethod.GET)
     public String get(ModelMap model, HttpServletRequest request) {
         FlowData data = flowDataProvider.getFlowData(request);
         DeviceData device = data.get(DeviceData.class);
 
-        model.addAttribute("hardwareVendor", device.getHardwareVendor());
-        model.addAttribute("hardwareName", device.getHardwareName());
-        model.addAttribute("deviceType", device.getDeviceType());
-        model.addAttribute("platformVendor", device.getPlatformVendor());
-        model.addAttribute("platformName", device.getPlatformName());
-        model.addAttribute("platformVersion", device.getPlatformVersion());
-        model.addAttribute("browserVendor", device.getBrowserVendor());
-        model.addAttribute("browserName", device.getBrowserName());
-        model.addAttribute("browserVersion", device.getBrowserVersion());
+
+        model.addAttribute("hardwareVendor",
+            tryGet(() -> device.getHardwareVendor()));
+        model.addAttribute("hardwareName",
+            tryGet(() -> device.getHardwareName()));
+        model.addAttribute("deviceType",
+            tryGet(() -> device.getDeviceType()));
+        model.addAttribute("platformVendor",
+            tryGet(() -> device.getPlatformVendor()));
+        model.addAttribute("platformName",
+            tryGet(() -> device.getPlatformName()));
+        model.addAttribute("platformVersion",
+            tryGet(() -> device.getPlatformVersion()));
+        model.addAttribute("browserVendor",
+            tryGet(() -> device.getBrowserVendor()));
+        model.addAttribute("browserName",
+            tryGet(() -> device.getBrowserName()));
+        model.addAttribute("browserVersion",
+            tryGet(() -> device.getBrowserVersion()));
         return "example";
     }
 }

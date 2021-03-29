@@ -23,6 +23,7 @@
 package fiftyone.devicedetection.shared.testhelpers;
 
 import fiftyone.pipeline.core.flowelements.Pipeline;
+import fiftyone.pipeline.engines.data.AspectData;
 import fiftyone.pipeline.engines.fiftyone.data.ComponentMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.ProfileMetaData;
@@ -43,5 +44,5 @@ public interface Wrapper extends Closeable {
 
     Iterable<ComponentMetaData> getComponents();
 
-    FiftyOneAspectEngine getEngine();
+    FiftyOneAspectEngine<? extends AspectData, ? extends FiftyOneAspectPropertyMetaData> getEngine();
 }

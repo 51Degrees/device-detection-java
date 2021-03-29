@@ -43,156 +43,165 @@ import static org.junit.Assert.*;
 public class ValueTests {
 
     public static void deviceId(Wrapper wrapper) throws Exception {
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data.addEvidence("header.user-agent", Constants.MobileUserAgent)
-            .process();
-        ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
-        DeviceData device = (DeviceData) elementData;
-        assertNotNull("The device id should not be null.",
-            device.getDeviceId().getValue());
-        assertTrue("The device id should not be empty.",
-            device.getDeviceId().getValue().isEmpty() == false);
+        try (FlowData data = wrapper.getPipeline().createFlowData()) {
+            data.addEvidence("header.user-agent", Constants.MobileUserAgent)
+                .process();
+            ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
+            DeviceData device = (DeviceData) elementData;
+            assertNotNull("The device id should not be null.",
+                device.getDeviceId().getValue());
+            assertTrue("The device id should not be empty.",
+                device.getDeviceId().getValue().isEmpty() == false);
+        }
     }
 
     public static void matchedUserAgents(Wrapper wrapper) throws Exception {
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data.addEvidence("header.user-agent", Constants.MobileUserAgent)
-            .process();
-        ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
-        DeviceData device = (DeviceData) elementData;
-        assertEquals(1, device.getUserAgents().getValue().size());
-        for (String matchedUa : device.getUserAgents().getValue()) {
-            for (String substring : matchedUa.split("_|\\{|\\}")) {
-                if (substring.isEmpty() == false) {
-                    assertTrue(
-                        "The matched substring '" + substring + "' does not " +
-                            "exist in the original User-Agent.",
-                        Constants.MobileUserAgent.contains(substring));
-                    int index = matchedUa.indexOf(substring);
-                    String original = Constants.MobileUserAgent
-                        .substring(index, index + substring.length());
-                    assertEquals(
-                        "Expected to find substring '" + original +
-                            "' at character position " + index +
-                            " but the substring found was '" + substring + "'.",
-                        substring,
-                        original);
+        try (FlowData data = wrapper.getPipeline().createFlowData()) {
+            data.addEvidence("header.user-agent", Constants.MobileUserAgent)
+                .process();
+            ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
+            DeviceData device = (DeviceData) elementData;
+            assertEquals(1, device.getUserAgents().getValue().size());
+            for (String matchedUa : device.getUserAgents().getValue()) {
+                for (String substring : matchedUa.split("_|\\{|\\}")) {
+                    if (substring.isEmpty() == false) {
+                        assertTrue(
+                            "The matched substring '" + substring + "' does not " +
+                                "exist in the original User-Agent.",
+                            Constants.MobileUserAgent.contains(substring));
+                        int index = matchedUa.indexOf(substring);
+                        String original = Constants.MobileUserAgent
+                            .substring(index, index + substring.length());
+                        assertEquals(
+                            "Expected to find substring '" + original +
+                                "' at character position " + index +
+                                " but the substring found was '" + substring + "'.",
+                            substring,
+                            original);
+                    }
+                }
+            }
+            
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void valueTypes(Wrapper wrapper) throws Exception {
+        try (FlowData data = wrapper.getPipeline().createFlowData()) {
+            data.addEvidence("header.user-agent", Constants.MobileUserAgent)
+                .process();
+            ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
+            for (FiftyOneAspectPropertyMetaData property :
+                (List<FiftyOneAspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
+                if (property.isAvailable()) {
+                    Class<?> expectedType;
+                    Object value = elementData.get(property.getName());
+
+                    expectedType = property.getType();
+                    assertNotNull(value);
+                    assertTrue(AspectPropertyValue.class.isAssignableFrom(value.getClass()));
+                    assertTrue("Value of '" + property.getName() +
+                            "' was of type " + value.getClass().getSimpleName() +
+                            " but should have been " + expectedType.getSimpleName() +
+                            ".",
+                        expectedType.isAssignableFrom(
+                            ((AspectPropertyValue<?>) value).getValue().getClass()));
                 }
             }
         }
     }
 
-    public static void valueTypes(Wrapper wrapper) throws Exception {
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data.addEvidence("header.user-agent", Constants.MobileUserAgent)
-            .process();
-        ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
-        for (FiftyOneAspectPropertyMetaData property :
-            (List<FiftyOneAspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
-            if (property.isAvailable()) {
-                Class expectedType;
-                Object value = elementData.get(property.getName());
+    @SuppressWarnings("unchecked")
+    public static void availableProperties(Wrapper wrapper) throws Exception {
+        try (FlowData data = wrapper.getPipeline().createFlowData()) {
+            data.addEvidence("header.user-agent", Constants.MobileUserAgent)
+                .process();
+            ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
+            for (FiftyOneAspectPropertyMetaData property :
+                (List<FiftyOneAspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
+                Map<String, Object> map = elementData.asKeyMap();
 
-                expectedType = property.getType();
-                assertNotNull(value);
-                assertTrue(AspectPropertyValue.class.isAssignableFrom(value.getClass()));
-                assertTrue("Value of '" + property.getName() +
-                    "' was of type " + value.getClass().getSimpleName() +
-                    " but should have been " + expectedType.getSimpleName() +
-                    ".",
-                    expectedType.isAssignableFrom(
-                    ((AspectPropertyValue)value).getValue().getClass()));
+                assertEquals("Property '" + property.getName() + "' " +
+                        (property.isAvailable() ? "should" : "should not") +
+                        " be in the results.",
+                    property.isAvailable(), map.containsKey(property.getName()));
             }
         }
     }
 
-    public static void availableProperties(Wrapper wrapper) throws Exception {
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data.addEvidence("header.user-agent", Constants.MobileUserAgent)
-            .process();
-        ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
-        for (FiftyOneAspectPropertyMetaData property :
-            (List<FiftyOneAspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
-            Map<String, Object> map = elementData.asKeyMap();
-
-            assertEquals("Property '" + property.getName() + "' " +
-                    (property.isAvailable() ? "should" : "should not") +
-                    " be in the results.",
-                property.isAvailable(), map.containsKey(property.getName()));
-        }
-    }
-
+    @SuppressWarnings("unchecked")
     public static void typedGetters(Wrapper wrapper) throws Exception {
-        FlowData data = wrapper.getPipeline().createFlowData();
-        data.addEvidence("header.user-agent", Constants.MobileUserAgent)
-            .process();
-        ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
-        List<String> missingGetters = new ArrayList<>();
-        for (FiftyOneAspectPropertyMetaData property :
-            (List<FiftyOneAspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
+        try (FlowData data = wrapper.getPipeline().createFlowData()) {
+            data.addEvidence("header.user-agent", Constants.MobileUserAgent)
+                .process();
+            ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
+            List<String> missingGetters = new ArrayList<>();
+            for (FiftyOneAspectPropertyMetaData property :
+                (List<FiftyOneAspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
 
-            if (Arrays.asList(Constants.ExcludedProperties)
-                .contains(property.getName()) == false) {
-                String cleanPropertyName = property.getName()
-                    .replace("/", "")
-                    .replace("-", "");
-                try {
-                    Method classProperty = elementData.getClass()
-                        .getMethod("get" + cleanPropertyName);
-                    if (classProperty != null) {
-                        if (property.isAvailable() == true) {
-                            Object value = null;
-                            try {
-                                value = classProperty.invoke(elementData);
-                            }catch (IllegalAccessException e){
-                                e.printStackTrace();
-                            }
-                            assertNotNull(
-                                "The typed getter for '" +
-                                    property.getName() + "' should " +
-                                    "not have returned a null value.",
-                                value);
-                        } else {
-                            try {
-                                Object value = classProperty.invoke(elementData);
-                                fail("The property getter for '" +
-                                    property.getName() + "' " +
-                                    "should have thrown a " +
-                                    "PropertyMissingException.");
-                            } catch (Exception e) {
-                                assertTrue(
-                                    "The property getter for '" +
+                if (Arrays.asList(Constants.ExcludedProperties)
+                    .contains(property.getName()) == false) {
+                    String cleanPropertyName = property.getName()
+                        .replace("/", "")
+                        .replace("-", "");
+                    try {
+                        Method classProperty = elementData.getClass()
+                            .getMethod("get" + cleanPropertyName);
+                        if (classProperty != null) {
+                            if (property.isAvailable() == true) {
+                                Object value = null;
+                                try {
+                                    value = classProperty.invoke(elementData);
+                                } catch (IllegalAccessException e) {
+                                    e.printStackTrace();
+                                }
+                                assertNotNull(
+                                    "The typed getter for '" +
+                                        property.getName() + "' should " +
+                                        "not have returned a null value.",
+                                    value);
+                            } else {
+                                try {
+                                    classProperty.invoke(elementData);
+                                    fail("The property getter for '" +
                                         property.getName() + "' " +
                                         "should have thrown a " +
-                                        "PropertyMissingException, but the exception " +
-                                        "was of type '" +
-                                        e.getCause().getClass().getSimpleName() +
-                                        "'.",
-                                    e.getCause() instanceof PropertyMissingException);
+                                        "PropertyMissingException.");
+                                } catch (Exception e) {
+                                    assertTrue(
+                                        "The property getter for '" +
+                                            property.getName() + "' " +
+                                            "should have thrown a " +
+                                            "PropertyMissingException, but the exception " +
+                                            "was of type '" +
+                                            e.getCause().getClass().getSimpleName() +
+                                            "'.",
+                                        e.getCause() instanceof PropertyMissingException);
+                                }
                             }
                         }
+                    } catch (NoSuchMethodException e) {
+                        missingGetters.add(property.getName());
                     }
-                } catch (NoSuchMethodException e) {
-                    missingGetters.add(property.getName());
                 }
             }
-        }
-        if (missingGetters.size() > 0) {
-            if (missingGetters.size() == 1) {
-                fail("The property '" + missingGetters.get(0) + "' " +
-                    "is missing a getter in the DeviceData class. This is not " +
-                    "a serious issue, and the property can still be used " +
-                    "through the asMap method, but it is an indication " +
-                    "that the API should be updated in order to enable the " +
-                    "the strongly typed getter for this property.");
-            } else {
-                fail("The properties " +
-                    stringJoin(missingGetters, ", ") +
-                    "are missing getters in the DeviceData class. This is not " +
-                    "a serious issue, and the properties can still be used " +
-                    "through the asMap method, but it is an indication " +
-                    "that the API should be updated in order to enable the " +
-                    "the strongly typed getter for these properties.");
+            if (missingGetters.size() > 0) {
+                if (missingGetters.size() == 1) {
+                    fail("The property '" + missingGetters.get(0) + "' " +
+                        "is missing a getter in the DeviceData class. This is not " +
+                        "a serious issue, and the property can still be used " +
+                        "through the asMap method, but it is an indication " +
+                        "that the API should be updated in order to enable the " +
+                        "the strongly typed getter for this property.");
+                } else {
+                    fail("The properties " +
+                        stringJoin(missingGetters, ", ") +
+                        "are missing getters in the DeviceData class. This is not " +
+                        "a serious issue, and the properties can still be used " +
+                        "through the asMap method, but it is an indication " +
+                        "that the API should be updated in order to enable the " +
+                        "the strongly typed getter for these properties.");
+                }
             }
         }
     }

@@ -2,7 +2,7 @@
 
 ![51Degrees](https://51degrees.com/img/logo.png?utm_source=github&utm_medium=repository&utm_content=readme_main&utm_campaign=java-open-source "Data rewards the curious") **Java Device Detection**
 
-[Developer Documentation](https://51degrees.com/device-detection-java/4.1/index.html?utm_source=github&utm_medium=repository&utm_content=documentation&utm_campaign=java-open-source "developer documentation")
+[Developer Documentation](https://51degrees.com/device-detection-java/4.2/index.html?utm_source=github&utm_medium=repository&utm_content=documentation&utm_campaign=java-open-source "developer documentation")
 
 ## Introduction
 
@@ -78,7 +78,7 @@ The 51Degrees Java Device Detection package is available on maven:
 <dependency>
     <groupId>com.51degrees</groupId>
     <artifactId>pipeline.device-detection</artifactId>
-    <version>4.1.0</version>
+    <version>4.2.0</version>
     <type>pom</type>
 </dependency>
 ```

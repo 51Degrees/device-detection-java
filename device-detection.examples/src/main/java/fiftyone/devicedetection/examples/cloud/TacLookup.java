@@ -34,7 +34,6 @@ import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.core.flowelements.PipelineBuilder;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
-import fiftyone.pipeline.engines.exceptions.NoValueException;
 import fiftyone.pipeline.engines.services.HttpClient;
 import fiftyone.pipeline.engines.services.HttpClientDefault;
 import org.slf4j.ILoggerFactory;
@@ -72,6 +71,10 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  * Which devices are associated with the TAC '35925406'?
  * Apple iPhone 6 (A1586)
  * ```
+ */
+
+/**
+ * TAC lookup example.
  */
 public class TacLookup extends ProgramBase {
 
@@ -138,33 +141,35 @@ public class TacLookup extends ProgramBase {
             }
         }
 
-        void analyseTac(String tac, Pipeline pipeline) throws NoValueException {
-            // Create the FlowData instance.
-            FlowData data = pipeline.createFlowData();
-            // After creating a flowdata instance, add the TAC as evidence.
-            data.addEvidence(EVIDENCE_QUERY_TAC_KEY, tac);
-            // Process the supplied evidence.
-            data.process();
-            // The result is an array containing the details of any devices that match
-            // the specified TAC.
-            // The code in this example iterates through this array, outputting the
-            // vendor and model of each matching device.
-            MultiDeviceDataCloud result = data.get(MultiDeviceDataCloud.class);
-            printf("Which devices are associated with the TAC '%s'?\n", tac);
-            for (DeviceData device : result.getProfiles()) {
-                AspectPropertyValue<String> vendor = device.getHardwareVendor();
-                AspectPropertyValue<List<String>> name = device.getHardwareName();
-                AspectPropertyValue<String> model = device.getHardwareModel();
+        void analyseTac(String tac, Pipeline pipeline) throws Exception {
+            // Create the FlowData instance. A try-with-resource block MUST be
+            // used for the FlowData instance. This ensures that native resources
+            // created by the device detection engine are freed.
+            try (FlowData data = pipeline.createFlowData()) {
+                // After creating a flowdata instance, add the TAC as evidence.
+                data.addEvidence(EVIDENCE_QUERY_TAC_KEY, tac);
+                // Process the supplied evidence.
+                data.process();
+                // The result is an array containing the details of any devices that match
+                // the specified TAC.
+                // The code in this example iterates through this array, outputting the
+                // vendor and model of each matching device.
+                MultiDeviceDataCloud result = data.get(MultiDeviceDataCloud.class);
+                printf("Which devices are associated with the TAC '%s'?\n", tac);
+                for (DeviceData device : result.getProfiles()) {
+                    AspectPropertyValue<String> vendor = device.getHardwareVendor();
+                    AspectPropertyValue<List<String>> name = device.getHardwareName();
+                    AspectPropertyValue<String> model = device.getHardwareModel();
 
-                if (vendor.hasValue() &&
-                    model.hasValue() &&
-                    name.hasValue()) {
-                    println("\t" + vendor.getValue() +
-                        " " + stringJoin(name.getValue(), ",") +
-                        " (" + model.getValue() + ")");
-                }
-                else {
-                    println(vendor.getNoValueMessage());
+                    if (vendor.hasValue() &&
+                        model.hasValue() &&
+                        name.hasValue()) {
+                        println("\t" + vendor.getValue() +
+                            " " + stringJoin(name.getValue(), ",") +
+                            " (" + model.getValue() + ")");
+                    } else {
+                        println(vendor.getNoValueMessage());
+                    }
                 }
             }
         }

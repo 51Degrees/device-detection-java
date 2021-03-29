@@ -25,19 +25,17 @@ package fiftyone.pipeline.web.examples.servlet;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
-import fiftyone.pipeline.engines.exceptions.NoValueException;
-import fiftyone.pipeline.jsonbuilder.data.JsonBuilderData;
 import fiftyone.pipeline.web.services.FlowDataProviderCore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
 import static fiftyone.pipeline.util.StringManipulation.stringJoin;
+import static fiftyone.pipeline.web.examples.servlet.ExampleHelper.tryGet;
 
 
 /**
@@ -124,7 +122,7 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  * public class Example extends HttpServlet {
  *     ...
  *     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
- *         throws ServletException, IOException {
+ *         throws Exception {
  *         FlowData data = flowDataProvider.getFlowData(request);
  *         DeviceData device = data.get(DeviceData.class);
  *         response.setContentType("text/html;charset=UTF-8");
@@ -155,8 +153,16 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *
  * ## Servlet
  */
+
+/**
+ * Servlet Example.
+ */
 public class Example extends HttpServlet {
 
+    /**
+     * Serializable class version number, which is used during deserialization.
+     */
+    private static final long serialVersionUID = 1734154705981153540L;
     FlowDataProviderCore flowDataProvider = new FlowDataProviderCore.Default();
 
     /**
@@ -165,11 +171,12 @@ public class Example extends HttpServlet {
      *
      * @param request servlet request
      * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws Exception if a servlet-specific error or an I/O error occurs
+     * or if a value not available
      */
+    @SuppressWarnings("unchecked")
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, NoValueException {
+            throws Exception {
         FlowData data = flowDataProvider.getFlowData(request);
         DeviceData device = data.get(DeviceData.class);
         response.setContentType("text/html;charset=UTF-8");
@@ -182,15 +189,24 @@ public class Example extends HttpServlet {
             out.println("<body>");
             out.println("<script src=\"/pipeline.web.examples.servlet/51Degrees.core.js\"></script>");
 
-            AspectPropertyValue<String> hardwareVendor = device.getHardwareVendor();
-            AspectPropertyValue<List<String>> hardwareName = device.getHardwareName();
-            AspectPropertyValue<String> deviceType = device.getDeviceType();
-            AspectPropertyValue<String> platformVendor = device.getPlatformVendor();
-            AspectPropertyValue<String> platformName = device.getPlatformName();
-            AspectPropertyValue<String> platformVersion = device.getPlatformVersion();
-            AspectPropertyValue<String> browserVendor = device.getBrowserVendor();
-            AspectPropertyValue<String> browserName = device.getBrowserName();
-            AspectPropertyValue<String> browserVersion = device.getBrowserVersion();
+            AspectPropertyValue<String> hardwareVendor =
+                tryGet(this, () -> device.getHardwareVendor());
+            AspectPropertyValue<List<String>> hardwareName =
+                tryGet(this, () -> device.getHardwareName());
+            AspectPropertyValue<String> deviceType =
+                tryGet(this, () ->device.getDeviceType());
+            AspectPropertyValue<String> platformVendor =
+                tryGet(this, () -> device.getPlatformVendor());
+            AspectPropertyValue<String> platformName =
+                tryGet(this, () -> device.getPlatformName());
+            AspectPropertyValue<String> platformVersion =
+                tryGet(this, () -> device.getPlatformVersion());
+            AspectPropertyValue<String> browserVendor =
+                tryGet(this, () -> device.getBrowserVendor());
+            AspectPropertyValue<String> browserName =
+                tryGet(this, () -> device.getBrowserName());
+            AspectPropertyValue<String> browserVersion =
+                tryGet(this, () -> device.getBrowserVersion());
 
 
             out.println("<h2>Example</h2>\n" +
@@ -252,14 +268,15 @@ public class Example extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException {
         try {
             processRequest(request, response);
-        } catch (NoValueException e) {
+        } catch (ServletException se) {
+            throw se;
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
