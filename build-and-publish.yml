@@ -93,7 +93,7 @@ stages:
   jobs:
   - job: Build
     pool:
-      vmImage: 'ubuntu-16.04'
+      vmImage: 'ubuntu-latest'
 
     steps:
 
@@ -150,6 +150,14 @@ stages:
         targetType: 'inline'
         script: 'mv $(build.sourcesdirectory)/binaries/*/*Hash* $(build.sourcesdirectory)/device-detection.hash.engine.on-premise/src/main/resources/'
 
+    - bash: |
+        sudo apt-get update
+        sudo apt-get -y install \
+          gcc-multilib \
+          g++-multilib
+      displayName: 'Install gcc-multilib and g++-multilib packages'
+      condition: contains(variables['imageName'], 'ubuntu')
+      
     - task: MavenAuthenticate@0
       inputs:
         artifactsFeeds: 'pipeline-insider'
