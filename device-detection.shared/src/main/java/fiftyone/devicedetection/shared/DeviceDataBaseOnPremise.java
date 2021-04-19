@@ -169,8 +169,8 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
      * @return value type, or {@link Object} if unknown
      */
     @SuppressWarnings("unchecked")
-    protected Class<Object> getPropertyType(String propertyName) {
-        Class<Object> type = Object.class;
+    protected Class<?> getPropertyType(String propertyName) {
+        Class<?> type = Object.class;
         Map<String, ElementPropertyMetaData> properties =
             getPipeline().getElementAvailableProperties()
                 .get(getEngines().get(0).getElementDataKey());

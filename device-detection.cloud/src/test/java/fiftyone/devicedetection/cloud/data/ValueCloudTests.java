@@ -20,44 +20,53 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-package fiftyone.devicedetection.hash.engine.onpremise.flowelements;
+package fiftyone.devicedetection.cloud.data;
 
-import fiftyone.devicedetection.hash.engine.onpremise.TestsBase;
-import fiftyone.devicedetection.shared.testhelpers.flowelements.EvidenceKeyTests;
-import fiftyone.pipeline.engines.Constants;
+import fiftyone.devicedetection.cloud.TestsBase;
+import fiftyone.devicedetection.cloud.ValueTests;
+import fiftyone.devicedetection.shared.testhelpers.UserAgentGenerator;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class EvidenceKeys extends TestsBase {
+public class ValueCloudTests extends TestsBase {
 
-    @Before
-    public void init() throws Exception {
-        testInitialize(Constants.PerformanceProfiles.HighPerformance);
+    	private UserAgentGenerator userAgents;
+    	
+        @Before
+        public void init() throws Exception {
+            testInitialize();
+        }
+
+        @After
+        public void cleanup() {
+            testCleanup();
+        }
+
+        @Test
+        public void ValueTests_Cloud_ValueTypes() throws Exception {
+            ValueTests.valueTypes(getWrapper());
+        }
+
+        @Test
+        public void ValueTests_Cloud_AvailableProperties() throws Exception {
+            ValueTests.availableProperties(getWrapper());
+        }
+
+        @Test
+        public void ValueTests_Cloud_TypedGetters() throws Exception {
+            ValueTests.typedGetters(getWrapper());
+        }
+
+        @Test
+        public void ValueTests_Cloud_DeviceId() throws Exception {
+            ValueTests.deviceId(getWrapper());
+        }
+
+        @Test
+        public void ValueTests_Cloud_MatchedUserAgents() throws Exception {
+            ValueTests.matchedUserAgents(getWrapper());
+        }
     }
 
-    @After
-    public void cleanup() {
-        testCleanup();
-    }
-
-    @Test
-    public void EvidenceKeys_Hash_ContainsUserAgent() {
-        EvidenceKeyTests.containsUserAgent(getWrapper());
-    }
-
-    @Test
-    public void EvidenceKeys_Hash_ContainsHeaderNames() {
-        EvidenceKeyTests.containsHeaderNames(getWrapper());
-    }
-
-    @Test
-    public void EvidenceKeys_Hash_ContainsOverrides() {
-        EvidenceKeyTests.containsOverrides(getWrapper());
-    }
-
-    @Test
-    public void EvidenceKeys_Hash_CaseInsensitiveKeys() {
-        EvidenceKeyTests.caseInsensitiveKeys(getWrapper());
-    }
-}

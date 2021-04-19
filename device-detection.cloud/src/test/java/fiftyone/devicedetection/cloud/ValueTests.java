@@ -20,17 +20,17 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-package fiftyone.devicedetection.shared.testhelpers.data;
+package fiftyone.devicedetection.cloud;
 
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.devicedetection.shared.testhelpers.Constants;
-import fiftyone.devicedetection.shared.testhelpers.Wrapper;
 import fiftyone.pipeline.core.data.ElementData;
-import fiftyone.pipeline.core.data.ElementPropertyMetaData;
 import fiftyone.pipeline.core.data.FlowData;
+import fiftyone.pipeline.core.data.types.JavaScript;
+import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
+import fiftyone.pipeline.engines.data.AspectPropertyValueDefault;
 import fiftyone.pipeline.engines.exceptions.PropertyMissingException;
-import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ import static org.junit.Assert.*;
 
 public class ValueTests {
 
-    public static void deviceId(Wrapper wrapper) throws Exception {
+    public static void deviceId(WrapperCloud wrapper) throws Exception {
         try (FlowData data = wrapper.getPipeline().createFlowData()) {
             data.addEvidence("header.user-agent", Constants.MobileUserAgent)
                 .process();
@@ -56,7 +56,7 @@ public class ValueTests {
         }
     }
 
-    public static void matchedUserAgents(Wrapper wrapper) throws Exception {
+    public static void matchedUserAgents(WrapperCloud wrapper) throws Exception {
         try (FlowData data = wrapper.getPipeline().createFlowData()) {
             data.addEvidence("header.user-agent", Constants.MobileUserAgent)
                 .process();
@@ -87,18 +87,21 @@ public class ValueTests {
     }
 
     @SuppressWarnings("unchecked")
-    public static void valueTypes(Wrapper wrapper) throws Exception {
+    public static void valueTypes(WrapperCloud wrapper) throws Exception {
         try (FlowData data = wrapper.getPipeline().createFlowData()) {
             data.addEvidence("header.user-agent", Constants.MobileUserAgent)
                 .process();
             ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
-            for (FiftyOneAspectPropertyMetaData property :
-                (List<FiftyOneAspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
+            for (AspectPropertyMetaData property :
+                (List<AspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
+                if (Arrays.asList(Constants.ExcludedProperties)
+                        .contains(property.getName()) == false) {
                 if (property.isAvailable()) {
                     Class<?> expectedType;
                     Object value = elementData.get(property.getName());
-                    //((ElementPropertyMetaData) value).getType();
-                    expectedType = property.getType();
+                               
+                    expectedType = getPropertyType(property.getType());
+                   
                     assertNotNull("Value of " + property.getName() + " is null. ", value);
                     assertTrue(AspectPropertyValue.class.isAssignableFrom(value.getClass()));
                     assertTrue("Value of '" + property.getName() +
@@ -111,15 +114,16 @@ public class ValueTests {
             }
         }
     }
-
+  }
+    
     @SuppressWarnings("unchecked")
-    public static void availableProperties(Wrapper wrapper) throws Exception {
+    public static void availableProperties(WrapperCloud wrapper) throws Exception {
         try (FlowData data = wrapper.getPipeline().createFlowData()) {
             data.addEvidence("header.user-agent", Constants.MobileUserAgent)
                 .process();
             ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
-            for (FiftyOneAspectPropertyMetaData property :
-                (List<FiftyOneAspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
+            for (AspectPropertyMetaData property :
+                (List<AspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
                 Map<String, Object> map = elementData.asKeyMap();
 
                 assertEquals("Property '" + property.getName() + "' " +
@@ -131,14 +135,14 @@ public class ValueTests {
     }
 
     @SuppressWarnings("unchecked")
-    public static void typedGetters(Wrapper wrapper) throws Exception {
+    public static void typedGetters(WrapperCloud wrapper) throws Exception {
         try (FlowData data = wrapper.getPipeline().createFlowData()) {
             data.addEvidence("header.user-agent", Constants.MobileUserAgent)
                 .process();
             ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
             List<String> missingGetters = new ArrayList<>();
-            for (FiftyOneAspectPropertyMetaData property :
-                (List<FiftyOneAspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
+            for (AspectPropertyMetaData property :
+                (List<AspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
 
                 if (Arrays.asList(Constants.ExcludedProperties)
                     .contains(property.getName()) == false) {
@@ -205,5 +209,19 @@ public class ValueTests {
                 }
             }
         }
+    }
+    
+    public static Class<?> getPropertyType(Class<?> clazz)
+    {
+        if (!clazz.isPrimitive()) 
+            return clazz;
+
+        if (clazz == Integer.TYPE)
+            return Integer.class;
+        if (clazz == Boolean.TYPE)
+            return Boolean.class;
+        if (clazz == Double.TYPE)
+            return Double.class;       
+        return clazz;
     }
 }
