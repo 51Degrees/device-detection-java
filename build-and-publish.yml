@@ -122,7 +122,7 @@ stages:
       continueOnError: true
       inputs:
         targetType: 'inline'
-        script: 'echo $(gpg_passphrase) | gpg --import --batch --yes --passphrase-fd 0 "$(CodeSigningCert.secureFilePath)"'
+        script: 'GPG_TTY=$(tty); export GPG_TTY; echo $(gpg_passphrase) | gpg --import --batch --yes --passphrase-fd 0 "$(CodeSigningCert.secureFilePath)"'
 
     - task: DownloadBuildArtifacts@0
       displayName: 'Download Build Artifacts - Mac Hash Binaries'
