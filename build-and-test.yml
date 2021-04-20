@@ -15,7 +15,7 @@ stages:
   - job: Get_Data_File_For_Tests
 
     pool:
-      'vmImage': 'ubuntu-latest'
+      'vmImage': 'ubuntu-18.04'
 
     variables: 
     - group: InternalKeys
@@ -52,10 +52,10 @@ stages:
     strategy:  
       matrix:
         linux-JDK8:
-          imageName: 'ubuntu-latest'
+          imageName: 'ubuntu-18.04'
           jdkVersion: '1.8'
         linux-JDK11:
-          imageName: 'ubuntu-latest'
+          imageName: 'ubuntu-18.04'
           jdkVersion: '1.11'
         mac-JDK8:
           imageName: 'macos-latest'
