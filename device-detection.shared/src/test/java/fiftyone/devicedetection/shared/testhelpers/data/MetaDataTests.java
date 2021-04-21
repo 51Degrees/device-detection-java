@@ -65,35 +65,26 @@ public class MetaDataTests {
         MetaDataHasher hasher,
         ExecutorService executorService) throws InterruptedException, ExecutionException {
         int threadCount = 4;
-        final int[] refreshes = {0};
-        final AtomicBoolean done = new AtomicBoolean(false);
         Future<?> reloader = executorService.submit(new Runnable() {
-            @Override
+           @Override
             public void run() {
-                while (done.get() == false) {
-                    synchronized(refreshes) {
-                    wrapper.getEngine().refreshData(wrapper.getEngine().getDataFileMetaData().getIdentifier());
-                    refreshes[0]++;
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-
-                    }
-                }
-               }
+                    wrapper.getEngine().refreshData(wrapper.getEngine().getDataFileMetaData().getIdentifier());                  
             }
+
         });
+        System.out.printf("reloader.get() = %s", reloader.get());
         List<Future<Integer>> threads = startHashingThreads(
             threadCount,
             wrapper,
             hasher,
             executorService);
+
+        for(Future<Integer> future : threads){
+            System.out.printf("threads.get() = %s", future.get());
+        }
         List<Integer> hashes = new ArrayList<>(threadCount);
         for (int i = 0; i < threadCount; i++) {
             hashes.add(threads.get(i).get());
-        }
-        done.set(true);
-        while (reloader.isDone() == false) {
         }
         for (int i = 0; i < threadCount - 1; i++) {
             assertEquals("Hashes were not equal", hashes.get(i), hashes.get(i + 1));

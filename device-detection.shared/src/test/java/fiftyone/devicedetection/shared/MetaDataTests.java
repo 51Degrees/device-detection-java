@@ -67,17 +67,14 @@ public class MetaDataTests {
         final int[] refreshes = {0};
         final AtomicBoolean done = new AtomicBoolean(false);
         Future<?> reloader = executorService.submit(new Runnable() {
-            @Override
+           @Override
             public void run() {
+                synchronized(done){
                 while (done.get() == false) {
                     wrapper.getEngine().refreshData(wrapper.getEngine().getDataFileMetaData().getIdentifier());
                     refreshes[0]++;
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-
-                    }
                 }
+               }
             }
         });
         List<Future<Integer>> threads = startHashingThreads(
