@@ -8,6 +8,7 @@ variables:
   # Access token for the git repository. Used by the git tag task.
   - name: system_accesstoken
     value: $(System.AccessToken)
+  - group: InternalKeys
 
 stages:
 
@@ -101,6 +102,23 @@ stages:
     - script: |
         curl "https://distributor.51degrees.com/api/v2/download?LicenseKeys=$(licensekey)&Type=HashV41&Download=True&Product=V4Enterprise" --output Enterprise-HashV41.hash.gz
       displayName: 'Download Enterprise Data File'
+      
+    - task: ExtractFiles@1
+      displayName: 'Extract Data File'
+      inputs:
+        archiveFilePatterns: 'Enterprise-HashV41.hash.gz'
+        cleanDestinationFolder: false
+        overwriteExistingFiles: true
+        
+    - script: |    
+          mv $(Build.SourcesDirectory)/Enterprise-HashV41.hash $(Build.ArtifactStagingDirectory)/Enterprise-HashV41.hash
+      displayName: 'Move Data Files'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'enterpriseFile'
+        publishLocation: 'Container'
       
     - checkout: self
       submodules: recursive
