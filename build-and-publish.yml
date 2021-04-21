@@ -156,7 +156,6 @@ stages:
           gcc-multilib \
           g++-multilib
       displayName: 'Install gcc-multilib and g++-multilib packages'
-      condition: contains(variables['imageName'], 'ubuntu')
       
     - task: MavenAuthenticate@0
       inputs:
