@@ -20,19 +20,35 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-package fiftyone.devicedetection.shared.testhelpers;
+package fiftyone.devicedetection.cloud;
 
-public class Constants {
-    public static final int UAS_TO_TEST = 10;
-    public static final String HASH_DATA_FILE_NAME = "Enterprise-HashV41.hash";
-    public static final String UA_FILE_NAME = "20000 User Agents.csv";
+import fiftyone.devicedetection.shared.testhelpers.UserAgentGenerator;
+import fiftyone.devicedetection.shared.testhelpers.Utils;
 
-    public static final String[] ExcludedProperties = {"JavascriptImageOptimiser", "JavascriptBandwidth"};
+import static fiftyone.devicedetection.shared.testhelpers.Constants.UA_FILE_NAME;
 
-    public static final String MobileUserAgent =
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) " +
-            "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile" +
-            "/11D167 Safari/9537.53";
-    
-    public static final String RESOURCE_KEY_ENV_VAR = "SuperResourceKey";
+public class TestsBase {
+
+    private WrapperCloud wrapper = null;
+    private UserAgentGenerator userAgents;
+
+    protected WrapperCloud getWrapper() {
+        return wrapper;
+    }
+
+    protected UserAgentGenerator getUserAgents() {
+        return userAgents;
+    }
+
+    protected void testInitialize() throws Exception {
+        wrapper = new WrapperCloud();
+        userAgents = new UserAgentGenerator(
+            Utils.getFilePath(UA_FILE_NAME));
+    }
+
+    public void testCleanup() {
+        if (wrapper != null) {
+            wrapper.close();
+        }
+    }
 }

@@ -140,10 +140,13 @@
       <AdditionalIncludeDirectories>%JAVA_HOME%/include;%JAVA_HOME%/include/win32</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DisableSpecificWarnings>4100</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <CustomBuildStep>
       <Command>
@@ -169,10 +172,13 @@
       <AdditionalIncludeDirectories>%JAVA_HOME%/include;%JAVA_HOME%/include/win32</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DisableSpecificWarnings>4100</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <CustomBuildStep>
       <Command>
@@ -200,12 +206,15 @@
       <AdditionalIncludeDirectories>%JAVA_HOME%/include;%JAVA_HOME%/include/win32</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DisableSpecificWarnings>4100</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <CustomBuildStep>
       <Command>
@@ -233,12 +242,15 @@
       <AdditionalIncludeDirectories>%JAVA_HOME%/include;%JAVA_HOME%/include/win32</AdditionalIncludeDirectories>
       <PrecompiledHeaderFile />
       <PrecompiledHeaderOutputFile />
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <DisableSpecificWarnings>4100</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TreatLinkerWarningAsErrors>true</TreatLinkerWarningAsErrors>
     </Link>
     <CustomBuildStep>
       <Command>

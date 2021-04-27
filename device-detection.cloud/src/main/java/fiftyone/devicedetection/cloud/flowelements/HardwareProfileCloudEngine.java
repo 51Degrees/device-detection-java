@@ -5,6 +5,8 @@ import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.cloudrequestengine.flowelements.PropertyKeyedCloudEngineBase;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.data.factories.ElementDataFactory;
+import fiftyone.pipeline.engines.services.MissingPropertyServiceDefault;
+
 import org.slf4j.Logger;
 
 public class HardwareProfileCloudEngine
@@ -22,7 +24,7 @@ public class HardwareProfileCloudEngine
             logger,
             flowData ,
             this,
-            missingPropertyService);
+            MissingPropertyServiceDefault.getInstance());
     }
 
     @Override
