@@ -8,6 +8,7 @@ variables:
   # Access token for the git repository. Used by the git tag task.
   - name: system_accesstoken
     value: $(System.AccessToken)
+  - group: InternalKeys
 
 stages:
 
@@ -97,6 +98,28 @@ stages:
 
     steps:
 
+    - bash: |
+    - script: |
+        curl "https://distributor.51degrees.com/api/v2/download?LicenseKeys=$(licensekey)&Type=HashV41&Download=True&Product=V4Enterprise" --output Enterprise-HashV41.hash.gz
+      displayName: 'Download Enterprise Data File'
+      
+    - task: ExtractFiles@1
+      displayName: 'Extract Data File'
+      inputs:
+        archiveFilePatterns: 'Enterprise-HashV41.hash.gz'
+        cleanDestinationFolder: false
+        overwriteExistingFiles: true
+        
+    - script: |    
+          mv $(Build.SourcesDirectory)/Enterprise-HashV41.hash $(Build.ArtifactStagingDirectory)/Enterprise-HashV41.hash
+      displayName: 'Move Data Files'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'enterpriseFile'
+        publishLocation: 'Container'
+      
     - checkout: self
       submodules: recursive
       lfs: true
@@ -150,6 +173,25 @@ stages:
         targetType: 'inline'
         script: 'mv $(build.sourcesdirectory)/binaries/*/*Hash* $(build.sourcesdirectory)/device-detection.hash.engine.on-premise/src/main/resources/'
 
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Data Files'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'enterpriseFile'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - script: |   
+          mv $(System.ArtifactsDirectory)/enterpriseFile/Enterprise-HashV41.hash  $(Build.SourcesDirectory)/device-detection-cxx/device-detection-data/Enterprise-HashV41.hash
+      displayName: 'Move Data Files'
+      
+    - bash: |
+        sudo apt-get update
+        sudo apt-get -y install \
+          gcc-multilib \
+          g++-multilib
+      displayName: 'Install gcc-multilib and g++-multilib packages'
+      
     - task: MavenAuthenticate@0
       inputs:
         artifactsFeeds: 'pipeline-insider'
@@ -167,7 +209,7 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean install'
-        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -DcreateChecksum=true'
+        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -DcreateChecksum=true -DSuperResourceKey=$(SuperResourceKey)'
         jdkVersionOption: '1.8'
 
     # Add a tag to the git repository with the version number of

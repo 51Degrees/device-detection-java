@@ -5,7 +5,7 @@
 
     <groupId>com.51degrees</groupId>
     <artifactId>pipeline.device-detection</artifactId>
-    <version>4.2.0-SNAPSHOT</version>
+    <version>4.2.6-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>51Degrees :: Pipeline :: Device Detection</name>
@@ -30,7 +30,7 @@
         <slf4j-simple.version>1.7.21</slf4j-simple.version>
         <mockito-core.version>2.22.0</mockito-core.version>
         <org.json.version>20180813</org.json.version>
-        <pipeline.version>4.2.0</pipeline.version>
+        <pipeline.version>4.2.3</pipeline.version>
         <publishrepository.id>ossrh</publishrepository.id>
         <publishrepository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</publishrepository.url>
         <fetchrepository.id>central</fetchrepository.id>

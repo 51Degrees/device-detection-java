@@ -58,32 +58,4 @@ public class DeviceDataCloudInternal
         MissingPropertyService missingPropertyService) {
         super(logger, flowData, engine, missingPropertyService);
     }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public AspectPropertyValue<List<String>> getUserAgents() {
-        AspectPropertyValue<List<String>> value = new AspectPropertyValueDefault<>();
-        List<String> val = this.getAs("useragents", List.class, String.class);
-        if(val == null){
-            value.setNoValueMessage("User-Agents were not included in the result");
-        } else {
-            value.setValue(val);
-        }
-            
-        return value;
-    }
-
-    @Override
-    public AspectPropertyValue<String> getDeviceId() {
-        AspectPropertyValue<String> value = new AspectPropertyValueDefault<>();
-        String val = this.getAs("deviceid", String.class);
-        
-        if(val == null){
-            value.setNoValueMessage("Device Id was not included in the result");
-        } else {
-            value.setValue(val);
-        }
-            
-        return value;
-    }
 }
