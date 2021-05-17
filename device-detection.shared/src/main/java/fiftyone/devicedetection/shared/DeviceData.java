@@ -926,6 +926,18 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getSelector();
 	/**
+	 * Client hint that represents the browser's brand. This property accepts the values SEC-CH-UA,SEC-CH-UA-Full-Version. The default value is Unknown for this property.
+	 */
+	AspectPropertyValue<String> getSetHeaderBrowserAcceptCH();
+	/**
+	 * Client hint that represents the hardware's brand. This property accepts the values SEC-CH-UA-Model,SEC-CH-UA-Mobile,SEC-CH-UA-Arch. The default value is Unknown for this property.
+	 */
+	AspectPropertyValue<String> getSetHeaderHardwareAcceptCH();
+	/**
+	 * Client hint that represents the platform's brand. This property accepts the values SEC-CH-UA-Platform,SEC-CH-UA-Platform-Version. The default value is Unknown for this property.
+	 */
+	AspectPropertyValue<String> getSetHeaderPlatformAcceptCH();
+	/**
 	 * Indicates the primary marketing name of the System on Chip (chipset) which includes the CPU, GPU and modem. e.g. Snapdragon S4
 	 */
 	AspectPropertyValue<String> getSoC();
