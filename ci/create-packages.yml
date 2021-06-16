@@ -3,21 +3,44 @@ trigger:
 - develop
 - release/*
 
+# Don't trigger for a pull request
+pr: none
+
+# Schedule to run overnight
+schedules:
+- cron: "0 20 * * *"
+  displayName: Daily overnight build
+  branches:
+    include:
+    - develop
+    
 variables:
   - group: CertificateVariables
   # Access token for the git repository. Used by the git tag task.
+  - group: InternalKeys
   - name: system_accesstoken
     value: $(System.AccessToken)
-  - group: InternalKeys
-
+  # Include shared variables
+  - template: shared-variables.yml
+  
 stages:
 
-- stage: Build_Windows
-  dependsOn: []
-  jobs:
-  - job: Build
+- template: shared-build-and-test-platforms.yml
+  parameters:
+    windowsImage: ${{ variables.windowsImage }}
+    linuxImage: ${{ variables.linuxImage }}
+    macImage: ${{ variables.macImage }}
+ 
+# Stage to create and publish binaries for Windows platforms 
+- stage: Build_Binaries_Windows
+  displayName: Build Binaries Windows
+  dependsOn: [Windows,Linux,MacOS]
+  jobs: 
+  - job: Build_Binaries_Windows
+    displayName: Build Binaries Windows
+    
     pool:
-      vmImage: 'vs2017-win2016'
+      vmImage: $(windowsImage)
 
     steps:
 
@@ -56,12 +79,16 @@ stages:
         PathtoPublish: '$(build.artifactstagingdirectory)'
         ArtifactName: windows-binaries
 
-- stage: Build_Mac
-  dependsOn: []
+# Stage to create and publish binaries for MacOS platform
+- stage: Build_Binaries_MacOS
+  displayName: Build Binaries MacOS
+  dependsOn: [Windows,Linux,MacOS]
   jobs:
-  - job: Build
+  - job: Build_Binaries_MacOS
+    displayName: Build Binaries MacOS
+    
     pool:
-      vmImage: 'macOS-10.14'
+      vmImage: $(macImage)
 
     steps:
 
@@ -89,36 +116,20 @@ stages:
         PathtoPublish: '$(build.artifactstagingdirectory)'
         ArtifactName: mac-binaries
 
-- stage: Build_Linux
-  dependsOn: [Build_Windows, Build_Mac]
+# Stage to create binaries for Linux, 
+# copy binaries for WIndows and Mac created in previous stages,
+# create and publish package using Linux platform 
+- stage: Build_Packages_Linux
+  displayName: Build Packages Linux
+  dependsOn: [Build_Binaries_Windows,Build_Binaries_MacOS]
   jobs:
-  - job: Build
+  - job: Create_Packages_Linux
+    displayName: Create Packages Linux
+    
     pool:
-      vmImage: 'ubuntu-16.04'
-
-    steps:
-
-    - bash: |
-    - script: |
-        curl "https://distributor.51degrees.com/api/v2/download?LicenseKeys=$(licensekey)&Type=HashV41&Download=True&Product=V4Enterprise" --output Enterprise-HashV41.hash.gz
-      displayName: 'Download Enterprise Data File'
+      vmImage: $(linuxImage)
       
-    - task: ExtractFiles@1
-      displayName: 'Extract Data File'
-      inputs:
-        archiveFilePatterns: 'Enterprise-HashV41.hash.gz'
-        cleanDestinationFolder: false
-        overwriteExistingFiles: true
-        
-    - script: |    
-          mv $(Build.SourcesDirectory)/Enterprise-HashV41.hash $(Build.ArtifactStagingDirectory)/Enterprise-HashV41.hash
-      displayName: 'Move Data Files'
-
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'enterpriseFile'
-        publishLocation: 'Container'
+    steps:
       
     - checkout: self
       submodules: recursive
@@ -142,23 +153,23 @@ stages:
         secureFile: '51Degrees Code Signing Certificate.asc'
 
     - task: Bash@3
-      continueOnError: true
+      displayName: 'Import Code Signing Certificate'
       inputs:
         targetType: 'inline'
         script: 'echo $(gpg_passphrase) | gpg --import --batch --yes --passphrase-fd 0 "$(CodeSigningCert.secureFilePath)"'
-
-    - task: DownloadBuildArtifacts@0
-      displayName: 'Download Build Artifacts - Mac Hash Binaries'
-      inputs:
-        downloadType: specific
-        itemPattern: '**/*Hash*.so'
-        downloadPath: '$(build.sourcesdirectory)/binaries/'
 
     - task: DownloadBuildArtifacts@0
       displayName: 'Download Build Artifacts - Windows Hash Binaries'
       inputs:
         downloadType: specific
         itemPattern: '**/*Hash*.dll'
+        downloadPath: '$(build.sourcesdirectory)/binaries/'
+        
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Build Artifacts - Mac Hash Binaries'
+      inputs:
+        downloadType: specific
+        itemPattern: '**/*Hash*.so'
         downloadPath: '$(build.sourcesdirectory)/binaries/'
 
     - task: Bash@3
@@ -184,7 +195,7 @@ stages:
     - script: |   
           mv $(System.ArtifactsDirectory)/enterpriseFile/Enterprise-HashV41.hash  $(Build.SourcesDirectory)/device-detection-cxx/device-detection-data/Enterprise-HashV41.hash
       displayName: 'Move Data Files'
-      
+
     - bash: |
         sudo apt-get update
         sudo apt-get -y install \
@@ -210,18 +221,7 @@ stages:
         mavenPomFile: 'pom.xml'
         goals: 'clean install'
         options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -DcreateChecksum=true -DSuperResourceKey=$(SuperResourceKey)'
-        jdkVersionOption: '1.8'
-
-    # Add a tag to the git repository with the version number of
-    # the package that has just been published
-    - task: ATP.ATP-GitTag.GitTag.GitTag@5
-      displayName: 'Tag Repo With Version Number'
-      inputs:
-        tagUser: 'Azure DevOps'
-        tagEmail: 'CIUser@51Degrees.com'
-      # Only create the tag if we also published a package as defined in
-      # the previous task.
-      condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), or(startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'), eq('true', variables['ForcePushMaven'])))))
+        jdkVersionOption: $(jdkVersionDefault)
 
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
@@ -231,6 +231,7 @@ stages:
         TargetFolder: '$(build.artifactstagingdirectory)'
 
     - task: Bash@3
+      displayName: 'Write GitVersion to version.txt'
       inputs:
         targetType: 'inline'
         script: 'echo $(GitVersion.SemVer) >> version.txt'
@@ -247,3 +248,14 @@ stages:
       displayName: 'Publish Artifact: drop'
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
+
+    # Add a tag to the git repository with the version number of
+    # the package that has just been published
+    - task: ATP.ATP-GitTag.GitTag.GitTag@5
+      displayName: 'Tag Repo With Version Number'
+      inputs:
+        tagUser: 'Azure DevOps'
+        tagEmail: 'CIUser@51Degrees.com'
+      # Only create the tag if we also published a package as defined in
+      # the previous task.
+      condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), or(startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'), eq('true', variables['ForcePushMaven'])))))

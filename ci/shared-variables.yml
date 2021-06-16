@@ -1,0 +1,10 @@
+variables:
+- name: windowsImage
+  value: 'vs2017-win2016'
+- name: linuxImage
+  value: 'ubuntu-16.04'
+- name: macImage
+  value: 'macOS-10.14'
+# jdk version used in package creation
+- name: jdkVersionDefault
+  value: '1.8'

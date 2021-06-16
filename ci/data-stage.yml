@@ -1,0 +1,41 @@
+# Data stage to download data files that is used in tests.
+
+stages:
+
+- stage: Data
+
+  jobs:
+  - job: Get_Data_File
+    displayName: Get Data File
+
+    variables: 
+    - group: InternalKeys
+    # Include shared variables
+    - template: shared-variables.yml
+    
+    pool:
+      vmImage: $(linuxImage)
+      
+    steps:
+    
+    - bash: |
+    - script: |
+        curl "https://distributor.51degrees.com/api/v2/download?LicenseKeys=$(licensekey)&Type=HashV41&Download=True&Product=V4Enterprise" --output Enterprise-HashV41.hash.gz
+      displayName: 'Download Enterprise Data File'
+
+    - task: ExtractFiles@1
+      displayName: 'Extract Data File'
+      inputs:
+        archiveFilePatterns: 'Enterprise-HashV41.hash.gz'
+        cleanDestinationFolder: false
+        overwriteExistingFiles: true
+        
+    - script: |    
+          mv $(Build.SourcesDirectory)/Enterprise-HashV41.hash $(Build.ArtifactStagingDirectory)/Enterprise-HashV41.hash
+      displayName: 'Move Data Files'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'enterpriseFile'
+        publishLocation: 'Container'
