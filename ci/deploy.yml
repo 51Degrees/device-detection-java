@@ -19,7 +19,7 @@ resources:
 
 
 variables:
-- group: InternalKeyss
+- group: InternalKeys
 # Include shared variables
 - template: shared-variables.yml
 - name: targetBranch
