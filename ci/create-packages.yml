@@ -131,11 +131,6 @@ stages:
       # (Required for GitTag task)
       persistCredentials: true
 
-    - task: gittools.gitversion.gitversion-task.GitVersion@5
-      displayName: GitVersion
-      inputs:
-        preferBundledVersion: true
-
     # The secure file to download will be stored in the
     # Pipelines/Library/SecureFiles section in Azure DevOps.
     - task: DownloadSecureFile@1
@@ -143,6 +138,16 @@ stages:
       name: CodeSigningCert
       inputs:
         secureFile: '51Degrees Code Signing Certificate.asc'
+
+     # GitVersion needs to be 5.6. The standard 5.0 breaks on Ubuntu 20.
+    - task: gitversion/setup@0
+      inputs:
+        versionSpec: '5.6.0'
+        
+    - task: gitversion/execute@0
+      inputs:
+        preferBundledVersion: true
+        failOnStderr: true
 
     - task: Bash@3
       displayName: 'Import Code Signing Certificate'
