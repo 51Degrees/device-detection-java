@@ -45,7 +45,6 @@ stages:
           - template: shared-publish-packages-internal.yml
             parameters:
               publishEndpoint: 'internal-feed'
-              resouceKey: $(SuperResourceKey)
 
 # Publish to internal staging                
 - stage: publish_staging
@@ -68,7 +67,6 @@ stages:
           - template: shared-publish-packages-internal.yml
             parameters:
               publishEndpoint: 'staging'
-              resouceKey: $(SuperResourceKey)
               
 # Promote from staging to Maven    
 - stage: publish_maven

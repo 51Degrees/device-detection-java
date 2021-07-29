@@ -33,9 +33,7 @@ public class Finalizer {
             {PropertyMetaDataCollectionSwig.class, true},
             {ProfileMetaDataCollectionSwig.class, true},
             {ValueMetaDataCollectionSwig.class, true},
-            {VectorStringSwig.class, true},
             {MetaDataSwig.class, true},
-            {DeviceDataHash.class, true},
             // Classes which should not have a finalizer.
             {ResultsHashSwig.class, false},
             {BoolValueSwig.class, false},
@@ -46,6 +44,7 @@ public class Finalizer {
             {EvidenceDeviceDetectionSwig.class, false},
             {EvidenceBaseSwig.class, false},
             {MapStringStringSwig.class, false},
+            {VectorStringSwig.class, false},
         };
         return Arrays.asList(data);
     }

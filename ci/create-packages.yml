@@ -17,106 +17,17 @@ variables:
   
 stages:
 
-- template: shared-build-and-test-platforms.yml
-  parameters:
-    windowsImage: ${{ variables.windowsImage }}
-    linuxImage: ${{ variables.linuxImage }}
-    macImage: ${{ variables.macImage }}
- 
-# Stage to create and publish binaries for Windows platforms 
-- stage: Build_Binaries_Windows
-  displayName: Build Binaries Windows
-  dependsOn: [Windows,Linux,MacOS]
-  jobs: 
-  - job: Build_Binaries_Windows
-    displayName: Build Binaries Windows
-    
-    pool:
-      vmImage: $(windowsImage)
+- template: shared-build-binaries-stage.yml
 
-    steps:
-
-    - checkout: self
-      submodules: recursive
-      persistCredentials: true
-
-    - task: MSBuild@1
-      displayName: 'Build Device Detection Engines x64'
-      inputs:
-        solution: 'VisualStudio/DeviceDetectionEngines.sln'
-        msbuildArchitecture: x64
-        platform: x64
-        configuration: Release
-        clean: true
-
-    - task: MSBuild@1
-      displayName: 'Build Device Detection Engines x86'
-      inputs:
-        solution: 'VisualStudio/DeviceDetectionEngines.sln'
-        platform: x86
-        configuration: Release
-
-    - task: CopyFiles@2
-      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-      inputs:
-        SourceFolder: '$(build.sourcesdirectory)'
-        Contents: '**/*windows-x*.dll'
-        TargetFolder: '$(build.artifactstagingdirectory)'
-        CleanTargetFolder: true
-        flattenFolders: true
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: windows-binaries'
-      inputs:
-        PathtoPublish: '$(build.artifactstagingdirectory)'
-        ArtifactName: windows-binaries
-
-# Stage to create and publish binaries for MacOS platform
-- stage: Build_Binaries_MacOS
-  displayName: Build Binaries MacOS
-  dependsOn: [Windows,Linux,MacOS]
-  jobs:
-  - job: Build_Binaries_MacOS
-    displayName: Build Binaries MacOS
-    
-    pool:
-      vmImage: $(macImage)
-
-    steps:
-
-    - checkout: self
-      submodules: recursive
-
-    - task: ShellScript@2
-      displayName: 'Build Hash'
-      inputs:
-        scriptPath: 'PreBuild.sh'
-        args: hash
-
-    - task: CopyFiles@2
-      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-      inputs:
-        SourceFolder: '$(build.sourcesdirectory)'
-        Contents: '**/*mac*.so'
-        TargetFolder: '$(build.artifactstagingdirectory)'
-        CleanTargetFolder: true
-        flattenFolders: true
-
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: mac-binaries'
-      inputs:
-        PathtoPublish: '$(build.artifactstagingdirectory)'
-        ArtifactName: mac-binaries
-
-# Stage to create binaries for Linux, 
-# copy binaries for WIndows and Mac created in previous stages,
+# Stage to create packages, 
+# copy binaries for Windows Linux and Mac created in previous stages,
 # create and publish package using Linux platform 
-- stage: Build_Packages_Linux
-  displayName: Build Packages Linux
-  dependsOn: [Build_Binaries_Windows,Build_Binaries_MacOS]
+- stage: Build_Packages
+  displayName: Build Packages
+  dependsOn: [Build_Binaries_Windows,Build_Binaries_MacOS,Build_Binaries_Linux_ARM,Build_Binaries_Linux]
   jobs:
-  - job: Create_Packages_Linux
-    displayName: Create Packages Linux
+  - job: Create_Packages
+    displayName: Create Packages
     
     pool:
       vmImage: $(linuxImage)
@@ -166,6 +77,13 @@ stages:
       displayName: 'Download Build Artifacts - Mac Hash Binaries'
       inputs:
         downloadType: specific
+        itemPattern: '**/*Hash*.dylib'
+        downloadPath: '$(build.sourcesdirectory)/binaries/'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Build Artifacts - Linux Hash Binaries'
+      inputs:
+        downloadType: specific
         itemPattern: '**/*Hash*.so'
         downloadPath: '$(build.sourcesdirectory)/binaries/'
 
@@ -181,25 +99,6 @@ stages:
         targetType: 'inline'
         script: 'mv $(build.sourcesdirectory)/binaries/*/*Hash* $(build.sourcesdirectory)/device-detection.hash.engine.on-premise/src/main/resources/'
 
-    - task: DownloadBuildArtifacts@0
-      displayName: 'Download Data Files'
-      inputs:
-        buildType: 'current'
-        downloadType: 'single'
-        artifactName: 'enterpriseFile'
-        downloadPath: '$(System.ArtifactsDirectory)'
-
-    - script: |   
-          mv $(System.ArtifactsDirectory)/enterpriseFile/Enterprise-HashV41.hash  $(Build.SourcesDirectory)/device-detection-cxx/device-detection-data/Enterprise-HashV41.hash
-      displayName: 'Move Data Files'
-
-    - bash: |
-        sudo apt-get update
-        sudo apt-get -y install \
-          gcc-multilib \
-          g++-multilib
-      displayName: 'Install gcc-multilib and g++-multilib packages'
-      
     - task: MavenAuthenticate@0
       inputs:
         artifactsFeeds: 'pipeline-insider'
@@ -217,7 +116,7 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean install'
-        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -DcreateChecksum=true -DSuperResourceKey=$(SuperResourceKey)'
+        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -DcreateChecksum=true -Dexec.skip=true -DskipTests=true'
         jdkVersionOption: $(jdkVersionDefault)
 
     - task: CopyFiles@2

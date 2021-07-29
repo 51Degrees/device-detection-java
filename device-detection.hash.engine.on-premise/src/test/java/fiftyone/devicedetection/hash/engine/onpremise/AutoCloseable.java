@@ -28,11 +28,12 @@ public class AutoCloseable {
             {IntegerValueSwig.class, true},
             {DoubleValueSwig.class, true},
             {VectorStringValuesSwig.class, true},
+            {EngineHashSwig.class, true},
             {EvidenceDeviceDetectionSwig.class, true},
             {MapStringStringSwig.class, true},
+            {VectorStringSwig.class, true},
             // Classes which should not be AutoCloseable.
             {Date.class, false},
-            {EngineHashSwig.class, false},
             {DeviceDataHash.class, false},
             {MetaDataSwig.class, false},
             {CollectionConfigSwig.class, false},
@@ -45,7 +46,6 @@ public class AutoCloseable {
             {ProfileMetaDataSwig.class, false},
             {ValueMetaDataCollectionSwig.class, false},
             {ValueMetaDataSwig.class, false},
-            {VectorStringSwig.class, false},
         };
         return Arrays.asList(data);
     }

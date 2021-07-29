@@ -3,8 +3,6 @@
 parameters:
 # feed where package needs to be uploaded.
 - name: publishEndpoint
-# resource key to be used in cloud tests
-- name: resouceKey
 
 steps:
 
@@ -41,7 +39,7 @@ steps:
   inputs:
     mavenPomFile: '$(PIPELINE.WORKSPACE)/build-pipeline/drop/pom.xml'
     goals: deploy
-    options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -Dexec.skip -DSuperResourceKey=${{ parameters.resouceKey }}'
+    options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -Dexec.skip=true -DskipTests=true'
     publishJUnitResults: false
     jdkVersionOption: $(jdkVersionDefault)
     mavenAuthenticateFeed: false
@@ -53,7 +51,7 @@ steps:
   inputs:
     mavenPomFile: '$(PIPELINE.WORKSPACE)/build-pipeline/drop/pom.xml'
     goals: deploy
-    options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -s $(stagingsettings.secureFilePath) -Dexec.skip -DSuperResourceKey=${{ parameters.resouceKey }}'
+    options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -s $(stagingsettings.secureFilePath) -Dexec.skip=true -DskipTests=true'
     publishJUnitResults: false
     jdkVersionOption: $(jdkVersionDefault)
     mavenAuthenticateFeed: false
