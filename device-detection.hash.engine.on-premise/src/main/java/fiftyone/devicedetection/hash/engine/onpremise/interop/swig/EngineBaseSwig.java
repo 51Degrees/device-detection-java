@@ -7,8 +7,8 @@
  * ----------------------------------------------------------------------------- */
 
 package fiftyone.devicedetection.hash.engine.onpremise.interop.swig;
-import java.io.Closeable;
-public class EngineBaseSwig implements Closeable {
+
+public class EngineBaseSwig implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 

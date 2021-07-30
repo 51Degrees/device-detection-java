@@ -123,4 +123,10 @@ public class ExampleTests {
         StronglyTyped.Example stronglyTyped = new StronglyTyped.Example(false);
         stronglyTyped.run(dataFile);
     }
+    
+    @Test
+    public void UserAgentClientHints_Hash() throws Exception {
+        UserAgentClientHints.Example UAClientHints = new UserAgentClientHints.Example(false);
+        UAClientHints.run(dataFile);
+    }
 }

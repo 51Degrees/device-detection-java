@@ -1,0 +1,82 @@
+# Build and test stage template
+
+parameters:
+# stageName: Stage name
+# imageName: image on which stage needs to be run
+- name: stageName
+- name: imageName
+- name: runTests
+  type: string
+  default: 'On'
+
+stages:
+
+- stage: ${{ parameters.stageName }}
+  dependsOn: [Data]
+  
+  jobs:
+  - job: 'Build_and_Test'
+    displayName: Build and Test
+    condition: ne(${{ parameters.runTests }}, 'Off')
+
+    variables: 
+    - group: InternalKeys
+    - group: CIAutomation
+      
+    strategy:
+      matrix:
+        JDK8:
+          jdkVersion: '1.8'
+        JDK11:
+          jdkVersion: '1.11'
+
+    pool:
+      vmImage: ${{ parameters.imageName }}
+          
+    steps:
+
+    - checkout: self
+      submodules: recursive
+      lfs: true
+      persistCredentials: true
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Data Files'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'enterpriseFile'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - script: |   
+          mv $(System.ArtifactsDirectory)/enterpriseFile/Enterprise-HashV41.hash  $(Build.SourcesDirectory)/device-detection-cxx/device-detection-data/Enterprise-HashV41.hash
+      displayName: 'Move Data Files'
+
+    - bash: |
+        sudo apt-get update
+        sudo apt-get -y install \
+          gcc-multilib \
+          g++-multilib
+      displayName: 'Install gcc-multilib and g++-multilib packages'
+      condition: contains('${{ parameters.imageName }}', 'ubuntu')
+
+    - task: MavenAuthenticate@0
+      inputs:
+        artifactsFeeds: '$(InternalFeedName)'
+
+    - task: Maven@1
+      displayName: 'Maven test'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'clean test'
+        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -DFOD_CLOUD_API_URL=$(FOD_CLOUD_API_URL) -DSuperResourceKey=$(SuperResourceKey)'
+        jdkVersionOption: $(jdkVersion)
+        testRunTitle: '${{ parameters.imageName }}-$(jdkVersion)'
+
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '**/TEST-*.xml' 
+        testRunTitle: '${{ parameters.imageName }}-$(jdkVersion)'
+        failTaskOnFailedTests: true
+      condition: succeededOrFailed()

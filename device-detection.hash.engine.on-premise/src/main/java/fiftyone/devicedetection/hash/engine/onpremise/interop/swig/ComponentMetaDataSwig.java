@@ -8,7 +8,7 @@
 
 package fiftyone.devicedetection.hash.engine.onpremise.interop.swig;
 
-public class ComponentMetaDataSwig implements AutoCloseable {
+public class ComponentMetaDataSwig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
@@ -36,11 +36,6 @@ public class ComponentMetaDataSwig implements AutoCloseable {
     }
   }
 
-  @Override
-  public void close() {
-    this.delete();
-  }
-
   public int getComponentIdAsInt() {
     return DeviceDetectionHashEngineModuleJNI.ComponentMetaDataSwig_getComponentIdAsInt(swigCPtr, this);
   }
@@ -52,5 +47,5 @@ public class ComponentMetaDataSwig implements AutoCloseable {
   public String getName() {
     return DeviceDetectionHashEngineModuleJNI.ComponentMetaDataSwig_getName(swigCPtr, this);
   }
-  
+
 }

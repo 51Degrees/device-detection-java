@@ -14,7 +14,7 @@
 <div id="content">
     <p>
         Hardware Vendor: ${hardwareVendor.hasValue() ? hardwareVendor.getValue() : "Unknown: ".concat(hardwareVendor.getNoValueMessage())}<br />
-        Hardware Name: ${hardwareName.hasValue() ? hardwareName.getValue() : "Unknown: ".concat(hardwareName.getNoValueMessage())}<br />
+        Hardware Name: ${hardwareName.hasValue() ? String.join(", ", hardwareName.getValue()) : "Unknown: ".concat(hardwareName.getNoValueMessage())}<br />
         Device Type: ${deviceType.hasValue() ? deviceType.getValue() : "Unknown: ".concat(deviceType.getNoValueMessage())}<br />
         Platform Vendor: ${platformVendor.hasValue() ? platformVendor.getValue() : "Unknown: ".concat(platformVendor.getNoValueMessage())}<br />
         Platform Name: ${platformName.hasValue() ? platformName.getValue() : "Unknown: ".concat(platformName.getNoValueMessage())}<br />
