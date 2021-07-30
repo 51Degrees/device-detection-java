@@ -1,5 +1,10 @@
 # Data stage to download data files that is used in tests.
 
+parameters:
+- name: runTests
+  type: string
+  default: 'On'
+
 stages:
 
 - stage: Data
@@ -7,6 +12,7 @@ stages:
   jobs:
   - job: Get_Data_File
     displayName: Get Data File
+    condition: ne(${{ parameters.runTests }}, 'Off')
 
     variables: 
     - group: InternalKeys

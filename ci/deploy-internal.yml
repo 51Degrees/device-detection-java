@@ -11,12 +11,11 @@ resources:
   pipelines:
   - pipeline: build-pipeline   # The name for the triggering build pipeline within this script
     source: device-detection-java-create-packages # Name of the pipeline
-    trigger: true 
+    trigger: true
   repositories:
   - repository: ciTemplates # Id of the repository used to reference to in this script
     type: git
     name: common-ci # Name of the actual repository
-
 
 variables:
 - group: InternalKeys
@@ -24,6 +23,7 @@ variables:
 - template: shared-variables.yml
 - name: targetBranch
   value: 'refs/heads/master'
+- group: CIAutomation
   
 # Publish to internal feed  
 stages:
@@ -45,51 +45,8 @@ stages:
           - template: shared-publish-packages-internal.yml
             parameters:
               publishEndpoint: 'internal-feed'
-
-# Publish to internal staging                
-- stage: publish_staging
-  displayName: Publish to Staging
-  dependsOn: []
-  condition: eq(variables['build.sourceBranch'], variables['targetBranch'])
-  jobs:
-  - deployment: deploy_staging
-    displayName: Deploy to Staging
-    pool:
-      vmImage: $(linuxImage)
-      workspace:
-        clean: all
-    environment: staging
-    strategy:
-      runOnce:
-        deploy:
-          steps: 
-          
-          - template: shared-publish-packages-internal.yml
-            parameters:
-              publishEndpoint: 'staging'
-              
-# Promote from staging to Maven    
-- stage: publish_maven
-  displayName: Publish to Maven
-  dependsOn: [publish_staging]
-  condition: eq(variables['build.sourceBranch'], variables['targetBranch'])
-  jobs:
-  - deployment: deploy_maven
-    displayName: Promote from Staging to Maven
-    pool:
-      vmImage: $(linuxImage)
-      workspace:
-        clean: all
-    environment: maven
-    strategy:
-      runOnce:
-        deploy:
-          steps: 
-          - template: shared-publish-packages-maven.yml
-          
-- template: shared-publish-github-stage.yml@ciTemplates
-  parameters:
-    imageName: $(linuxImage)
-    branchName: ${{ variables.targetBranch }}
+              resouceKey: $(SuperResourceKey)
+              internalFeedName: $(InternalFeedName)
+              templates: 'ciTemplates'
           
  

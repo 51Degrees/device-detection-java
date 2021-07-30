@@ -5,6 +5,9 @@ parameters:
 # imageName: image on which stage needs to be run
 - name: stageName
 - name: imageName
+- name: runTests
+  type: string
+  default: 'On'
 
 stages:
 
@@ -14,9 +17,11 @@ stages:
   jobs:
   - job: 'Build_and_Test'
     displayName: Build and Test
+    condition: ne(${{ parameters.runTests }}, 'Off')
 
     variables: 
     - group: InternalKeys
+    - group: CIAutomation
       
     strategy:
       matrix:
@@ -57,7 +62,7 @@ stages:
 
     - task: MavenAuthenticate@0
       inputs:
-        artifactsFeeds: 'pipeline-insider'
+        artifactsFeeds: '$(InternalFeedName)'
 
     - task: Maven@1
       displayName: 'Maven test'

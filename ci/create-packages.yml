@@ -8,15 +8,21 @@ pr: none
 
 variables:
   - group: CertificateVariables
+  - group: CIAutomation
   # Access token for the git repository. Used by the git tag task.
   - group: InternalKeys
   - name: system_accesstoken
     value: $(System.AccessToken)
   # Include shared variables
   - template: shared-variables.yml
-  
-stages:
 
+resources:
+  repositories:
+    - repository: ciTemplates # Id of the repository used to reference to in this script
+      type: git
+      name: common-ci # Name of the actual repository
+ 
+stages:
 - template: shared-build-binaries-stage.yml
 
 # Stage to create packages, 
@@ -26,8 +32,17 @@ stages:
   displayName: Build Packages
   dependsOn: [Build_Binaries_Windows,Build_Binaries_MacOS,Build_Binaries_Linux_ARM,Build_Binaries_Linux]
   jobs:
+  - template: shared-git-version-job.yml@ciTemplates
+    parameters:
+      imageName: $(linuxImage)
+
   - job: Create_Packages
     displayName: Create Packages
+    dependsOn: Versioning
+    condition: and(succeeded(), ne(variables['CreatePackages'], 'Off'))
+    
+    variables:
+      GitVersionSemVer: $[ dependencies.Versioning.outputs['SetGitVersionVars.GitVersionSemVer'] ]
     
     pool:
       vmImage: $(linuxImage)
@@ -42,29 +57,9 @@ stages:
       # (Required for GitTag task)
       persistCredentials: true
 
-    # The secure file to download will be stored in the
-    # Pipelines/Library/SecureFiles section in Azure DevOps.
-    - task: DownloadSecureFile@1
-      displayName: 'Download Code Signing Certificate'
-      name: CodeSigningCert
-      inputs:
-        secureFile: '51Degrees Code Signing Certificate.asc'
-
-     # GitVersion needs to be 5.6. The standard 5.0 breaks on Ubuntu 20.
-    - task: gitversion/setup@0
-      inputs:
-        versionSpec: '5.6.0'
-        
-    - task: gitversion/execute@0
-      inputs:
-        preferBundledVersion: true
-        failOnStderr: true
-
-    - task: Bash@3
-      displayName: 'Import Code Signing Certificate'
-      inputs:
-        targetType: 'inline'
-        script: 'echo $(gpg_passphrase) | gpg --import --batch --yes --passphrase-fd 0 "$(CodeSigningCert.secureFilePath)"'
+    - template: java/shared-code-signing-steps.yml@ciTemplates
+      parameters:
+        gpgPassPhrase: $(gpg_passphrase)
 
     - task: DownloadBuildArtifacts@0
       displayName: 'Download Build Artifacts - Windows Hash Binaries'
@@ -101,13 +96,13 @@ stages:
 
     - task: MavenAuthenticate@0
       inputs:
-        artifactsFeeds: 'pipeline-insider'
+        artifactsFeeds: '$(InternalFeedName)'
 
     - task: Maven@2
       displayName: 'Maven version set'
       inputs:
         goals: 'versions:set'
-        options: '-DnewVersion=$(GitVersion.SemVer)'
+        options: '-DnewVersion=$(GitVersionSemVer)'
         testResultsFiles: '**/surefire-reports/TEST-*.xml'
         mavenAuthenticateFeed: false
 
@@ -116,7 +111,7 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean install'
-        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -DcreateChecksum=true -Dexec.skip=true -DskipTests=true'
+        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersionSemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -DcreateChecksum=true -Dexec.skip=true -DskipTests=true'
         jdkVersionOption: $(jdkVersionDefault)
 
     - task: CopyFiles@2
@@ -130,7 +125,7 @@ stages:
       displayName: 'Write GitVersion to version.txt'
       inputs:
         targetType: 'inline'
-        script: 'echo $(GitVersion.SemVer) >> version.txt'
+        script: 'echo $(GitVersionSemVer) >> version.txt'
 
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
@@ -145,13 +140,7 @@ stages:
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
 
-    # Add a tag to the git repository with the version number of
-    # the package that has just been published
-    - task: ATP.ATP-GitTag.GitTag.GitTag@5
-      displayName: 'Tag Repo With Version Number'
-      inputs:
-        tagUser: 'Azure DevOps'
-        tagEmail: 'CIUser@51Degrees.com'
-      # Only create the tag if we also published a package as defined in
-      # the previous task.
-      condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), or(eq(variables['Build.SourceBranch'], 'refs/heads/develop'), or(startsWith(variables['Build.SourceBranch'], 'refs/heads/release/'), eq('true', variables['ForcePushMaven'])))))
+  - template: shared-git-tag-job.yml@ciTemplates
+    parameters:
+      imageName: $(linuxImage)
+      jobDependencies: [Versioning,Create_Packages]

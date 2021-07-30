@@ -1,0 +1,78 @@
+# Disable automatic runs of this pipeline when changes are pushed to the repository.
+trigger: none
+
+# Disable automatic runs of this pipeline when a PR is create.
+pr: none
+
+# Add the pipeline that builds the packages as a resource.
+# This allows the deployment pipeline to be triggered whenever
+# the build pipeline completes.
+resources:
+  pipelines:
+  - pipeline: build-pipeline   # The name for the triggering build pipeline within this script
+    source: device-detection-java-create-packages # Name of the pipeline
+    trigger: true 
+  repositories:
+  - repository: ciTemplates # Id of the repository used to reference to in this script
+    type: git
+    name: common-ci # Name of the actual repository
+
+
+variables:
+- group: InternalKeys
+# Include shared variables
+- template: shared-variables.yml
+- name: targetBranch
+  value: 'refs/heads/master'
+- group: CIAutomation
+  
+stages:
+# Publish to internal staging                
+- stage: publish_staging
+  displayName: Publish to Staging
+
+  condition: eq(variables['build.sourceBranch'], variables['targetBranch'])
+  jobs:
+  - deployment: deploy_staging
+    displayName: Deploy to Staging
+    pool:
+      vmImage: $(linuxImage)
+      workspace:
+        clean: all
+    environment: staging
+    strategy:
+      runOnce:
+        deploy:
+          steps: 
+          
+          - template: shared-publish-packages-internal.yml
+            parameters:
+              publishEndpoint: 'staging'
+              internalFeedName: $(InternalFeedName)
+              templates: 'ciTemplates'
+              
+# Promote from staging to Maven    
+- stage: publish_maven
+  displayName: Publish to Maven
+  dependsOn: [publish_staging]
+  condition: eq(variables['build.sourceBranch'], variables['targetBranch'])
+  jobs:
+  - deployment: deploy_maven
+    displayName: Promote from Staging to Maven
+    pool:
+      vmImage: $(linuxImage)
+      workspace:
+        clean: all
+    environment: maven
+    strategy:
+      runOnce:
+        deploy:
+          steps: 
+          - template: shared-publish-packages-maven.yml
+          
+- template: shared-publish-github-stage.yml@ciTemplates
+  parameters:
+    imageName: $(linuxImage)
+    branchName: ${{ variables.targetBranch }}
+          
+ 

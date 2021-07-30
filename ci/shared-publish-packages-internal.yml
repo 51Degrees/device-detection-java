@@ -3,16 +3,10 @@
 parameters:
 # feed where package needs to be uploaded.
 - name: publishEndpoint
+- name: internalFeedName
+- name: templates
 
 steps:
-
-# Download Code Signing Certificate from SecureFile Library
-- task: DownloadSecureFile@1
-  name: CodeSigningCert
-  displayName: 'Download secure file'
-  inputs:
-    secureFile: '51Degrees Code Signing Certificate.asc'
-    retryCount: 5
 
 # Download Staging Settings from SecureFile Library
 - task: DownloadSecureFile@1
@@ -23,15 +17,15 @@ steps:
     retryCount: 5
   condition: eq('${{ parameters.publishEndpoint }}', 'staging')
 
-#  Import 51Degrees Code Signing Certificate   
-- bash: 'echo $(gpg_passphrase) | gpg --import --batch --yes --passphrase-fd 0 "$(CodeSigningCert.secureFilePath)"'
-  displayName: 'Import Code Signing Certificate'
+- template: java/shared-code-signing-steps.yml@${{ parameters.templates }}
+  parameters:
+    gpgPassPhrase: $(gpg_passphrase)
 
 # Connect to internal feed
 - task: MavenAuthenticate@0
   displayName: 'Maven Authenticate'
   inputs:
-    artifactsFeeds: 'pipeline-insider'
+    artifactsFeeds: '${{ parameters.internalFeedName }}'
 
 # Task for deployment of package on internal feed.
 - task: Maven@1
@@ -47,7 +41,7 @@ steps:
 
 # Task for deployment of package on staging.
 - task: Maven@1
-  displayName: 'Maven Deploy Internal'
+  displayName: 'Maven Deploy Staging'
   inputs:
     mavenPomFile: '$(PIPELINE.WORKSPACE)/build-pipeline/drop/pom.xml'
     goals: deploy
