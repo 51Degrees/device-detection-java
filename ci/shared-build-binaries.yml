@@ -1,0 +1,28 @@
+# Template to publish packages on Internal feeds
+
+parameters:
+- name: name
+- name: cmakeArgs
+  default: ''
+- name: buildArgs
+  default: ''
+
+steps:
+
+- task: CmdLine@2
+  displayName: 'Create ${{ parameters.name }} Build Dirs'
+  inputs:
+    script: |
+      mkdir build-${{ parameters.name }}
+    workingDirectory: '$(build.sourcesdirectory)'
+
+- task: CMake@1
+  displayName: 'Setup ${{ parameters.name }} Build'
+  inputs:
+    workingDirectory: '$(build.sourcesdirectory)/build-${{ parameters.name }}'
+    cmakeArgs: '.. ${{ parameters.cmakeArgs }}'
+- task: CMake@1
+  displayName: 'Build ${{ parameters.name }}'
+  inputs:
+    workingDirectory: '$(build.sourcesdirectory)/build-${{ parameters.name }}'
+    cmakeArgs: '--build . --target fiftyone-hash-java ${{ parameters.buildArgs }}'

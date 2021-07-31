@@ -177,7 +177,7 @@ public abstract class DeviceDataBaseOnPremise extends DeviceDataBase {
         if (properties != null) {
             ElementPropertyMetaData property = properties.get(propertyName);
             if (property != null) {
-                type = property.getType();
+                type = (Class<Object>)property.getType();
             }
         }
         return type;

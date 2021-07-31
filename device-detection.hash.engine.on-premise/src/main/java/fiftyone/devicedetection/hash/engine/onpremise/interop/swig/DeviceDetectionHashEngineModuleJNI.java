@@ -10,6 +10,7 @@ package fiftyone.devicedetection.hash.engine.onpremise.interop.swig;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.pipeline.engines.fiftyone.flowelements.interop.LibLoader;
+import java.nio.ByteBuffer;
 
 public class DeviceDetectionHashEngineModuleJNI {
   public final static native long new_MapStringStringSwig__SWIG_0();

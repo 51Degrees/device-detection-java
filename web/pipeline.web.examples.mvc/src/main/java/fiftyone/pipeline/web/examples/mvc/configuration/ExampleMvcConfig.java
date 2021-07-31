@@ -206,7 +206,7 @@ public class ExampleMvcConfig extends WebMvcConfigurerAdapter {
     public FiftyOneInterceptorConfig fiftyOneInterceptorConfig() {
         final FiftyOneInterceptorConfigDefault bean = new FiftyOneInterceptorConfigDefault();
 
-        bean.setDataFilePath(servletContext.getRealPath("/WEB-INF/51Degrees-Cloud.xml"));
+        bean.setDataFilePath(servletContext.getRealPath("/WEB-INF/51Degrees-Hash.xml"));
         bean.setClientsidePropertiesEnabled(true);
 
         return bean;

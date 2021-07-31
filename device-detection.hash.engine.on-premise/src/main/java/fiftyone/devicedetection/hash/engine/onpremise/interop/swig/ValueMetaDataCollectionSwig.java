@@ -8,7 +8,7 @@
 
 package fiftyone.devicedetection.hash.engine.onpremise.interop.swig;
 
-public class ValueMetaDataCollectionSwig implements AutoCloseable {
+public class ValueMetaDataCollectionSwig {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
@@ -21,6 +21,11 @@ public class ValueMetaDataCollectionSwig implements AutoCloseable {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
+  @SuppressWarnings("deprecation")
+  protected void finalize() {
+    delete();
+  }
+
   public synchronized void delete() {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
@@ -29,11 +34,6 @@ public class ValueMetaDataCollectionSwig implements AutoCloseable {
       }
       swigCPtr = 0;
     }
-  }
-
-  @Override
-  public void close() {
-    this.delete();
   }
 
   public ValueMetaDataSwig getByKey(ValueMetaDataKeySwig key) {

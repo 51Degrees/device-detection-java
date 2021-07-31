@@ -1,0 +1,78 @@
+steps:
+
+- powershell: |
+   $root = "https://oss.sonatype.org/service/local"
+   $user = "51degrees"
+   $pass = $env:NEXUSPASSWORD
+   $pair = "${user}:${pass}"
+
+   $packageVersion = Get-Content .\build-pipeline\drop\version.txt
+   
+   $bytes = [System.Text.Encoding]::ASCII.GetBytes($pair)
+   $base64 = [System.Convert]::ToBase64String($bytes)
+   
+   $auth = "Basic $base64"
+   
+   $headers = @{ Authorization = $auth
+   Accept = "application/json" }
+   
+   $packages = Invoke-WebRequest -Uri "${root}/staging/profile_repositories" -Headers $headers | ConvertFrom-Json
+   
+   $targetId = ""
+   
+   foreach ($package in $packages.data) {
+       $packageId = $package.repositoryId
+       $packageRootUrl = "${root}/repositories/${packageId}/content/com/51degrees/pipeline/"
+       $packageRoot = Invoke-WebRequest -Uri $packageRootUrl -Headers $headers | ConvertFrom-Json
+       foreach ($file in $packageRoot.data) {
+           if (!$file.leaf -and $file.text.Equals($packageVersion)) {
+               $targetId = $packageId
+               Write-Host "Found '${packageVersion}' with id '${targetId}'"
+           }
+       }
+   }
+   
+   function Alter-NexusPackage {
+   Param ([string]$command,[string]$id)
+       $postData = "{'data':{'autoDropAfterRelease':true,'description':'','stagedRepositoryIds':['${id}']}}"
+       $url = "${root}/staging/bulk/${command}"
+       Write-Host "Calling '${url}' with '${postData}'"
+       $res = Invoke-WebRequest -Uri $url -Headers $headers -Method Post -Body $postData -ContentType "application/json"
+       if ($res.StatusCode -ne 201) {
+           Write-Host $res
+           throw
+       }
+   }
+   
+   function WaitFor-NexusPackage {
+   Param ([string]$id)
+       Write-Host "Waiting for '${id}'"
+       $transitioning = True
+       do {
+           Start-Sleep -Seconds 5
+           $packages = Invoke-WebRequest -Uri "${root}/staging/profile_repositories" -Headers $headers | ConvertFrom-Json
+   
+           foreach ($package in $packages.data) {
+               if ($package.repositoryId.Equals($id)) {
+                   $transitioning = $package.transitioning
+               }
+           }
+       }
+       while($transitioning)
+   }
+   
+   Alter-NexusPackage -command "close" -id $targetId
+   
+   WaitFor-NexusPackage -id $targetId
+   
+   $packages = Invoke-WebRequest -Uri "${root}/staging/profile_repositories" -Headers $headers | ConvertFrom-Json
+   
+   foreach ($package in $packages.data) {
+       if ($package.repositoryId.Equals($id) -and !$package.type.Equals("closed")) {
+           Write-Host $package
+           throw
+       }
+   }
+   
+   Alter-NexusPackage -command "promote" -id $targetId
+  displayName: 'PowerShell Script'

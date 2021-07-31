@@ -34,3 +34,5 @@ nbactions*.xml
 
 # netbeans files
 nbactions.xml
+
+build*/
