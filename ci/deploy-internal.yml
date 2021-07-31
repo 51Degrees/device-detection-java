@@ -45,7 +45,6 @@ stages:
           - template: shared-publish-packages-internal.yml
             parameters:
               publishEndpoint: 'internal-feed'
-              resouceKey: $(SuperResourceKey)
               internalFeedName: $(InternalFeedName)
               templates: 'ciTemplates'
           
