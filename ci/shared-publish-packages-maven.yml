@@ -22,7 +22,7 @@ steps:
    
    foreach ($package in $packages.data) {
        $packageId = $package.repositoryId
-       $packageRootUrl = "${root}/repositories/${packageId}/content/com/51degrees/pipeline/"
+       $packageRootUrl = "${root}/repositories/${packageId}/content/com/51degrees/device-detection/"
        $packageRoot = Invoke-WebRequest -Uri $packageRootUrl -Headers $headers | ConvertFrom-Json
        foreach ($file in $packageRoot.data) {
            if (!$file.leaf -and $file.text.Equals($packageVersion)) {
