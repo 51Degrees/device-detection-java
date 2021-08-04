@@ -6,7 +6,7 @@ steps:
    $pass = $env:NEXUSPASSWORD
    $pair = "${user}:${pass}"
 
-   $packageVersion = Get-Content .\build-pipeline\drop\version.txt
+   $packageVersion = Get-Content ..\build-pipeline\drop\version.txt
    
    $bytes = [System.Text.Encoding]::ASCII.GetBytes($pair)
    $base64 = [System.Convert]::ToBase64String($bytes)
