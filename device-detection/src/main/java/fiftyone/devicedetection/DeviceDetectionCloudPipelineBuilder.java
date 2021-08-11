@@ -93,6 +93,9 @@ public class DeviceDetectionCloudPipelineBuilder
         if (licenseKey != null && licenseKey.isEmpty() == false) {
             cloudRequestEngineBuilder.setLicenseKey(licenseKey);
         }
+        if (cloudRequestOrigin != null && cloudRequestOrigin.isEmpty() == false) {
+            cloudRequestEngineBuilder.setCloudRequestOrigin(cloudRequestOrigin);
+        }
         CloudRequestEngine cloudRequestEngine = cloudRequestEngineBuilder.build();
 
         // Configure and build the device detection engine
