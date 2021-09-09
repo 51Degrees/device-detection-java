@@ -56,6 +56,7 @@ public class DeviceDetectionHashEngine
     private List<String> evidenceKeys;
     private EvidenceKeyFilter evidenceKeyFilter;
     private volatile boolean propertiesPopulated = false;
+    private final Random rand = new Random();
 
     /**
      * Construct a new instance of the {@link DeviceDetectionHashEngine}.
@@ -223,6 +224,10 @@ public class DeviceDetectionHashEngine
             value.getYear(),
             value.getMonth() - 1,
             value.getDay());
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.HOUR, 0);
         return calendar.getTime();
     }
 
@@ -235,6 +240,10 @@ public class DeviceDetectionHashEngine
             value.getYear(),
             value.getMonth() - 1,
             value.getDay());
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MINUTE, rand.nextInt(60));
+        calendar.set(Calendar.HOUR, 12);
         return calendar.getTime();
     }
 
