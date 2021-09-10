@@ -74,11 +74,11 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Integer> getBrowserDiscontinuedAge();
 	/**
-	 * The month in which further development of the browser version is stopped by the browser vendor.  This occurs when a new stable version of the brower is released.
+	 * The month in which further development of the browser version is stopped by the browser vendor. This occurs when a new stable version of the browser is released.
 	 */
 	AspectPropertyValue<String> getBrowserDiscontinuedMonth();
 	/**
-	 * The year in which further development of the browser version is stopped by the browser vendor.  This occurs when a new stable version of the brower is released.
+	 * The year in which further development of the browser version is stopped by the browser vendor. This occurs when a new stable version of the browser is released.
 	 */
 	AspectPropertyValue<Integer> getBrowserDiscontinuedYear();
 	/**
