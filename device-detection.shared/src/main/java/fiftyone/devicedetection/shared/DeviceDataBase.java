@@ -1230,13 +1230,13 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Integer> getBrowserReleaseYear() { return getAs("browserreleaseyear", AspectPropertyValue.class, Integer.class); }
 	/**
-	 * The month in which further development of the browser version is stopped by the browser vendor.  This occurs when a new stable version of the brower is released.
+	 * The month in which further development of the browser version is stopped by the browser vendor. This occurs when a new stable version of the browser is released.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getBrowserDiscontinuedMonth() { return getAs("browserdiscontinuedmonth", AspectPropertyValue.class, String.class); }
 	/**
-	 * The year in which further development of the browser version is stopped by the browser vendor.  This occurs when a new stable version of the brower is released.
+	 * The year in which further development of the browser version is stopped by the browser vendor. This occurs when a new stable version of the browser is released.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
