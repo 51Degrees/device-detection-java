@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  *
  * @include{doc} example-automatic-updates-system-watcher-hash.txt
  *
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/AutomaticUpdates.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/automaticupdates/DataFileSystemWatcher.java).
  *
  * @include{doc} example-require-licensekey.txt
  * @include{doc} example-require-datafile.txt
