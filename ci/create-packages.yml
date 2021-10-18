@@ -57,9 +57,13 @@ stages:
       # (Required for GitTag task)
       persistCredentials: true
 
-    - template: java/shared-code-signing-steps.yml@ciTemplates
-      parameters:
-        gpgPassPhrase: $(gpg_passphrase)
+    - task: DownloadSecureFile@1
+      displayName: 'Download Code Signing Certificate'
+      name: CodeSigningCert
+      inputs:
+        secureFile: '51Degrees Private Code Signing Certificate.pfx'
+        retryCount: 5
+      continueOnError: true
 
     - task: DownloadBuildArtifacts@0
       displayName: 'Download Build Artifacts - Windows Hash Binaries'
@@ -111,7 +115,7 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean install'
-        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersionSemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(gpg_passphrase) -DcreateChecksum=true -Dexec.skip=true -DskipTests=true'
+        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dkeystore="$(CodeSigningCert.secureFilePath)" -Dalias=$(CodeSigningCertAlias) -Dkeypass=$(CodeSigningCertPassword) -Dkeystorepass=$(CodeSigningCertPassword) -DcreateChecksum=true -Dexec.skip=true -DskipTests=true'
         jdkVersionOption: $(jdkVersionDefault)
 
     - task: CopyFiles@2

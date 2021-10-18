@@ -86,26 +86,24 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
+                <artifactId>maven-jarsigner-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                <execution>
+                    <id>sign</id>
+                    <goals>
+                    <goal>sign</goal>
+                    </goals>
+                </execution>
+                </executions>
                 <configuration>
                     <skip>${skippackagesign}</skip>
-                        <gpgArguments>
-                            <arg>--pinentry-mode</arg>
-                            <arg>loopback</arg>
-                    </gpgArguments>
+                    <keystore>${keystore}</keystore>
+                    <alias>${alias}</alias>
+                    <storepass>${keystorepass}</storepass>
+                    <keypass>${keypass}</keypass>
                 </configuration>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
-          	
         </plugins>
     </build>
 
