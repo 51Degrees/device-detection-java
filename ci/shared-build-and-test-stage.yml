@@ -29,6 +29,8 @@ stages:
           jdkVersion: '1.8'
         JDK11:
           jdkVersion: '1.11'
+        JDK17:
+          jdkVersion: '1.17'
 
     pool:
       vmImage: ${{ parameters.imageName }}
@@ -59,6 +61,30 @@ stages:
           g++-multilib
       displayName: 'Install gcc-multilib and g++-multilib packages'
       condition: contains('${{ parameters.imageName }}', 'ubuntu')
+      
+    # Java 17 is not currently available on MS hosted Linux build agents.
+    # Download Open JDK 17 archive.
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          mkdir $(System.DefaultWorkingDirectory)/java-bin
+          cd $(System.DefaultWorkingDirectory)/java-bin
+          wget -nv https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_linux-x64_bin.tar.gz
+      condition: and(eq('${{ parameters.stageName }}', 'Linux'), eq(variables.jdkVersion, '1.17'))
+      displayName: Download OpenJDK 17
+
+    # Extract and install Open JDK 17.
+    - task: JavaToolInstaller@0
+      inputs:
+        versionSpec: '17'
+        jdkArchitectureOption: 'x64'
+        jdkSourceOption: 'LocalDirectory'
+        jdkFile: '$(System.DefaultWorkingDirectory)/java-bin/openjdk-17_linux-x64_bin.tar.gz'
+        jdkDestinationDirectory: '$(agent.toolsDirectory)/jdk17'
+        cleanDestinationDirectory: true
+      condition: and(eq('${{ parameters.stageName }}', 'Linux'), eq(variables.jdkVersion, '1.17'))
+      displayName: Install OpenJDK 17
 
     - task: MavenAuthenticate@0
       inputs:
