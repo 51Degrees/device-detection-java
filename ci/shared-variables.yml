@@ -4,7 +4,7 @@ variables:
 - name: linuxImage
   value: 'ubuntu-20.04'
 - name: macImage
-  value: 'macOS-10.14'
+  value: 'macOS-10.15'
 # jdk version used in package creation
 - name: jdkVersionDefault
   value: '1.8'

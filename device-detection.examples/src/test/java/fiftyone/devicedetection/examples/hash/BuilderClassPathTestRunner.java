@@ -1,12 +1,12 @@
 package fiftyone.devicedetection.examples.hash;
 
-import com.sun.xml.bind.v2.ContextFactory;
+import org.glassfish.jaxb.runtime.v2.ContextFactory;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 
-import javax.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContext;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;

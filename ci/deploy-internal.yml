@@ -19,6 +19,7 @@ resources:
 
 variables:
 - group: InternalKeys
+- group: CertificateVariables
 # Include shared variables
 - template: shared-variables.yml
 - name: targetBranch
