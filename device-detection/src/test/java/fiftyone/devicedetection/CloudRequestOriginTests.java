@@ -91,8 +91,8 @@ public class CloudRequestOriginTests {
                 }
             }
             String originText = this.origin == null ? "" : this.origin;
-            String expectedText = "This resource key is not authorized " +
-                "for use with domain: '" + originText + "'.";
+            String expectedText = "This Resource Key is not authorized " +
+                "for use with this domain: '" + originText + "'.";
             String failureMessage = "Exception did not contain expected text '" + 
                 expectedText + "' (" + exceptionText + ")";
             assertTrue(failureMessage,
