@@ -65,6 +65,10 @@ stages:
         retryCount: 5
       continueOnError: true
 
+    - template: java/shared-package-signing-steps.yml@ciTemplates
+      parameters:
+        gpgPassPhrase: $(JavaMavenGPGKeyPassphrase)
+
     - task: DownloadBuildArtifacts@0
       displayName: 'Download Build Artifacts - Windows Hash Binaries'
       inputs:
@@ -115,7 +119,7 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean install'
-        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dkeystore="$(CodeSigningCert.secureFilePath)" -Dalias=$(CodeSigningCertAlias) -Dkeypass=$(CodeSigningCertPassword) -Dkeystorepass=$(CodeSigningCertPassword) -DcreateChecksum=true -Dexec.skip=true -DskipTests=true'
+        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(JavaMavenGPGKeyPassphrase) -Dkeystore="$(CodeSigningCert.secureFilePath)" -Dalias=$(CodeSigningCertAlias) -Dkeypass=$(CodeSigningCertPassword) -Dkeystorepass=$(CodeSigningCertPassword) -DcreateChecksum=true -Dexec.skip=true -DskipTests=true'
         jdkVersionOption: $(jdkVersionDefault)
 
     - task: CopyFiles@2

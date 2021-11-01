@@ -30,7 +30,7 @@
         <slf4j-simple.version>1.7.21</slf4j-simple.version>
         <mockito-core.version>2.22.0</mockito-core.version>
         <org.json.version>20180813</org.json.version>
-        <pipeline.version>4.3.4</pipeline.version>
+        <pipeline.version>4.3.5-beta.2</pipeline.version>
         <publishrepository.id>ossrh</publishrepository.id>
         <publishrepository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</publishrepository.url>
         <fetchrepository.id>central</fetchrepository.id>
@@ -103,6 +103,27 @@
                     <storepass>${keystorepass}</storepass>
                     <keypass>${keypass}</keypass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.6</version>
+                <configuration>
+                    <skip>${skippackagesign}</skip>
+                    <gpgArguments>
+                        <arg>--pinentry-mode</arg>
+                        <arg>loopback</arg>
+                    </gpgArguments>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
