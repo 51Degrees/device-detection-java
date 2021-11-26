@@ -42,6 +42,6 @@
         </Element>
         <Element>
         	<BuilderName>SetHeadersElement</BuilderName>
-        </Element>
+        </Element>        
     </Elements>
 </PipelineOptions>

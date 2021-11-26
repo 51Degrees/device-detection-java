@@ -35,4 +35,8 @@ public class Constants {
             "/11D167 Safari/9537.53";
     
     public static final String RESOURCE_KEY_ENV_VAR = "SuperResourceKey";
+	public static final String PLATFORM_RESOURCE_KEY_ENV_VAR = "AcceptChPlatformKey";
+	public static final String HARDWARE_RESOURCE_KEY_ENV_VAR = "AcceptChHardwareKey";
+	public static final String BROWSER_RESOURCE_KEY_ENV_VAR = "AcceptChBrowserKey";
+	public static final String NO_ACCEPTCH_RESOURCE_KEY_ENV_VAR = "AcceptChNoneKey";
 }

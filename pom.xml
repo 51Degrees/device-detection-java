@@ -5,7 +5,7 @@
 
     <groupId>com.51degrees</groupId>
     <artifactId>pipeline.device-detection</artifactId>
-    <version>4.3.0-SNAPSHOT</version>
+    <version>4.3.5-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>51Degrees :: Pipeline :: Device Detection</name>
@@ -30,7 +30,7 @@
         <slf4j-simple.version>1.7.21</slf4j-simple.version>
         <mockito-core.version>2.22.0</mockito-core.version>
         <org.json.version>20180813</org.json.version>
-        <pipeline.version>4.3.5</pipeline.version>
+        <pipeline.version>4.4.0-uach-fixes.1</pipeline.version>
         <publishrepository.id>ossrh</publishrepository.id>
         <publishrepository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</publishrepository.url>
         <fetchrepository.id>central</fetchrepository.id>
@@ -138,6 +138,7 @@
         <module>web/pipeline.web.examples.mvc</module>
         <module>web/pipeline.uach.examples.servlet</module>
         <module>web/pipeline.uach.examples.mvc</module>
+        <module>web/pipeline.uachmanual.cloud.examples.servlet</module>
         <module>web/pipeline.uachmanual.examples.servlet</module>
         <module>web/pipeline.uachmanual.examples.mvc</module>
     </modules>

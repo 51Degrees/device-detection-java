@@ -24,6 +24,8 @@ package fiftyone.pipeline.uach.examples.mvc.controller;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
+import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngine;
+import fiftyone.pipeline.core.data.EvidenceKeyFilter;
 import fiftyone.pipeline.core.data.FlowData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -87,13 +89,25 @@ public class UACHExampleController {
         	model.addAttribute("browserVersion",
 				tryGet(() -> device.getBrowserVersion()));
  
+        	// Get evidence based on the device detection engine being used.
         	Map<String, Object> evidenceUsed = new HashMap<>();      	
-        	DeviceDetectionHashEngine engine = data.getPipeline().getElement(DeviceDetectionHashEngine.class);
+        	Object engine = null;
+        	EvidenceKeyFilter evidenceKeyfilter = null;
+        	if(data.getPipeline().getElement(DeviceDetectionHashEngine.class) != null) {
+        		engine = (DeviceDetectionHashEngine) data.getPipeline().getElement(DeviceDetectionHashEngine.class);
+        		evidenceKeyfilter = ((DeviceDetectionHashEngine) engine).getEvidenceKeyFilter();
+        	}
+        	else {
+       		 engine = (CloudRequestEngine) data.getPipeline().getElement(CloudRequestEngine.class);
+       		 evidenceKeyfilter = ((CloudRequestEngine) engine).getEvidenceKeyFilter();
+       	    } 
+        	
         	for (Map.Entry<String, Object> evidence : data.getEvidence().asKeyMap().entrySet()) {
-        		if(engine.getEvidenceKeyFilter().include(evidence.getKey())) {
+        		if(evidenceKeyfilter.include(evidence.getKey())) {
         			evidenceUsed.put(evidence.getKey(), evidence.getValue());
         		}
         	}
+      	 
         	model.addAttribute("evidenceUsed", evidenceUsed);
         	
         	return "uachexample";

@@ -20,10 +20,10 @@
  * such notice(s) shall fulfill the requirements of that article.
  * ********************************************************************* */
 
-package fiftyone.pipeline.uachmanual.examples.servlet;
+package fiftyone.pipeline.uachmanual.cloud.examples.servlet;
 
-import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
+import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngine;
 import fiftyone.pipeline.core.configuration.PipelineOptions;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
@@ -92,36 +92,10 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *         <Element>
  *             <BuilderName>DeviceDetectionCloudEngine</BuilderName>
  *         </Element>
- *         <Element>
- *             <BuilderName>SetHeadersElement</BuilderName>
- *         </Element>
  *     </Elements>
  * </PipelineOptions>
  * ```
  *
- * Alternatively, to use the on-premise API with automatic updates enabled,
- * replace the cloud element in the config with the new configuration.
- * ```{xml}
- * <PipelineOptions>
- *     <Elements>
- *         <Element>
- *             <BuildParameters>
- *                 <AutoUpdate>true</AutoUpdate>
- *                 <DataFileSystemWatcher>false</DataFileSystemWatcher>
- *                 <CreateTempDataCopy>true</CreateTempDataCopy>
- *                 <!-- Obtain your own license key and enterprise data file
- *                 from https://51degrees.com. -->
- *                 <DataUpdateLicenseKey>[[Your License Key]]</DataUpdateLicenseKey>
- *                 <DataFile>D:\[[Path to data file]]\51Degrees-EnterpriseV4.1.hash</DataFile>
- *                 <PerformanceProfile>LowMemory</PerformanceProfile>
- *             </BuildParameters>
- *             <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
- *         </Element>
- *         <Element>
- *             <BuilderName>SetHeadersElement</BuilderName>
- *         </Element>
- *     </Elements>
- * </PipelineOptions>
  * ```
  * 
  * 2. Enable configuration, Add builders and the Pipeline to the Servlet.
@@ -194,9 +168,9 @@ public class UAClientHintsManualExample extends HttpServlet {
             throws Exception {
     	
         // Create the configuration object from an XML file
-        ServletContext context = getServletContext();
-        File configFile = new File(context.getRealPath("/WEB-INF/51Degrees-Hash.xml"));
-        
+        ServletContext context = getServletContext();       
+        File configFile = new File(context.getRealPath("WEB-INF/51Degrees-Cloud.xml"));
+                        
         JAXBContext jaxbContext = JAXBContext.newInstance(PipelineOptions.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
         
@@ -206,16 +180,16 @@ public class UAClientHintsManualExample extends HttpServlet {
         	 options = (PipelineOptions) unmarshaller.unmarshal(configFile);        	
         } catch(Exception e) {
         	try {
-        		configFile = new File(context.getRealPath("src/main/webapp/WEB-INF/51Degrees-Hash.xml"));
+        		configFile = new File(context.getRealPath("src/main/webapp/WEB-INF/51Degrees-Cloud.xml"));
         		options = (PipelineOptions) unmarshaller.unmarshal(configFile);
         	
         	} catch(Exception e1) {
         		e1.printStackTrace();
         	}
-        }  
+        }        
 
-        // Override onpremsie test configuration the request.
-        options = overrideOnPremiseTestConfig(request, options);
+        // Override resource key from the request.
+        options = overrideResourceKeyFromRequest(request, options);
         
         // Build a new Pipeline from the configuration.
         Pipeline pipeline = new FiftyOnePipelineBuilder()
@@ -332,8 +306,8 @@ public class UAClientHintsManualExample extends HttpServlet {
 			"          <th>Key</th>\n" +
 			"         <th>Value</th>\n" +
 			"     </tr>\n");
-			
-        	DeviceDetectionHashEngine engine = flowData.getPipeline().getElement(DeviceDetectionHashEngine.class);
+
+        	CloudRequestEngine engine = flowData.getPipeline().getElement(CloudRequestEngine.class);
         	for (Map.Entry<String, Object> evidence : flowData.getEvidence().asKeyMap().entrySet()) {
         		if(engine.getEvidenceKeyFilter().include(evidence.getKey())) {
         			out.println("<tr>");
@@ -396,15 +370,12 @@ public class UAClientHintsManualExample extends HttpServlet {
     }// </editor-fold>
 
     /**
-     * Override datafile and propertiesList from the request parameters.
+     * Override resourcKey from the request parameter.
      */
-    private PipelineOptions overrideOnPremiseTestConfig(HttpServletRequest request, PipelineOptions options) {
-    	String dataFile = (String) request.getHeader("datafile");
-    	String properties = (String) request.getHeader("properties");
-    	if(dataFile != null)
-    		options.elements.get(0).buildParameters.replace("DataFile", dataFile);  
-    	if(properties != null && !properties.isEmpty())
-    		options.elements.get(0).buildParameters.put("Properties", properties);  	
+    private PipelineOptions overrideResourceKeyFromRequest(HttpServletRequest request, PipelineOptions options) {
+    	String resourceKey = (String) request.getHeader("resourcekey");
+    	if(resourceKey != null)
+    		options.elements.get(0).buildParameters.replace("ResourceKey", resourceKey);  	
     	return options;
     }
 }
