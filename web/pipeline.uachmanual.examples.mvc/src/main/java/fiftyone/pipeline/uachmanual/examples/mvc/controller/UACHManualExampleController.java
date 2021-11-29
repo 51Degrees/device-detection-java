@@ -24,7 +24,9 @@ package fiftyone.pipeline.uachmanual.examples.mvc.controller;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
+import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngine;
 import fiftyone.pipeline.core.configuration.PipelineOptions;
+import fiftyone.pipeline.core.data.EvidenceKeyFilter;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.fiftyone.flowelements.FiftyOnePipelineBuilder;
@@ -109,13 +111,26 @@ public class UACHManualExampleController {
         model.addAttribute("browserName", device.getBrowserName());
         model.addAttribute("browserVersion", device.getBrowserVersion());
 
-    	Map<String, Object> evidenceUsed = new HashMap<>();      	
-    	DeviceDetectionHashEngine engine = flowData.getPipeline().getElement(DeviceDetectionHashEngine.class);
+    	// Get evidence based on the device detection engine being used.
+        Map<String, Object> evidenceUsed = new HashMap<>();
+    	Object engine = null;
+    	EvidenceKeyFilter evidenceKeyfilter = null;
+    	if (configFile.getAbsolutePath().contains("51Degrees-Hash") ||
+    			flowData.getPipeline().getElement(DeviceDetectionHashEngine.class) != null) {
+    		 engine = (DeviceDetectionHashEngine) flowData.getPipeline().getElement(DeviceDetectionHashEngine.class);
+    		 evidenceKeyfilter = ((DeviceDetectionHashEngine) engine).getEvidenceKeyFilter();
+    	}
+    	else {
+    		 engine = (CloudRequestEngine) flowData.getPipeline().getElement(CloudRequestEngine.class);
+    		 evidenceKeyfilter = ((CloudRequestEngine) engine).getEvidenceKeyFilter();
+    	}
+    	
     	for (Map.Entry<String, Object> evidence : flowData.getEvidence().asKeyMap().entrySet()) {
-    		if(engine.getEvidenceKeyFilter().include(evidence.getKey())) {
+    		if(evidenceKeyfilter.include(evidence.getKey())) {
     			evidenceUsed.put(evidence.getKey(), evidence.getValue());
     		}
     	}
+    	
     	model.addAttribute("evidenceUsed", evidenceUsed);
     	
         return "uachmanualexample";

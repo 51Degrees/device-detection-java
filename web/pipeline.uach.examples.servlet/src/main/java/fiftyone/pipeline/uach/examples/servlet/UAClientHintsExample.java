@@ -24,6 +24,8 @@ package fiftyone.pipeline.uach.examples.servlet;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
+import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngine;
+import fiftyone.pipeline.core.data.EvidenceKeyFilter;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.web.services.FlowDataProviderCore;
@@ -284,10 +286,21 @@ public class UAClientHintsExample extends HttpServlet {
 			"          <th>Key</th>\n" +
 			"         <th>Value</th>\n" +
 			"     </tr>\n");
-			
-        	DeviceDetectionHashEngine engine = data.getPipeline().getElement(DeviceDetectionHashEngine.class);
+
+        	// Get evidence based on the device detection engine being used.
+        	Object engine = null;
+        	EvidenceKeyFilter evidenceKeyfilter = null;
+        	if(data.getPipeline().getElement(DeviceDetectionHashEngine.class) != null) {
+        		engine = (DeviceDetectionHashEngine) data.getPipeline().getElement(DeviceDetectionHashEngine.class);
+        		evidenceKeyfilter = ((DeviceDetectionHashEngine) engine).getEvidenceKeyFilter();
+        	}
+        	else {
+       		 engine = (CloudRequestEngine) data.getPipeline().getElement(CloudRequestEngine.class);
+       		 evidenceKeyfilter = ((CloudRequestEngine) engine).getEvidenceKeyFilter();
+       	    }       	
+
         	for (Map.Entry<String, Object> evidence : data.getEvidence().asKeyMap().entrySet()) {
-        		if(engine.getEvidenceKeyFilter().include(evidence.getKey())) {
+        		if(evidenceKeyfilter.include(evidence.getKey())) {
         			out.println("<tr>");
         			out.println("<td>" + evidence.getKey() + "</td>");
         		    out.println("<td>" + evidence.getValue() + "</td>");
