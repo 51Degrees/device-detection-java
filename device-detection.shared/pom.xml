@@ -15,7 +15,7 @@
     <url>https://51degrees.com</url>
 
     <properties>
-        <tomcat.version>8.0.48</tomcat.version>
+        <tomcat.version>8.5.63</tomcat.version>
     </properties>
 
     <dependencies>
