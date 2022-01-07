@@ -136,7 +136,7 @@ public class DeviceDetectionHashEngine
                             e);
                     }
 
-                    newProperties.addAll(getMetricProperties());
+                    properties.addAll(getMetricProperties());
 
                     propertiesPopulated = true;
                 }
@@ -371,9 +371,9 @@ public class DeviceDetectionHashEngine
             new FiftyOneAspectPropertyMetaData[]{
 
             new FiftyOneAspectPropertyMetaDataDefault(
-                "MatchedNodes",
+            	Constants.MatchMetrics.MATCHED_NODES,
                 this,
-                "Device Metrics",
+                Constants.MatchMetrics.CATEGORY,
                 Integer.class,
                 dataFileList,
                 true,
@@ -384,14 +384,14 @@ public class DeviceDetectionHashEngine
                 false,
                 false,
                 false,
-                "Indicates the number of hash nodes matched within the evidence.",
+                Constants.MatchMetrics.MATCHED_NODES_DESCRIPTION,
                 null,
                 Arrays.asList(),
                 new ValueMetaDataDefault("0")),
             new FiftyOneAspectPropertyMetaDataDefault(
-                "Difference",
+            	Constants.MatchMetrics.DIFFERENCE,
                 this,
-                "Device Metrics",
+                Constants.MatchMetrics.CATEGORY,
                 Integer.class,
                 dataFileList,
                 true,
@@ -402,14 +402,14 @@ public class DeviceDetectionHashEngine
                 false,
                 false,
                 false,
-                "Used when detection method is not Exact or None. This is an integer value and the larger the value the less confident the detector is in this result.",
+                Constants.MatchMetrics.DIFFERENCE_DESCRIPTION,
                 null,
                 Arrays.asList(),
                 new ValueMetaDataDefault("0")),
             new FiftyOneAspectPropertyMetaDataDefault(
-                "Drift",
+            	Constants.MatchMetrics.DRIFT,
                 this,
-                "Device Metrics",
+                Constants.MatchMetrics.CATEGORY,
                 Integer.class,
                 dataFileList,
                 true,
@@ -420,14 +420,14 @@ public class DeviceDetectionHashEngine
                 false,
                 false,
                 false,
-                "Total difference in character positions where the substrings hashes were found away from where they were expected.",
+                Constants.MatchMetrics.DRIFT_DESCRIPTION,
                 null,
                 Arrays.asList(),
                 new ValueMetaDataDefault("0")),
             new FiftyOneAspectPropertyMetaDataDefault(
-                "DeviceId",
+            	Constants.MatchMetrics.DEVICE_ID,
                 this,
-                "Device Metrics",
+                Constants.MatchMetrics.CATEGORY,
                 String.class,
                 dataFileList,
                 true,
@@ -438,14 +438,14 @@ public class DeviceDetectionHashEngine
                 false,
                 false,
                 false,
-                "Consists of four components separated by a hyphen symbol: Hardware-Platform-Browser-IsCrawler where each Component represents an ID of the corresponding Profile.",
+                Constants.MatchMetrics.DEVICE_ID_DESCRIPTION,
                 null,
                 Arrays.asList(),
                 new ValueMetaDataDefault("0-0-0-0")),
             new FiftyOneAspectPropertyMetaDataDefault(
-                "UserAgents",
+            	Constants.MatchMetrics.USER_AGENTS,
                 this,
-                "Device Metrics",
+                Constants.MatchMetrics.CATEGORY,
                 List.class,
                 dataFileList,
                 true,
@@ -456,14 +456,14 @@ public class DeviceDetectionHashEngine
                 false,
                 false,
                 false,
-                "The matched User-Agents.",
+                Constants.MatchMetrics.USER_AGENTS_DESCRIPTION,
                 null,
                 Arrays.asList(),
                 new ValueMetaDataDefault("n/a")),
             new FiftyOneAspectPropertyMetaDataDefault(
-                "Method",
+            	Constants.MatchMetrics.METHOD,
                 this,
-                "Device Metrics",
+                Constants.MatchMetrics.CATEGORY,
                 String.class,
                 dataFileList,
                 true,
@@ -474,14 +474,32 @@ public class DeviceDetectionHashEngine
                 false,
                 false,
                 false,
-                "Provides information about the algorithm that was used to perform detection for a particular User-Agent.",
+                Constants.MatchMetrics.METHOD_DESCRIPTION,
                 null,
                 Arrays.asList(
                     new ValueMetaDataDefault("NONE"),
                     new ValueMetaDataDefault("PERFORMANCE"),
                     new ValueMetaDataDefault("COMBINED"),
                     new ValueMetaDataDefault( "PREDICTIVE")),
-                new ValueMetaDataDefault("NONE"))
+                new ValueMetaDataDefault("NONE")),
+            new FiftyOneAspectPropertyMetaDataDefault(
+            	Constants.MatchMetrics.ITERATIONS,
+                this,
+                Constants.MatchMetrics.CATEGORY,
+                Integer.class,
+                dataFileList,
+                true,
+                null,
+                (byte) 0,
+                true,
+                false,
+                false,
+                false,
+                false,
+                Constants.MatchMetrics.ITERATIONS_DESCRIPTION,
+                null,
+                Arrays.asList(),
+                new ValueMetaDataDefault("0"))
         };
         return Arrays.asList(metricProperties);
     }

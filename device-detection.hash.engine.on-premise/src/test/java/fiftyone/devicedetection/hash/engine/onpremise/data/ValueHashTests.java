@@ -23,8 +23,23 @@
 package fiftyone.devicedetection.hash.engine.onpremise.data;
 
 import fiftyone.devicedetection.hash.engine.onpremise.TestsBase;
+import fiftyone.devicedetection.shared.testhelpers.Wrapper;
 import fiftyone.devicedetection.shared.testhelpers.data.ValueTests;
-import fiftyone.pipeline.engines.Constants;
+import fiftyone.pipeline.core.data.ElementData;
+import fiftyone.pipeline.core.data.FlowData;
+import fiftyone.devicedetection.hash.engine.onpremise.flowelements.Constants;
+import fiftyone.pipeline.engines.data.AspectPropertyValue;
+import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +48,8 @@ public class ValueHashTests extends TestsBase {
 
     @Before
     public void init() throws Exception {
-        testInitialize(Constants.PerformanceProfiles.HighPerformance);
+        testInitialize(fiftyone.pipeline.engines
+        	.Constants.PerformanceProfiles.HighPerformance);
     }
 
     @After
@@ -41,6 +57,83 @@ public class ValueHashTests extends TestsBase {
         testCleanup();
     }
 
+    private void validateDescription(FiftyOneAspectPropertyMetaData metaData) {
+    	String actual = metaData.getDescription();
+    	String expected = "";
+    	String propertyName = metaData.getName();
+    	switch (propertyName) {
+    	case Constants.MatchMetrics.MATCHED_NODES:
+    		expected = Constants.MatchMetrics.MATCHED_NODES_DESCRIPTION;
+    		break;
+    	case Constants.MatchMetrics.DIFFERENCE:
+    		expected = Constants.MatchMetrics.DIFFERENCE_DESCRIPTION;
+    		break;
+    	case Constants.MatchMetrics.DRIFT:
+    		expected = Constants.MatchMetrics.DRIFT_DESCRIPTION;
+    		break;
+    	case Constants.MatchMetrics.DEVICE_ID:
+    		expected = Constants.MatchMetrics.DEVICE_ID_DESCRIPTION;
+    		break;
+    	case Constants.MatchMetrics.USER_AGENTS:
+    		expected = Constants.MatchMetrics.USER_AGENTS_DESCRIPTION;
+    		break;
+    	case Constants.MatchMetrics.METHOD:
+    		expected = Constants.MatchMetrics.METHOD_DESCRIPTION;
+    		break;
+    	case Constants.MatchMetrics.ITERATIONS:
+    		expected = Constants.MatchMetrics.ITERATIONS_DESCRIPTION;
+    		break;
+    	default:
+    		fail(propertyName + " is not a match metric property.");
+    		break;
+    	}
+    	
+    	assertFalse("Description should not be empty", actual.isEmpty());
+    	assertEquals(
+    		String.format("Expected \"%s\" but get \"%s\"",
+    			expected, actual), expected, actual);
+    }
+    
+    @Test
+    public void Values_Hash_MatchMetricsDescriptionByIndex() throws Exception {
+    	// Matched nodes
+    	validateDescription(getWrapper().getEngine().getProperty(
+    		Constants.MatchMetrics.MATCHED_NODES));
+    	// Difference
+    	validateDescription(getWrapper().getEngine().getProperty(
+    		Constants.MatchMetrics.DIFFERENCE));
+        // Drift
+    	validateDescription(getWrapper().getEngine().getProperty(
+    		Constants.MatchMetrics.DRIFT));   
+       	// Device ID
+    	validateDescription(getWrapper().getEngine().getProperty(
+    		Constants.MatchMetrics.DEVICE_ID));
+        // User Agents
+    	validateDescription(getWrapper().getEngine().getProperty(
+    		Constants.MatchMetrics.USER_AGENTS));
+        // Method
+    	validateDescription(getWrapper().getEngine().getProperty(
+    		Constants.MatchMetrics.METHOD));
+        // Iterations
+    	validateDescription(getWrapper().getEngine().getProperty(
+    		Constants.MatchMetrics.ITERATIONS));
+    }
+    
+    @Test
+    public void Values_Hash_MatchMetricsDescription() throws Exception {
+    	final AtomicInteger counter = new AtomicInteger(0);
+    	getWrapper()
+    		.getEngine()
+    		.getProperties()
+    		.stream()
+    		.filter(m -> m.getCategory().equals("Device Metrics"))
+    		.forEach(m -> {
+    			validateDescription(m);
+    			counter.incrementAndGet();
+    		});
+    	assertTrue("Match metrics properties are not present", counter.get() > 0);
+    }
+    
     @Test
     public void Values_Hash_ValueTypes() throws Exception {
         ValueTests.valueTypes(getWrapper());
