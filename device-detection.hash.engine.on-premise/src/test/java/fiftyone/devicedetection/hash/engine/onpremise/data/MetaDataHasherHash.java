@@ -22,6 +22,7 @@
 
 package fiftyone.devicedetection.hash.engine.onpremise.data;
 
+import fiftyone.devicedetection.hash.engine.onpremise.flowelements.Constants;
 import fiftyone.devicedetection.shared.testhelpers.Wrapper;
 import fiftyone.devicedetection.shared.testhelpers.data.MetaDataHasher;
 import fiftyone.pipeline.engines.fiftyone.data.ComponentMetaData;
@@ -47,7 +48,10 @@ public class MetaDataHasherHash implements MetaDataHasher {
                     }
                     j++;
                 }
-                hash ^= property.getComponent().hashCode();
+                // Match metric property does not have component so don't include
+                if (!property.getCategory().equals(Constants.MatchMetrics.CATEGORY)) {
+                	hash ^= property.getComponent().hashCode();
+                }
                 if (property.getDefaultValue() != null) {
                     hash ^= property.getDefaultValue().hashCode();
                 }
