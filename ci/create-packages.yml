@@ -30,7 +30,7 @@ stages:
 # create and publish package using Linux platform 
 - stage: Build_Packages
   displayName: Build Packages
-  dependsOn: [Build_Binaries_Windows,Build_Binaries_MacOS,Build_Binaries_Linux_ARM,Build_Binaries_Linux]
+  dependsOn: [Build_Binaries_Windows,Build_Binaries_MacOS,Build_Binaries_MacOS_ARM,Build_Binaries_Linux_ARM,Build_Binaries_Linux]
   jobs:
   - template: shared-git-version-job.yml@ciTemplates
     parameters:
