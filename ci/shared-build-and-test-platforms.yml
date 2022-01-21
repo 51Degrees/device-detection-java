@@ -5,6 +5,7 @@ parameters:
 - name: windowsImage
 - name: linuxImage
 - name: macImage
+- name: resourceRepoName
 - name: runTests
   type: string
   default: 'On'
@@ -12,6 +13,7 @@ parameters:
 stages:
 - template: data-stage.yml
   parameters:
+    linuxImage: ${{ parameters.linuxImage }}
     runTests: ${{ parameters.runTests }}
 
 - template: shared-build-and-test-stage.yml
@@ -19,15 +21,18 @@ stages:
     stageName: Windows
     imageName: ${{ parameters.windowsImage }}
     runTests: ${{ parameters.runTests }}
+    resourceRepoName: ${{ parameters.resourceRepoName }}
     
 - template: shared-build-and-test-stage.yml
   parameters:
     stageName: Linux
     imageName: ${{ parameters.linuxImage }}
     runTests: ${{ parameters.runTests }}
+    resourceRepoName: ${{ parameters.resourceRepoName }}
     
 - template: shared-build-and-test-stage.yml
   parameters:
     stageName: MacOS
     imageName: ${{ parameters.macImage }}
     runTests: ${{ parameters.runTests }}
+    resourceRepoName: ${{ parameters.resourceRepoName }}

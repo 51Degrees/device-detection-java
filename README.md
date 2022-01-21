@@ -10,9 +10,9 @@ This repository contains the device detection engines for the Java implementatio
 
 ## Pre-requesites
 
-JDK 7 or later.
+- JDK 7 or later.
 
-Git Large File System (LFS) for sub module `device-detection-cxx\device-detection-data`
+- Git Large File System (LFS) for sub module `device-detection-cxx\device-detection-data`
 
 ### Submodules
 
@@ -24,9 +24,13 @@ git submodule update --init --recursive
 
 ### Build dependencies
 
-On Windows make sure you have the Java 7 JDK installed, Maven, MSBuild and the latest Windows 10 SDK.
+On Windows make sure you have the Java 7 JDK installed, Maven, Visual Studio 2019 and the latest Windows 10 SDK.
+- Minimum required Platform Toolset version is `v142`
+- Minimum required Windows SDK version is `10.0.18362.0`
 
 On linux make sure you have the Java 7 JDK installed, Maven and Gcc.
+
+There are a Batch script and a Bash script provided to build native binaries on Windows and Linux. This is taken from the view that Batch script is supported by default on Windows, and Bash is widely available across Linux distributions.
 
 ## Projects
 
@@ -84,6 +88,8 @@ The 51Degrees Java Device Detection package is available on maven:
 ```
 This package includes the Cloud, Hash and Pattern APIs and will allow you to switch between them.
 
+On Windows platform, make sure to install `C++ Redistributable latest 14.2* or above`. This is required to use the Windows native binaries shipped with the Maven package.
+
 ### Manual Installation
 
 Make sure you have installed the build pre-requisites.
@@ -101,3 +107,9 @@ The tests use junit, to run them navigate to the root of this repository and cal
 ```
 mvn test
 ```
+
+## Windows Specific
+
+On Windows, the default Platform Toolset version is `v142` and the default Windows 10 SDK version is `10.0.18362.0`. However these can be overwritten when running `mvn` by adding following options:
+- `-DplatformToolsetVersion=[ Platform Toolset Version]`
+- `-DwindowsSDKVersion=[ Windows 10 SDK Version ]`

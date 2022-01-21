@@ -22,6 +22,7 @@ variables:
 - group: CertificateVariables
 # Include shared variables
 - template: shared-variables.yml
+- template: shared-variables.yml@ciTemplates
 - name: targetBranch
   value: 'refs/heads/master'
 - group: CIAutomation

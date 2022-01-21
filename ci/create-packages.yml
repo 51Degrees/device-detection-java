@@ -6,24 +6,28 @@ trigger:
 # Don't trigger for a pull request
 pr: none
 
-variables:
-  - group: CertificateVariables
-  - group: CIAutomation
-  # Access token for the git repository. Used by the git tag task.
-  - group: InternalKeys
-  - name: system_accesstoken
-    value: $(System.AccessToken)
-  # Include shared variables
-  - template: shared-variables.yml
-
 resources:
   repositories:
-    - repository: ciTemplates # Id of the repository used to reference to in this script
-      type: git
-      name: common-ci # Name of the actual repository
- 
+  - repository: ciTemplates # Id of the repository used to reference to in this script
+    type: git
+    name: common-ci # Name of the actual repository
+
+variables:
+- group: CertificateVariables
+- group: CIAutomation
+# Access token for the git repository. Used by the git tag task.
+- group: InternalKeys
+- name: system_accesstoken
+  value: $(System.AccessToken)
+# Include shared variables
+- template: shared-variables.yml
+- template: shared-variables.yml@ciTemplates
+
 stages:
 - template: shared-build-binaries-stage.yml
+  parameters:
+    plfTsVer: ${{ variables.plfTsVer }}
+    winSDKVer: ${{ variables.winSDKVer }}
 
 # Stage to create packages, 
 # copy binaries for Windows Linux and Mac created in previous stages,

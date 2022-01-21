@@ -1,3 +1,7 @@
+parameters:
+- name: plfTsVer
+- name: winSDKVer
+
 stages:
 
 # Stage to create and publish binaries for Windows platforms 
@@ -20,12 +24,12 @@ stages:
     - template: shared-build-binaries.yml
       parameters:
         name: 'x86'
-        cmakeArgs: '-A Win32'
+        cmakeArgs: '-A Win32 -DCMAKE_GENERATOR_TOOLSET=${{ parameters.plfTsVer }} -DCMAKE_SYSTEM_VERSION=${{ parameters.winSDKVer }}'
         buildArgs: '--config Release'
     - template: shared-build-binaries.yml
       parameters:
         name: 'x86_64'
-        cmakeArgs: '-A x64'
+        cmakeArgs: '-A x64 -DCMAKE_GENERATOR_TOOLSET=${{ parameters.plfTsVer }} -DCMAKE_SYSTEM_VERSION=${{ parameters.winSDKVer }}'
         buildArgs: '--config Release'
 
     - task: CopyFiles@2

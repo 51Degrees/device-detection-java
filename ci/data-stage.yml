@@ -4,6 +4,7 @@ parameters:
 - name: runTests
   type: string
   default: 'On'
+- name: linuxImage
 
 stages:
 
@@ -20,7 +21,7 @@ stages:
     - template: shared-variables.yml
     
     pool:
-      vmImage: $(linuxImage)
+      vmImage: ${{ parameters.linuxImage }}
       
     steps:
     
