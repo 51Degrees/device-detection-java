@@ -8,6 +8,8 @@ parameters:
 - name: runTests
   type: string
   default: 'On'
+# Identity of resource which point to where CI templates are located
+- name: resourceRepoName
 
 stages:
 
@@ -22,6 +24,7 @@ stages:
     variables: 
     - group: InternalKeys
     - group: CIAutomation
+    - template: c/shared-variables.yml@${{ parameters.resourceRepoName }}
       
     strategy:
       matrix:
@@ -95,7 +98,7 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean test'
-        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -DFOD_CLOUD_API_URL=$(FOD_CLOUD_API_URL) -DSuperResourceKey=$(SuperResourceKey) -DAcceptChPlatformKey=$(AcceptChPlatformKey) -DAcceptChHardwareKey=$(AcceptChHardwareKey) -DAcceptChBrowserKey=$(AcceptChBrowserKey) -DAcceptChNoneKey=$(AcceptChNoneKey)'
+        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -DFOD_CLOUD_API_URL=$(FOD_CLOUD_API_URL) -DSuperResourceKey=$(SuperResourceKey) -DAcceptChPlatformKey=$(AcceptChPlatformKey) -DAcceptChHardwareKey=$(AcceptChHardwareKey) -DAcceptChBrowserKey=$(AcceptChBrowserKey) -DAcceptChNoneKey=$(AcceptChNoneKey) -DplatformToolsetVersion=${{ variables.plfTsVer }} -DwindowsSDKVersion=${{ variables.winSDKVer }}'
         jdkVersionOption: $(jdkVersion)
         testRunTitle: '${{ parameters.imageName }}-$(jdkVersion)'
 

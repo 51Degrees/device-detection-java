@@ -49,8 +49,8 @@
     </dependencies>
 
     <profiles>
-        <profile>
-            <id>Windows</id>
+	    <profile>
+            <id>WindowsCommon</id>
             <activation>
                 <os>
                     <family>Windows</family>
@@ -58,6 +58,64 @@
             </activation>
             <properties>
                 <script.extension>.bat</script.extension>
+				<toolset.version.flag>/t</toolset.version.flag>
+				<windows.sdk.version.flag>/w</windows.sdk.version.flag>
+            </properties>
+        </profile>
+		<profile>
+            <id>WindowsDefaultToolsetVersion</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+				<property>
+				    <name>!platformToolsetVersion</name>
+				</property>
+            </activation>
+            <properties>
+				<toolset.version>v142</toolset.version>
+            </properties>
+        </profile>
+		<profile>
+            <id>WindowsDefaultSDKVersion</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+				<property>
+				    <name>!windowsSDKVersion</name>
+				</property>
+            </activation>
+            <properties>
+				<windows.sdk.version>10.0.18362.0</windows.sdk.version>
+            </properties>
+        </profile>
+		<profile>
+            <id>WindowsNativeToolsetVersion</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+				<property>
+				    <name>platformToolsetVersion</name>
+				</property>
+            </activation>
+            <properties>
+				<toolset.version>${platformToolsetVersion}</toolset.version>
+            </properties>
+        </profile>
+		<profile>
+            <id>WindowsNativeSDKVersion</id>
+            <activation>
+                <os>
+                    <family>Windows</family>
+                </os>
+				<property>
+				    <name>windowsSDKVersion</name>
+				</property>
+            </activation>
+            <properties>
+				<windows.sdk.version>${windowsSDKVersion}</windows.sdk.version>
             </properties>
         </profile>
         <profile>
@@ -93,6 +151,12 @@
                             <executable>
                                 ${project.basedir}/../PreBuild${script.extension}
                             </executable>
+							<arguments>
+							    <argument>${toolset.version.flag}</argument>
+								<argument>${toolset.version}</argument>
+								<argument>${windows.sdk.version.flag}</argument>
+								<argument>${windows.sdk.version}</argument>
+							</arguments>
                             <successCodes>
                                 <successCode>0</successCode>
                             </successCodes>
@@ -102,7 +166,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>	       
+            </plugin>
         </plugins>
     </build>
 

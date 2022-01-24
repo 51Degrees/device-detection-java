@@ -1,3 +1,7 @@
+parameters:
+- name: plfTsVer
+- name: winSDKVer
+
 stages:
 
 # Stage to create and publish binaries for Windows platforms 
@@ -20,12 +24,12 @@ stages:
     - template: shared-build-binaries.yml
       parameters:
         name: 'x86'
-        cmakeArgs: '-A Win32'
+        cmakeArgs: '-A Win32 -DCMAKE_GENERATOR_TOOLSET=${{ parameters.plfTsVer }} -DCMAKE_SYSTEM_VERSION=${{ parameters.winSDKVer }}'
         buildArgs: '--config Release'
     - template: shared-build-binaries.yml
       parameters:
         name: 'x86_64'
-        cmakeArgs: '-A x64'
+        cmakeArgs: '-A x64 -DCMAKE_GENERATOR_TOOLSET=${{ parameters.plfTsVer }} -DCMAKE_SYSTEM_VERSION=${{ parameters.winSDKVer }}'
         buildArgs: '--config Release'
 
     - task: CopyFiles@2
@@ -88,10 +92,10 @@ stages:
         flattenFolders: true
 
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: arm-binaries'
+      displayName: 'Publish Artifact: linux-arm-binaries'
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
-        ArtifactName: arm-binaries
+        ArtifactName: linux-arm-binaries
 
 
 # Stage to create and publish binaries for Linux platforms 
@@ -141,6 +145,42 @@ stages:
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
         ArtifactName: linux-binaries
+
+# Stage to create and publish binaries for MacOS ARM platform
+- stage: Build_Binaries_MacOS_ARM
+  displayName: Build Binaries MacOS ARM
+  dependsOn: []
+  jobs:
+  - job: Build_Binaries_MacOS_ARM
+    displayName: Build Binaries MacOS ARM
+    
+    pool:
+      vmImage: $(macImage)
+
+    steps:
+
+    - checkout: self
+      submodules: recursive
+
+    - template: shared-build-binaries.yml
+      parameters:
+        name: 'arm64'
+        cmakeArgs: '-D32bit=OFF -DCMAKE_TOOLCHAIN_FILE=../device-detection-cxx/src/common-cxx/cmake/mac-arm64-cross.cmake'
+
+    - task: CopyFiles@2
+      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+      inputs:
+        SourceFolder: '$(build.sourcesdirectory)'
+        Contents: '**/*mac*.dylib'
+        TargetFolder: '$(build.artifactstagingdirectory)'
+        CleanTargetFolder: true
+        flattenFolders: true
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: mac-arm-binaries'
+      inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)'
+        ArtifactName: mac-arm-binaries
 
 # Stage to create and publish binaries for MacOS platform
 - stage: Build_Binaries_MacOS
