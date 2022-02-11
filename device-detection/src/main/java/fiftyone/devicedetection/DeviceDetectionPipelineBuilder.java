@@ -115,16 +115,30 @@ public class DeviceDetectionPipelineBuilder {
      * @param algorithm The detection algorithm that the supplied data supports.
      * @return A builder that can be used to configure and build a pipeline
      * that will use the on-premise detection engine.
+     * @deprecated there is no choice of algorithm, use the (byte[]) method
+     */
+    @Deprecated
+    public DeviceDetectionOnPremisePipelineBuilder useOnPremise(
+            byte[] data,
+            Enums.DeviceDetectionAlgorithm algorithm) {
+        return useOnPremise(data);
+    }
+    /**
+     *
+     * Use a 51Degrees on-premise device detection engine to
+     * perform device detection.
+     * @param data The device detection data file as a byte array.
+     * @return A builder that can be used to configure and build a pipeline
+     * that will use the on-premise detection engine.
      */
     public DeviceDetectionOnPremisePipelineBuilder useOnPremise(
-        byte[] data,
-        Enums.DeviceDetectionAlgorithm algorithm) {
+            byte[] data) {
         DeviceDetectionOnPremisePipelineBuilder builder =
-            new DeviceDetectionOnPremisePipelineBuilder(
-                loggerFactory,
-                dataUpdateService,
-                httpClient);
-        builder.setEngineData(data, algorithm);
+                new DeviceDetectionOnPremisePipelineBuilder(
+                        loggerFactory,
+                        dataUpdateService,
+                        httpClient);
+        builder.setEngineData(data);
         return builder;
     }
 

@@ -33,6 +33,7 @@ import fiftyone.pipeline.core.data.EvidenceKeyFilter;
 import fiftyone.pipeline.core.data.EvidenceKeyFilterWhitelist;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.data.factories.ElementDataFactory;
+import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.caching.FlowCache;
 import fiftyone.pipeline.engines.data.AspectEngineDataFile;
 import fiftyone.pipeline.engines.fiftyone.data.*;

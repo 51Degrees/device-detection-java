@@ -2,13 +2,13 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <artifactId>pipeline.device-detection</artifactId>
         <groupId>com.51degrees</groupId>
-        <version>4.3.5-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>4.3.15-SNAPSHOT</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>device-detection</artifactId>
     <name>51Degrees :: Device Detection</name>
@@ -25,18 +25,13 @@
             <artifactId>device-detection.cloud</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito-core.version}</version>
-            <scope>test</scope>
-        </dependency>
+
+        <!-- test -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>device-detection.shared</artifactId>
@@ -45,42 +40,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j-api.version}</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j-simple.version}</version>
-            <scope>test</scope>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
         </dependency>
     </dependencies>
-
-    <licenses>
-        <license>
-            <name>European Union Public License 1.2</name>
-            <url>https://opensource.org/licenses/EUPL-1.2</url>
-        </license>
-    </licenses>
-    
-    <build>
-    <plugins>
-         <plugin>
-   		<groupId>org.apache.maven.plugins</groupId>
-  		<artifactId>maven-compiler-plugin</artifactId>
-  		<version>${maven-compiler-plugin.version}</version>
-        <configuration>
-            <source>${maven.compiler.source}</source>
-            <target>${maven.compiler.target}</target>
-            <showWarnings>true</showWarnings>
-            <compilerArgs>
-                <arg>-Xlint:all,-try,-options</arg>
-                <arg>-Werror</arg>
-            </compilerArgs>
-        </configuration>
-        </plugin>		
-    </plugins>
-    </build>
-   
 </project>

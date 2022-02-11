@@ -63,7 +63,7 @@ public class MapStringStringSwig extends java.util.AbstractMap<String, String> i
   }
 
   public String put(String key, String value) {
-    Iterator itr = find((String) key);
+    Iterator itr = find(key);
     if (itr.isNot(end())) {
       String oldValue = itr.getValue();
       itr.setValue(value);
@@ -91,7 +91,7 @@ public class MapStringStringSwig extends java.util.AbstractMap<String, String> i
 
   public java.util.Set<Entry<String, String>> entrySet() {
     java.util.Set<Entry<String, String>> setToReturn =
-        new java.util.HashSet<Entry<String, String>>();
+        new java.util.HashSet<>();
 
     Iterator itr = begin();
     final Iterator end = end();

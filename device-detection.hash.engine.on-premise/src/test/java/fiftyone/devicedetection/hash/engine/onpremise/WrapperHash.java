@@ -22,7 +22,6 @@
 
 package fiftyone.devicedetection.hash.engine.onpremise;
 
-import fiftyone.common.testhelpers.TestLoggerFactory;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder;
 import fiftyone.devicedetection.shared.testhelpers.Wrapper;
@@ -33,24 +32,24 @@ import fiftyone.pipeline.engines.fiftyone.data.ComponentMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.ProfileMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
+import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 public class WrapperHash implements Wrapper {
 
-    protected static final TestLoggerFactory logger =
-            new TestLoggerFactory(LoggerFactory.getILoggerFactory());
+    protected static final ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
     private Pipeline pipeline;
     private DeviceDetectionHashEngine engine;
 
     public WrapperHash(File dataFile, Constants.PerformanceProfiles profile) throws Exception {
-        engine = new DeviceDetectionHashEngineBuilder(logger, null)
+        engine = new DeviceDetectionHashEngineBuilder(loggerFactory, null)
                 .setPerformanceProfile(profile)
                 .setUpdateMatchedUserAgent(true)
                 .setAutoUpdate(false)
                 .build(dataFile.toString(), false);
-        pipeline = new PipelineBuilder(logger)
+        pipeline = new PipelineBuilder(loggerFactory)
                 .addFlowElement(engine)
                 .build();
     }

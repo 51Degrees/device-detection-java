@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>pipeline.device-detection</artifactId>
+        <groupId>com.51degrees</groupId>
+        <version>4.3.15-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>device-detection.examples</artifactId>
+    <name>51Degrees :: Device Detection :: Shell :: Examples</name>
+    <url>https://51degrees.com</url>
+    <description>Example use of Device Detection from the shell</description>
+
+    <properties>
+        <maven.deploy.skip>false</maven.deploy.skip>
+        <jakarta.xml.bind-api.version>3.0.1</jakarta.xml.bind-api.version>
+        <jaxb-runtime.version>3.0.2</jaxb-runtime.version>
+        <jaxb-impl.version>3.0.2</jaxb-impl.version>
+    </properties>
+
+    <dependencies>
+         <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>device-detection</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>device-detection.shared</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>${jakarta.xml.bind-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${jaxb-impl.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+    </dependencies>
+</project>

@@ -56,8 +56,9 @@ public class ClientHintsExampleTestBase {
 	public static String PLATFORM_ACCEPT_CH = "SEC-CH-UA-Platform,SEC-CH-UA-Platform-Version";
 	public static String HARDWARE_ACCEPT_CH = "SEC-CH-UA-Model,SEC-CH-UA-Mobile,SEC-CH-UA-Arch";
 	public static String BROWSER_ACCEPT_CH = "SEC-CH-UA,SEC-CH-UA-Full-Version";
-	
-	public static String BASE_URL = "http://localhost:8080/";
+
+	public static int TEST_PORT_NUMBER = 8080;
+	public static String BASE_URL = "http://localhost:"+ TEST_PORT_NUMBER + "/";
 	public static String CLOUD_URL = BASE_URL + "pipeline.uachmanual.cloud.examples.servlet";
 	public static String HASH_URL = BASE_URL + "pipeline.uachmanual.examples.servlet";
 	

@@ -23,11 +23,15 @@
 package fiftyone.devicedetection.hash.engine.onpremise.flowelements;
 
 import fiftyone.devicedetection.hash.engine.onpremise.TestsBase;
+import fiftyone.devicedetection.hash.engine.onpremise.Util;
 import fiftyone.devicedetection.shared.testhelpers.flowelements.EvidenceKeyTests;
 import fiftyone.pipeline.engines.Constants;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.junit.Assume.assumeFalse;
 
 public class EvidenceKeysTests extends TestsBase {
 
@@ -53,6 +57,7 @@ public class EvidenceKeysTests extends TestsBase {
 
     @Test
     public void EvidenceKeys_Hash_ContainsOverrides() {
+        assumeFalse("Need to run test with Enterprise data", Util.isLiteFile(getWrapper().getEngine()));
         EvidenceKeyTests.containsOverrides(getWrapper());
     }
 

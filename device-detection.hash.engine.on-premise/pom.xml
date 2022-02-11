@@ -5,8 +5,7 @@
     <parent>
         <artifactId>pipeline.device-detection</artifactId>
         <groupId>com.51degrees</groupId>
-        <version>4.3.5-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
+        <version>4.3.15-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -20,6 +19,8 @@
             <artifactId>device-detection.shared</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!-- test dependencies -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>device-detection.shared</artifactId>
@@ -28,23 +29,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>pipeline.common</artifactId>
-            <version>${pipeline.version}</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>${mockito-core.version}</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -133,23 +123,14 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
-                <configuration>
-                    <release>${maven.compiler.release}</release>
-                </configuration>
-            </plugin>
-            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>${exec-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>generate-sources</phase>
                         <configuration>
                             <executable>
-                                ${project.basedir}/../PreBuild${script.extension}
+                                ${project.basedir}/src/main/cxx/PreBuild${script.extension}
                             </executable>
 							<arguments>
 							    <argument>${toolset.version.flag}</argument>
@@ -169,11 +150,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <licenses>
-        <license>
-            <name>European Union Public License 1.2</name>
-            <url>https://opensource.org/licenses/EUPL-1.2</url>
-        </license>
-    </licenses>
 </project>

@@ -5,12 +5,21 @@
 
     <groupId>com.51degrees</groupId>
     <artifactId>pipeline.device-detection</artifactId>
-    <version>4.3.5-SNAPSHOT</version>
+    <version>4.3.15-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>51Degrees :: Pipeline :: Device Detection</name>
     <url>https://51degrees.com</url>
     <description>Device detection engines for the 51Degrees Pipeline API</description>
+
+    <modules>
+        <module>device-detection.shared</module>
+        <module>device-detection.hash.engine.on-premise</module>
+        <module>device-detection.cloud</module>
+        <module>device-detection</module>
+        <module>device-detection.shell.examples</module>
+        <module>device-detection.web.examples</module>
+    </modules>
 
     <developers>
         <developer>
@@ -23,41 +32,141 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
-        <exec-maven-plugin.version>1.5.0</exec-maven-plugin.version>
-        <junit.version>4.13.1</junit.version>
-        <slf4j-api.version>1.7.25</slf4j-api.version>
-        <slf4j-simple.version>1.7.21</slf4j-simple.version>
-        <mockito-core.version>2.22.0</mockito-core.version>
-        <org.json.version>20180813</org.json.version>
-        <pipeline.version>4.3.7</pipeline.version>
+
+        <pipeline.version>4.3.9-beta.1</pipeline.version>
+
+        <junit.version>4.13.2</junit.version>
+        <slf4j-api.version>1.7.33</slf4j-api.version>
+        <logback-classic.version>1.2.10</logback-classic.version>
+        <mockito-core.version>4.3.1</mockito-core.version>
+        <org.json.version>20211205</org.json.version>
+
+        <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
+        <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
+        <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
+        <maven-jarsigner-plugin.version>3.0.0</maven-jarsigner-plugin.version>
+        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+        <maven-project-info-reports-plugin.version>2.6</maven-project-info-reports-plugin.version>
+        <maven-site-plugin.version>3.7</maven-site-plugin.version>
+
         <publishrepository.id>ossrh</publishrepository.id>
         <publishrepository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</publishrepository.url>
         <fetchrepository.id>central</fetchrepository.id>
         <fetchrepository.url>https://repo1.maven.org/maven2</fetchrepository.url>
+
         <skippackagesign>true</skippackagesign>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <!-- compile dependencies -->
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-api.version}</version>
+            </dependency>
+
+            <!-- test dependencies -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito-core.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- runtime dependencies -->
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback-classic.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+        <!-- Examples and tests need an implementation of SLF4J at runtime -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
         </dependency>
     </dependencies>
 
+
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <source>${maven.compiler.source}</source>
+                        <target>${maven.compiler.target}</target>
+                        <showWarnings>true</showWarnings>
+                        <compilerArgs>
+                            <arg>-Xlint:all,-try,-options</arg>
+                            <arg>-Werror</arg>
+                        </compilerArgs>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.0</version>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <!-- this tells all tests run via surefire to pick their logback config up from the root -->
+                        <!-- fwiw does not affect those run via main() which need to find their config by other means -->
+                        <!--suppress UnresolvedMavenProperty -->
+                        <logback.configurationFile>${maven.multiModuleProjectDirectory}/logback.xml</logback.configurationFile>
+                        <!-- this sets the scope of file search (inter alia in Utils.getFilePath) to the project directory-->
+                        <!--suppress UnresolvedMavenProperty -->
+                        <project.root>${maven.multiModuleProjectDirectory}</project.root>
+                        <!-- these are defined in  settings.xml -->
+                        <SuperResourceKey>${SuperResourceKey}</SuperResourceKey>
+                        <AcceptChNoneKey>${AcceptChNoneKey}</AcceptChNoneKey>
+                        <AcceptChPlatformKey>${AcceptChPlatformKey}</AcceptChPlatformKey>
+                        <AcceptChBrowserKey>${AcceptChBrowserKey}</AcceptChBrowserKey>
+                        <AcceptChHardwareKey>${AcceptChHardwareKey}</AcceptChHardwareKey>
+                    </systemPropertyVariables>
+                    <properties>
+                        <property>
+                            <name>listener</name>
+                            <value>fiftyone.devicedetection.shared.testhelpers.MavenRunListener</value>
+                        </property>
+                    </properties>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${exec-maven-plugin.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven-source-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -70,9 +179,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>${maven-javadoc-plugin.version}</version>
                 <configuration>
                     <doclint>none</doclint>
+                    <quiet>true</quiet>
                     <detectJavaApiLink>false</detectJavaApiLink>
                 </configuration>
                 <executions>
@@ -87,14 +197,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jarsigner-plugin</artifactId>
-                <version>3.0.0</version>
+                <version>${maven-jarsigner-plugin.version}</version>
                 <executions>
-                <execution>
-                    <id>sign</id>
-                    <goals>
-                    <goal>sign</goal>
-                    </goals>
-                </execution>
+                    <execution>
+                        <id>sign</id>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
                 </executions>
                 <configuration>
                     <skip>${skippackagesign}</skip>
@@ -107,7 +217,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
+                <version>${maven-gpg-plugin.version}</version>
                 <configuration>
                     <skip>${skippackagesign}</skip>
                     <gpgArguments>
@@ -125,30 +235,35 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven-site-plugin.version}</version>
+            </plugin>
         </plugins>
     </build>
 
-    <modules>
-        <module>device-detection.shared</module>
-        <module>device-detection.hash.engine.on-premise</module>
-        <module>device-detection.cloud</module>
-        <module>device-detection</module>
-        <module>device-detection.examples</module>
-        <module>web/pipeline.web.examples.servlet</module>
-        <module>web/pipeline.web.examples.mvc</module>
-        <module>web/pipeline.uach.examples.servlet</module>
-        <module>web/pipeline.uach.examples.mvc</module>
-        <module>web/pipeline.uachmanual.cloud.examples.servlet</module>
-        <module>web/pipeline.uachmanual.examples.servlet</module>
-        <module>web/pipeline.uachmanual.examples.mvc</module>
-    </modules>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${maven-project-info-reports-plugin.version}</version>
+            </plugin>
+         </plugins>
+    </reporting>
 
     <distributionManagement>
         <repository>
             <id>${publishrepository.id}</id>
             <url>${publishrepository.url}</url>
         </repository>
+        <site>
+            <id>local</id>
+            <url>file:///${maven.multiModuleProjectDirectory}/site/</url>
+        </site>
     </distributionManagement>
+
     <repositories>
         <repository>
             <id>${fetchrepository.id}</id>
@@ -162,10 +277,11 @@
             <url>https://opensource.org/licenses/EUPL-1.2</url>
         </license>
     </licenses>
+
     <scm>
         <url>https://github.com/51Degrees/device-detection-java</url>
         <connection>scm:git:git://github.com/51Degrees/device-detection-java.git</connection>
         <developerConnection>scm:git:info@51degrees.com:51Degrees/device-detection-java.git</developerConnection>
     </scm>
-    
+
 </project>

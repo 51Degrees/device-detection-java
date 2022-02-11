@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>pipeline.device-detection</artifactId>
+        <groupId>com.51degrees</groupId>
+        <version>4.3.15-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>device-detection.web.examples</artifactId>
+    <name>51Degrees :: Device Detection :: Web :: Examples</name>
+    <url>https://51degrees.com</url>
+    <description>Example use of Device Detection using Web technologies</description>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>pipeline.web.examples.servlet</module>
+        <module>pipeline.web.examples.mvc</module>
+        <module>pipeline.uach.examples.servlet</module>
+        <module>pipeline.uach.examples.mvc</module>
+        <module>pipeline.uachmanual.cloud.examples.servlet</module>
+        <module>pipeline.uachmanual.examples.servlet</module>
+        <module>pipeline.uachmanual.examples.mvc</module>
+        <module>pipeline.web.examples.shared</module>
+    </modules>
+
+    <properties>
+        <maven.deploy.skip>false</maven.deploy.skip>
+
+        <tomcat.version>8.5.73</tomcat.version>
+        <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
+        <spring-webmvc.version>4.3.30.RELEASE</spring-webmvc.version>
+        <jstl.version>1.2</jstl.version>
+
+        <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
+        <maven-dependency-plugin.version>3.2.0</maven-dependency-plugin.version>
+        <javaee-endorsed-api.version>7.0</javaee-endorsed-api.version>
+
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${spring-webmvc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>jstl</artifactId>
+                <version>${jstl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-core</artifactId>
+                <version>${tomcat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat.embed</groupId>
+                <artifactId>tomcat-embed-jasper</artifactId>
+                <version>${tomcat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-jasper</artifactId>
+                <version>${tomcat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-jasper-el</artifactId>
+                <version>${tomcat.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.tomcat</groupId>
+                <artifactId>tomcat-jsp-api</artifactId>
+                <version>${tomcat.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${maven-war-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>${maven-dependency-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <logback.configurationFile>${maven.multiModuleProjectDirectory}/logback.xml
+                        </logback.configurationFile>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+    <licenses>
+        <license>
+            <name>European Union Public License 1.2</name>
+            <url>https://opensource.org/licenses/EUPL-1.2</url>
+        </license>
+    </licenses>
+</project>

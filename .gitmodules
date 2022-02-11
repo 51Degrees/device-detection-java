@@ -1,6 +1,6 @@
-[submodule "device-detection-cxx"]
-	path = device-detection-cxx
-	url = ../device-detection-cxx
 [submodule "ci/common-ci"]
 	path = ci/common-ci
 	url = ../common-ci
+[submodule "device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx"]
+	path = device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx
+	url = ../device-detection-cxx

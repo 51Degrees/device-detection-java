@@ -123,7 +123,7 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean install'
-        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(JavaMavenGPGKeyPassphrase) -Dkeystore="$(CodeSigningCert.secureFilePath)" -Dalias=$(CodeSigningCertAlias) -Dkeypass=$(CodeSigningCertPassword) -Dkeystorepass=$(CodeSigningCertPassword) -DcreateChecksum=true -Dexec.skip=true -DskipTests=true'
+        options: '-Pbuild -Dhttps.protocols=TLSv1.2 -Dbuildversion=$(GitVersion.SemVer) -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dpublishrepository.id=$(publishrepository.id) -Dpublishrepository.url=$(publishrepository.url) -Dskippackagesign=false -Dgpg.passphrase=$(JavaMavenGPGKeyPassphrase) -Dkeystore="$(CodeSigningCert.secureFilePath)" -Dalias=$(CodeSigningCertAlias) -Dkeypass=$(CodeSigningCertPassword) -Dkeystorepass=$(CodeSigningCertPassword) -DcreateChecksum=true -Dexec.skip=true -DskipTests=true --no-transfer-progress'
         jdkVersionOption: $(jdkVersionDefault)
 
     - task: CopyFiles@2
