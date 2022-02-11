@@ -51,6 +51,7 @@
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-project-info-reports-plugin.version>2.6</maven-project-info-reports-plugin.version>
         <maven-site-plugin.version>3.7</maven-site-plugin.version>
+        <dependency-check-maven.version>6.5.3</dependency-check-maven.version>
 
         <publishrepository.id>ossrh</publishrepository.id>
         <publishrepository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</publishrepository.url>
@@ -239,6 +240,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>${maven-site-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.owasp</groupId>
+                <artifactId>dependency-check-maven</artifactId>
+                <version>${dependency-check-maven.version}</version>
+                <configuration>
+                    <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+                </configuration>
             </plugin>
         </plugins>
     </build>
