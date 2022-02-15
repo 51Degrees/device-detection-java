@@ -54,7 +54,7 @@ stages:
         downloadPath: '$(System.ArtifactsDirectory)'
 
     - script: |   
-          mv $(System.ArtifactsDirectory)/enterpriseFile/Enterprise-HashV41.hash  $(Build.SourcesDirectory)/device-detection-cxx/device-detection-data/Enterprise-HashV41.hash
+          mv $(System.ArtifactsDirectory)/enterpriseFile/Enterprise-HashV41.hash  $(Build.SourcesDirectory)/device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx/device-detection-data/Enterprise-HashV41.hash
       displayName: 'Move Data Files'
 
     - bash: |
@@ -98,7 +98,7 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean test'
-        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -DFOD_CLOUD_API_URL=$(FOD_CLOUD_API_URL) -DSuperResourceKey=$(SuperResourceKey) -DAcceptChPlatformKey=$(AcceptChPlatformKey) -DAcceptChHardwareKey=$(AcceptChHardwareKey) -DAcceptChBrowserKey=$(AcceptChBrowserKey) -DAcceptChNoneKey=$(AcceptChNoneKey) -DplatformToolsetVersion=${{ variables.plfTsVer }} -DwindowsSDKVersion=${{ variables.winSDKVer }}'
+        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -DFOD_CLOUD_API_URL=$(FOD_CLOUD_API_URL) -DSuperResourceKey=$(SuperResourceKey) -DAcceptChPlatformKey=$(AcceptChPlatformKey) -DAcceptChHardwareKey=$(AcceptChHardwareKey) -DAcceptChBrowserKey=$(AcceptChBrowserKey) -DAcceptChNoneKey=$(AcceptChNoneKey) -DplatformToolsetVersion=${{ variables.plfTsVer }} -DwindowsSDKVersion=${{ variables.winSDKVer }} --no-transfer-progress'
         jdkVersionOption: $(jdkVersion)
         testRunTitle: '${{ parameters.imageName }}-$(jdkVersion)'
 

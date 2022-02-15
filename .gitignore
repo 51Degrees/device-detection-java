@@ -24,6 +24,7 @@ hs_err_pid*
 
 **/target
 .idea
+*.iml
 nbactions*.xml
 
 # vscode files
@@ -36,3 +37,5 @@ nbactions*.xml
 nbactions.xml
 
 build*/
+Enterprise-HashV41.hash
+SESSIONS.ser

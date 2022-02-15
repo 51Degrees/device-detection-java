@@ -66,8 +66,8 @@ public class DeviceDetectionOnPremisePipelineBuilder
     private String dataUpdateLicenseKey = null;
     private Constants.PerformanceProfiles performanceProfile =
         Constants.PerformanceProfiles.Balanced;
-    private Enums.DeviceDetectionAlgorithm algorithm =
-        Enums.DeviceDetectionAlgorithm.Hash;
+/*    private Enums.DeviceDetectionAlgorithm algorithm =
+        Enums.DeviceDetectionAlgorithm.Hash;*/
     private final DataUpdateService dataUpdateService;
     private final HttpClient httpClient;
 
@@ -102,15 +102,12 @@ public class DeviceDetectionOnPremisePipelineBuilder
         boolean createTempDataCopy) throws Exception {
         this.filename = filename;
         this.createTempDataCopy = createTempDataCopy;
-        if (filename.substring(filename.length() - 4)
-            .equalsIgnoreCase(".dat")) {
+        if (filename.endsWith(".dat")) {
             throw new Exception("The Pattern data format data " +
-                "files are deprecated in version 4. Please use a " +
+                "files can not be used in version 4. Please use a " +
                 "Hash V4.1 data file.");
-        } else if (filename.substring(filename.length() - 5)
-            .equalsIgnoreCase(".hash")) {
-            algorithm = Enums.DeviceDetectionAlgorithm.Hash;
-        } else {
+        }
+        if (filename.endsWith(".hash") == false) {
             throw new Exception("Unrecognised filename. " +
                 "Expected a '*.hash' hash data file.");
         }
@@ -121,14 +118,10 @@ public class DeviceDetectionOnPremisePipelineBuilder
      * Set the byte array to use as a data source when 
      * creating the engine.
      * @param data The entire device detection data file as a byte array.
-     * @param algorithm The detection algorithm that the supplied data supports.
-     * @return This builder instance.
+      * @return This builder instance.
      */
-    DeviceDetectionOnPremisePipelineBuilder setEngineData(
-        byte[] data,
-        Enums.DeviceDetectionAlgorithm algorithm) {
+    DeviceDetectionOnPremisePipelineBuilder setEngineData(byte[] data) {
         this.engineData = data;
-        this.algorithm = algorithm;
         return this;
     }
 
@@ -330,7 +323,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
      * match for evidence which was not in the training data. If
      * the predictive graph is also enabled, it will be used
      * next if there was no match in the performance graph.
-     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Performance">Hash Algorithm</a>*
+     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Performance">Hash Algorithm</a>
      * @param use true if the performance graph should be used
      * @return this builder
      */
@@ -375,17 +368,9 @@ public class DeviceDetectionOnPremisePipelineBuilder
     public Pipeline build() throws Exception {
         AspectEngine<? extends AspectData, ? extends AspectPropertyMetaData> deviceDetectionEngine;
 
-        // Create the device detection engine based on the configuration.
-        switch (algorithm) {
-            case Hash:
-                DeviceDetectionHashEngineBuilder hashBuilder =
-                    new DeviceDetectionHashEngineBuilder(loggerFactory, dataUpdateService);
-                deviceDetectionEngine = configureAndBuild(hashBuilder);
-                break;
-            default:
-                throw new PipelineConfigurationException(
-                    "Unrecognised algorithm '" + algorithm.name() + "'.");
-        }
+        DeviceDetectionHashEngineBuilder hashBuilder =
+                new DeviceDetectionHashEngineBuilder(loggerFactory, dataUpdateService);
+        deviceDetectionEngine = configureAndBuild(hashBuilder);
 
         if (deviceDetectionEngine != null) {
             // Add the share usage element to the list if enabled
@@ -398,6 +383,8 @@ public class DeviceDetectionOnPremisePipelineBuilder
         } else {
             throw new RuntimeException("Unexpected error creating device detection engine.");
         }
+
+        setAutoCloseElements(true);
 
         // Create and return the pipeline
         return super.build();

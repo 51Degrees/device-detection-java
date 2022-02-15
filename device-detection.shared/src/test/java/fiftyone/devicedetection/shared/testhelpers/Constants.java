@@ -22,9 +22,29 @@
 
 package fiftyone.devicedetection.shared.testhelpers;
 
+import java.io.File;
+import java.util.Objects;
+
 public class Constants {
     public static final int UAS_TO_TEST = 10;
-    public static final String HASH_DATA_FILE_NAME = "Enterprise-HashV41.hash";
+    public static final String ENTERPRISE_HASH_DATA_FILE_NAME = "Enterprise-HashV41.hash";
+    public static final String LITE_HASH_DATA_FILE_NAME = "51Degrees-LiteV4.1.hash";
+    public static final String HASH_DATA_FILE_NAME;
+
+    static {
+        File f;
+        try {
+            f = Utils.getFilePath(ENTERPRISE_HASH_DATA_FILE_NAME);
+        } catch (Exception e) {
+            try {
+                f = Utils.getFilePath(LITE_HASH_DATA_FILE_NAME);
+            } catch (Exception ex) {
+                f = null;
+            }
+        }
+        HASH_DATA_FILE_NAME = Objects.nonNull(f) ? f.getPath() : null;
+    }
+
     public static final String UA_FILE_NAME = "20000 User Agents.csv";
 
     public static final String[] ExcludedProperties = {"JavascriptImageOptimiser", "JavascriptBandwidth"};

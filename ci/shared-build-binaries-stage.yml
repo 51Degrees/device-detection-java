@@ -76,11 +76,11 @@ stages:
     - template: shared-build-binaries.yml
       parameters:
         name: 'armhf'
-        cmakeArgs: '-DCMAKE_TOOLCHAIN_FILE=../device-detection-cxx/src/common-cxx/cmake/linux-armhf-cross.cmake'
+        cmakeArgs: '-DCMAKE_TOOLCHAIN_FILE=../device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx/src/common-cxx/cmake/linux-armhf-cross.cmake'
     - template: shared-build-binaries.yml
       parameters:
         name: 'aarch64'
-        cmakeArgs: '-DCMAKE_TOOLCHAIN_FILE=../device-detection-cxx/src/common-cxx/cmake/linux-aarch64-cross.cmake'
+        cmakeArgs: '-DCMAKE_TOOLCHAIN_FILE=../device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx/src/common-cxx/cmake/linux-aarch64-cross.cmake'
 
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
@@ -165,7 +165,7 @@ stages:
     - template: shared-build-binaries.yml
       parameters:
         name: 'arm64'
-        cmakeArgs: '-D32bit=OFF -DCMAKE_TOOLCHAIN_FILE=../device-detection-cxx/src/common-cxx/cmake/mac-arm64-cross.cmake'
+        cmakeArgs: '-D32bit=OFF -DCMAKE_TOOLCHAIN_FILE=../device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx/src/common-cxx/cmake/mac-arm64-cross.cmake'
 
     - task: CopyFiles@2
       displayName: 'Copy Files to: $(build.artifactstagingdirectory)'

@@ -1,20 +1,19 @@
 package fiftyone.devicedetection.hash.engine.onpremise.flowelements;
 
-import fiftyone.common.testhelpers.TestLoggerFactory;
 import fiftyone.pipeline.engines.configuration.CacheConfiguration;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
 public class Builder {
-    protected static final TestLoggerFactory logger =
-        new TestLoggerFactory(LoggerFactory.getILoggerFactory());
+    protected static final ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
 
     private DeviceDetectionHashEngineBuilder builder;
 
     @Before
     public void init() {
-        builder = new DeviceDetectionHashEngineBuilder(logger);
+        builder = new DeviceDetectionHashEngineBuilder(loggerFactory);
     }
 
     /**

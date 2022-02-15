@@ -26,10 +26,8 @@ import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.devicedetection.shared.testhelpers.Constants;
 import fiftyone.pipeline.core.data.ElementData;
 import fiftyone.pipeline.core.data.FlowData;
-import fiftyone.pipeline.core.data.types.JavaScript;
 import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
-import fiftyone.pipeline.engines.data.AspectPropertyValueDefault;
 import fiftyone.pipeline.engines.exceptions.PropertyMissingException;
 
 import java.lang.reflect.Method;
@@ -51,8 +49,8 @@ public class ValueTests {
             DeviceData device = (DeviceData) elementData;
             assertNotNull("The device id should not be null.",
                 device.getDeviceId().getValue());
-            assertTrue("The device id should not be empty.",
-                device.getDeviceId().getValue().isEmpty() == false);
+            assertFalse("The device id should not be empty.",
+                device.getDeviceId().getValue().isEmpty());
         }
     }
 
@@ -135,7 +133,7 @@ public class ValueTests {
     }
 
     @SuppressWarnings("unchecked")
-    public static void typedGetters(WrapperCloud wrapper) throws Exception {
+    public static void typedGetters(WrapperCloud   wrapper) throws Exception {
         try (FlowData data = wrapper.getPipeline().createFlowData()) {
             data.addEvidence("header.user-agent", Constants.MobileUserAgent)
                 .process();

@@ -22,7 +22,6 @@
 
 package fiftyone.devicedetection.cloud;
 
-import fiftyone.common.testhelpers.TestLoggerFactory;
 import fiftyone.devicedetection.cloud.flowelements.DeviceDetectionCloudEngine;
 import fiftyone.devicedetection.cloud.flowelements.DeviceDetectionCloudEngineBuilder;
 import fiftyone.devicedetection.shared.testhelpers.Constants;
@@ -35,12 +34,12 @@ import fiftyone.pipeline.engines.flowelements.AspectEngine;
 
 import java.io.Closeable;
 
+import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
 public class WrapperCloud implements Closeable {
 
-    protected static final TestLoggerFactory logger =
-            new TestLoggerFactory(LoggerFactory.getILoggerFactory());
+    protected static final ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
     public Pipeline pipeline;
     public CloudRequestEngine cloudRequestEngine;
     public DeviceDetectionCloudEngine deviceDetectionCloudEngine;
@@ -63,12 +62,12 @@ public class WrapperCloud implements Closeable {
         }
     	
         cloudRequestEngine = 
-                new CloudRequestEngineBuilder(logger)
+                new CloudRequestEngineBuilder(loggerFactory)
                 .setResourceKey(resourceKey)
                 .build();
-        deviceDetectionCloudEngine = new DeviceDetectionCloudEngineBuilder(logger)
+        deviceDetectionCloudEngine = new DeviceDetectionCloudEngineBuilder(loggerFactory)
                 .build();
-        pipeline = new PipelineBuilder(logger)
+        pipeline = new PipelineBuilder(loggerFactory)
                 .addFlowElement(cloudRequestEngine)
                 .addFlowElement(deviceDetectionCloudEngine)
                 .build();

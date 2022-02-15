@@ -20,7 +20,7 @@ steps:
   displayName: 'Setup ${{ parameters.name }} Build'
   inputs:
     workingDirectory: '$(build.sourcesdirectory)/build-${{ parameters.name }}'
-    cmakeArgs: '.. ${{ parameters.cmakeArgs }}'
+    cmakeArgs: '../device-detection.hash.engine.on-premise/src/main/cxx ${{ parameters.cmakeArgs }}'
 - task: CMake@1
   displayName: 'Build ${{ parameters.name }}'
   inputs:
