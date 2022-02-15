@@ -35,7 +35,7 @@ import fiftyone.pipeline.engines.data.AspectPropertyValue;
  * @example hash/GettingStarted.java
  * @include{doc} example-gettingstarted-hash.txt
  * <p>
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/GettingStarted.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.shell.examples/src/main/java/fiftyone/devicedetection/examples/hash/GettingStarted.java).
  * @include{doc} example-require-datafile.txt
  */
 

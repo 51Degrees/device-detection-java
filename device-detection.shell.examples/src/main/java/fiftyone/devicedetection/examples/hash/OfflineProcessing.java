@@ -38,7 +38,7 @@ import java.io.FileWriter;
  * @example hash/OfflineProcessing.java
  * @include{doc} example-offline-processing-hash.txt
  * <p>
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/OfflineProcessing.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.shell.examples/src/main/java/fiftyone/devicedetection/examples/hash/OfflineProcessing.java).
  * @include{doc} example-require-datafile.txt
  */
 

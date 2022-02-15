@@ -41,7 +41,7 @@ import java.io.File;
  *
  * @include{doc} example-configure-from-file-cloud.txt
  *
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/cloud/ConfigureFromFile.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.shell.examples/src/main/java/fiftyone/devicedetection/examples/cloud/ConfigureFromFile.java).
  *
  * @include{doc} example-require-resourcekey.txt
  *

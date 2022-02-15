@@ -49,7 +49,7 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
  *
  * @include{doc} example-tac-lookup-cloud.txt
  *
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/cloud/TacLookup.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.shell.examples/src/main/java/fiftyone/devicedetection/examples/cloud/TacLookup.java).
  *
  * @include{doc} example-require-resourcekey.txt
  * Make sure to include the HardwareVendor, HardwareModel and HardwareName

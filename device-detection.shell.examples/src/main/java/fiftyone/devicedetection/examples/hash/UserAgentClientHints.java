@@ -16,7 +16,7 @@ import static fiftyone.pipeline.core.Constants.*;
  *
  * @include{doc} example-user-agent-client-hints.txt
  *
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/UserAgentClientHints.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.shell.examples/src/main/java/fiftyone/devicedetection/examples/hash/UserAgentClientHints.java).
  *
  * @include{doc} example-require-datafile.txt
  * 

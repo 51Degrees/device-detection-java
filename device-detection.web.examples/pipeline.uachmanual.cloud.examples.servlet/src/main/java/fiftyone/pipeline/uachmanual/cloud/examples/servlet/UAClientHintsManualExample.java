@@ -63,7 +63,7 @@ import static fiftyone.pipeline.web.examples.shared.EmbedTomcat.stopTomcat;
  * must be handled manually. For example, setting the HTTP response headers to
  * request user-agent client hints.
  * <p>
- * The source code for this example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/tree/master/web/pipeline.uachmanual.examples.mvc).
+ * The source code for this example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/tree/master/device-detection.web.examples/pipeline.uachmanual.examples.mvc).
  * <p>
  * This example can be configured to use the 51Degrees cloud service or a local
  * data file. If you don't already have data file you can obtain one from the
@@ -119,6 +119,9 @@ import static fiftyone.pipeline.web.examples.shared.EmbedTomcat.stopTomcat;
  * Pipeline pipeline = new FiftyOnePipelineBuilder()
  * .buildFromConfiguration(options);
  * ...
+ * // Pipeline should be created once in 'init(...)' method of HttpServlet.
+ * // Make pipeline an attribute to ServletContext for reusability.
+ * config.getServletContext().setAttribute(PIPELINE, pipeline);
  * ```
  * <p>
  * <p>
@@ -168,21 +171,19 @@ public class UAClientHintsManualExample extends HttpServlet {
             System.err.println("Must supply a resource key as first argument");
             System.exit(1);
         }
-        // instantiate a pipeline
-        try (Pipeline pipeline = createPipeline(args[0])) {
-            // create the servlet and run Tomcat
-            HttpServlet servlet = new UAClientHintsManualExample();
-            int port = 8080;
-            Map<String, String> initParams = new HashMap<>();
-            initParams.put(RESOURCE_KEY_PARAMETER_NAME, args[0]);
-            startTomcat("servlet", "", servlet, port, initParams);
+        
+        // create the servlet and run Tomcat
+        HttpServlet servlet = new UAClientHintsManualExample();
+        int port = 8080;
+        Map<String, String> initParams = new HashMap<>();
+        initParams.put(RESOURCE_KEY_PARAMETER_NAME, args[0]);
+        startTomcat("servlet", "", servlet, port, initParams);
 
-            // wait for the user to shut tomcat down
-            System.out.format("Browse to http://localhost:%d using a 'private' window in your browser\n" +
-                    "Hit enter to stop tomcat:", port);
-            new Scanner(System.in).nextLine();
-            stopTomcat();
-        }
+        // wait for the user to shut tomcat down
+        System.out.format("Browse to http://localhost:%d using a 'private' window in your browser\n" +
+        		"Hit enter to stop tomcat:", port);
+        new Scanner(System.in).nextLine();
+        stopTomcat();
     }
 
     public static Pipeline createPipeline(String resourceKey) throws Exception {

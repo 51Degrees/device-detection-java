@@ -12,15 +12,32 @@
     <url>https://51degrees.com</url>
     <description>Device detection engines for the 51Degrees Pipeline API</description>
 
-    <modules>
-        <module>device-detection.shared</module>
-        <module>device-detection.hash.engine.on-premise</module>
-        <module>device-detection.cloud</module>
-        <module>device-detection</module>
-        <module>device-detection.shell.examples</module>
-        <module>device-detection.web.examples</module>
-    </modules>
-
+    <profiles>
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+             </activation>
+             <modules>
+                <module>device-detection.shared</module>
+                <module>device-detection.hash.engine.on-premise</module>
+                <module>device-detection.cloud</module>
+                <module>device-detection</module>
+                <module>device-detection.shell.examples</module>
+                <module>device-detection.web.examples</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>dependency-check</id>
+            <modules>
+                <module>device-detection.shared</module>
+                <module>device-detection.hash.engine.on-premise</module>
+                <module>device-detection.cloud</module>
+                <module>device-detection</module>
+            </modules>
+        </profile>
+    </profiles>
+	
     <developers>
         <developer>
             <name>51Degrees</name>
@@ -33,7 +50,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
 
-        <pipeline.version>4.3.9-beta.1</pipeline.version>
+        <pipeline.version>4.3.9</pipeline.version>
 
         <junit.version>4.13.2</junit.version>
         <slf4j-api.version>1.7.33</slf4j-api.version>

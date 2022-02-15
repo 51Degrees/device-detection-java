@@ -40,7 +40,7 @@ import java.io.File;
  * @example hash/ConfigureFromFile.java
  * @include{doc} example-configure-from-file-hash.txt
  * <p>
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/ConfigureFromFile.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.shell.examples/src/main/java/fiftyone/devicedetection/examples/hash/ConfigureFromFile.java).
  * @include{doc} example-reqiure-datafile.txt
  * <p>
  * The configuration file used here is:

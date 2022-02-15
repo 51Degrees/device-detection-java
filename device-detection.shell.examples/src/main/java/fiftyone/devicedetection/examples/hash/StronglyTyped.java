@@ -36,7 +36,7 @@ import fiftyone.pipeline.engines.data.AspectPropertyValue;
  * @example hash/StronglyTyped.java
  * @include{doc} example-strongly-typed-hash.txt
  * <p>
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/Performance.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.shell.examples/src/main/java/fiftyone/devicedetection/examples/hash/Performance.java).
  * @include{doc} example-require-datafile.txt
  */
 

@@ -52,7 +52,7 @@ import static fiftyone.pipeline.web.mvc.components.FiftyOneInterceptor.enableCli
  * This means that several jobs that the API usually takes care of automatically
  * For example, setting the HTTP response headers to request user-agent client hints.
  *
- * The source code for this example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/tree/master/web/pipeline.uach.examples.mvc).
+ * The source code for this example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/tree/master/device-detection.web.examples/pipeline.uach.examples.mvc).
  * 
  * This example can be configured to use the 51Degrees cloud service or a local 
  * data file. If you don't already have data file you can obtain one from the 

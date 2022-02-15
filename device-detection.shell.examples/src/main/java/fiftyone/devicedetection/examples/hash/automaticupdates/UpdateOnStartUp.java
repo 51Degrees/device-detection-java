@@ -44,7 +44,7 @@ import org.slf4j.LoggerFactory;
  *
  * @include{doc} example-automatic-updates-on-startup-hash.txt
  *
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/hash/automaticupdates/UpdateOnStartUp.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.shell.examples/src/main/java/fiftyone/devicedetection/examples/hash/automaticupdates/UpdateOnStartUp.java).
  *
  * @include{doc} example-require-licensekey.txt
  * @include{doc} example-require-datafile.txt

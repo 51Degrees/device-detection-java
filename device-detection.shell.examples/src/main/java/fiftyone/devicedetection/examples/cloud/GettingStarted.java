@@ -36,7 +36,7 @@ import fiftyone.pipeline.engines.data.AspectPropertyValue;
  *
  * @include{doc} example-getting-started-cloud.txt
  *
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/src/main/java/fiftyone/devicedetection/examples/cloud/GettingStarted.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.shell.examples/src/main/java/fiftyone/devicedetection/examples/cloud/GettingStarted.java).
  *
  * @include{doc} example-require-resourcekey.txt
  */
