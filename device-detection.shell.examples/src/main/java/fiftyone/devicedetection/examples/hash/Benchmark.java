@@ -61,7 +61,7 @@ public class Benchmark extends ProgramBase {
      * @param numberOfThreads number of concurrent threads
      * @throws Exception as a catch all
      */
-    private static void runBenchmarks(
+    protected static void runBenchmarks(
             String deviceDataFile,
             String userAgentFile,
             int numberOfThreads) throws Exception {
@@ -69,7 +69,7 @@ public class Benchmark extends ProgramBase {
         Example example = new Example(true);
 
         System.out.printf("Benchmarking in memory dataset: %s\r\n", deviceDataFile);
-        byte[] fileContent = Files.readAllBytes(new File(userAgentFile).toPath());
+        byte[] fileContent = Files.readAllBytes(new File(deviceDataFile).toPath());
         try (Pipeline pipeline = new DeviceDetectionPipelineBuilder()
                 .useOnPremise(fileContent)
                 .setAutoUpdate(false)

@@ -53,12 +53,10 @@
         // response by the server.
         // 4. Web Server will return the properties based on the new User Agent Client Hint headers
         // being used as evidence.
-
         function redirect() {
             sessionStorage.reloadAfterPageLoad = true;
             window.location.reload(true);
         }
-
         window.onload = function () {
             if (sessionStorage.reloadAfterPageLoad) {
                 document.getElementById('description').innerHTML = "<p>The information shown below is determined using <strong>User Agent Client Hints</strong> that was sent in the request to obtain additional evidence. If no additional information appears then it may indicate an external problem such as <strong>User Agent Client Hints</strong> being disabled in your browser.</p>";

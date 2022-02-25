@@ -29,6 +29,9 @@ import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.data.FlowError;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.Constants;
+import fiftyone.pipeline.engines.services.DataUpdateService;
+import fiftyone.pipeline.engines.services.HttpClientDefault;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.ILoggerFactory;
@@ -52,6 +55,8 @@ import static fiftyone.pipeline.engines.Constants.PerformanceProfiles.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class DeviceDetectionTests {
@@ -190,6 +195,57 @@ public class DeviceDetectionTests {
                 future.get();
             }
         }
+    }
+    
+    /**
+     * This tests that the default constructor of the
+     * DeviceDetectionPipelineBuilder does pass the DataUpdateService to the
+     * resulting pipeline.
+     * @throws Exception
+     */
+    @Test
+    public void TestOnPremiseBuilder_DataUpdateService_Default() throws Exception {
+    	// Configure the pipeline builder based on the
+        // parameters passed to this method.
+        ILoggerFactory loggerFactory = mock(ILoggerFactory.class);
+        Logger logger = mock(Logger.class);
+        when(loggerFactory.getLogger(anyString())).thenReturn(logger);
+    	DeviceDetectionOnPremisePipelineBuilder builder =
+                new DeviceDetectionPipelineBuilder(loggerFactory,
+                		new HttpClientDefault())
+                    .useOnPremise(HASH_DATA_FILE_NAME, false)
+                    .setPerformanceProfile(MaxPerformance)
+                    .setShareUsage(false)
+                    .setAutoUpdate(false);
+    	try (Pipeline pipeline = builder.build()) {
+    		assertEquals(1, pipeline.getServices().size());
+    	}
+    }
+    
+    /**
+     * This tests that DataUpdateService is closed when its corresponding
+     * pipeline created by DeviceDetectionPipelineBuilder is closed.
+     * @throws Exception
+     */
+    @Test
+    public void TestOnPremiseBuilder_DataUpdateService_Close() throws Exception {
+    	// Configure the pipeline builder based on the
+        // parameters passed to this method.
+        ILoggerFactory loggerFactory = mock(ILoggerFactory.class);
+        Logger logger = mock(Logger.class);
+        when(loggerFactory.getLogger(anyString())).thenReturn(logger);
+        DataUpdateService updateService = mock(DataUpdateService.class);
+    	DeviceDetectionOnPremisePipelineBuilder builder =
+                new DeviceDetectionPipelineBuilder(loggerFactory,
+                		new HttpClientDefault(), updateService)
+                    .useOnPremise(HASH_DATA_FILE_NAME, false)
+                    .setPerformanceProfile(MaxPerformance)
+                    .setShareUsage(false)
+                    .setAutoUpdate(false);
+    	try (Pipeline pipeline = builder.build()) {
+    		assertEquals(1, pipeline.getServices().size());
+    	}
+    	verify(updateService, times(1)).close();
     }
 
     private class TestConfig {

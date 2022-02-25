@@ -22,15 +22,16 @@
 
 package fiftyone.devicedetection.examples.hash;
 
-import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
+
 import fiftyone.devicedetection.shared.testhelpers.Utils;
-import fiftyone.pipeline.core.flowelements.Pipeline;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
 
 import static fiftyone.devicedetection.shared.testhelpers.Constants.HASH_DATA_FILE_NAME;
+import static fiftyone.devicedetection.shared.testhelpers.Constants.LITE_HASH_DATA_FILE_NAME;
 import static fiftyone.devicedetection.shared.testhelpers.Constants.UA_FILE_NAME;
 
 @RunWith(BuilderClassPathTestRunner.class)
@@ -38,35 +39,23 @@ public class ExampleTests {
 
     private static final String dataFile =
         Utils.getFilePath(HASH_DATA_FILE_NAME).getAbsolutePath();
+    private static final String liteDataFile =
+    	Utils.getFilePath(LITE_HASH_DATA_FILE_NAME).getAbsolutePath();
 
     @Test
     public void Benchmark_Hash_SingleThreaded() throws Exception {
-        Benchmark.Example benchmark = new Benchmark.Example(false);
-        try (Pipeline pipeline = new DeviceDetectionPipelineBuilder()
-            .useOnPremise(dataFile, false)
-            .setShareUsage(false)
-            .setAutoUpdate(false)
-            .build()) {
-            benchmark.run(
-                pipeline,
-                Utils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
-                1);
-        }
+    	Benchmark.runBenchmarks(
+    		liteDataFile,
+    		Utils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
+    		1);
     }
 
     @Test
     public void Benchmark_Hash_MultiThreaded() throws Exception {
-        Benchmark.Example benchmark = new Benchmark.Example(false);
-        try (Pipeline pipeline = new DeviceDetectionPipelineBuilder()
-            .useOnPremise(dataFile, false)
-            .setShareUsage(false)
-            .setAutoUpdate(false)
-            .build()) {
-            benchmark.run(
-                pipeline,
-                Utils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
-                8);
-        }
+    	Benchmark.runBenchmarks(
+    		liteDataFile,
+    		Utils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
+    		8);
     }
 
     @Test

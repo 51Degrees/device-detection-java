@@ -87,6 +87,8 @@ public class DeviceDetectionOnPremisePipelineBuilder
         super(loggerFactory);
         this.dataUpdateService = dataUpdateService;
         this.httpClient = httpClient;
+        // Make sure to add dataUpdateService to the list of managed services
+        this.addService(dataUpdateService);
     }
 
     /**

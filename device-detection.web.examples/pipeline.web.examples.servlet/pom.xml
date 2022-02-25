@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.51degrees</groupId>
         <artifactId>device-detection.web.examples</artifactId>
-        <version>4.3.15-SNAPSHOT</version>
+        <version>4.3.16-SNAPSHOT</version>
     </parent>
 
     <artifactId>pipeline.web.examples.servlet</artifactId>
