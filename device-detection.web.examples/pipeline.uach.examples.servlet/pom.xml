@@ -12,6 +12,13 @@
     <name>51Degrees :: Pipeline :: UserAgentClientHints :: Examples :: Servlet</name>
     <url>https://51degrees.com</url>
     <packaging>war</packaging>
+	<description>This example is no longer available in Maven</description>
+	<distributionManagement>
+		<relocation>
+			<groupId>com.51degrees.no_longer_in_maven</groupId>
+			<message>This example is no longer available in Maven</message>
+		</relocation>
+	</distributionManagement>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>

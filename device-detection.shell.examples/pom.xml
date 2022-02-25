@@ -12,7 +12,13 @@
     <artifactId>device-detection.examples</artifactId>
     <name>51Degrees :: Device Detection :: Shell :: Examples</name>
     <url>https://51degrees.com</url>
-    <description>Example use of Device Detection from the shell</description>
+    <description>Example use of Device Detection from the shell. These examples are no longer available in Maven</description>
+	<distributionManagement>
+		<relocation>
+			<groupId>com.51degrees.no_longer_in_maven</groupId>
+			<message>These examples are no longer available in Maven</message>
+		</relocation>
+	</distributionManagement>
 
     <properties>
         <maven.deploy.skip>false</maven.deploy.skip>
