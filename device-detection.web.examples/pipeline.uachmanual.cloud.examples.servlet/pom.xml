@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.51degrees</groupId>
         <artifactId>device-detection.web.examples</artifactId>
-        <version>4.3.16-SNAPSHOT</version>
+        <version>4.3.17-SNAPSHOT</version>
     </parent>
 
     <artifactId>pipeline.uachmanual.cloud.examples.servlet</artifactId>
