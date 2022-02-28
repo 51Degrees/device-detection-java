@@ -250,7 +250,7 @@ public class DeviceDetectionHashEngine
 
     @Override
     public String getDataSourceTier() {
-        return engine.getType();
+        return engine.getProduct();
     }
 
     /**

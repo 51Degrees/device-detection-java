@@ -98,44 +98,50 @@ public class UpdatePollingInterval extends ProgramBase {
             DataUpdateService dataUpdateService = new DataUpdateServiceDefault(
                     LoggerFactory.getLogger(DataUpdateServiceDefault.class.getName()),
                     httpClient);
+            try {
+            	dataUpdateService.onUpdateComplete(new GetAutoUpdateStatus());
             
-            dataUpdateService.onUpdateComplete(new GetAutoUpdateStatus());
+            	// Build the device detection pipeline using the builder that comes with the
+            	// fiftyone.devicedetection package and pass in the desired settings to configure
+            	// automatic updates.
+            	pipeline = new DeviceDetectionPipelineBuilder(
+            			LoggerFactory.getILoggerFactory(), httpClient, dataUpdateService)
+            			.useOnPremise(dataFile, true)
+            			// For automatic updates to work you will need to provide a license key.
+            			// A license key can be obtained with a subscription from https://51degrees.com/pricing
+            			.setDataUpdateLicenseKey(licenseKey)
+            			// Enable automatic updates.
+            			.setAutoUpdate(true)
+            			// Set the frequency in seconds that the pipeline should
+            			// check for updates to data files. A recommended 
+            			// polling interval in a production environment is
+            			// around 30 minutes or 1800 seconds.   
+            			.setUpdatePollingInterval(updatePollingInterval)
+            			// Set the max ammount of time in seconds that should be 
+            			// added to the polling interval. This is useful in datacenter
+            			// applications where mulitple instances may be polling for 
+            			// updates at the same time. A recommended ammount in production 
+            			// environments is 600 seconds.
+            			.setUpdateRandomisationMax(pollingIntervalRandomisation)
+            			.build();
             
-            // Build the device detection pipeline using the builder that comes with the
-            // fiftyone.devicedetection package and pass in the desired settings to configure
-            // automatic updates.
-            pipeline = new DeviceDetectionPipelineBuilder(LoggerFactory.getILoggerFactory(), httpClient, dataUpdateService)
-                .useOnPremise(dataFile, true)
-                // For automatic updates to work you will need to provide a license key.
-                // A license key can be obtained with a subscription from https://51degrees.com/pricing
-                .setDataUpdateLicenseKey(licenseKey)
-                // Enable automatic updates.
-                .setAutoUpdate(true)
-                // Set the frequency in seconds that the pipeline should
-                // check for updates to data files. A recommended 
-                // polling interval in a production environment is
-                // around 30 minutes or 1800 seconds.   
-                .setUpdatePollingInterval(updatePollingInterval)
-                // Set the max ammount of time in seconds that should be 
-                // added to the polling interval. This is useful in datacenter
-                // applications where mulitple instances may be polling for 
-                // updates at the same time. A recommended ammount in production 
-                // environments is 600 seconds.
-                .setUpdateRandomisationMax(pollingIntervalRandomisation)
-                .build();
-            
-            // Get the published date of the data file from the Hash engine 
-            // after building the pipeline.
-            Date publishedDate = pipeline
-                .getElement(DeviceDetectionHashEngine.class)
-                .getDataFilePublishedDate();
-            println("Initial data file published date: "+ publishedDate);
+            	// Get the published date of the data file from the Hash engine 
+            	// after building the pipeline.
+            	Date publishedDate = pipeline
+            			.getElement(DeviceDetectionHashEngine.class)
+            			.getDataFilePublishedDate();
+            	println("Initial data file published date: "+ publishedDate);
 
-            println("The pipeline has now been set up to poll for updates every " 
-                    + updatePollingInterval + " seconds, a random ammount of "
-                    + "time up to " + pollingIntervalRandomisation + " seconds will be added.");
-            println("Press a key to end the program.");
-            System.in.read();
+            	println("The pipeline has now been set up to poll for updates every " 
+            			+ updatePollingInterval + " seconds, a random ammount of "
+            			+ "time up to " + pollingIntervalRandomisation + " seconds will be added.");
+            	println("Press a key to end the program.");
+            	System.in.read();
+            }
+            finally {
+            	// Shutdown data update service
+            	dataUpdateService.close();
+            }
         }
         
         public static class GetAutoUpdateStatus implements OnUpdateComplete {

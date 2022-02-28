@@ -5,14 +5,20 @@
     <parent>
         <artifactId>pipeline.device-detection</artifactId>
         <groupId>com.51degrees</groupId>
-        <version>4.3.15-SNAPSHOT</version>
+        <version>4.3.16-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>device-detection.web.examples</artifactId>
     <name>51Degrees :: Device Detection :: Web :: Examples</name>
     <url>https://51degrees.com</url>
-    <description>Example use of Device Detection using Web technologies</description>
+    <description>Example use of Device Detection using Web technologies. These examples are no longer available in Maven</description>
+	<distributionManagement>
+		<relocation>
+			<groupId>com.51degrees.no_longer_in_maven</groupId>
+			<message>These examples are no longer available in Maven</message>
+		</relocation>
+	</distributionManagement>
 
     <packaging>pom</packaging>
 

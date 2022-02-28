@@ -96,54 +96,62 @@ public class DataFileSystemWatcher extends ProgramBase {
             println("Using data file at " + dataFile);
             
             HttpClient httpClient = new HttpClientDefault();
+            
             DataUpdateService dataUpdateService = new DataUpdateServiceDefault(
                     LoggerFactory.getLogger(DataUpdateServiceDefault.class.getName()),
                     httpClient);
-            
-            dataUpdateService.onUpdateComplete(new GetAutoUpdateStatus());
-            
-            // Build the device detection pipeline using the builder that comes with the
-            // fiftyone.devicedetection package and pass in the desired settings to configure
-            // automatic updates.
-            pipeline = new DeviceDetectionPipelineBuilder(LoggerFactory.getILoggerFactory(), httpClient, dataUpdateService)
-                .useOnPremise(dataFile, true)
-                // For automatic updates to work you will need to provide a license key.
-                // A license key can be obtained with a subscription from https://51degrees.com/pricing
-                .setDataUpdateLicenseKey(licenseKey)
-                // Enable automatic updates.
-                .setAutoUpdate(true)
-                // Watch the data file on disk and refresh the engine 
-                // when the polling interval has elapsed.    
-                .setDataFileSystemWatcher(true)
-                // Set the frequency in seconds that the pipeline should
-                // check for updates to data files. A recommended 
-                // polling interval in a production environment is
-                // around 30 minutes or 1800 seconds.   
-                .setUpdatePollingInterval(30)
-                // Set the max ammount of time in seconds that should be 
-                // added to the polling interval. This is useful in datacenter
-                // applications where mulitple instances may be polling for 
-                // updates at the same time. A recommended ammount in production 
-                // environments is 600 seconds.
-                .setUpdateRandomisationMax(10)
-                // Disable update on startup
-                .setDataUpdateOnStartup(false)
-                .build();
-            
-            // Get the published date of the data file from the Hash engine 
-            // after building the pipeline.
-            Date publishedDate = pipeline
-                .getElement(DeviceDetectionHashEngine.class)
-                .getDataFilePublishedDate();
-            println("Data file published date: " + publishedDate);
 
-            println("The pipeline has now been set up to watch for changes " +
-                "to the data file at the path shown above.");
-            println("Copy a new data file over the existing one to trigger " +
-                "this process.");
-            println("You can obtain a new file from https://51degrees.com/developers/downloads/enhanced-device-data?licenceKey=" + licenseKey);
-            println("Press a key to end the program.");
-            System.in.read();
+            try {
+            	dataUpdateService.onUpdateComplete(new GetAutoUpdateStatus());
+            
+            	// Build the device detection pipeline using the builder that comes with the
+            	// fiftyone.devicedetection package and pass in the desired settings to configure
+            	// automatic updates.
+            	pipeline = new DeviceDetectionPipelineBuilder(
+            			LoggerFactory.getILoggerFactory(), httpClient, dataUpdateService)
+            			.useOnPremise(dataFile, true)
+            			// For automatic updates to work you will need to provide a license key.
+            			// A license key can be obtained with a subscription from https://51degrees.com/pricing
+            			.setDataUpdateLicenseKey(licenseKey)
+            			// Enable automatic updates.
+            			.setAutoUpdate(true)
+            			// Watch the data file on disk and refresh the engine 
+            			// when the polling interval has elapsed.    
+            			.setDataFileSystemWatcher(true)
+            			// Set the frequency in seconds that the pipeline should
+            			// check for updates to data files. A recommended 
+            			// polling interval in a production environment is
+            			// around 30 minutes or 1800 seconds.   
+            			.setUpdatePollingInterval(30)
+            			// Set the max ammount of time in seconds that should be 
+            			// added to the polling interval. This is useful in datacenter
+            			// applications where mulitple instances may be polling for 
+            			// updates at the same time. A recommended ammount in production 
+            			// environments is 600 seconds.
+            			.setUpdateRandomisationMax(10)
+            			// Disable update on startup
+            			.setDataUpdateOnStartup(false)
+            			.build();
+            
+            	// Get the published date of the data file from the Hash engine 
+            	// after building the pipeline.
+            	Date publishedDate = pipeline
+            			.getElement(DeviceDetectionHashEngine.class)
+            			.getDataFilePublishedDate();
+            	println("Data file published date: " + publishedDate);
+
+            	println("The pipeline has now been set up to watch for changes " +
+            			"to the data file at the path shown above.");
+            	println("Copy a new data file over the existing one to trigger " +
+            			"this process.");
+            	println("You can obtain a new file from https://51degrees.com/developers/downloads/enhanced-device-data?licenceKey=" + licenseKey);
+            	println("Press a key to end the program.");
+            	System.in.read();
+            }
+            finally {
+            	// Shutdown data update service
+            	dataUpdateService.close();
+            }
         }
         
         public static class GetAutoUpdateStatus implements OnUpdateComplete {

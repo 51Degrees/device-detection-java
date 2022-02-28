@@ -75,7 +75,7 @@ public class GettingStarted extends ProgramBase {
             try (Pipeline pipeline = new DeviceDetectionPipelineBuilder()
                     .useOnPremise(dataFile, false)
                     .setAutoUpdate(false)
-                    //.setShareUsage(false)
+                    .setShareUsage(false)
                     // Prefer low memory profile where all data streamed
                     // from disk on-demand. Experiment with other profiles.
                     //.setPerformanceProfile(Constants.PerformanceProfiles.HighPerformance)

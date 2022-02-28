@@ -126,39 +126,46 @@ public class UpdateOnStartUp extends ProgramBase {
             DataUpdateService dataUpdateService = new DataUpdateServiceDefault(
                     LoggerFactory.getLogger(DataUpdateServiceDefault.class.getName()),
                     httpClient);
-            dataUpdateService.onUpdateComplete(new GetAutoUpdateStatus());
-            // Build the device detection pipeline using the builder that comes with the
-            // fiftyone.devicedetection package and pass in the desired settings to configure
-            // automatic updates.
-            Pipeline pipeline = new DeviceDetectionPipelineBuilder(LoggerFactory.getILoggerFactory(), httpClient, dataUpdateService)
-                .useOnPremise(dataFile, true)
-                // For automatic updates to work you will need to provide a license key.
-                // A license key can be obtained with a subscription from https://51degrees.com/pricing
-                .setDataUpdateLicenseKey(licenseKey)
-                // Enable automatic updates.
-                .setAutoUpdate(true)
-                // Watch the data file on disk and refresh the engine 
-                // as soon as that file is updated. 
-                .setDataFileSystemWatcher(true)
-                // Enable update on startup, the auto update system 
-                // will be used to check for an update before the
-                // device detection engine is created. This will block 
-                // creation of the pipeline.
-                .setDataUpdateOnStartup(true)
-                .build();
+            try {
+            	dataUpdateService.onUpdateComplete(new GetAutoUpdateStatus());
+            	// Build the device detection pipeline using the builder that comes with the
+            	// fiftyone.devicedetection package and pass in the desired settings to configure
+            	// automatic updates.
+            	Pipeline pipeline = new DeviceDetectionPipelineBuilder(
+            			LoggerFactory.getILoggerFactory(), httpClient, dataUpdateService)
+            			.useOnPremise(dataFile, true)
+            			// For automatic updates to work you will need to provide a license key.
+            			// A license key can be obtained with a subscription from https://51degrees.com/pricing
+            			.setDataUpdateLicenseKey(licenseKey)
+            			// Enable automatic updates.
+            			.setAutoUpdate(true)
+            			// Watch the data file on disk and refresh the engine 
+            			// as soon as that file is updated. 
+            			.setDataFileSystemWatcher(true)
+            			// Enable update on startup, the auto update system 
+            			// will be used to check for an update before the
+            			// device detection engine is created. This will block 
+            			// creation of the pipeline.
+            			.setDataUpdateOnStartup(true)
+            			.build();
             
-            executor.shutdownNow();
+            	executor.shutdownNow();
             
-            Date updatedPublishedDate = pipeline
-                    .getElement(DeviceDetectionHashEngine.class)
-                    .getDataFilePublishedDate();
-            
-            if(initialPublishedDate.equals(updatedPublishedDate))
-            {
-                println("There was no update available at this time.");
+            	Date updatedPublishedDate = pipeline
+            			.getElement(DeviceDetectionHashEngine.class)
+            			.getDataFilePublishedDate();
+            	
+            	if(initialPublishedDate.equals(updatedPublishedDate))
+            	{
+            		println("There was no update available at this time.");
+            	}
+            	println("Data file published date: " + updatedPublishedDate.toString());
+            	System.in.read();
             }
-            println("Data file published date: " + updatedPublishedDate.toString());
-            System.in.read();
+            finally {
+            	// Shutdown data update service
+            	dataUpdateService.close();
+            }
         }
         
         class GetAutoUpdateStatus implements OnUpdateComplete {

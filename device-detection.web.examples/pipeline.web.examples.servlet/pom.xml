@@ -4,13 +4,20 @@
     <parent>
         <groupId>com.51degrees</groupId>
         <artifactId>device-detection.web.examples</artifactId>
-        <version>4.3.15-SNAPSHOT</version>
+        <version>4.3.16-SNAPSHOT</version>
     </parent>
 
     <artifactId>pipeline.web.examples.servlet</artifactId>
     <name>51Degrees :: Pipeline :: Web :: Examples :: Servlet</name>
 	<url>https://51degrees.com</url>
     <packaging>war</packaging>
+	<description>This example is no longer available in Maven</description>
+	<distributionManagement>
+		<relocation>
+			<groupId>com.51degrees.no_longer_in_maven</groupId>
+			<message>This example is no longer available in Maven</message>
+		</relocation>
+	</distributionManagement>
 
     <dependencies>
         <dependency>
