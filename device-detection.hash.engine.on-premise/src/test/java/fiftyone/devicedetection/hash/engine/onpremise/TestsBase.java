@@ -23,11 +23,10 @@
 package fiftyone.devicedetection.hash.engine.onpremise;
 
 import fiftyone.devicedetection.shared.testhelpers.UserAgentGenerator;
-import fiftyone.devicedetection.shared.testhelpers.Utils;
+import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.engines.Constants;
 
-import static fiftyone.devicedetection.shared.testhelpers.Constants.HASH_DATA_FILE_NAME;
-import static fiftyone.devicedetection.shared.testhelpers.Constants.UA_FILE_NAME;
+import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
 
 public class TestsBase {
 
@@ -44,10 +43,10 @@ public class TestsBase {
 
     protected void testInitialize(Constants.PerformanceProfiles profile) throws Exception {
         wrapper = new WrapperHash(
-            Utils.getFilePath(HASH_DATA_FILE_NAME),
+            FileUtils.getHashFile(),
             profile);
         userAgents = new UserAgentGenerator(
-            Utils.getFilePath(UA_FILE_NAME));
+            FileUtils.getFilePath(UA_FILE_NAME));
     }
 
     public void testCleanup() {

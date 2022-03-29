@@ -9,19 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>device-detection.examples</artifactId>
+    <artifactId>device-detection.shell.examples</artifactId>
     <name>51Degrees :: Device Detection :: Shell :: Examples</name>
     <url>https://51degrees.com</url>
-    <description>Example use of Device Detection from the shell. These examples are no longer available in Maven</description>
-	<distributionManagement>
-		<relocation>
-			<groupId>com.51degrees.no_longer_in_maven</groupId>
-			<message>These examples are no longer available in Maven</message>
-		</relocation>
-	</distributionManagement>
+    <description>Example use of Device Detection from the shell.</description>
 
     <properties>
-        <maven.deploy.skip>false</maven.deploy.skip>
+        <maven.deploy.skip>true</maven.deploy.skip>
         <jakarta.xml.bind-api.version>3.0.1</jakarta.xml.bind-api.version>
         <jaxb-runtime.version>3.0.2</jaxb-runtime.version>
         <jaxb-impl.version>3.0.2</jaxb-impl.version>

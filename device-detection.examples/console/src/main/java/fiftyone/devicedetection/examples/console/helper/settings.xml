@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This is an example of setting maven variables using your local
+settings.xml - see https://maven.apache.org/settings.html for location etc.
+
+These maven variables are set to system properties by the maven surefire
+test configuration in the standard project root POM and can hence be picked
+up automatically by tests.
+
+This does not affect the operation of the examples when launched via
+their "main" method, where the resource key needs to be supplied as
+a command line parameter, or by setting environment variables using
+your IDE launch configuration or your operating system shell.
+-->
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+    <profiles>
+        <profile>
+            <id>test-keys</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- a resource key configured for executing the tests and
+                examples in this source distribution may be configured at
+                https://configure.51degrees.com/jqz435Nc -->
+                <ResourceKey><!-- your resource key --></ResourceKey>
+            </properties>
+        </profile>
+    </profiles>
+</settings>

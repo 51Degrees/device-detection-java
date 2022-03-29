@@ -30,13 +30,13 @@ stages:
     resourceRepoName: 'ciTemplates'
 
 # Perform a security check
-- template: java/shared-security-vulnerability-check.yml@ciTemplates
-  parameters:
-    imageName: ${{ variables.linuxImage }}
-    dependencies: [Windows,Linux,MacOS]
+#- template: java/shared-security-vulnerability-check.yml@ciTemplates
+#  parameters:
+#    imageName: ${{ variables.linuxImage }}
+#    dependencies: [Windows,Linux,MacOS]
 
 # Try to complete the corresponding pull request if
 # this is triggered by one.    
 - template: shared-auto-complete-pr-stage.yml@ciTemplates
   parameters:
-    stageDependencies: [SecurityCheck]
+    stageDependencies: [Windows,Linux,MacOS]

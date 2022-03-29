@@ -24,7 +24,7 @@ package fiftyone.devicedetection;
 
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.devicedetection.shared.testhelpers.UserAgentGenerator;
-import fiftyone.devicedetection.shared.testhelpers.Utils;
+import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.data.FlowError;
 import fiftyone.pipeline.core.flowelements.Pipeline;
@@ -48,7 +48,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import static fiftyone.devicedetection.shared.testhelpers.Constants.*;
+import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
 import static fiftyone.pipeline.core.Constants.EVIDENCE_HTTPHEADER_PREFIX;
 import static fiftyone.pipeline.core.Constants.EVIDENCE_SEPERATOR;
 import static fiftyone.pipeline.engines.Constants.PerformanceProfiles.*;
@@ -62,6 +62,8 @@ import static org.mockito.Mockito.when;
 public class DeviceDetectionTests {
 
     private static final Logger logger = LoggerFactory.getLogger(DeviceDetectionTests.class);
+
+    private static final String HASH_DATA_FILE_NAME = FileUtils.getHashFileName();
 
     private static UserAgentGenerator userAgents;
     TestConfig[] hashConfigs = {
@@ -92,7 +94,7 @@ public class DeviceDetectionTests {
     @BeforeClass
     public static void initClass() throws IOException {
         userAgents = new UserAgentGenerator(
-            Utils.getFilePath(UA_FILE_NAME));
+            FileUtils.getFilePath(UA_FILE_NAME));
     }
 
     private static String reportErrors(Collection<FlowError> errors) {
@@ -140,7 +142,7 @@ public class DeviceDetectionTests {
         Constants.PerformanceProfiles performanceProfile,
         boolean useCache,
         boolean multiThreaded) throws Exception {
-        File datafile = Utils.getFilePath(datafileName);
+        File datafile = FileUtils.getFilePath(datafileName);
 
         // Configure the pipeline builder based on the
         // parameters passed to this method.

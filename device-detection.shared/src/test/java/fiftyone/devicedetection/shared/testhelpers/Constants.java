@@ -27,25 +27,6 @@ import java.util.Objects;
 
 public class Constants {
     public static final int UAS_TO_TEST = 10;
-    public static final String ENTERPRISE_HASH_DATA_FILE_NAME = "Enterprise-HashV41.hash";
-    public static final String LITE_HASH_DATA_FILE_NAME = "51Degrees-LiteV4.1.hash";
-    public static final String HASH_DATA_FILE_NAME;
-
-    static {
-        File f;
-        try {
-            f = Utils.getFilePath(ENTERPRISE_HASH_DATA_FILE_NAME);
-        } catch (Exception e) {
-            try {
-                f = Utils.getFilePath(LITE_HASH_DATA_FILE_NAME);
-            } catch (Exception ex) {
-                f = null;
-            }
-        }
-        HASH_DATA_FILE_NAME = Objects.nonNull(f) ? f.getPath() : null;
-    }
-
-    public static final String UA_FILE_NAME = "20000 User Agents.csv";
 
     public static final String[] ExcludedProperties = {"JavascriptImageOptimiser", "JavascriptBandwidth"};
 
@@ -54,9 +35,5 @@ public class Constants {
             "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile" +
             "/11D167 Safari/9537.53";
     
-    public static final String RESOURCE_KEY_ENV_VAR = "SuperResourceKey";
-	public static final String PLATFORM_RESOURCE_KEY_ENV_VAR = "AcceptChPlatformKey";
-	public static final String HARDWARE_RESOURCE_KEY_ENV_VAR = "AcceptChHardwareKey";
-	public static final String BROWSER_RESOURCE_KEY_ENV_VAR = "AcceptChBrowserKey";
-	public static final String NO_ACCEPTCH_RESOURCE_KEY_ENV_VAR = "AcceptChNoneKey";
+    public static final String RESOURCE_KEY_ENV_VAR = "TestResourceKey";
 }

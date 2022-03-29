@@ -17,14 +17,14 @@
             <id>default</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
-             </activation>
-             <modules>
+            </activation>
+            <modules>
                 <module>device-detection.shared</module>
                 <module>device-detection.hash.engine.on-premise</module>
                 <module>device-detection.cloud</module>
                 <module>device-detection</module>
+                <module>device-detection.examples</module>
                 <module>device-detection.shell.examples</module>
-                <module>device-detection.web.examples</module>
             </modules>
         </profile>
         <profile>
@@ -50,7 +50,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
 
-        <pipeline.version>4.3.13</pipeline.version>
+        <pipeline.version>4.4.0-skip-examples-deployment-test.1</pipeline.version>
 
         <junit.version>4.13.2</junit.version>
         <slf4j-api.version>1.7.33</slf4j-api.version>
@@ -156,12 +156,8 @@
                         <!-- this sets the scope of file search (inter alia in Utils.getFilePath) to the project directory-->
                         <!--suppress UnresolvedMavenProperty -->
                         <project.root>${maven.multiModuleProjectDirectory}</project.root>
-                        <!-- these are defined in  settings.xml -->
-                        <SuperResourceKey>${SuperResourceKey}</SuperResourceKey>
-                        <AcceptChNoneKey>${AcceptChNoneKey}</AcceptChNoneKey>
-                        <AcceptChPlatformKey>${AcceptChPlatformKey}</AcceptChPlatformKey>
-                        <AcceptChBrowserKey>${AcceptChBrowserKey}</AcceptChBrowserKey>
-                        <AcceptChHardwareKey>${AcceptChHardwareKey}</AcceptChHardwareKey>
+                        <!-- cloud resource key for running tests - this is defined in  settings.xml -->
+                        <TestResourceKey>${TestResourceKey}</TestResourceKey>
                     </systemPropertyVariables>
                     <properties>
                         <property>

@@ -24,7 +24,7 @@ package fiftyone.devicedetection.cloud;
 
 import fiftyone.devicedetection.cloud.flowelements.DeviceDetectionCloudEngine;
 import fiftyone.devicedetection.cloud.flowelements.DeviceDetectionCloudEngineBuilder;
-import fiftyone.devicedetection.shared.testhelpers.Constants;
+import fiftyone.devicedetection.shared.testhelpers.ResourceKeyHelper;
 import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngine;
 import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder;
 import fiftyone.pipeline.core.flowelements.Pipeline;
@@ -45,25 +45,9 @@ public class WrapperCloud implements Closeable {
     public DeviceDetectionCloudEngine deviceDetectionCloudEngine;
 
     public WrapperCloud() throws Exception {
-    	
-        String envResourceKey = System.getenv(Constants.RESOURCE_KEY_ENV_VAR);
-        String propertyResourceKey = System.getProperty(Constants.RESOURCE_KEY_ENV_VAR);
-        String resourceKey = null;
-        
-        if(envResourceKey == null || envResourceKey.isEmpty()) {
-    	if (propertyResourceKey == null || propertyResourceKey.isEmpty())
-    		throw new Exception("Resource key is required to run Cloud tests.");
-    	else {
-    		resourceKey = propertyResourceKey;
-    	}
-        }
-        else {
-        	resourceKey = envResourceKey;
-        }
-    	
         cloudRequestEngine = 
                 new CloudRequestEngineBuilder(loggerFactory)
-                .setResourceKey(resourceKey)
+                .setResourceKey(ResourceKeyHelper.getResourceKey())
                 .build();
         deviceDetectionCloudEngine = new DeviceDetectionCloudEngineBuilder(loggerFactory)
                 .build();
