@@ -23,30 +23,27 @@
 package fiftyone.devicedetection.examples.hash;
 
 
-import fiftyone.devicedetection.shared.testhelpers.Utils;
+import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.File;
-
-import static fiftyone.devicedetection.shared.testhelpers.Constants.HASH_DATA_FILE_NAME;
-import static fiftyone.devicedetection.shared.testhelpers.Constants.LITE_HASH_DATA_FILE_NAME;
-import static fiftyone.devicedetection.shared.testhelpers.Constants.UA_FILE_NAME;
+import static fiftyone.devicedetection.shared.testhelpers.FileUtils.LITE_HASH_DATA_FILE_NAME;
+import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
 
 @RunWith(BuilderClassPathTestRunner.class)
 public class ExampleTests {
 
     private static final String dataFile =
-        Utils.getFilePath(HASH_DATA_FILE_NAME).getAbsolutePath();
+        FileUtils.getHashFile().getAbsolutePath();
     private static final String liteDataFile =
-    	Utils.getFilePath(LITE_HASH_DATA_FILE_NAME).getAbsolutePath();
+    	FileUtils.getFilePath(LITE_HASH_DATA_FILE_NAME).getAbsolutePath();
 
     @Test
     public void Benchmark_Hash_SingleThreaded() throws Exception {
     	Benchmark.runBenchmarks(
     		liteDataFile,
-    		Utils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
+    		FileUtils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
     		1);
     }
 
@@ -54,7 +51,7 @@ public class ExampleTests {
     public void Benchmark_Hash_MultiThreaded() throws Exception {
     	Benchmark.runBenchmarks(
     		liteDataFile,
-    		Utils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
+    		FileUtils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
     		8);
     }
 
@@ -62,12 +59,6 @@ public class ExampleTests {
     public void ConfigureFromFile_Hash() throws Exception {
         ConfigureFromFile.Example configureFromFile = new ConfigureFromFile.Example(false);
         configureFromFile.run();
-    }
-
-    @Test
-    public void GettingStarted_Hash() throws Exception {
-        GettingStarted.Example gettingStarted = new GettingStarted.Example(false);
-        gettingStarted.run(dataFile);
     }
 
     @Test
@@ -83,28 +74,11 @@ public class ExampleTests {
     }
 
     @Test
-    public void OfflineProcessing_Hash() throws Exception {
-        String outputFile = "testoutput";
-        try {
-            OfflineProcessing.Example offlineProcessing = new OfflineProcessing.Example(false);
-            offlineProcessing.run(
-                dataFile,
-                Utils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
-                outputFile);
-        } finally {
-            File file = new File(outputFile);
-            if (file.exists()) {
-                file.delete();
-            }
-        }
-    }
-
-    @Test
     public void Performance_Hash() throws Exception {
         Performance.Example performance = new Performance.Example(false);
         performance.run(
             dataFile,
-            Utils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
+            FileUtils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
             1000);
     }
 
@@ -112,11 +86,5 @@ public class ExampleTests {
     public void StronglyTyped_Hash() throws Exception {
         StronglyTyped.Example stronglyTyped = new StronglyTyped.Example(false);
         stronglyTyped.run(dataFile);
-    }
-    
-    @Test
-    public void UserAgentClientHints_Hash() throws Exception {
-        UserAgentClientHints.Example UAClientHints = new UserAgentClientHints.Example(false);
-        UAClientHints.run(dataFile);
     }
 }

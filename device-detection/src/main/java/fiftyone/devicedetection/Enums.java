@@ -23,7 +23,7 @@
 package fiftyone.devicedetection;
 
 /**
- * @deprecated  no longer needed since there is only the Hash algorith
+ * @deprecated  no longer needed since there is only the Hash algorithm
  */
 @Deprecated
 public class Enums {

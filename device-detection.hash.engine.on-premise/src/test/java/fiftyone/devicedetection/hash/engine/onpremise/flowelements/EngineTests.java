@@ -31,10 +31,10 @@ import org.junit.Test;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
-import fiftyone.devicedetection.shared.testhelpers.Utils;
+import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.engines.Constants;
-import static fiftyone.devicedetection.shared.testhelpers.Constants.LITE_HASH_DATA_FILE_NAME;
-import static fiftyone.devicedetection.shared.testhelpers.Constants.ENTERPRISE_HASH_DATA_FILE_NAME;
+import static fiftyone.devicedetection.shared.testhelpers.FileUtils.LITE_HASH_DATA_FILE_NAME;
+import static fiftyone.devicedetection.shared.testhelpers.FileUtils.ENTERPRISE_HASH_DATA_FILE_NAME;
 
 public class EngineTests {
 	protected static final ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
@@ -55,7 +55,7 @@ public class EngineTests {
 	private void testDataSourceTier(String fileName) throws Exception {
 		File dataFile = null;
 		try {
-			dataFile = Utils.getFilePath(fileName);
+			dataFile = FileUtils.getFilePath(fileName);
 		}
 		catch (IllegalArgumentException e) {
 			assumeTrue(e.getMessage(), false);

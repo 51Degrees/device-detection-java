@@ -1,0 +1,56 @@
+<!-- Example client-side script to display locally detected values -->
+<script lang="JavaScript">
+    window.onload = function () {
+    // Subscribe to the 'complete' event.
+    fod.complete(function (data) {
+    // When the event fires, use the supplied data to populate a new table.
+        let fieldValues = [];
+
+
+
+        var hardwareName = typeof data.device.hardwarename == "undefined" ?
+            "Unknown" : data.device.hardwarename.join(", ")
+        fieldValues.push(["Hardware Name ", hardwareName]);
+        fieldValues.push(["Platform ",
+            data.device.platformname + " " + data.device.platformversion]);
+        fieldValues.push(["Browser ",
+            data.device.browsername + " " + data.device.browserversion]);
+        fieldValues.push(["Screen width (pixels) ", data.device.screenpixelswidth]);
+        fieldValues.push(["Screen height (pixels) ", data.device.screenpixelsheight]);
+        displayValues(fieldValues);
+    });
+}
+
+
+
+// Helper function to add a table that displays the supplied values.
+function displayValues(fieldValues) {
+    var table = document.createElement("table");
+    fieldValues.forEach(function (entry) {
+        var tr = document.createElement("tr");
+        addToRow(tr, "td", entry[0], false);
+        addToRow(tr, "td", entry[1], false);
+        table.appendChild(tr);
+    });
+
+
+
+    var element = document.getElementById("apple-detection");
+    element.appendChild(table);
+}
+
+
+
+// Helper function to add an entry to a table row.
+function addToRow(row, elementName, text, strong) {
+    var entry = document.createElement(elementName);
+    var textNode = document.createTextNode(text);
+    if (strong === true) {
+        var strongNode = document.createElement("strong");
+        strongNode.appendChild(textNode);
+        textNode = strongNode;
+    }
+    entry.appendChild(textNode);
+    row.appendChild(entry);
+}
+</script>

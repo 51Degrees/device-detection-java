@@ -21,7 +21,7 @@ The Java API can either use our cloud service to get its data or it can use a lo
 #### Cloud
 
 You will require [resource keys](https://51degrees.com/documentation/4.3/_info__resource_keys.html)
-to use the Web API, as described on our website. Get resource keys from
+to use the Cloud API, as described on our website. Get resource keys from
 our [configurator](https://configure.51degrees.com/), see our [documentation](https://51degrees.com/documentation/4.3/_concepts__configurator.html) on 
 how to use this.
 
@@ -49,9 +49,8 @@ the [latest version](https://mvnrepository.com/artifact/com.51degrees/device-det
 <!-- Make sure to select the latest version from https://mvnrepository.com/artifact/com.51degrees/pipeline.device-detection -->
 <dependency>
     <groupId>com.51degrees</groupId>
-    <artifactId>pipeline.device-detection</artifactId>
+    <artifactId>device-detection</artifactId>
     <version>4.3.14</version>
-    <type>pom</type>
 </dependency>
 ```
 
@@ -96,7 +95,7 @@ You will need [resource keys](https://51degrees.com/documentation/4.3/_info__res
 To verify the code:
 
 ```
-mvn clean test
+mvn clean test -DTestResourceKey=[Resource Key]
 ```
 
 #### Install JARs
@@ -121,5 +120,5 @@ On Windows, the default Platform Toolset version is `v142` and the default Windo
 The following examples are not distributed as maven jars and need to be built by you, please
 see the respective README for these projects:
 
+- **device-detection.examples** - Device detection getting started and other introductory examples.
 - **device-detection.shell.examples** - Device detection examples to be run from the command line.
-- **device-detection.web.examples** - Device detection examples to be run via Tomcat, servlets etc.

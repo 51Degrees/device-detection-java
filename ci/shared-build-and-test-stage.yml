@@ -98,7 +98,7 @@ stages:
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean test'
-        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -DFOD_CLOUD_API_URL=$(FOD_CLOUD_API_URL) -DSuperResourceKey=$(SuperResourceKey) -DAcceptChPlatformKey=$(AcceptChPlatformKey) -DAcceptChHardwareKey=$(AcceptChHardwareKey) -DAcceptChBrowserKey=$(AcceptChBrowserKey) -DAcceptChNoneKey=$(AcceptChNoneKey) -DplatformToolsetVersion=${{ variables.plfTsVer }} -DwindowsSDKVersion=${{ variables.winSDKVer }} --no-transfer-progress'
+        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -DFOD_CLOUD_API_URL=$(FOD_CLOUD_API_URL) -DTestResourceKey=$(SuperResourceKey) -DplatformToolsetVersion=${{ variables.plfTsVer }} -DwindowsSDKVersion=${{ variables.winSDKVer }} --no-transfer-progress'
         jdkVersionOption: $(jdkVersion)
         testRunTitle: '${{ parameters.imageName }}-$(jdkVersion)'
 

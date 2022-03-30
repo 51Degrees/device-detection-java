@@ -22,7 +22,7 @@
 
 package fiftyone.devicedetection.examples;
 
-import fiftyone.devicedetection.shared.testhelpers.Utils;
+import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 import static fiftyone.devicedetection.examples.Comparison.readUserAgents;
-import static fiftyone.devicedetection.shared.testhelpers.Constants.*;
+import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
 
 public class ComparisonTests {
 
@@ -45,14 +45,14 @@ public class ComparisonTests {
 
     @Before
     public void setUp() throws IOException {
-        userAgents = readUserAgents(Utils.getFilePath(UA_FILE_NAME).getAbsolutePath());
+        userAgents = readUserAgents(FileUtils.getFilePath(UA_FILE_NAME).getAbsolutePath());
     }
 
     @Test
     public void Comparison_Hash_Memory_SingleThreaded() throws Exception {
         Comparison.ComparisonProvider provider =
             new Comparison.FiftyOneDegreesHashMemoryProvider(
-                Utils.getFilePath(HASH_DATA_FILE_NAME).getAbsolutePath());
+                FileUtils.getHashFile().getAbsolutePath());
         comparison.run(provider, userAgents, 1);
     }
 
@@ -60,7 +60,7 @@ public class ComparisonTests {
     public void Comparison_Hash_Memory_MultiThreaded() throws Exception {
         Comparison.ComparisonProvider provider =
             new Comparison.FiftyOneDegreesHashMemoryProvider(
-                Utils.getFilePath(HASH_DATA_FILE_NAME).getAbsolutePath());
+                FileUtils.getHashFile().getAbsolutePath());
         comparison.run(provider, userAgents, 8);
     }
 }

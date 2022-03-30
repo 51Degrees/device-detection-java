@@ -28,11 +28,7 @@ import static org.junit.Assert.fail;
 public class ClientHintsExampleTestBase {
 	
 	public static String SUPER_RESOURCEKEY = getEnvVar(RESOURCE_KEY_ENV_VAR, "Super Resource Key");
-	public static String PLATFORM_RESOURCEKEY = getEnvVar(PLATFORM_RESOURCE_KEY_ENV_VAR, "Resource Key containing SetHeaderPlatformAccept-CH property");
-	public static String HARDWARE_RESOURCEKEY = getEnvVar(HARDWARE_RESOURCE_KEY_ENV_VAR, "Resource Key containing SetHeaderHardwareAccept-CH property");
-	public static String BROWSER_RESOURCEKEY = getEnvVar(BROWSER_RESOURCE_KEY_ENV_VAR, "Resource Key containing SetHeaderBrowserAccept-CH property");
-	public static String NO_ACCEPTCH_KEY = getEnvVar(NO_ACCEPTCH_RESOURCE_KEY_ENV_VAR, "Resource Key containing no SetHeader*Accept-CH properties");
-	
+
 	public static String ALL_PROPERTIES = null;
 	public static String BASE_PROPERTIES = "HardwareVendor,HardwareName,DeviceType,PlatformVendor,PlatformName,PlatformVersion,BrowserVendor,BrowserName,BrowserVersion";
     public static String PLATFORM_PROPERTIES = BASE_PROPERTIES + ",SetHeaderPlatformAccept-CH";

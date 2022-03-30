@@ -823,8 +823,8 @@ INPUT                  = ../device-detection/src/main \
                          ../device-detection.shell.examples/src/main \
                          ../device-detection.hash.engine.on-premise/src/main \
                          ../device-detection.shared/src/main \
+                         ../device-detection.examples \
                          ../README.md \
-                         ../device-detection.web.examples
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -899,6 +899,7 @@ EXCLUDE_SYMBOLS        =
 
 EXAMPLE_PATH           = ../device-detection.shell.examples \
                          ../device-detection.web.examples \
+                         ../device-detection.examples \
                          ../../../src/snippets
 
 # If the value of the EXAMPLE_PATH tag contains directories, you can use the

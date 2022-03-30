@@ -378,7 +378,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
             // Add the share usage element to the list if enabled
             if (shareUsageEnabled) {
                 getFlowElements().add(
-                    new ShareUsageBuilder(loggerFactory, httpClient).build());
+                    new ShareUsageBuilder(loggerFactory).build());
             }
             // Add the device detection engine to the list
             getFlowElements().add(deviceDetectionEngine);
