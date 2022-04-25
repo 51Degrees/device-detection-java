@@ -1,11 +1,8 @@
-package fiftyone.devicedetection.examples.web;
+package fiftyone.devicedetection.examples.shared;
 
 import fiftyone.devicedetection.shared.testhelpers.FileUtils;
+import org.junit.Assert;
 import org.junit.Test;
-
-import java.io.File;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 
 import static org.junit.Assert.*;
 
@@ -19,7 +16,7 @@ public class OptionsHelperTest {
     @Test
     public void replaceTest() throws Exception {
         OptionsHelper oh = new OptionsHelper(FileUtils.getFilePath("51Degrees-Cloud-Test.xml"));
-        assertTrue( oh.replace("CloudRequestEngine", "ResourceKey", "something"));
+        Assert.assertTrue( oh.replace("CloudRequestEngine", "ResourceKey", "something"));
         assertEquals("something", oh.find("CloudRequestEngine", "ResourceKey"));
     }
 }

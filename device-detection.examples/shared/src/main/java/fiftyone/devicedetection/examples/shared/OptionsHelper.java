@@ -1,10 +1,10 @@
-package fiftyone.devicedetection.examples.web;
+package fiftyone.devicedetection.examples.shared;
 
 import fiftyone.pipeline.core.configuration.ElementOptions;
 import fiftyone.pipeline.core.configuration.PipelineOptions;
-import java.io.*;
+import fiftyone.pipeline.core.configuration.PipelineOptionsFactory;
 
-import static fiftyone.pipeline.core.configuration.PipelineOptionsFactory.getOptionsFromFile;
+import java.io.*;
 
 /**
  * Helper allows retrieving values from and manipulating {@link PipelineOptions}
@@ -12,12 +12,15 @@ import static fiftyone.pipeline.core.configuration.PipelineOptionsFactory.getOpt
 public class OptionsHelper {
     private final PipelineOptions pipelineOptions;
 
+    public PipelineOptions get(){
+        return pipelineOptions;
+    }
     public OptionsHelper(String file) throws Exception {
-        pipelineOptions = getOptionsFromFile(file);
+        pipelineOptions = PipelineOptionsFactory.getOptionsFromFile(file);
     }
 
     public OptionsHelper(File file) throws Exception {
-        pipelineOptions = getOptionsFromFile(file);
+        pipelineOptions = PipelineOptionsFactory.getOptionsFromFile(file);
     }
 
     public String find(String builderName, String buildParameter){

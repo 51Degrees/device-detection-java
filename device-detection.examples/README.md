@@ -24,4 +24,4 @@ to run the examples can be obtained [here](https://configure.51degrees.com/jqz43
 To use the resource key in the example it can be supplied as a
 command line parameter, pasted into the configuration file (where there is one)
 or supplied as either a environment variable or a system
-property called "ResourceKey".
+property called "TestResourceKey".

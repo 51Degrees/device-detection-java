@@ -6,7 +6,6 @@ import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngine;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.FlowElement;
-import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,13 +16,12 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
-import static fiftyone.devicedetection.examples.web.ExampleHelper.asString;
-import static fiftyone.devicedetection.examples.web.ExampleHelper.tryGet;
+import static fiftyone.devicedetection.examples.shared.PropertyHelper.asString;
+import static fiftyone.devicedetection.examples.shared.PropertyHelper.tryGet;
 
 public class HtmlContentHelper {
     /**

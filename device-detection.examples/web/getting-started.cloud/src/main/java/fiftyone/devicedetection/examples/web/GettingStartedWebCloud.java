@@ -1,5 +1,6 @@
 package fiftyone.devicedetection.examples.web;
 
+import fiftyone.devicedetection.examples.shared.ResourceKeyHelper;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.web.Constants;
@@ -16,7 +17,7 @@ import static fiftyone.common.testhelpers.LogbackHelper.configureLogback;
 import static fiftyone.devicedetection.examples.web.HtmlContentHelper.*;
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.getFilePath;
 
-/**
+/*
  * @example GettingStartedWebCloud.java
  * 
  * @include{doc} example-getting-started-web.txt
@@ -70,7 +71,8 @@ public class GettingStartedWebCloud extends HttpServlet {
         logger.info("Running Example {}", GettingStartedWebCloud.class);
         // if the config file doesn't contain a valid resource key we will try to find
         // one in args or in environment or system variables
-        ExampleHelper.findResourceKey(resourceBase + "/WEB-INF/51Degrees-Cloud.xml", args);
+        ResourceKeyHelper.findResourceKey(
+                resourceBase + "/WEB-INF/51Degrees-Cloud.xml", args);
         // start Jetty with this WebApp
         EmbedJetty.runWebApp(resourceBase, 8081);
     }
