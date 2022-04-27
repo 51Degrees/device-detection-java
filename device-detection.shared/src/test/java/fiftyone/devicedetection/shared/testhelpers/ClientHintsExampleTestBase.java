@@ -26,8 +26,6 @@ import static fiftyone.devicedetection.shared.testhelpers.Constants.*;
 import static org.junit.Assert.fail;
 
 public class ClientHintsExampleTestBase {
-	
-	public static String SUPER_RESOURCEKEY = getEnvVar(RESOURCE_KEY_ENV_VAR, "Super Resource Key");
 
 	public static String ALL_PROPERTIES = null;
 	public static String BASE_PROPERTIES = "HardwareVendor,HardwareName,DeviceType,PlatformVendor,PlatformName,PlatformVersion,BrowserVendor,BrowserName,BrowserVersion";

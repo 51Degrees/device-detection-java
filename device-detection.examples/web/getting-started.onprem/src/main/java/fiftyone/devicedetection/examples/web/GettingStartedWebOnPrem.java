@@ -1,5 +1,6 @@
 package fiftyone.devicedetection.examples.web;
 
+import fiftyone.devicedetection.examples.shared.OptionsHelper;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.web.Constants;
@@ -16,7 +17,7 @@ import static fiftyone.common.testhelpers.LogbackHelper.configureLogback;
 import static fiftyone.devicedetection.examples.web.HtmlContentHelper.*;
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.getFilePath;
 
-/**
+/*
  * @example GettingStartedWebOnPrem.java
  * 
  * @include{doc} example-getting-started-web.txt

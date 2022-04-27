@@ -1,7 +1,8 @@
 package fiftyone.devicedetection.examples.console;
 
 import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
-import fiftyone.devicedetection.examples.console.helper.ExampleHelper;
+import fiftyone.devicedetection.examples.shared.ResourceKeyHelper;
+import fiftyone.devicedetection.examples.shared.ExampleTestHelper;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
@@ -13,13 +14,13 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import static fiftyone.common.testhelpers.LogbackHelper.configureLogback;
-import static fiftyone.devicedetection.examples.console.helper.ExampleHelper.getResourceKey;
+import static fiftyone.devicedetection.examples.shared.PropertyHelper.asString;
+import static fiftyone.devicedetection.examples.shared.ResourceKeyHelper.getTestResourceKey;
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.getFilePath;
 
-/**
+/*
  * @example console/GettingStartedCloud.java
  *
  * @include{doc} example-getting-started-cloud.txt
@@ -47,14 +48,14 @@ public class GettingStartedCloud {
 
     /**
      * The resource key can be supplied as an argument to this program or as an environment
-     * variable or as a Java system property called "ResourceKey".
+     * variable or as a Java system property called "TestResourceKey".
      */
     public static void main(String[] args) throws Exception {
         configureLogback(getFilePath("logback.xml"));
-        String resourceKey = args.length > 0 ? args[0]: getResourceKey();
+        String resourceKey = args.length > 0 ? args[0]: getTestResourceKey();
 
         // prepare 'evidence' for use in pipeline (see below)
-        List<Map<String, String>> evidence = ExampleHelper.setUpEvidence();
+        List<Map<String, String>> evidence = ExampleTestHelper.setUpEvidence();
         run(resourceKey, evidence, System.out);
     }
 
@@ -69,12 +70,12 @@ public class GettingStartedCloud {
                            OutputStream outputStream) throws Exception {
         logger.info("Running GettingStarted Cloud example");
 
-        ExampleHelper.checkResourceKey(resourceKey);
+        ResourceKeyHelper.checkResourceKey(resourceKey);
 
         /* In this example, we use the DeviceDetectionPipelineBuilder and configure it in code.
 
         For more information about pipelines in general see the documentation at
-        http://51degrees.com/documentation/4.3/_concepts__configuration__builders__index.html
+        http://51degrees.com/documentation/_concepts__configuration__builders__index.html
 
         Note that we wrap the creation of a pipeline in a try/resources to control its lifecycle */
         try (Pipeline pipeline = new DeviceDetectionPipelineBuilder()
@@ -133,29 +134,13 @@ public class GettingStartedCloud {
             /* Display the results of the detection, which are called device properties. See the
             property dictionary at https://51degrees.com/developers/property-dictionary for
             details of all available properties. */
-            writer.println(outputValue("Mobile Device", device.getIsMobile()));
-            writer.println(outputValue("Platform Name", device.getPlatformName()));
-            writer.println(outputValue("Platform Version", device.getPlatformVersion()));
-            writer.println(outputValue("Browser Name", device.getBrowserName()));
-            writer.println(outputValue("Browser Version", device.getBrowserVersion()));
+            writer.println("\tMobile Device: " + asString(device.getIsMobile()));
+            writer.println("\tPlatform Name: " + asString(device.getPlatformName()));
+            writer.println("\tPlatform Version: " + asString(device.getPlatformVersion()));
+            writer.println("\tBrowser Name: " + asString(device.getBrowserName()));
+            writer.println("\tBrowser Version: " + asString(device.getBrowserVersion()));
         }
         writer.println();
         writer.flush();
-    }
-
-    /**
-     * Format a name and an AspectPropertyValue for display
-     * @param name the name of the property
-     * @param value a value (or no value) for it
-     * @return the string representing the above parameters
-     */
-    private static String outputValue(String name, AspectPropertyValue<?> value) {
-        /* Individual result values are wrapped with "AspectPropertyValue". This functions
-        similarly to a null-able type. If the value has not been set then trying to access the
-        "Value" property will throw an exception. AspectPropertyValue also includes the
-        "NoValueMessage", which describes why the value has not been set. */
-        return (value.hasValue() ?
-                String.format("\t%s: %s", name, value.getValue().toString()) :
-                String.format("\t%s: %s", name, value.getNoValueMessage()));
     }
 }

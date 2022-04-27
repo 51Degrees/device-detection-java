@@ -9,16 +9,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>device-detection.examples.console</artifactId>
-    <name>51Degrees :: Device Detection :: Examples :: Console</name>
-    <description>Examples showing how to use device detection in a console environment</description>
+    <artifactId>device-detection.examples.shared</artifactId>
+    <name>51Degrees :: Device Detection :: Examples :: Shared</name>
+
+    <properties>
+        <jakarta.xml.bind-api.version>3.0.1</jakarta.xml.bind-api.version>
+        <jaxb-runtime.version>3.0.2</jaxb-runtime.version>
+        <jaxb-impl.version>3.0.2</jaxb-impl.version>
+    </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>device-detection.examples.shared</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.51degrees</groupId>
             <artifactId>device-detection</artifactId>
@@ -29,17 +29,24 @@
             <artifactId>device-detection.shared</artifactId>
             <version>${project.version}</version>
             <type>test-jar</type>
-            <scope>test</scope>
+            <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.yaml</groupId>
-            <artifactId>snakeyaml</artifactId>
-            <version>${snakeyaml.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>${jakarta.xml.bind-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>${jaxb-impl.version}</version>
+        </dependency>
+
     </dependencies>
 </project>

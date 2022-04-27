@@ -156,8 +156,11 @@
                         <!-- this sets the scope of file search (inter alia in Utils.getFilePath) to the project directory-->
                         <!--suppress UnresolvedMavenProperty -->
                         <project.root>${maven.multiModuleProjectDirectory}</project.root>
-                        <!-- cloud resource key for running tests - this is defined in  settings.xml -->
+                        <!-- cloud resource key for running tests - this can be defined in  settings.xml -->
                         <TestResourceKey>${TestResourceKey}</TestResourceKey>
+                        <!-- special resource key with license for running TAC and Native Model examples
+                             - can be defined in settings.xml-->
+                        <SuperResourceKey>${SuperResourceKey}</SuperResourceKey>
                     </systemPropertyVariables>
                     <properties>
                         <property>

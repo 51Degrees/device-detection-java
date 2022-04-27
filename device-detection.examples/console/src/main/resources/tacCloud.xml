@@ -1,0 +1,16 @@
+<PipelineOptions>
+    <Elements>
+        <Element>
+            <BuildParameters>
+                <!-- A free resource key configured with the properties
+                required by this example may be obtained from
+                https://configure.51degrees.com/jqz435Nc -->
+                <ResourceKey>!!YOUR_RESOURCE_KEY!!</ResourceKey>
+            </BuildParameters>
+            <BuilderName>CloudRequestEngine</BuilderName>
+        </Element>
+        <Element>
+            <BuilderName>HardwareProfileCloudEngine</BuilderName>
+        </Element>
+    </Elements>
+</PipelineOptions>

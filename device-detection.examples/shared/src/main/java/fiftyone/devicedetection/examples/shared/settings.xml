@@ -24,7 +24,7 @@ your IDE launch configuration or your operating system shell.
                 <!-- a resource key configured for executing the tests and
                 examples in this source distribution may be configured at
                 https://configure.51degrees.com/jqz435Nc -->
-                <ResourceKey><!-- your resource key --></ResourceKey>
+                <TestResourceKey><!-- your resource key --></TestResourceKey>
             </properties>
         </profile>
     </profiles>

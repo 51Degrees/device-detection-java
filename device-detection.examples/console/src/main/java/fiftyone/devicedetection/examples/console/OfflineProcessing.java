@@ -1,7 +1,7 @@
 package fiftyone.devicedetection.examples.console;
 
 import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
-import fiftyone.devicedetection.examples.console.helper.ExampleHelper;
+import fiftyone.devicedetection.examples.shared.DataFileHelper;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.devicedetection.shared.testhelpers.FileUtils;
@@ -21,9 +21,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static fiftyone.common.testhelpers.LogbackHelper.configureLogback;
+import static fiftyone.devicedetection.examples.shared.PropertyHelper.asString;
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.getFilePath;
 
-/**
+/*
  * @example console/OfflineProcessing.java
  * @include{doc} example-offline-processing-hash.txt
  * <p>
@@ -58,10 +59,12 @@ public class OfflineProcessing {
     // Note that the Lite data file is only used for illustration, and has
     // limited accuracy and capabilities. Find out about the Enterprise data
     // file here: https://51degrees.com/pricing
-    public static final String LITE_V_4_1_HASH = "51Degrees-LiteV4.1.hash";
+    public static final String LITE_V_4_1_HASH =
+            "device-detection-data/51Degrees-LiteV4.1.hash";
     // This 51degrees file of 20,000 examples (distributed with the source)
     // needs to be somewhere in the project space
-    public static final String HEADER_EVIDENCE_YML = "20000 Evidence Records.yml";
+    public static final String HEADER_EVIDENCE_YML =
+            "device-detection-data/20000 Evidence Records.yml";
 
     public static void main(String[] args) throws Exception {
         configureLogback(getFilePath("logback.xml"));
@@ -85,7 +88,7 @@ public class OfflineProcessing {
         try {
             detectionFile = FileUtils.getFilePath(dataFile).getAbsolutePath();
         } catch (Exception e) {
-            ExampleHelper.cantFindDataFile(dataFile);
+            DataFileHelper.cantFindDataFile(dataFile);
             throw e;
         }
 
@@ -119,7 +122,7 @@ public class OfflineProcessing {
                 .setAutoUpdate(false)
                 // -- Setting the Profile
                 // For information on profiles see
-                // https://51degrees.com/documentation/4.3/_device_detection__features__performance_options.html
+                // https://51degrees.com/documentation/_device_detection__features__performance_options.html
                 //.setPerformanceProfile(Constants.PerformanceProfiles.MaxPerformance)
                 //.setPerformanceProfile(Constants.PerformanceProfiles.HighPerformance)
                 // Low memory profile has detection data streamed from disk on
@@ -128,11 +131,11 @@ public class OfflineProcessing {
                 .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
                 //.setPerformanceProfile(Constants.PerformanceProfiles.Balanced)
                 // -- Setting the Graph
-                // see https://51degrees.com/documentation/4.3/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction
+                // see https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction
                 //.setUsePerformanceGraph(false)
                 //.setUsePredictiveGraph(true)
                 // -- Setting Predictive Power
-                // see https://51degrees.com/documentation/4.3/_device_detection__hash.html#DeviceDetection_Hash_PredictivePower
+                // see https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_PredictivePower
                 //.setDifference(0)
                 //.setDrift(0)
                 .build()) {
@@ -178,9 +181,9 @@ public class OfflineProcessing {
                          */
 
                         Map<String, ? super Object> resultMap = new HashMap<>();
-                        resultMap.put("device.ismobile", getPropertyValue(device.getIsMobile()));
-                        resultMap.put("device.platformname", getPropertyValue(device.getPlatformName()));
-                        resultMap.put("device.platformversion", getPropertyValue(device.getPlatformVersion()));
+                        resultMap.put("device.ismobile", asString(device.getIsMobile()));
+                        resultMap.put("device.platformname", asString(device.getPlatformName()));
+                        resultMap.put("device.platformversion", asString(device.getPlatformVersion()));
 
                         // to look at all device detection properties use the following:
                         // resultMap.putAll(getPopulatedProperties(device, "device."));
@@ -209,12 +212,6 @@ public class OfflineProcessing {
         }
     }
 	
-	private static Object getPropertyValue (AspectPropertyValue<?> value) {
-		return value.hasValue()
-			? value.getValue()
-			: "Unknown. " + value.getNoValueMessage();
-	}
-
     /**
      * Filter entries that are not keyed on the required prefix
      *

@@ -1,6 +1,7 @@
 package fiftyone.devicedetection.cloud.flowelements;
 
 import fiftyone.devicedetection.cloud.data.MultiDeviceDataCloud;
+import fiftyone.pipeline.annotations.ElementBuilder;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.data.factories.ElementDataFactory;
 import fiftyone.pipeline.core.flowelements.FlowElement;
@@ -11,6 +12,8 @@ import org.slf4j.ILoggerFactory;
 
 import java.util.List;
 
+
+@ElementBuilder
 public class HardwareProfileCloudEngineBuilder extends AspectEngineBuilderBase<
     HardwareProfileCloudEngineBuilder,
     HardwareProfileCloudEngine> {

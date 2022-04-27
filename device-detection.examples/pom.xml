@@ -16,6 +16,7 @@
     <modules>
         <module>web</module>
         <module>console</module>
+        <module>shared</module>
     </modules>
 
     <properties>
