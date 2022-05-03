@@ -5,7 +5,6 @@ import fiftyone.devicedetection.examples.shared.DataFileHelper;
 import fiftyone.devicedetection.examples.shared.ExampleTestHelper;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
-import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.Constants;
@@ -19,14 +18,7 @@ import java.util.Map;
 
 import static fiftyone.common.testhelpers.LogbackHelper.configureLogback;
 import static fiftyone.devicedetection.examples.shared.PropertyHelper.asString;
-import static fiftyone.devicedetection.shared.testhelpers.FileUtils.getFilePath;
-/*
- * @example console/GettingStartedOnPrem.java
- * @include{doc} example-getting-started-onpremise.txt
- * <p>
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/GettingStartedOnPrem.java).
- * @include{doc} example-require-datafile.txt
- */
+import static fiftyone.pipeline.util.FileFinder.getFilePath;
 
 /**
  * Provides an illustration of the fundamental elements of carrying out device detection using
@@ -65,7 +57,7 @@ public class GettingStartedOnPrem {
         logger.info("Running GettingStarted example");
         String dataFileLocation;
         try {
-            dataFileLocation = FileUtils.getFilePath(dataFile).getAbsolutePath();
+            dataFileLocation = getFilePath(dataFile).getAbsolutePath();
         } catch (Exception e) {
             DataFileHelper.cantFindDataFile(dataFile);
             throw e;
@@ -162,5 +154,11 @@ public class GettingStartedOnPrem {
         writer.println();
         writer.flush();
     }
-
 }
+/*!
+ * @example console/GettingStartedOnPrem.java
+ * @include{doc} example-getting-started-onpremise.txt
+ * <p>
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/GettingStartedOnPrem.java).
+ * @include{doc} example-require-datafile.txt
+ */

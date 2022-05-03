@@ -1,11 +1,10 @@
 package fiftyone.devicedetection.examples.console;
 
 import fiftyone.devicedetection.cloud.data.MultiDeviceDataCloud;
-import fiftyone.devicedetection.examples.shared.OptionsHelper;
-import fiftyone.devicedetection.examples.shared.ResourceKeyHelper;
 import fiftyone.devicedetection.shared.Constants;
 import fiftyone.devicedetection.shared.DeviceData;
-import fiftyone.devicedetection.shared.testhelpers.FileUtils;
+import fiftyone.pipeline.core.configuration.PipelineOptions;
+import fiftyone.pipeline.core.configuration.PipelineOptionsFactory;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
@@ -15,28 +14,11 @@ import java.io.File;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Objects;
 
 import static fiftyone.common.testhelpers.LogbackHelper.configureLogback;
 import static fiftyone.devicedetection.examples.shared.PropertyHelper.asString;
-import static fiftyone.devicedetection.examples.shared.ResourceKeyHelper.mustSupplySuperResourceKey;
-import static fiftyone.devicedetection.shared.testhelpers.FileUtils.getFilePath;
-
-/*
- * @example console/TacCloud.java
- *
- * This example shows how to use the 51Degrees Cloud service to look up the details of a device
- * based on a given 'TAC'. More background information on TACs can be found through various online 
- * sources such as <a href="https://en.wikipedia.org/wiki/Type_Allocation_Code">Wikipedia</a>.
- *
- * Unlike other examples, use of this example requires a license key which can be purchased from our
- * pricing page: http://51degrees.com/pricing. Once this is done, a resource key with the
- * properties required by this example can be created at https://configure.51degrees.com/QKyYH5XT.
- *
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/TacCloud.java).
- *
- * @include{doc} example-require-resourcekey.txt
- */
+import static fiftyone.devicedetection.examples.shared.ResourceKeyHelper.*;
+import static fiftyone.pipeline.util.FileFinder.getFilePath;
 
 /**
  * This example demonstrates looking up device details using a TAC code.
@@ -58,8 +40,7 @@ public class TacCloud {
 
     public static void main (String[] args) throws Exception {
         configureLogback(getFilePath("logback.xml"));
-        String resourceKey = args.length > 0 ? args[0] :
-                ResourceKeyHelper.getNamedResourceKey(TAC_EXAMPLE_RESOURCE_KEY_NAME);
+        String resourceKey = args.length > 0 ? args[0] : null;
         run(resourceKey, System.out);
     }
 
@@ -71,22 +52,14 @@ public class TacCloud {
         // http://51degrees.com/documentation/_concepts__configuration__builders__index.html
 
         // the configuration file is in the resources directory
-        File optionsFile = FileUtils.getFilePath("tacCloud.xml");
+        File optionsFile = getFilePath("tacCloud.xml");
         // load the options and if no resource key has been set in the file
         // use the one supplied to this method
-        OptionsHelper oh = new OptionsHelper(optionsFile);
-        String fileResourceKey = oh.find("CloudRequestEngine", "ResourceKey");
-        // default value of resourceKey in the file is "!!YOUR_RESOURCE_KEY!!"
-        if (Objects.isNull(fileResourceKey) || fileResourceKey.startsWith("!!")) {
-            if (ResourceKeyHelper.isInvalidResourceKey(resourceKey)) {
-                mustSupplySuperResourceKey(TAC_EXAMPLE_RESOURCE_KEY_NAME);
-                throw new Exception("A suitable resource key must be supplied");
-            }
-            // replace the resource key supplied in the file with the one supplied at run-time
-            // this would not ordinarily be required in user code
-            oh.replace("CloudRequestEngine", "ResourceKey", resourceKey);
+        PipelineOptions pipelineOptions = PipelineOptionsFactory.getOptionsFromFile(optionsFile);
+        String fileResourceKey = pipelineOptions.find("CloudRequestEngine", "ResourceKey");
+        if (isInvalidResourceKey(fileResourceKey)) {
+            getOrSetSuperResourceKey(resourceKey, TAC_EXAMPLE_RESOURCE_KEY_NAME);
         }
-
         try (PrintWriter writer = new PrintWriter(os)) {
             writer.println("This example shows the details of devices " +
                     "associated with a given 'Type Allocation Code' or 'TAC'.");
@@ -99,7 +72,7 @@ public class TacCloud {
 
             // Create the pipeline using the service provider and the configured options.
             try (Pipeline pipeline = new FiftyOnePipelineBuilder()
-                    .buildFromConfiguration(oh.get())) {
+                    .buildFromConfiguration(pipelineOptions)) {
                 // Pass a TAC into the pipeline and list the matching devices.
                 analyseTac(TAC_1, pipeline, writer);
                 analyseTac(TAC_2, pipeline, writer);
@@ -131,3 +104,18 @@ public class TacCloud {
         }
     }
 }
+/*!
+ * @example console/TacCloud.java
+ *
+ * This example shows how to use the 51Degrees Cloud service to look up the details of a device
+ * based on a given 'TAC'. More background information on TACs can be found through various online
+ * sources such as <a href="https://en.wikipedia.org/wiki/Type_Allocation_Code">Wikipedia</a>.
+ *
+ * Unlike other examples, use of this example requires a license key which can be purchased from our
+ * pricing page: http://51degrees.com/pricing. Once this is done, a resource key with the
+ * properties required by this example can be created at https://configure.51degrees.com/QKyYH5XT.
+ *
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/TacCloud.java).
+ *
+ * @include{doc} example-require-resourcekey.txt
+ */

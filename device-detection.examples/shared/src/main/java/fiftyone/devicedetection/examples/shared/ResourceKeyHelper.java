@@ -1,6 +1,5 @@
 package fiftyone.devicedetection.examples.shared;
 
-import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineDefault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,92 +26,63 @@ public class ResourceKeyHelper {
      * @return boolean
      */
     public static boolean isInvalidResourceKey(String resourceKeyValue){
-        return Objects.isNull(resourceKeyValue) || resourceKeyValue.trim().length() == 0;
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+        try {
+            return Objects.isNull(resourceKeyValue) ||
+                    resourceKeyValue.trim().length() < 19 ||
+                    decoder.decode(resourceKeyValue).length < 14;
+        } catch (IllegalArgumentException e) {
+            return true;
+        }
     }
 
 
     /**
      * Obtain a resource key either from environment variable or from a property.
      */
-    public static String getTestResourceKey() {
-        return getTestResourceKey(null);
+    public static String getOrSetTestResourceKey() {
+        return getOrSetTestResourceKey(null);
     }
 
+    public static String getOrSetTestResourceKey(String value) {
+        return getOrSetResourceKey(value, TEST_RESOURCE_KEY,
+                "A free resource key configured with the " +
+                        "properties required by this example may be obtained from " +
+                        "https://configure.51degrees.com/jqz435Nc ");
+    }
     /**
-     * Obtain a resource key from the passed argument, from environment variable or from a property.
+     * Obtain a resource key from the passed argument,
+     * from environment variable or from a property. Store
+     * as System Property TEST_RESOURCE_KEY
      */
-    public static String getTestResourceKey(String value) {
+    public static String getOrSetResourceKey(String value, String variableName,
+                                                 String errorMessage) {
         if (Objects.isNull(value)) {
-            if (Objects.isNull(value = System.getenv(TEST_RESOURCE_KEY))) {
-                if (Objects.isNull(value = System.getProperty(TEST_RESOURCE_KEY))) {
-                    throw new IllegalStateException("\nTo access Cloud Services you must supply a " +
-                            "\"ResourceKey\" in one of the following ways: \n - in the " +
-                            "configuration file of an example,\n - as a command line parameter of a " +
-                            "runnable example,\n - as an Environment Variable named " +
-                            "\"TestResourceKey\"," +
-                            "\n - as a System Property named \"TestResourceKey\"). \n " +
-                            "A free resource key configured with the " +
-                            "properties required by this example may be obtained from " +
-                            "https://configure.51degrees.com/jqz435Nc ");
-                }
-            }
-        } else {
-            // capture the passed parameter for next time called
-            System.setProperty(TEST_RESOURCE_KEY, value);
+            value = getNamedResourceKey(variableName);
+
         }
+        if (isInvalidResourceKey(value)) {
+            logger.error("\nTo access Cloud Services you must supply a " +
+                    "\"ResourceKey\" in one of the following ways: \n - in the " +
+                    "configuration file of an example,\n - as a command line parameter of a " +
+                    "runnable example,\n - as an Environment Variable named \"\u001B[36m{}\u001B[0m\"," +
+                    "\n - as a System Property named \"\u001B[36m{}\u001B[0m\").", variableName,
+                    variableName);
+            logger.error(errorMessage);
+            throw new IllegalStateException("\"" + value + "\" is not a valid resource key");
+        }
+
+        // capture the passed parameter for next time called
+        System.setProperty(variableName, value);
         return value;
     }
 
-    /**
-     * Helper to find a resource key from one of:
-     * <ul>
-     *     <li>the pipeline options file specified</li>
-     *     <li>an array of strings presumed to be command line args</li>
-     *     <li>environment variable "TestResourceKey"</li>
-     *     <li>system property "TestResourceKey"</li>
-     * </ul>
-     * @param pipelineConfig pipeline options file
-     * @param args command line args
-     */
-    public static void findResourceKey(String pipelineConfig, String[] args) throws Exception {
-        OptionsHelper oh = new OptionsHelper(pipelineConfig);
-        String resourceKey = oh.find("CloudRequestEngine", "ResourceKey");
-        if (Objects.isNull(resourceKey) || resourceKey.startsWith("!!")){
-            logger.warn("Default config file contains no resource key, trying command " +
-                    "line, environment and system options");
-            if (Objects.nonNull(getTestResourceKey(args.length > 0 ? args[0] : null))) {
-                CloudRequestEngineDefault.resourceKeySupplier =
-                        ResourceKeyHelper::getTestResourceKey;
-                resourceKey = CloudRequestEngineDefault.resourceKeySupplier.get();
-            }
-        }
-        logger.info("Using resource key {}", resourceKey);
-    }
-
-    public static void checkResourceKey(String resourceKey) {
-        if (isInvalidResourceKey(resourceKey)) {
-            logger.error(
-                    "A resource key must be provided. \nFor more details see " +
-                            "http://51degrees.com/documentation/_info__resource_keys.html.\n" +
-                            "A free resource key with the properties required by this example can be " +
-                            "configured at https://configure.51degrees.com/jqz435Nc. \n" +
-                            "Once you have obtained a resource key you can provide it as an argument to this " +
-                            "program, as an environment variable or system property named \"TestResourceKey\".");
-        }
-    }
-
-    public static void mustSupplySuperResourceKey(String resourceKeyName) {
-        logger.error("No resource key specified on the command line or in " +
-                "the environment variable '{}'. ", resourceKeyName);
-
-        logger.error("TAC lookup and Native Model are not available as a free service. This means " +
+    public static String getOrSetSuperResourceKey(String value, String variablename) {
+        return getOrSetResourceKey(value, variablename, "TAC lookup and Native Model are not " +
+                "available as a free service.\nThis means " +
                 "that you will first need a license key, which can be purchased " +
-                "from our pricing page: http://51degrees.com/pricing. Once this is " +
+                "from our pricing page: http://51degrees.com/pricing. \nOnce this is " +
                 "done, a resource key with the properties required by this example " +
-                "can be created at https://configure.51degrees.com/QKyYH5XT. You " +
-                "can now populate the environment variable mentioned at the start " +
-                "of this message with the resource key or pass it as the first " +
-                "argument on the command line.");
-
+                "can be created at https://configure.51degrees.com/QKyYH5XT. ");
     }
 }

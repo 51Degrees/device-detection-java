@@ -32,6 +32,7 @@ import fiftyone.pipeline.engines.Constants;
 import fiftyone.pipeline.engines.services.DataUpdateService;
 import fiftyone.pipeline.engines.services.HttpClientDefault;
 
+import fiftyone.pipeline.util.FileFinder;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.ILoggerFactory;
@@ -94,7 +95,7 @@ public class DeviceDetectionTests {
     @BeforeClass
     public static void initClass() throws IOException {
         userAgents = new UserAgentGenerator(
-            FileUtils.getFilePath(UA_FILE_NAME));
+            FileFinder.getFilePath(UA_FILE_NAME));
     }
 
     private static String reportErrors(Collection<FlowError> errors) {
@@ -142,7 +143,7 @@ public class DeviceDetectionTests {
         Constants.PerformanceProfiles performanceProfile,
         boolean useCache,
         boolean multiThreaded) throws Exception {
-        File datafile = FileUtils.getFilePath(datafileName);
+        File datafile = FileFinder.getFilePath(datafileName);
 
         // Configure the pipeline builder based on the
         // parameters passed to this method.

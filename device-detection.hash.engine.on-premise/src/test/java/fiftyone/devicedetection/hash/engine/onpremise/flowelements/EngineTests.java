@@ -35,6 +35,7 @@ import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.engines.Constants;
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.LITE_HASH_DATA_FILE_NAME;
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.ENTERPRISE_HASH_DATA_FILE_NAME;
+import static fiftyone.pipeline.util.FileFinder.getFilePath;
 
 public class EngineTests {
 	protected static final ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
@@ -55,7 +56,7 @@ public class EngineTests {
 	private void testDataSourceTier(String fileName) throws Exception {
 		File dataFile = null;
 		try {
-			dataFile = FileUtils.getFilePath(fileName);
+			dataFile = getFilePath(fileName);
 		}
 		catch (IllegalArgumentException e) {
 			assumeTrue(e.getMessage(), false);

@@ -30,7 +30,7 @@ public class EmbedJetty {
         WebAppContext context = new WebAppContext();
         // Configure the path of the packaged web application (file or directory).
         context.setResourceBase(resourceBase);
-        context.setDescriptor(resourceBase + "/WEB-INF/web.xml");
+        context.setDescriptor("WEB-INF/web.xml");
 
         // Link the context to the server.
         server.setHandler(context);
@@ -60,7 +60,7 @@ public class EmbedJetty {
         context.setSessionHandler(new SessionHandler());
         context.setContextPath("/");
 
-        // Add the Servlet implementing the cart functionality to the context.
+        // Add the Servlet to the context.
         ServletHolder servletHolder = context.addServlet(servlet, contextPath);
         // Configure the Servlet with init-parameters.
         servletHolder.setInitParameters(initParams);

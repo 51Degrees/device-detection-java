@@ -24,26 +24,24 @@ package fiftyone.devicedetection.examples.hash;
 
 
 import fiftyone.devicedetection.shared.testhelpers.FileUtils;
-
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.LITE_HASH_DATA_FILE_NAME;
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
+import static fiftyone.pipeline.util.FileFinder.getFilePath;
 
-@RunWith(BuilderClassPathTestRunner.class)
 public class ExampleTests {
 
     private static final String dataFile =
         FileUtils.getHashFile().getAbsolutePath();
     private static final String liteDataFile =
-    	FileUtils.getFilePath(LITE_HASH_DATA_FILE_NAME).getAbsolutePath();
+    	getFilePath(LITE_HASH_DATA_FILE_NAME).getAbsolutePath();
 
     @Test
     public void Benchmark_Hash_SingleThreaded() throws Exception {
     	Benchmark.runBenchmarks(
     		liteDataFile,
-    		FileUtils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
+    		getFilePath(UA_FILE_NAME).getAbsolutePath(),
     		1);
     }
 
@@ -51,7 +49,7 @@ public class ExampleTests {
     public void Benchmark_Hash_MultiThreaded() throws Exception {
     	Benchmark.runBenchmarks(
     		liteDataFile,
-    		FileUtils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
+    		getFilePath(UA_FILE_NAME).getAbsolutePath(),
     		8);
     }
 
@@ -67,18 +65,13 @@ public class ExampleTests {
         matchMetrics.run(dataFile);
     }
 
-    @Test
-    public void MetaData_Hash() throws Exception {
-        MetaData.Example metaData = new MetaData.Example(false);
-        metaData.run(dataFile);
-    }
 
     @Test
     public void Performance_Hash() throws Exception {
         Performance.Example performance = new Performance.Example(false);
         performance.run(
             dataFile,
-            FileUtils.getFilePath(UA_FILE_NAME).getAbsolutePath(),
+            getFilePath(UA_FILE_NAME).getAbsolutePath(),
             1000);
     }
 

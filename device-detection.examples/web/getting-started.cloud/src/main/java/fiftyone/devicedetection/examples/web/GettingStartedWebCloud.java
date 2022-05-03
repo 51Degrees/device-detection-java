@@ -1,6 +1,5 @@
 package fiftyone.devicedetection.examples.web;
 
-import fiftyone.devicedetection.examples.shared.ResourceKeyHelper;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.web.Constants;
@@ -11,53 +10,20 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.PrintWriter;
 
 import static fiftyone.common.testhelpers.LogbackHelper.configureLogback;
+import static fiftyone.devicedetection.examples.shared.ResourceKeyHelper.getOrSetTestResourceKey;
 import static fiftyone.devicedetection.examples.web.HtmlContentHelper.*;
-import static fiftyone.devicedetection.shared.testhelpers.FileUtils.getFilePath;
-
-/*
- * @example GettingStartedWebCloud.java
- * 
- * @include{doc} example-getting-started-web.txt
- * 
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/web/getting-started.cloud/src/main/java/fiftyone/devicedetection/examples/web/GettingStartedWebCloud.java).
- * 
- * @include{doc} example-require-resourcekey.txt
- * 
- * ## Overview
- * 
- * The `PipelineFilter` to intercept requests and perform device detection. The results will be 
- * stored in the HttpServletRequest object.
- * The filter will also handle setting response headers (e.g. Accept-CH for User-Agent 
- * Client Hints) and serving requests for client-side JavaScript and JSON resources.
- * 
- * The results of detection can be accessed by using a FlowDataProvider.
- * ```{java}
- * FlowData flowData = flowDataProvider.getFlowData(request);
- * DeviceData device = flowData.get(DeviceData.class);
- * ```
- * 
- * Results can also be accessed in client-side code by using the `fod` object.
- * 
- * ```{java}
- * window.onload = function () {
- *     fod.complete(function(data) {
- *         var hardwareName = data.device.hardwarename;
- *         alert(hardwareName.join(", "));
- *     }
- * }
- * ```
- * 
- */
+import static fiftyone.pipeline.util.FileFinder.getFilePath;
 
 /**
  * This is the getting started Web/Cloud example showing use of the 51Degrees
  * supplied filter which automatically creates and configures a device detection pipeline.
  * <p>
  * To use this example you must obtain a resource key. A resource key suitable for
- * use with the example can be obtained here: https://configure.51degrees.com/jqz435Nc.
+ * use with the example can be obtained here:
+ * <a href="https://configure.51degrees.com/jqz435Nc">https://configure.51degrees.com/jqz435Nc</a>.
  * <p>
  * The configuration file for the pipeline is at src/main/webapp/WEB-INF/51Degrees-Cloud.xml
  */
@@ -68,11 +34,11 @@ public class GettingStartedWebCloud extends HttpServlet {
 
     public static void main(String[] args) throws Exception {
         configureLogback(getFilePath("logback.xml"));
+        String resourceKey = args.length > 0 ? args[0] : null;
         logger.info("Running Example {}", GettingStartedWebCloud.class);
-        // if the config file doesn't contain a valid resource key we will try to find
-        // one in args or in environment or system variables
-        ResourceKeyHelper.findResourceKey(
-                resourceBase + "/WEB-INF/51Degrees-Cloud.xml", args);
+        // check resource key and set as System Property
+        getOrSetTestResourceKey(resourceKey);
+
         // start Jetty with this WebApp
         EmbedJetty.runWebApp(resourceBase, 8081);
     }
@@ -88,6 +54,7 @@ public class GettingStartedWebCloud extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         // the detection has already been carried out by the Filter
+        // which is responsible to the lifecycle of the flowData - do NOT dispose
         FlowData flowData = flowDataProvider.getFlowData(request);
         // retrieve the device data from the flowdata
         DeviceData device = flowData.get(DeviceData.class);
@@ -132,3 +99,40 @@ public class GettingStartedWebCloud extends HttpServlet {
         }
     }
 }
+/*!
+ * @example GettingStartedWebCloud.java
+ *
+ * @include{doc} example-getting-started-web.txt
+ *
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/web/getting-started.cloud/src/main/java/fiftyone/devicedetection/examples/web/GettingStartedWebCloud.java).
+ *
+ * @include{doc} example-require-resourcekey.txt
+ *
+ * ## Overview
+ *
+ * The `PipelineFilter` to intercept requests and perform device detection. The results will be
+ * stored in the HttpServletRequest object.
+ * The filter will also handle setting response headers (e.g. Accept-CH for User-Agent
+ * Client Hints) and serving requests for client-side JavaScript and JSON resources.
+ *
+ * The results of detection can be accessed by using a FlowDataProvider which
+ * is responsible for managing the lifecycle of the flowData - do NOT dispose
+ * ```{java}
+ * FlowData flowData = flowDataProvider.getFlowData(request);
+ * DeviceData device = flowData.get(DeviceData.class);
+ * ...
+ * ```
+ *
+ * Results can also be accessed in client-side code by using the `fod` object.
+ *
+ * ```{java}
+ * window.onload = function () {
+ *     fod.complete(function(data) {
+ *         var hardwareName = data.device.hardwarename;
+ *         alert(hardwareName.join(", "));
+ *     }
+ * }
+ * ```
+ *
+ */
+
