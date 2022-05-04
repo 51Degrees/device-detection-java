@@ -5,7 +5,7 @@
 
     <groupId>com.51degrees</groupId>
     <artifactId>pipeline.device-detection</artifactId>
-    <version>4.4.2-SNAPSHOT</version>
+    <version>4.4.6-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>51Degrees :: Pipeline :: Device Detection</name>
@@ -50,7 +50,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
 
-        <pipeline.version>4.4.3</pipeline.version>
+        <pipeline.version>4.4.4</pipeline.version>
 
         <junit.version>4.13.2</junit.version>
         <slf4j-api.version>1.7.33</slf4j-api.version>
@@ -148,12 +148,13 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven-surefire-plugin.version}</version>
                 <configuration>
+                    <useSystemClassLoader>false</useSystemClassLoader>
                     <systemPropertyVariables>
                         <!-- this tells all tests run via surefire to pick their logback config up from the root -->
                         <!-- fwiw does not affect those run via main() which need to find their config by other means -->
                         <!--suppress UnresolvedMavenProperty -->
                         <logback.configurationFile>${maven.multiModuleProjectDirectory}/logback.xml</logback.configurationFile>
-                        <!-- this sets the scope of file search (inter alia in Utils.getFilePath) to the project directory-->
+                        <!-- this sets the scope of file search (inter alia in getFilePath) to the project directory-->
                         <!--suppress UnresolvedMavenProperty -->
                         <project.root>${maven.multiModuleProjectDirectory}</project.root>
                         <!-- cloud resource key for running tests - this can be defined in  settings.xml -->

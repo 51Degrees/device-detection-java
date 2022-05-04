@@ -3,6 +3,9 @@ package fiftyone.devicedetection.examples.shared;
 import fiftyone.devicedetection.cloud.flowelements.HardwareProfileCloudEngine;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder;
 import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder;
+import fiftyone.pipeline.engines.fiftyone.flowelements.SequenceElementBuilder;
+import fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder;
+import fiftyone.pipeline.jsonbuilder.flowelements.JsonBuilderElement;
 import jakarta.xml.bind.JAXBContext;
 import org.glassfish.jaxb.runtime.v2.ContextFactory;
 import org.junit.runner.notification.RunNotifier;
@@ -79,7 +82,10 @@ public class BuilderClassPathTestRunner extends BlockJUnit4ClassRunner {
             classpathUrls.add(DeviceDetectionHashEngineBuilder.class.getProtectionDomain().getCodeSource().getLocation());
             classpathUrls.add(CloudRequestEngineBuilder.class.getProtectionDomain().getCodeSource().getLocation());
             classpathUrls.add(HardwareProfileCloudEngine.class.getProtectionDomain().getCodeSource().getLocation());
-             if (Integer.parseInt(System.getProperty("java.version").split("\\.")[0]) >= 9) {
+            classpathUrls.add(SequenceElementBuilder.class.getProtectionDomain().getCodeSource().getLocation());
+            classpathUrls.add(JsonBuilderElement.class.getProtectionDomain().getCodeSource().getLocation());
+            classpathUrls.add(JavaScriptBuilderElementBuilder.class.getProtectionDomain().getCodeSource().getLocation());
+            if (Integer.parseInt(System.getProperty("java.version").split("\\.")[0]) >= 9) {
                 classpathUrls.add(JAXBContext.class.getProtectionDomain().getCodeSource().getLocation());
                 classpathUrls.add(ContextFactory.class.getProtectionDomain().getCodeSource().getLocation());
             }

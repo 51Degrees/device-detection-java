@@ -1,26 +1,7 @@
 package fiftyone.devicedetection.examples.console;
 
-/*
- * @example NativeModel-Console/Program.cs
- *
- * This example shows how to use the 51Degrees Cloud service to look up the details of a device
- * based on a given 'native model name'. Native model name is a string of characters that are
- * returned from a query to the device's OS.
- *
- * There are different mechanisms to get native model names for
- * [Android devices](https://developer.android.com/reference/android/os/Build#MODEL) and
- * [iOS devices](https://gist.github.com/soapyigu/c99e1f45553070726f14c1bb0a54053b#file-machinename-swift)
- *
- * Unlike other examples, use of this example requires a license key which can be purchased from our
- * pricing page: http://51degrees.com/pricing. Once this is done, a resource key with the
- * properties required by this example can be created at https://configure.51degrees.com/QKyYH5XT.
- *
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/NativeModelCloud.java).
- */
-
 import fiftyone.devicedetection.cloud.data.MultiDeviceDataCloud;
 import fiftyone.devicedetection.cloud.flowelements.HardwareProfileCloudEngineBuilder;
-import fiftyone.devicedetection.examples.shared.ResourceKeyHelper;
 import fiftyone.devicedetection.shared.Constants;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder;
@@ -34,8 +15,8 @@ import java.io.PrintWriter;
 
 import static fiftyone.common.testhelpers.LogbackHelper.configureLogback;
 import static fiftyone.devicedetection.examples.shared.PropertyHelper.asString;
-import static fiftyone.devicedetection.examples.shared.ResourceKeyHelper.mustSupplySuperResourceKey;
-import static fiftyone.devicedetection.shared.testhelpers.FileUtils.getFilePath;
+import static fiftyone.devicedetection.examples.shared.ResourceKeyHelper.getOrSetSuperResourceKey;
+import static fiftyone.pipeline.util.FileFinder.getFilePath;
 
 public class NativeModelCloud {
     // Example values to use when looking up device details from native model names.
@@ -45,8 +26,7 @@ public class NativeModelCloud {
 
     public static void main (String[] args) throws Exception {
         configureLogback(getFilePath("logback.xml"));
-        String resourceKey = args.length > 0 ? args[0] :
-                ResourceKeyHelper.getNamedResourceKey(NATIVE_MODEL_EXAMPLE_RESOURCE_KEY_NAME);
+        String resourceKey = args.length > 0 ? args[0] : null;
         run(resourceKey, System.out);
     }
 
@@ -55,10 +35,7 @@ public class NativeModelCloud {
         // of how to do this using a configuration file instead, see the TacCloud example.
         // For more information about builders in general see the documentation at
         // http://51degrees.com/documentation/_concepts__configuration__builders__index.html
-        if (ResourceKeyHelper.isInvalidResourceKey(resourceKey)) {
-            mustSupplySuperResourceKey(NATIVE_MODEL_EXAMPLE_RESOURCE_KEY_NAME);
-            throw new Exception("A suitable resource key must be supplied");
-        }
+        resourceKey = getOrSetSuperResourceKey(resourceKey, NATIVE_MODEL_EXAMPLE_RESOURCE_KEY_NAME);
 
         try (PrintWriter output = new PrintWriter(os)) {
             output.println("This example shows the details of devices " +
@@ -119,3 +96,20 @@ public class NativeModelCloud {
         }
     }
 }
+/*!
+ * @example NativeModel-Console/Program.cs
+ *
+ * This example shows how to use the 51Degrees Cloud service to look up the details of a device
+ * based on a given 'native model name'. Native model name is a string of characters that are
+ * returned from a query to the device's OS.
+ *
+ * There are different mechanisms to get native model names for
+ * [Android devices](https://developer.android.com/reference/android/os/Build#MODEL) and
+ * [iOS devices](https://gist.github.com/soapyigu/c99e1f45553070726f14c1bb0a54053b#file-machinename-swift)
+ *
+ * Unlike other examples, use of this example requires a license key which can be purchased from our
+ * pricing page: http://51degrees.com/pricing. Once this is done, a resource key with the
+ * properties required by this example can be created at https://configure.51degrees.com/QKyYH5XT.
+ *
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/NativeModelCloud.java).
+ */

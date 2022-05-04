@@ -1,14 +1,11 @@
 package fiftyone.devicedetection.examples.console;
 
-import fiftyone.devicedetection.examples.shared.BuilderClassPathTestRunner;
 import fiftyone.devicedetection.examples.shared.ResourceKeyHelper;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import static fiftyone.devicedetection.examples.shared.ResourceKeyHelper.getNamedResourceKey;
 import static org.junit.Assume.assumeFalse;
 
-@RunWith(BuilderClassPathTestRunner.class)
 public class TacCloudTest {
 
     @Test

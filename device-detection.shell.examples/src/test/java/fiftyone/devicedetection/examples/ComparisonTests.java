@@ -32,6 +32,7 @@ import java.util.LinkedList;
 
 import static fiftyone.devicedetection.examples.Comparison.readUserAgents;
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
+import static fiftyone.pipeline.util.FileFinder.getFilePath;
 
 public class ComparisonTests {
 
@@ -45,7 +46,7 @@ public class ComparisonTests {
 
     @Before
     public void setUp() throws IOException {
-        userAgents = readUserAgents(FileUtils.getFilePath(UA_FILE_NAME).getAbsolutePath());
+        userAgents = readUserAgents(getFilePath(UA_FILE_NAME).getAbsolutePath());
     }
 
     @Test

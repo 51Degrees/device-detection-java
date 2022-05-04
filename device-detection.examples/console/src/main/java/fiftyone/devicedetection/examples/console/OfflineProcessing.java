@@ -4,7 +4,6 @@ import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
 import fiftyone.devicedetection.examples.shared.DataFileHelper;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
-import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.Constants;
@@ -15,6 +14,7 @@ import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -22,15 +22,7 @@ import java.util.stream.Collectors;
 
 import static fiftyone.common.testhelpers.LogbackHelper.configureLogback;
 import static fiftyone.devicedetection.examples.shared.PropertyHelper.asString;
-import static fiftyone.devicedetection.shared.testhelpers.FileUtils.getFilePath;
-
-/*
- * @example console/OfflineProcessing.java
- * @include{doc} example-offline-processing-hash.txt
- * <p>
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/OfflineProcessing.java).
- * @include{doc} example-require-datafile.txt
- */
+import static fiftyone.pipeline.util.FileFinder.getFilePath;
 
 /**
  * Provides an example of processing a YAML file containing evidence for device detection. There are
@@ -68,8 +60,8 @@ public class OfflineProcessing {
 
     public static void main(String[] args) throws Exception {
         configureLogback(getFilePath("logback.xml"));
-        File evidenceFile = FileUtils.getFilePath(HEADER_EVIDENCE_YML);
-        run(LITE_V_4_1_HASH, new FileInputStream(evidenceFile), System.out);
+        File evidenceFile = getFilePath(HEADER_EVIDENCE_YML);
+        run(LITE_V_4_1_HASH, Files.newInputStream(evidenceFile.toPath()), System.out);
     }
 
     /**
@@ -86,7 +78,7 @@ public class OfflineProcessing {
 
         String detectionFile;
         try {
-            detectionFile = FileUtils.getFilePath(dataFile).getAbsolutePath();
+            detectionFile = getFilePath(dataFile).getAbsolutePath();
         } catch (Exception e) {
             DataFileHelper.cantFindDataFile(dataFile);
             throw e;
@@ -244,12 +236,11 @@ public class OfflineProcessing {
                         e -> ((AspectPropertyValue<?>)e.getValue()).getValue()));
     }
 }
-
-/*
- * @example hash/OfflineProcessing.java
+/*!
+ * @example console/OfflineProcessing.java
  * @include{doc} example-offline-processing-hash.txt
  * <p>
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.shell.examples/src/main/java/fiftyone/devicedetection/examples/hash/OfflineProcessing.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/OfflineProcessing.java).
  * @include{doc} example-require-datafile.txt
  */
 

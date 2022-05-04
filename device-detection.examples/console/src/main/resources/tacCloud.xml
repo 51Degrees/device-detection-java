@@ -2,10 +2,18 @@
     <Elements>
         <Element>
             <BuildParameters>
-                <!-- A free resource key configured with the properties
-                required by this example may be obtained from
-                https://configure.51degrees.com/jqz435Nc -->
-                <ResourceKey>!!YOUR_RESOURCE_KEY!!</ResourceKey>
+                <!-- TAC lookup and Native Model are not available as a free service.
+
+                This means that you will first need a license key, which can be purchased
+                from our pricing page: http://51degrees.com/pricing. 
+
+                Once this is done, a resource key with the properties required by this example
+                can be created at https://configure.51degrees.com/QKyYH5XT.
+
+                You can paste the resource key here, or set an environment
+                variable or System property called "SuperResourceKey"
+                which will get inserted as the value.-->
+                <ResourceKey>${SuperResourceKey}</ResourceKey>
             </BuildParameters>
             <BuilderName>CloudRequestEngine</BuilderName>
         </Element>

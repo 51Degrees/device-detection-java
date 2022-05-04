@@ -2,7 +2,6 @@ package fiftyone.devicedetection.examples.web;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
-import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngine;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.FlowElement;
@@ -22,6 +21,7 @@ import java.util.Objects;
 
 import static fiftyone.devicedetection.examples.shared.PropertyHelper.asString;
 import static fiftyone.devicedetection.examples.shared.PropertyHelper.tryGet;
+import static fiftyone.pipeline.util.FileFinder.getFilePath;
 
 public class HtmlContentHelper {
     /**
@@ -211,7 +211,7 @@ public class HtmlContentHelper {
 
     static void doStaticText(PrintWriter out, String location) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader(
-                FileUtils.getFilePath(location)))) {
+                getFilePath(location)))) {
             br.lines().forEach(out::println);
         }
     }

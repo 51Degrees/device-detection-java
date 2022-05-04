@@ -6,7 +6,6 @@ import fiftyone.devicedetection.examples.shared.ExampleTestHelper;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
-import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,28 +16,16 @@ import java.util.Map;
 
 import static fiftyone.common.testhelpers.LogbackHelper.configureLogback;
 import static fiftyone.devicedetection.examples.shared.PropertyHelper.asString;
-import static fiftyone.devicedetection.examples.shared.ResourceKeyHelper.getTestResourceKey;
-import static fiftyone.devicedetection.shared.testhelpers.FileUtils.getFilePath;
-
-/*
- * @example console/GettingStartedCloud.java
- *
- * @include{doc} example-getting-started-cloud.txt
- *
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/GettingStartedCloud.java).
- *
- * @include{doc} example-require-resourcekey.txt
- */
+import static fiftyone.pipeline.util.FileFinder.getFilePath;
 
 /**
  * Provides an illustration of the fundamental elements of carrying out device detection using
  * our "cloud" service. Meaning that you don't host the datafile on your server, but request
  * detection to be carried out on our servers.
  * <p>
- * In order to use the cloud service you will need to obtain a "Resource Key". The resource
- * key is obtained from https://configure.51degrees.com/. A free resource key configured with the
- * properties required by this example may be obtained from
- * https://configure.51degrees.com/jqz435Nc
+ * In order to use the cloud service you will need to obtain a "Resource Key". A free resource key
+ * configured with the properties required by this example may be obtained from
+ * <a href="https://configure.51degrees.com/jqz435Nc">https://configure.51degrees.com/jqz435Nc</a>
  * <p>
  * The concepts of "pipeline", "flow data", "evidence" and "results" are illustrated.
  */
@@ -52,7 +39,7 @@ public class GettingStartedCloud {
      */
     public static void main(String[] args) throws Exception {
         configureLogback(getFilePath("logback.xml"));
-        String resourceKey = args.length > 0 ? args[0]: getTestResourceKey();
+        String resourceKey = args.length > 0 ? args[0]: null;
 
         // prepare 'evidence' for use in pipeline (see below)
         List<Map<String, String>> evidence = ExampleTestHelper.setUpEvidence();
@@ -70,7 +57,7 @@ public class GettingStartedCloud {
                            OutputStream outputStream) throws Exception {
         logger.info("Running GettingStarted Cloud example");
 
-        ResourceKeyHelper.checkResourceKey(resourceKey);
+        resourceKey = ResourceKeyHelper.getOrSetTestResourceKey(resourceKey);
 
         /* In this example, we use the DeviceDetectionPipelineBuilder and configure it in code.
 
@@ -144,3 +131,13 @@ public class GettingStartedCloud {
         writer.flush();
     }
 }
+/*!
+ * @example console/GettingStartedCloud.java
+ *
+ * @include{doc} example-getting-started-cloud.txt
+ *
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/GettingStartedCloud.java).
+ *
+ * @include{doc} example-require-resourcekey.txt
+ */
+

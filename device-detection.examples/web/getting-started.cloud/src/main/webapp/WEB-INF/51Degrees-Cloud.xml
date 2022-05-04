@@ -26,11 +26,15 @@
     <Elements>
         <Element>
             <BuildParameters>
-                <EndPoint>http://cloud.51degrees.com/api/v4</EndPoint>
-                <!-- A free resource key configured with the properties
-                required by this example may be obtained from
-                https://configure.51degrees.com/jqz435Nc -->
-                <ResourceKey>!!YOUR_RESOURCE_KEY!!</ResourceKey>
+                <EndPoint>${TestCloudEndpoint:-http://cloud.51degrees.com/api/v4}</EndPoint>
+                <!-- A free resource key configured with the
+                properties required by this example may be obtained from
+                https://configure.51degrees.com/jqz435Nc
+
+                You can paste the resource key here, or set an environment
+                variable or System property called "TestResourceKey"
+                which will get inserted as the value.-->
+                <ResourceKey>${TestResourceKey}</ResourceKey>
             </BuildParameters>
             <BuilderName>CloudRequestEngine</BuilderName>
         </Element>
