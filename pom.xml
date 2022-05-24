@@ -5,39 +5,22 @@
 
     <groupId>com.51degrees</groupId>
     <artifactId>pipeline.device-detection</artifactId>
-    <version>4.4.6-SNAPSHOT</version>
+    <version>4.4.8-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>51Degrees :: Pipeline :: Device Detection</name>
     <url>https://51degrees.com</url>
     <description>Device detection engines for the 51Degrees Pipeline API</description>
 
-    <profiles>
-        <profile>
-            <id>default</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>device-detection.shared</module>
-                <module>device-detection.hash.engine.on-premise</module>
-                <module>device-detection.cloud</module>
-                <module>device-detection</module>
-                <module>device-detection.examples</module>
-                <module>device-detection.shell.examples</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>dependency-check</id>
-            <modules>
-                <module>device-detection.shared</module>
-                <module>device-detection.hash.engine.on-premise</module>
-                <module>device-detection.cloud</module>
-                <module>device-detection</module>
-            </modules>
-        </profile>
-    </profiles>
-	
+    <modules>
+        <module>device-detection.shared</module>
+        <module>device-detection.hash.engine.on-premise</module>
+        <module>device-detection.cloud</module>
+        <module>device-detection</module>
+        <module>device-detection.examples</module>
+        <module>device-detection.shell.examples</module>
+    </modules>
+
     <developers>
         <developer>
             <name>51Degrees</name>
@@ -50,7 +33,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
 
-        <pipeline.version>4.4.5</pipeline.version>
+        <pipeline.version>4.4.6-SNAPSHOT</pipeline.version>
 
         <junit.version>4.13.2</junit.version>
         <slf4j-api.version>1.7.33</slf4j-api.version>
@@ -63,7 +46,7 @@
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
         <maven-jarsigner-plugin.version>3.0.0</maven-jarsigner-plugin.version>
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-project-info-reports-plugin.version>2.6</maven-project-info-reports-plugin.version>
@@ -162,6 +145,8 @@
                         <!-- special resource key with license for running TAC and Native Model examples
                              - can be defined in settings.xml-->
                         <SuperResourceKey>${SuperResourceKey}</SuperResourceKey>
+                        <!-- license key required for running UpdateDataFile example -->
+                        <LicenseKey>${LicenseKey}</LicenseKey>
                     </systemPropertyVariables>
                     <properties>
                         <property>
@@ -264,6 +249,10 @@
                 <version>${dependency-check-maven.version}</version>
                 <configuration>
                     <failBuildOnAnyVulnerability>true</failBuildOnAnyVulnerability>
+                    <excludes>
+                        <exclude>com.51degrees:device-detection.examples.*</exclude>
+                        <exclude>com.51degrees:device.detection.shell.examples.*</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
@@ -284,6 +273,10 @@
             <id>${publishrepository.id}</id>
             <url>${publishrepository.url}</url>
         </repository>
+        <snapshotRepository>
+            <id>${snapshotrepository.id}</id>
+            <url>${snapshotrepository.url}</url>
+        </snapshotRepository>
         <site>
             <id>local</id>
             <url>file:///${maven.multiModuleProjectDirectory}/site/</url>
@@ -294,8 +287,47 @@
         <repository>
             <id>${fetchrepository.id}</id>
             <url>${fetchrepository.url}</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>${snapshotrepository.id}</id>
+            <url>${snapshotrepository.url}</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
         </repository>
     </repositories>
+
+    <profiles>
+        <profile>
+            <id>snapshot</id>
+            <activation>
+                <property>
+                    <name>SNAPSHOT</name>
+                </property>
+            </activation>
+            <repositories>
+                <repository>
+                    <id>${snapshotrepository.id}</id>
+                    <url>${snapshotrepository.url}</url>
+                    <snapshots>
+                        <enabled>true</enabled>
+                        <updatePolicy>always</updatePolicy>
+                    </snapshots>
+                </repository>
+            </repositories>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>${snapshotrepository.id}</id>
+                    <url>${snapshotrepository.url}</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+
 
     <licenses>
         <license>

@@ -39,3 +39,8 @@ nbactions.xml
 build*/
 Enterprise-HashV41.hash
 SESSIONS.ser
+Enterprise-HashV41.hash.gz
+Enterprise-HashV41.hash
+Enterprise-HashV41.hash.bak
+TAC-HashV41.hash
+TAC-HashV41.hash.gz

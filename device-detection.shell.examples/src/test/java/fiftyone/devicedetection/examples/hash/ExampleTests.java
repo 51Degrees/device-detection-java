@@ -60,22 +60,6 @@ public class ExampleTests {
     }
 
     @Test
-    public void MatchMetrics_Hash() throws Exception {
-        MatchMetrics.Example matchMetrics = new MatchMetrics.Example(false);
-        matchMetrics.run(dataFile);
-    }
-
-
-    @Test
-    public void Performance_Hash() throws Exception {
-        Performance.Example performance = new Performance.Example(false);
-        performance.run(
-            dataFile,
-            getFilePath(UA_FILE_NAME).getAbsolutePath(),
-            1000);
-    }
-
-    @Test
     public void StronglyTyped_Hash() throws Exception {
         StronglyTyped.Example stronglyTyped = new StronglyTyped.Example(false);
         stronglyTyped.run(dataFile);

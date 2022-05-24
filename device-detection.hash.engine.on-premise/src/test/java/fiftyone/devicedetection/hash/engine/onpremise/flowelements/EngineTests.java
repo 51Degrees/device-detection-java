@@ -70,7 +70,8 @@ public class EngineTests {
 			assertEquals("Lite", tier);
 		}
 		else {
-			assertEquals("Enterprise", tier);
+			assertTrue(tier.equalsIgnoreCase("Enterprise") ||
+					tier.equalsIgnoreCase("TAC"));
 		}
 	}
 	

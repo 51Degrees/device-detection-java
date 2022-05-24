@@ -33,7 +33,6 @@ import fiftyone.pipeline.core.data.EvidenceKeyFilter;
 import fiftyone.pipeline.core.data.EvidenceKeyFilterWhitelist;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.data.factories.ElementDataFactory;
-import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.caching.FlowCache;
 import fiftyone.pipeline.engines.data.AspectEngineDataFile;
 import fiftyone.pipeline.engines.fiftyone.data.*;
@@ -41,6 +40,9 @@ import fiftyone.pipeline.engines.fiftyone.flowelements.FiftyOneOnPremiseAspectEn
 import org.slf4j.Logger;
 
 import java.util.*;
+
+import static fiftyone.pipeline.util.Check.notFileExists;
+import static org.apache.commons.lang3.BooleanUtils.isFalse;
 
 /**
  * Hash device detection engine. This engine takes User-Agents and other
@@ -90,15 +92,11 @@ public class DeviceDetectionHashEngine
      * @param engine to get the keys from
      * @return evidence keys list
      */
-    private static List<String> getKeysFromEngine(
-        EngineDeviceDetectionSwig engine) {
-        List<String> result = new ArrayList<>();
+    private static List<String> getKeysFromEngine(EngineDeviceDetectionSwig engine) {
         // In this case, the vector does not need to be closed.
         // The vector is a pointer to memory owned by the native engine, so the
         // delete method actually doesn't call down to the native layer.
-        VectorStringSwig keys = engine.getKeys();
-        result.addAll(keys);
-        return result;
+        return new ArrayList<>(engine.getKeys());
     }
 
     @Override
@@ -116,9 +114,9 @@ public class DeviceDetectionHashEngine
 
     @Override
     public List<FiftyOneAspectPropertyMetaData> getProperties() {
-        if (propertiesPopulated == false) {
+        if (isFalse(propertiesPopulated)) {
             synchronized (properties) {
-                if (propertiesPopulated == false) {
+                if (isFalse(propertiesPopulated)) {
                     properties.clear();
                     List<FiftyOneAspectPropertyMetaData> newProperties =
                         new ArrayList<>();
@@ -201,16 +199,9 @@ public class DeviceDetectionHashEngine
 
     @Override
     public ValueMetaData getValue(String propertyName, String valueName) {
-        ValueMetaDataHash result = null;
-        ValueMetaDataKeySwig key = new ValueMetaDataKeySwig(
-            propertyName,
-            valueName);
-        ValueMetaDataCollectionSwig values =
-                 engine.getMetaData().getValues();
-        result = new ValueMetaDataHash(
-            this,
-            // this value is closed by the enclosing meta data.
-            values.getByKey(key));
+        ValueMetaDataKeySwig key = new ValueMetaDataKeySwig(propertyName, valueName);
+        ValueMetaDataCollectionSwig values = engine.getMetaData().getValues();
+        ValueMetaDataHash result = new ValueMetaDataHash(this, values.getByKey(key));
         values.delete();
         key.delete();
         return result;
@@ -271,14 +262,30 @@ public class DeviceDetectionHashEngine
     public void refreshData(String dataFileIdentifier) {
         AspectEngineDataFile dataFile = getDataFiles().get(0);
 
-        if (dataFile.getDataFilePath() != null &&
-            dataFile.getDataFilePath().isEmpty() == false) {
-            engine = new EngineHashSwig(
-                dataFile.getDataFilePath(),
-                config,
-                propertiesConfigSwig);
-        }
-        else {
+        if (Objects.isNull(engine)) {
+            if (notFileExists(dataFile.getDataFilePath())) {
+                throw new IllegalStateException("Data file must exist for refresh data " + dataFile.getDataFilePath());
+            }
+            // sometimes the engine can't read data file, but succeeds on retry
+            int tries = 0;
+            String lastMessage = "";
+            while (tries < 10) {
+                try {
+                engine = new EngineHashSwig(dataFile.getDataFilePath(), config, propertiesConfigSwig);
+                } catch (Throwable t) {
+                    lastMessage = t.getMessage();
+                    logger.warn("Creation of Swig Engine failed: " + lastMessage);
+                    tries++;
+                }
+                if (Objects.nonNull(engine)){
+                    break;
+                }
+            }
+            if (tries >= 10) {
+                throw new IllegalStateException("Failed to create SwigEngine after " + tries +
+                        " retries, last exception was " + lastMessage);
+            }
+        } else {
             engine.refreshData();
         }
         setEngineMetaData();
@@ -288,8 +295,7 @@ public class DeviceDetectionHashEngine
     public void refreshData(String dataFileIdentifier, byte[] data) {
         if (engine == null) {
             engine = new EngineHashSwig(data, config, propertiesConfigSwig);
-        }
-        else {
+        } else {
             engine.refreshData(data);
         }
         setEngineMetaData();
@@ -310,7 +316,7 @@ public class DeviceDetectionHashEngine
                     }
                 }
 
-                if (containsKey == true) {
+                if (containsKey) {
                     relevantEvidence.addFromBytes(
                         evidenceItem.getKey(),
                         evidenceItem.getKey().length(),

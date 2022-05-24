@@ -22,20 +22,32 @@
 
 package fiftyone.devicedetection.examples.console;
 
-import fiftyone.devicedetection.examples.shared.KeyHelper;
 import fiftyone.devicedetection.shared.testhelpers.KeyUtils;
 import org.junit.Test;
 
+import static fiftyone.devicedetection.examples.console.UpdateDataFile.run;
+import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeFalse;
+import static org.junit.Assume.assumeNoException;
 
-public class NativeModelCloudTest {
+public class UpdateDataFileTest {
     @Test
-    public void run() throws Exception {
-        String resourceKey =
-                KeyUtils.getNamedKey(NativeModelCloud.NATIVE_MODEL_EXAMPLE_RESOURCE_KEY_NAME);
-        assumeFalse("Skipping test, no resource key found",
-                KeyUtils.isInvalidKey(resourceKey));
-        NativeModelCloud.run(resourceKey, System.out);
-
+    public void updateExampleTest () throws Exception {
+        String licenseKey = KeyUtils.getNamedKey(UpdateDataFile.UPDATE_EXAMPLE_LICENSE_KEY_NAME);
+        assumeFalse("Skipping test, no license key found",
+                KeyUtils.isInvalidKey(licenseKey));
+        try {
+            run(null, licenseKey, false);
+        } catch (IllegalStateException e) {
+            if (e.getMessage().contains("ERR_429")) {
+                assumeFalse("Download failed because of too many requests error", true);
+            }
+            e.printStackTrace();
+            fail(e.getMessage());
+        } catch (Throwable t) {
+            t.printStackTrace();
+            fail(t.getMessage());
+        }
     }
+
 }

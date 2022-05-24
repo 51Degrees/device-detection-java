@@ -18,10 +18,18 @@ Among other things, the examples illustrate:
 - use of device detection pipeline for off-line processing tasks
 - configuring device detection trade-offs between speed and conserving memory
 
-In order to use the cloud examples you will need to obtain a free resource key. 
-A resource key configured will all the properties needed
-to run the examples can be obtained [here](https://configure.51degrees.com/jqz435Nc). 
+You will require [resource keys](https://51degrees.com/documentation/4.3/_info__resource_keys.html)
+to use the Cloud API, as described on our website. Get resource keys from
+our [configurator](https://configure.51degrees.com/), see our [documentation](https://51degrees.com/documentation/4.3/_concepts__configurator.html) on
+how to use this.
+ 
+A resource key configured will the properties needed
+to run most of the examples can be obtained [here](https://configure.51degrees.com/jqz435Nc). 
 To use the resource key in the example it can be supplied as a
 command line parameter, pasted into the configuration file (where there is one)
-or supplied as either a environment variable or a system
+or supplied as either an environment variable or a system
 property called "TestResourceKey".
+
+Some cloud examples require an enhanced resource key containing a license key. And some
+on-premise examples require you to provide a license key. You can find out about 
+resource keys and license keys at our [pricing page](https://51degrees.com/pricing). 

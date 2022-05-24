@@ -1,24 +1,24 @@
-/* *********************************************************************
+/*
  * This Original Work is copyright of 51 Degrees Mobile Experts Limited.
- * Copyright 2019 51 Degrees Mobile Experts Limited, 5 Charlotte Close,
- * Caversham, Reading, Berkshire, United Kingdom RG4 7BY.
+ * Copyright 2022 51 Degrees Mobile Experts Limited, Davidson House,
+ * Forbury Square, Reading, Berkshire, United Kingdom RG1 3EU.
  *
- * This Original Work is licensed under the European Union Public Licence (EUPL)
- * v.1.2 and is subject to its terms as set out below.
+ * This Original Work is licensed under the European Union Public Licence
+ *  (EUPL) v.1.2 and is subject to its terms as set out below.
  *
- * If a copy of the EUPL was not distributed with this file, You can obtain
- * one at https://opensource.org/licenses/EUPL-1.2.
+ *  If a copy of the EUPL was not distributed with this file, You can obtain
+ *  one at https://opensource.org/licenses/EUPL-1.2.
  *
- * The 'Compatible Licences' set out in the Appendix to the EUPL (as may be
- * amended by the European Commission) shall be deemed incompatible for
- * the purposes of the Work and the provisions of the compatibility
- * clause in Article 5 of the EUPL shall not apply.
+ *  The 'Compatible Licences' set out in the Appendix to the EUPL (as may be
+ *  amended by the European Commission) shall be deemed incompatible for
+ *  the purposes of the Work and the provisions of the compatibility
+ *  clause in Article 5 of the EUPL shall not apply.
  *
- * If using the Work as, or as part of, a network application, by
- * including the attribution notice(s) required under Article 5 of the EUPL
- * in the end user terms of the application under an appropriate heading,
- * such notice(s) shall fulfill the requirements of that article.
- * ********************************************************************* */
+ *   If using the Work as, or as part of, a network application, by
+ *   including the attribution notice(s) required under Article 5 of the EUPL
+ *   in the end user terms of the application under an appropriate heading,
+ *   such notice(s) shall fulfill the requirements of that article.
+ */
 package fiftyone.devicedetection.examples.console;
 
 import fiftyone.devicedetection.examples.shared.DataFileHelper;
@@ -27,7 +27,6 @@ import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetecti
 import fiftyone.pipeline.core.data.EvidenceKeyFilterWhitelist;
 import fiftyone.pipeline.engines.Constants;
 import fiftyone.pipeline.engines.fiftyone.data.ComponentMetaData;
-import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.ProfileMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
 import org.slf4j.Logger;
@@ -104,13 +103,12 @@ public class MetadataOnPrem {
             writer.println();
             writer.flush();
 
-            DataFileHelper.logDataFileInfo(dataFileLocation, ddEngine);
+            DataFileHelper.logDataFileInfo(ddEngine);
         }
     }
 
     private static void outputEvidenceKeyDetails(DeviceDetectionHashEngine ddEngine,
-                                              PrintWriter output)
-    {
+                                              PrintWriter output){
         output.println();
         if (ddEngine.getEvidenceKeyFilter() instanceof EvidenceKeyFilterWhitelist) {
             // If the evidence key filter extends EvidenceKeyFilterWhitelist then we can
@@ -158,8 +156,7 @@ public class MetadataOnPrem {
             output.println("    ... no properties");
             return;
         }
-        Spliterator<FiftyOneAspectPropertyMetaData> spliterator = component.getProperties().spliterator();
-        StreamSupport.stream(spliterator,false)
+        component.getProperties()
                 .forEach(property-> {
                             // Output some details about the property.
                             // If we're outputting to console then we also add some formatting to make it

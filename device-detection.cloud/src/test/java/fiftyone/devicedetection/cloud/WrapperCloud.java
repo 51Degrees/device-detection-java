@@ -24,7 +24,7 @@ package fiftyone.devicedetection.cloud;
 
 import fiftyone.devicedetection.cloud.flowelements.DeviceDetectionCloudEngine;
 import fiftyone.devicedetection.cloud.flowelements.DeviceDetectionCloudEngineBuilder;
-import fiftyone.devicedetection.shared.testhelpers.ResourceKeyHelper;
+import fiftyone.devicedetection.shared.testhelpers.KeyUtils;
 import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngine;
 import fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder;
 import fiftyone.pipeline.core.flowelements.Pipeline;
@@ -47,7 +47,7 @@ public class WrapperCloud implements Closeable {
     public WrapperCloud() throws Exception {
         cloudRequestEngine = 
                 new CloudRequestEngineBuilder(loggerFactory)
-                .setResourceKey(ResourceKeyHelper.getResourceKey())
+                .setResourceKey(KeyUtils.getNamedKey("TestResourceKey"))
                 .build();
         deviceDetectionCloudEngine = new DeviceDetectionCloudEngineBuilder(loggerFactory)
                 .build();

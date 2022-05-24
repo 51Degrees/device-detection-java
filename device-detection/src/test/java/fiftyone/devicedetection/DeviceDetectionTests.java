@@ -22,6 +22,7 @@
 
 package fiftyone.devicedetection;
 
+import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.devicedetection.shared.testhelpers.UserAgentGenerator;
 import fiftyone.devicedetection.shared.testhelpers.FileUtils;
@@ -41,6 +42,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -54,6 +57,7 @@ import static fiftyone.pipeline.core.Constants.EVIDENCE_HTTPHEADER_PREFIX;
 import static fiftyone.pipeline.core.Constants.EVIDENCE_SEPERATOR;
 import static fiftyone.pipeline.engines.Constants.PerformanceProfiles.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assume.assumeTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -224,12 +228,35 @@ public class DeviceDetectionTests {
     		assertEquals(1, pipeline.getServices().size());
     	}
     }
-    
+
     /**
-     * This tests that DataUpdateService is closed when its corresponding
-     * pipeline created by DeviceDetectionPipelineBuilder is closed.
-     * @throws Exception
+     * This tests that creating a temp file works
      */
+    @Test
+    public void TestOnPremiseBuilder_CreateTempFile() throws Exception {
+        int i;
+        for (i=0; i < 10; i++) {
+            DeviceDetectionOnPremisePipelineBuilder builder =
+                    new DeviceDetectionPipelineBuilder()
+                            .useOnPremise(HASH_DATA_FILE_NAME, true)
+                            .setPerformanceProfile(MaxPerformance)
+                            .setShareUsage(false)
+                            .setAutoUpdate(false);
+            try (Pipeline pipeline = builder.build()) {
+                assertEquals(1, pipeline.getServices().size());
+                DeviceDetectionHashEngine ddhe =
+                        pipeline.getElement(DeviceDetectionHashEngine.class);
+                String tempDir = ddhe.getTempDataDirPath();
+                Path tempPath = Paths.get(tempDir);
+            }
+        }
+        logger.info("Completed {} creations", i);
+    }
+        /**
+         * This tests that DataUpdateService is closed when its corresponding
+         * pipeline created by DeviceDetectionPipelineBuilder is closed.
+         * @throws Exception
+         */
     @Test
     public void TestOnPremiseBuilder_DataUpdateService_Close() throws Exception {
     	// Configure the pipeline builder based on the
