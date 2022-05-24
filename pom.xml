@@ -291,14 +291,6 @@
                 <enabled>true</enabled>
             </releases>
         </repository>
-        <repository>
-            <id>${snapshotrepository.id}</id>
-            <url>${snapshotrepository.url}</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
     </repositories>
 
     <profiles>
