@@ -6,5 +6,6 @@
 
 ## Introduction
 
-This module contains examples that can be run from the shell/command line. Each example
-aims to be self-explanatory as to its purpose.
+This module contains legacy examples that can be run from the shell/command line. Each example
+aims to be self-explanatory as to its purpose. The examples are being phased out and replaced by
+examples [here](../device-detection.examples/README.md]).

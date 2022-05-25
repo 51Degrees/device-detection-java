@@ -20,22 +20,17 @@
  *   such notice(s) shall fulfill the requirements of that article.
  */
 
-package fiftyone.devicedetection.examples.console;
+package fiftyone.devicedetection.shared.testhelpers;
 
-import fiftyone.devicedetection.examples.shared.KeyHelper;
-import fiftyone.devicedetection.shared.testhelpers.KeyUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import static org.junit.Assume.assumeFalse;
-
-public class NativeModelCloudTest {
-    @Test
-    public void run() throws Exception {
-        String resourceKey =
-                KeyUtils.getNamedKey(NativeModelCloud.NATIVE_MODEL_EXAMPLE_RESOURCE_KEY_NAME);
-        assumeFalse("Skipping test, no resource key found",
-                KeyUtils.isInvalidKey(resourceKey));
-        NativeModelCloud.run(resourceKey, System.out);
-
+public class ListRuntimeConfigTest {
+    @Test @Ignore
+    public void runtimeConfigTest () {
+        System.out.println("Environment");
+        System.getenv().forEach((key, value) -> System.out.format("%s: %s%n", key, value));
+        System.out.println("\nProperties");
+        System.getProperties().forEach((key, value) -> System.out.format("%s: %s%n", key, value));
     }
 }

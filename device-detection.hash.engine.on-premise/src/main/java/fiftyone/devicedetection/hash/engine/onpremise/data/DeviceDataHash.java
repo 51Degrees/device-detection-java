@@ -33,7 +33,7 @@ import java.util.List;
 public interface DeviceDataHash extends DeviceData {
 
     /**
-     * Get the values for the specified property as a List<>. For
+     * Get the values for the specified property as a List&lt;>. For
      * on-premise engines, this is the raw form they are stored in the data file
      * as.
      * @param propertyName name of the property to get values for

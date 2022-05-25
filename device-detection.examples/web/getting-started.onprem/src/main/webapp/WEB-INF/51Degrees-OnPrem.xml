@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  ~ This Source Code Form is copyright of 51Degrees Mobile Experts Limited.
-  ~ Copyright 2017 51Degrees Mobile Experts Limited, 5 Charlotte Close,
-  ~ Caversham, Reading, Berkshire, United Kingdom RG4 7BY
+<!--
+  ~ This Original Work is copyright of 51 Degrees Mobile Experts Limited.
+  ~ Copyright 2022 51 Degrees Mobile Experts Limited, Davidson House,
+  ~ Forbury Square, Reading, Berkshire, United Kingdom RG1 3EU.
   ~
-  ~ This Source Code Form is the subject of the following patents and patent
-  ~ applications, owned by 51Degrees Mobile Experts Limited of 5 Charlotte
-  ~ Close, Caversham, Reading, Berkshire, United Kingdom RG4 7BY:
-  ~ European Patent No. 2871816;
-  ~ European Patent Application No. 17184134.9;
-  ~ United States Patent Nos. 9,332,086 and 9,350,823; and
-  ~ United States Patent Application No. 15/686,066.
+  ~ This Original Work is licensed under the European Union Public Licence
+  ~  (EUPL) v.1.2 and is subject to its terms as set out below.
   ~
-  ~ This Source Code Form is subject to the terms of the Mozilla Public
-  ~ License, v. 2.0.
+  ~  If a copy of the EUPL was not distributed with this file, You can obtain
+  ~  one at https://opensource.org/licenses/EUPL-1.2.
   ~
-  ~ If a copy of the MPL was not distributed with this file, You can obtain
-  ~ one at http://mozilla.org/MPL/2.0/.
+  ~  The 'Compatible Licences' set out in the Appendix to the EUPL (as may be
+  ~  amended by the European Commission) shall be deemed incompatible for
+  ~  the purposes of the Work and the provisions of the compatibility
+  ~  clause in Article 5 of the EUPL shall not apply.
   ~
-  ~ This Source Code Form is "Incompatible With Secondary Licenses", as
-  ~ defined by the Mozilla Public License, v. 2.0.
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+  ~   If using the Work as, or as part of, a network application, by
+  ~   including the attribution notice(s) required under Article 5 of the EUPL
+  ~   in the end user terms of the application under an appropriate heading,
+  ~   such notice(s) shall fulfill the requirements of that article.
+  -->
 
 <PipelineOptions>
     <Elements>

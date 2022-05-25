@@ -139,6 +139,8 @@ public class Benchmark extends ProgramBase {
      */
     public static void main(String[] args)
             throws Exception {
+        System.setProperty("logback.configurationFile", "./logback.xml");
+
         int numberOfThreads = defaultNumberOfThreads;
 
         String dataFile = null;

@@ -22,20 +22,13 @@
 
 package fiftyone.devicedetection.examples.console;
 
-import fiftyone.devicedetection.examples.shared.KeyHelper;
-import fiftyone.devicedetection.shared.testhelpers.KeyUtils;
+import fiftyone.devicedetection.examples.shared.ExampleTestHelper;
 import org.junit.Test;
 
-import static org.junit.Assume.assumeFalse;
-
-public class NativeModelCloudTest {
+public class MatchMetricsTest {
     @Test
-    public void run() throws Exception {
-        String resourceKey =
-                KeyUtils.getNamedKey(NativeModelCloud.NATIVE_MODEL_EXAMPLE_RESOURCE_KEY_NAME);
-        assumeFalse("Skipping test, no resource key found",
-                KeyUtils.isInvalidKey(resourceKey));
-        NativeModelCloud.run(resourceKey, System.out);
-
+    public void testMatchMetrics() throws Exception {
+        MatchMetrics.run(null, ExampleTestHelper.setUpEvidence(), false, System.out);
     }
+
 }

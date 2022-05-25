@@ -66,9 +66,8 @@ public class DeviceDetectionOnPremisePipelineBuilder
     private String dataUpdateLicenseKey = null;
     private Constants.PerformanceProfiles performanceProfile =
         Constants.PerformanceProfiles.Balanced;
-/*    private Enums.DeviceDetectionAlgorithm algorithm =
-        Enums.DeviceDetectionAlgorithm.Hash;*/
-    private final DataUpdateService dataUpdateService;
+
+    private DataUpdateService dataUpdateService;
     private final HttpClient httpClient;
 
     DeviceDetectionOnPremisePipelineBuilder(
@@ -152,7 +151,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
         autoUpdateEnabled = enabled;
         return this;
     }
-    
+
     /**
      * The DataUpdateService has the ability to watch a 
      * file on disk and refresh the engine as soon as that file is 
@@ -162,8 +161,19 @@ public class DeviceDetectionOnPremisePipelineBuilder
      * @return This builder instance.
      */
     public DeviceDetectionOnPremisePipelineBuilder setDataFileSystemWatcher(
-        boolean enabled) {
+            boolean enabled) {
         dataFileSystemWatcher = enabled;
+        return this;
+    }
+
+    /**
+     * Automatic updates require a {@link DataUpdateService}.
+     * @param dataUpdateService an instance of a dataUpdateService
+     * @return This builder instance.
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setDataUpdateService(
+            DataUpdateService dataUpdateService) {
+        this.dataUpdateService = dataUpdateService;
         return this;
     }
 
@@ -363,8 +373,8 @@ public class DeviceDetectionOnPremisePipelineBuilder
 
     /**
      * Build and return a pipeline that can perform device detection.
-     * @return
-     * @throws Exception 
+     * @return the built pipeline
+     * @throws Exception on error
      */
     @Override
     public Pipeline build() throws Exception {

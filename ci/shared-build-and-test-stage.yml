@@ -19,13 +19,17 @@ stages:
   jobs:
   - job: 'Build_and_Test'
     displayName: Build and Test
+    timeoutInMinutes: 30
     condition: ne(${{ parameters.runTests }}, 'Off')
 
     variables: 
     - group: InternalKeys
     - group: CIAutomation
     - template: c/shared-variables.yml@${{ parameters.resourceRepoName }}
-      
+    - name: SNAPSHOT
+      value: true
+
+
     strategy:
       matrix:
         JDK8:
@@ -91,15 +95,27 @@ stages:
 
     - task: MavenAuthenticate@0
       inputs:
-        artifactsFeeds: '$(InternalFeedName)'
+        artifactsFeeds: $(fetchrepository.id), $(snapshotrepository.id)
 
-    - task: Maven@1
+    - task: Maven@3
+      displayName: 'Maven effective POM'
+      inputs:
+        mavenPomFile: 'pom.xml'
+        goals: 'help:effective-pom'
+        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dsnapshotrepository.id=$(snapshotrepository.id) -Dsnapshotrepository.url=$(snapshotrepository.url) -DFOD_CLOUD_API_URL=$(FOD_CLOUD_API_URL) -DSuperResourceKey=$(SuperResourceKey) --no-transfer-progress'
+        jdkVersionOption: $(jdkVersion)
+        skipEffectivePom: false
+        testRunTitle: '${{ parameters.imageName }}-$(jdkVersion)'
+
+    - task: Maven@3
       displayName: 'Maven test'
       inputs:
         mavenPomFile: 'pom.xml'
         goals: 'clean test'
-        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -DFOD_CLOUD_API_URL=$(FOD_CLOUD_API_URL) -DTestResourceKey=$(SuperResourceKey) -DplatformToolsetVersion=${{ variables.plfTsVer }} -DwindowsSDKVersion=${{ variables.winSDKVer }} --no-transfer-progress'
+        options: '-Dhttps.protocols=TLSv1.2 -DfailIfNoTests=false -Psnapshot -DXmx2048m -Dgpg.skip=true -Dfetchrepository.id=$(fetchrepository.id) -Dfetchrepository.url=$(fetchrepository.url) -Dsnapshotrepository.id=$(snapshotrepository.id) -Dsnapshotrepository.url=$(snapshotrepository.url) -DFOD_CLOUD_API_URL=$(FOD_CLOUD_API_URL) -DplatformToolsetVersion=${{ variables.plfTsVer }} -DwindowsSDKVersion=${{ variables.winSDKVer }} --no-transfer-progress'
+        # to run a single test add e.g. -Dtest=MatchMetricsTest,UpdateDataFileTest,DeviceDetectionTests#TestOnPremiseBuilder_CreateTempFile  -am
         jdkVersionOption: $(jdkVersion)
+        skipEffectivePom: false
         testRunTitle: '${{ parameters.imageName }}-$(jdkVersion)'
 
     - task: PublishTestResults@2

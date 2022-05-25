@@ -8,11 +8,12 @@
 
 This repository contains the device detection engines for the Java implementation of the Pipeline API.
 
-## Pre-requisites
+## Dependencies
 
-- JDK 8 or later.
-
-- Git Large File System (LFS) for sub module `device-detection-cxx\device-detection-data`
+For runtime dependencies, see our [dependencies](http://51degrees.com/documentation/_info__dependencies.html) page.
+The [tested versions](https://51degrees.com/documentation/_info__tested_versions.html) page shows 
+the JDK versions that we currently test against. The software may run fine against other versions, 
+but additional caution should be applied.
 
 ### Data
 
@@ -20,21 +21,31 @@ The Java API can either use our cloud service to get its data or it can use a lo
 
 #### Cloud
 
-You will require [resource keys](https://51degrees.com/documentation/4.3/_info__resource_keys.html)
+You will require [resource keys](https://51degrees.com/documentation/_info__resource_keys.html)
 to use the Cloud API, as described on our website. Get resource keys from
-our [configurator](https://configure.51degrees.com/), see our [documentation](https://51degrees.com/documentation/4.3/_concepts__configurator.html) on 
+our [configurator](https://configure.51degrees.com/), see our [documentation](https://51degrees.com/documentation/_concepts__configurator.html) on 
 how to use this.
 
 #### On-Premise
 
-If you are using 
-on-premise detection, a "Lite" version of the data required is packaged 
-in this repository. It contains only a limited set of "essential" device detection 
-properties. 
+If you are using on-premise detection, a "Lite" version of the data required is packaged 
+in this repository. It contains only a limited set of "essential" device detection properties. 
 
-You may want to license our complete
-data file containing all properties. [Details of our licenses](https://51degrees.com/pricing) are available 
-on our website.
+You may want to license our complete data file containing all properties. 
+[Details of our licenses](https://51degrees.com/pricing) are available on our website.
+
+If you want to use the lite file, you will need to install [GitLFS](https://git-lfs.github.com/):
+
+```
+sudo apt-get install git-lfs
+git lfs install
+```
+
+Then, navigate to 'device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx/device-detection-data' and execute:
+
+```
+git lfs pull
+```
 
 ## Installation
 
@@ -56,40 +67,43 @@ the [latest version](https://mvnrepository.com/artifact/com.51degrees/device-det
 
 This package includes the Cloud and on-premise APIs.
 
-On Windows platform, make sure to install `C++ Redistributable latest 14.2* or above`. This is required to use the Windows native binaries shipped with the Maven package.
+### Build and Install from source
 
+Device detection on-premise uses a native binary. (i.e. compiled from C code to target a specific 
+platform/architecture) This section explains how to build this binary.
 
-### Build and Install from source.
+#### Pre-requisites
 
-Make sure you have installed the build pre-requisites as described above.
+- Install C build tools:
+  - Windows:
+    - You will need either Visual Studio 2019 or the [C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) installed.
+      - Minimum platform toolset version is `v142`
+      - Minimum Windows SDK version is `10.0.18362.0`
+  - Linux/MacOS:
+    - `sudo apt-get install g++ make libatomic1`
+- Maven version 3.8.4 or higher is recommended, and what is used for our own build.
+- If you have not already done so, pull the git submodules that contain the native code:
+  - `git submodule update --init --recursive`
 
-Clone this repository and navigate to the root of the local copy.
-
-### Build dependencies
-
-On Windows make sure you have the Java 8 JDK installed, Maven, Visual Studio 2019 and the latest Windows 10 SDK.
-- Minimum required Platform Toolset version is `v142`
-- Minimum required Windows SDK version is `10.0.18362.0`
-
-On Linux/macOS make sure you have the Java 8 JDK installed, Maven and Gcc.
-
-Maven version 3.8.4 or higher is recommended, and what is used for our own build.
+#### Build steps
 
 Batch script and Bash script are provided to support building native binaries on Windows and Linux/macOS.
 These scripts are implicitly called by the Maven build step.
 
-### Submodules
-
-Run the following from the Git terminal to obtain all sub-modules.
-
 ```
-git submodule update --init --recursive 
+mvn clean build
 ```
 
+On Windows, the Platform Toolset version and Windows 10 SDK version can be overwritten when 
+running `mvn` by adding following options:
+- `-DplatformToolsetVersion=[ Platform Toolset Version ]`
+- `-DwindowsSDKVersion=[ Windows 10 SDK Version ]`
 
-#### Tests
+This is not recommended unless absolutely necessary and should be used with caution.
 
-You will need [resource keys](https://51degrees.com/documentation/4.3/_info__resource_keys.html)
+## Tests
+
+You will need [resource keys](https://51degrees.com/documentation/_info__resource_keys.html)
 (see above) to complete the tests and run examples which include exercising the cloud API.
 
 To verify the code:
@@ -97,18 +111,6 @@ To verify the code:
 ```
 mvn clean test -DTestResourceKey=[Resource Key]
 ```
-
-#### Install JARs
-
-```
-mvn clean install
-```
-
-#### Windows Specific
-
-On Windows, the default Platform Toolset version is `v142` and the default Windows 10 SDK version is `10.0.18362.0`. However these can be overwritten when running `mvn` by adding following options:
-- `-DplatformToolsetVersion=[ Platform Toolset Version]`
-- `-DwindowsSDKVersion=[ Windows 10 SDK Version ]`
 
 ## Projects
 
@@ -120,5 +122,33 @@ On Windows, the default Platform Toolset version is `v142` and the default Windo
 The following examples are not distributed as maven jars and need to be built by you, please
 see the respective README for these projects:
 
-- **device-detection.examples** - Device detection getting started and other introductory examples.
-- **device-detection.shell.examples** - Device detection examples to be run from the command line.
+- **device-detection.examples** - Device detection getting started and other introductory examples [README](./device-detection.examples/README.md).
+- **device-detection.shell.examples** - Device detection examples to be run from the command line [README](./device-detection.shell.examples/README.md).
+
+## Examples
+
+The tables below describe the examples available in this repository under the 
+`device-detection.examples` and `device-detection.shell.examples` folders.
+
+### Cloud
+
+| Example                                | Description                                                                                                                                        |
+|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| GettingStarted (Console)               | How to use the 51Degrees Cloud service to determine details about a device based on its User-Agent and User-Agent Client Hints HTTP header values. |
+| GettingStarted (Web)                   | How to use the 51Degrees Cloud service to determine details about a device as part of a simple Java servlet website.                               |
+| Metadata                               | How to access the meta-data that relates to things like the properties populated device detection                                                  |
+| TacLookup                              | How to get device details from a TAC (Type Allocation Code) using the 51Degrees cloud service.                                                     |
+| NativeModelLookup                      | How to get device details from a native model name using the 51Degrees cloud service.                                                              |
+
+### On-Premise
+
+| Example                                | Description                                                                                                                                                          |
+|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| GettingStarted (Console)               | How to use the 51Degrees on-premise device detection API to determine details about a device based on its User-Agent and User-Agent Client Hints HTTP header values. |
+| GettingStarted (Web)                   | How to use the 51Degrees Cloud service to determine details about a device as part of a simple Java servlet website.                                                 |
+| Metadata                               | How to access the meta-data that relates to things like the properties populated device detection.                                                                   |
+| MatchMetrics                           | How to view metrics associated with the results of processing with a Device Detection engine.                                                                        |
+| OfflineProcessing                      | Example showing how to ingest a file containing data from web requests and perform detection against the entries.                                                    |
+| Performance                            | How to configure the various performance options and run a simple performance test.                                                                                  |
+| Benchmark                              | Performs a benchmarking test to determine the number of requests/sec that the current hardware can accommodate.                                                      |
+| UpdateOnStartup                        | How to configure the Pipeline to automatically update the device detection data file on startup. Also illujstrates 'file watcher'. This will refresh the device detection engine if the specified data file is updated on disk.                                                  |

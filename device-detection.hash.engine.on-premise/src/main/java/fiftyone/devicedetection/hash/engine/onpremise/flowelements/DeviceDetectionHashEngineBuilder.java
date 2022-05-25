@@ -37,6 +37,7 @@ import fiftyone.pipeline.engines.configuration.CacheConfiguration;
 import fiftyone.pipeline.engines.data.AspectEngineDataFile;
 import fiftyone.pipeline.engines.services.DataUpdateService;
 import fiftyone.pipeline.engines.services.MissingPropertyServiceDefault;
+import fiftyone.pipeline.util.Check;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
@@ -260,7 +261,7 @@ public class DeviceDetectionHashEngineBuilder
         if (dataFiles.size() != 1) {
             throw new PipelineConfigurationException(
                 "This builder requires one and only one configured file " +
-                    "but it has {DataFiles.Count}");
+                    "but it has " + dataFiles.size());
         }
         AspectEngineDataFile dataFile = dataFiles.get(0);
         // We remove the data file configuration from the list.
@@ -274,8 +275,7 @@ public class DeviceDetectionHashEngineBuilder
 
         // Update the swig configuration object.
         config.setUseUpperPrefixHeaders(false);
-        if (dataFile.getConfiguration().getCreateTempDataCopy() &&
-            tempDir != null && tempDir.isEmpty() == false) {
+        if (dataFile.getConfiguration().getCreateTempDataCopy() && Check.notNullOrBlank(tempDir)) {
             try (VectorStringSwig tempDirs = new VectorStringSwig()) {
                 tempDirs.add(tempDir);
                 config.setTempDirectories(tempDirs);
