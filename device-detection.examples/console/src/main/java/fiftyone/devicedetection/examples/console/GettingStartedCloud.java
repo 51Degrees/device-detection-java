@@ -24,7 +24,7 @@ package fiftyone.devicedetection.examples.console;
 
 import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
 import fiftyone.devicedetection.examples.shared.KeyHelper;
-import fiftyone.devicedetection.examples.shared.ExampleTestHelper;
+import fiftyone.devicedetection.examples.shared.EvidenceHelper;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
@@ -64,7 +64,7 @@ public class GettingStartedCloud {
         String resourceKey = args.length > 0 ? args[0]: null;
 
         // prepare 'evidence' for use in pipeline (see below)
-        List<Map<String, String>> evidence = ExampleTestHelper.setUpEvidence();
+        List<Map<String, String>> evidence = EvidenceHelper.setUpEvidence();
         run(resourceKey, evidence, System.out);
     }
 

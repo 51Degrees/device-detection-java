@@ -22,13 +22,13 @@
 
 package fiftyone.devicedetection.examples.console;
 
-import fiftyone.devicedetection.examples.shared.ExampleTestHelper;
+import fiftyone.devicedetection.examples.shared.EvidenceHelper;
 import org.junit.Test;
 
 public class MatchMetricsTest {
     @Test
     public void testMatchMetrics() throws Exception {
-        MatchMetrics.run(null, ExampleTestHelper.setUpEvidence(), false, System.out);
+        MatchMetrics.run(null, EvidenceHelper.setUpEvidence(), false, System.out);
     }
 
 }

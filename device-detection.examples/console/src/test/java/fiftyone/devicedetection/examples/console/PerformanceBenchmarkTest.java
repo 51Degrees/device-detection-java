@@ -22,15 +22,29 @@
 
 package fiftyone.devicedetection.examples.console;
 
-import fiftyone.devicedetection.examples.shared.EvidenceHelper;
-import fiftyone.devicedetection.shared.testhelpers.FileUtils;
+import fiftyone.common.testhelpers.LogbackHelper;
+import fiftyone.pipeline.engines.Constants;
+import fiftyone.pipeline.util.FileFinder;
 import org.junit.Test;
 
-public class GettingStartedOnPremTest {
+import java.io.PrintWriter;
 
-    @Test
-    public void gettingStartedOnPremTest() throws Exception {
-        GettingStartedOnPrem.run(FileUtils.LITE_HASH_DATA_FILE_NAME,
-                EvidenceHelper.setUpEvidence(), System.out);
-    }
+import static fiftyone.devicedetection.examples.console.PerformanceBenchmark.*;
+import static java.util.Arrays.stream;
+
+public class PerformanceBenchmarkTest {
+
+   @Test
+   public void benchmarkTest() throws Exception {
+       LogbackHelper.configureLogback(FileFinder.getFilePath("logback.xml"));
+       new PerformanceBenchmark().runBenchmarks(
+               // get only max performance for testing
+               stream(DEFAULT_PERFORMANCE_CONFIGURATIONS)
+                       .filter(c -> c.profile.equals(Constants.PerformanceProfiles.MaxPerformance))
+                       .toArray(PerformanceConfiguration[]::new),
+               null,
+               null,
+               DEFAULT_NUMBER_OF_THREADS,
+               new PrintWriter(System.out,true));
+   }
 }

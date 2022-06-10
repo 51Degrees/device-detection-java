@@ -22,12 +22,16 @@
 
 package fiftyone.devicedetection.examples.shared;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.yaml.snakeyaml.Yaml;
 
-public class ExampleTestHelper {
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+public class EvidenceHelper {
 
     /**
      * Prepare evidence for use in examples
@@ -62,4 +66,41 @@ public class ExampleTestHelper {
 
         return evidence;
     }
+
+    /**
+     * Load a Yaml file as a list of documents (each being a Map containing evidence)
+     * @param yamlFile a yaml file
+     * @param max maximum entries
+     * @return a List
+     * @throws IOException in case of error
+     */
+    public static List<Map<String, String>> getEvidenceList(File yamlFile, int max) throws IOException {
+        return StreamSupport.stream(getEvidenceIterable(yamlFile).spliterator(), false)
+                .limit(max)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Create an Iterable<Map<String, String>> for reading documents from the passed yamlFile
+     * @param yamlFile a yamlFile
+     * @return an Iterable
+     * @throws IOException for file errors
+     */
+    @SuppressWarnings("unchecked")
+    public static Iterable<Map<String, String>> getEvidenceIterable(File yamlFile) throws IOException {
+        final Iterator<Object> objectIterator =
+                new Yaml().loadAll(Files.newInputStream(yamlFile.toPath())).iterator();
+        return () -> new Iterator<Map<String, String>>() {
+            @Override
+            public boolean hasNext() {
+                return objectIterator.hasNext();
+            }
+
+            @Override
+            public Map<String, String> next() {
+                return (Map<String, String>) objectIterator.next();
+            }
+        };
+    }
+
 }

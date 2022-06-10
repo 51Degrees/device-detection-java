@@ -58,11 +58,10 @@ import static fiftyone.pipeline.util.FileFinder.getFilePath;
  * </ol>
  * ## License Key
  * In order to test this example you will need a 51Degrees Enterprise license which can be
- * purchased from our
- * <a href="http://51degrees.com/pricing/annual">pricing page</a>. Look for our "Bigger" or
+ * purchased from our [pricing page](//51degrees.com/pricing/annual). Look for our "Bigger" or
  * "Biggest" options.
  * # Data Files
- * You can find out more about data files, licenses etc. at our (FAQ page)[http://51degrees.com/resources/faqs]
+ * You can find out more about data files, licenses etc. at our (FAQ page)[//51degrees.com/resources/faqs]
  * ## Enterprise Data File
  * Enterprise (fully-featured) data files are typically released by 51Degrees four days a week
  * (Mon-Thu) and on-premise deployments can fetch and download those files automatically. Equally,

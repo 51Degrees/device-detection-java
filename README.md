@@ -61,7 +61,7 @@ the [latest version](https://mvnrepository.com/artifact/com.51degrees/device-det
 <dependency>
     <groupId>com.51degrees</groupId>
     <artifactId>device-detection</artifactId>
-    <version>4.3.14</version>
+    <version>4.4.9</version>
 </dependency>
 ```
 
@@ -123,12 +123,11 @@ The following examples are not distributed as maven jars and need to be built by
 see the respective README for these projects:
 
 - **device-detection.examples** - Device detection getting started and other introductory examples [README](./device-detection.examples/README.md).
-- **device-detection.shell.examples** - Device detection examples to be run from the command line [README](./device-detection.shell.examples/README.md).
 
 ## Examples
 
-The tables below describe the examples available in this repository under the 
-`device-detection.examples` and `device-detection.shell.examples` folders.
+The tables below describe the examples available in this repository under 
+`device-detection.examples`.
 
 ### Cloud
 
@@ -142,13 +141,12 @@ The tables below describe the examples available in this repository under the
 
 ### On-Premise
 
-| Example                                | Description                                                                                                                                                          |
-|----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| GettingStarted (Console)               | How to use the 51Degrees on-premise device detection API to determine details about a device based on its User-Agent and User-Agent Client Hints HTTP header values. |
-| GettingStarted (Web)                   | How to use the 51Degrees Cloud service to determine details about a device as part of a simple Java servlet website.                                                 |
-| Metadata                               | How to access the meta-data that relates to things like the properties populated device detection.                                                                   |
-| MatchMetrics                           | How to view metrics associated with the results of processing with a Device Detection engine.                                                                        |
-| OfflineProcessing                      | Example showing how to ingest a file containing data from web requests and perform detection against the entries.                                                    |
-| Performance                            | How to configure the various performance options and run a simple performance test.                                                                                  |
-| Benchmark                              | Performs a benchmarking test to determine the number of requests/sec that the current hardware can accommodate.                                                      |
-| UpdateOnStartup                        | How to configure the Pipeline to automatically update the device detection data file on startup. Also illujstrates 'file watcher'. This will refresh the device detection engine if the specified data file is updated on disk.                                                  |
+| Example                  | Description                                                                                                                                                                                                                    |
+|--------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| GettingStarted (Console) | How to use the 51Degrees on-premise device detection API to determine details about a device based on its User-Agent and User-Agent Client Hints HTTP header values.                                                           |
+| GettingStarted (Web)     | How to use the 51Degrees Cloud service to determine details about a device as part of a simple Java servlet website.                                                                                                           |
+| Metadata                 | How to access the meta-data that relates to things like the properties populated device detection.                                                                                                                             |
+| MatchMetrics             | How to view metrics associated with the properties of processing with a Device Detection engine.                                                                                                                               |
+| OfflineProcessing        | Example showing how to ingest a file containing data from web requests and perform detection against the entries.                                                                                                              |
+| PerformanceBenchmark     | How to configure the various performance options and run some simple performance tests.                                                                                                                                        |
+| UpdateOnStartup          | How to configure the Pipeline to automatically update the device detection data file on startup. Also illustrates 'file watcher'. This will refresh the device detection engine if the specified data file is updated on disk. |

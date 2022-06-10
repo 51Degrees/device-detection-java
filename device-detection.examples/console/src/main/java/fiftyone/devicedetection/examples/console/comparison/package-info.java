@@ -20,16 +20,18 @@
  *   such notice(s) shall fulfill the requirements of that article.
  */
 
-package fiftyone.devicedetection.examples.console;
-
-import org.junit.Test;
-
-public class PerformanceTest {
-
-    @Test
-    public void testMatchMetrics() throws Exception {
-        Performance.run(null, null,
-                Performance.THREADS, Performance.TESTS_PER_THREAD,System.out);
-    }
-
-}
+/**
+ * This package provides a framework for comparing vendor solutions.
+ * <p>
+ * To add a vendor implement the interfaces in
+ * {@link fiftyone.devicedetection.examples.console.comparison.Detection} and provide to
+ * {@link fiftyone.devicedetection.examples.console.comparison.Comparer} to be compared.
+ * <p>
+ * Concrete implementation for 51degrees and BrowsCap are provided. Skeleton implementation
+ * of Device Atlas and Scientia Mobile are provided - uncomment the code which is sketched there
+ * which has not been tested as we do not have access to those vendors libraries.
+ * <p>
+ * Only minimal (speed) reporting is provided here. You can add to this to report
+ * accuracy and so on. See {@link fiftyone.devicedetection.examples.console.comparison.Reporting}
+ */
+package fiftyone.devicedetection.examples.console.comparison;

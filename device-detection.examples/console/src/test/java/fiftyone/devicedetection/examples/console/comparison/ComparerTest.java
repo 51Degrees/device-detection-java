@@ -20,17 +20,26 @@
  *   such notice(s) shall fulfill the requirements of that article.
  */
 
-package fiftyone.devicedetection.examples.console;
+package fiftyone.devicedetection.examples.console.comparison;
 
-import fiftyone.devicedetection.examples.shared.EvidenceHelper;
-import fiftyone.devicedetection.shared.testhelpers.FileUtils;
+import fiftyone.common.testhelpers.LogbackHelper;
+import fiftyone.pipeline.util.FileFinder;
 import org.junit.Test;
 
-public class GettingStartedOnPremTest {
+import java.io.PrintWriter;
+import java.util.Arrays;
+
+import static fiftyone.devicedetection.examples.console.comparison.Comparer.*;
+
+public class ComparerTest {
 
     @Test
-    public void gettingStartedOnPremTest() throws Exception {
-        GettingStartedOnPrem.run(FileUtils.LITE_HASH_DATA_FILE_NAME,
-                EvidenceHelper.setUpEvidence(), System.out);
+    public void TestCompare() throws Exception {
+        LogbackHelper.configureLogback(FileFinder.getFilePath("logback.xml"));
+        new Comparer().compare(Arrays.asList(DEFAULT_SOLUTIONS),
+                DEFAULT_NUMBER_OF_THREADS,
+                DEFAULT_NUMBER_OF_RESULTS,
+                new Reporting.Minimal(),
+                new PrintWriter(System.out, true));
     }
 }

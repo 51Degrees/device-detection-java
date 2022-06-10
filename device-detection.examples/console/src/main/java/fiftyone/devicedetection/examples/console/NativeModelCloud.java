@@ -129,9 +129,9 @@ public class NativeModelCloud {
  * [Android devices](https://developer.android.com/reference/android/os/Build#MODEL) and
  * [iOS devices](https://gist.github.com/soapyigu/c99e1f45553070726f14c1bb0a54053b#file-machinename-swift)
  *
- * Unlike other examples, use of this example requires a license key which can be purchased from our
- * pricing page: http://51degrees.com/pricing. Once this is done, a resource key with the
- * properties required by this example can be created at https://configure.51degrees.com/QKyYH5XT.
+ * Unlike other examples, use of this example requires a license key which can be purchased from [our
+ * pricing page](http://51degrees.com/pricing). Once this is done, a resource key with the
+ * properties required by this example can be created at [here](//configure.51degrees.com/QKyYH5XT).
  *
  * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/NativeModelCloud.java).
  */
