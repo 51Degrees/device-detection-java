@@ -22,17 +22,19 @@
 
 package fiftyone.devicedetection.examples.console;
 
-import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
 import fiftyone.devicedetection.examples.shared.DataFileHelper;
-import fiftyone.devicedetection.examples.shared.ExampleTestHelper;
+import fiftyone.devicedetection.examples.shared.EvidenceHelper;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
+import fiftyone.pipeline.core.configuration.PipelineOptions;
+import fiftyone.pipeline.core.configuration.PipelineOptionsFactory;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
-import fiftyone.pipeline.engines.Constants;
+import fiftyone.pipeline.engines.fiftyone.flowelements.FiftyOnePipelineBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
@@ -46,6 +48,10 @@ import static fiftyone.pipeline.util.FileFinder.getFilePath;
  * Provides an illustration of the fundamental elements of carrying out device detection using
  * "on premise" (aka Hash) detection - meaning the device detection data is stored on your server
  * and the detection software executes exclusively on your server.
+ * <p>
+ * This example shows how to use pipeline configuration file, as opposed to the fluent builder
+ * illustrated in {@link GettingStartedCloud}. The configuration file is
+ * <code>src/main/resources/gettingStartedOnPrem.xml</code>.
  * <p>
  * The concepts of "pipeline", "flow data", "evidence" and "results" are illustrated.
  */
@@ -63,7 +69,7 @@ public class GettingStartedOnPrem {
         configureLogback(getFilePath("logback.xml"));
         String dataFile = args.length > 0 ? args[0] : LITE_V_4_1_HASH;
         // prepare 'evidence' for use in pipeline (see below)
-        List<Map<String, String>> evidence = ExampleTestHelper.setUpEvidence();
+        List<Map<String, String>> evidence = EvidenceHelper.setUpEvidence();
         run(dataFile, evidence, System.out);
     }
 
@@ -77,37 +83,31 @@ public class GettingStartedOnPrem {
                            List<Map<String, String>> evidenceList,
                            OutputStream outputStream) throws Exception {
         logger.info("Running GettingStarted example");
-        String dataFileLocation;
         try {
-            dataFileLocation = getFilePath(dataFile).getAbsolutePath();
+            String dataFileLocation = getFilePath(dataFile).getAbsolutePath();
+            // the location of the test data file is interpolated in the pipeline
+            // configuration file
+            System.setProperty("TestDataFile", dataFileLocation);
         } catch (Exception e) {
             DataFileHelper.cantFindDataFile(dataFile);
             throw e;
         }
 
-        /* In this example, we use the DeviceDetectionPipelineBuilder and configure it in code.
+        /* In this example, we use the DeviceDetectionPipelineBuilder and configure it from
+        options contained in the file "gettingStartedOnPrem.xml".
 
         For more information about pipelines in general see the documentation at
         http://51degrees.com/documentation/_concepts__configuration__builders__index.html
 
         Note that we wrap the creation of a pipeline in a try/resources to control its lifecycle */
-        try (Pipeline pipeline = new DeviceDetectionPipelineBuilder()
-                .useOnPremise(dataFileLocation, false)
-
-                /* We use the low memory profile as its performance is
-                sufficient for this example. See the documentation for
-                more detail on this and other configuration options:
-                http://51degrees.com/documentation/_device_detection__features__performance_options.html
-                http://51degrees.com/documentation/_features__automatic_datafile_updates.html
-                http://51degrees.com/documentation/_features__usage_sharing.html */
-                .setPerformanceProfile(Constants.PerformanceProfiles.LowMemory)
-                /* inhibit sharing usage for this test, in production it should be "true" */
-                .setShareUsage(false)
-                /* inhibit auto-update of the data file for this test */
-                .setAutoUpdate(false)
-                .setDataUpdateOnStartup(false)
-                .setDataFileSystemWatcher(false)
-                .build()) {
+        // the configuration file is in the resources directory
+        File optionsFile = getFilePath("gettingStartedOnPrem.xml");
+        // load the options and if no resource key has been set in the file
+        // use the one supplied to this method
+        PipelineOptions pipelineOptions = PipelineOptionsFactory.getOptionsFromFile(optionsFile);
+        // Build a new Pipeline from the configuration.
+        try (Pipeline pipeline = new FiftyOnePipelineBuilder()
+                .buildFromConfiguration(pipelineOptions)) {
 
 
             // carry out some sample detections

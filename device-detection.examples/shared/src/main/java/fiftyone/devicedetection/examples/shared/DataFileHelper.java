@@ -24,15 +24,21 @@ package fiftyone.devicedetection.examples.shared;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder;
+import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.engines.data.AspectEngineDataFile;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneDataFile;
+import fiftyone.pipeline.util.FileFinder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Objects;
+
+import static fiftyone.pipeline.util.FileFinder.getFilePath;
 
 public class DataFileHelper {
     static Logger logger = LoggerFactory.getLogger(DataFileHelper.class);
@@ -102,5 +108,49 @@ public class DataFileHelper {
                 "Find out about the Enterprise data file, which includes " +
                 "automatic daily updates, on our pricing " +
                 "page: https://51degrees.com/pricing");
+    }
+
+    /**
+     * Tries to find the passed file, or if null a default file
+     * @param evidenceFilename a filename to find
+     * @return a File object
+     * @throws Exception if the file was not found
+     */
+
+    @SuppressWarnings("RedundantThrows")
+    public static File getEvidenceFile(String evidenceFilename) throws Exception {
+        if (Objects.isNull(evidenceFilename)) {
+            evidenceFilename = FileUtils.EVIDENCE_FILE_NAME;
+        }
+
+        File evidenceFile;
+        try {
+            evidenceFile = FileFinder.getFilePath(evidenceFilename);
+        } catch (Exception e) {
+            logger.error("Could not find evidence file {}", evidenceFilename);
+            throw e;
+        }
+        return evidenceFile;
+    }
+
+    /**
+     * Tries to find the passed file, or if null a default file
+     * @param dataFilename a filename to find
+     * @return a full pathname
+     * @throws Exception if the file was not found
+     */
+    @SuppressWarnings("RedundantThrows")
+    public static String getDataFileLocation(String dataFilename) throws Exception {
+        if (Objects.isNull(dataFilename)) {
+            dataFilename = FileUtils.getHashFileName();
+        }
+        String dataFileLocation;
+        try {
+            dataFileLocation = getFilePath(dataFilename).getAbsolutePath();
+        } catch (Exception e) {
+            DataFileHelper.cantFindDataFile(dataFilename);
+            throw e;
+        }
+        return dataFileLocation;
     }
 }

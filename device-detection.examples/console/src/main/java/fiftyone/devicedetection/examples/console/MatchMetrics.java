@@ -24,7 +24,7 @@ package fiftyone.devicedetection.examples.console;
 
 import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
 import fiftyone.devicedetection.examples.shared.DataFileHelper;
-import fiftyone.devicedetection.examples.shared.ExampleTestHelper;
+import fiftyone.devicedetection.examples.shared.EvidenceHelper;
 import fiftyone.devicedetection.hash.engine.onpremise.data.DeviceDataHash;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.testhelpers.FileUtils;
@@ -57,7 +57,7 @@ import static java.util.stream.Collectors.groupingBy;
  * There is a
  * <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Performance">discussion</a>
  * of metrics and controlling performance on our web site. See also the
- * <a href="https://51degrees.com/documentation/4.4/_device_detection__features__performance_options.html">performance options</a>
+ * <a href="https://51degrees.com/documentation/_device_detection__features__performance_options.html">performance options</a>
  * page.
  */
 public class MatchMetrics {
@@ -66,7 +66,7 @@ public class MatchMetrics {
     public static void main(String[] args) throws Exception {
         configureLogback(getFilePath("logback.xml"));
         String dataFilename = args.length > 0 ? args[0] : null;
-        run(dataFilename, ExampleTestHelper.setUpEvidence(), false, System.out);
+        run(dataFilename, EvidenceHelper.setUpEvidence(), false, System.out);
     }
 
     /**
@@ -230,9 +230,9 @@ public class MatchMetrics {
  * process - reducing the number of components required to return the properties requested reduces
  * the overall time taken.
  * <p>
- * There is a (discussion)[https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Performance]
+ * There is a (discussion)[//51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Performance]
  * of metrics and controlling performance on our web site. See also the (performance options)
- * [https://51degrees.com/documentation/_device_detection__features__performance_options.html]
+ * [//51degrees.com/documentation/_device_detection__features__performance_options.html]
  * page.
  * # Location
  * This example is available in full on (GitHub)[https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/MatchMetrics.java].

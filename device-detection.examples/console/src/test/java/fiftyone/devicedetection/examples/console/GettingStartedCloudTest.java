@@ -22,7 +22,7 @@
 
 package fiftyone.devicedetection.examples.console;
 
-import fiftyone.devicedetection.examples.shared.ExampleTestHelper;
+import fiftyone.devicedetection.examples.shared.EvidenceHelper;
 import fiftyone.devicedetection.examples.shared.KeyHelper;
 
 import org.junit.Test;
@@ -31,6 +31,6 @@ public class GettingStartedCloudTest {
     @Test
     public void gettingStartedCloudTest() throws Exception {
         GettingStartedCloud.run(KeyHelper.getOrSetTestResourceKey(),
-                ExampleTestHelper.setUpEvidence(), System.out);
+                EvidenceHelper.setUpEvidence(), System.out);
     }
 }

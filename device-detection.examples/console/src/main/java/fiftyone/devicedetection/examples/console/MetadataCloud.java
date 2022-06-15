@@ -147,9 +147,7 @@ public class MetadataCloud {
  * keys that, when added to the evidence collection in flow data, could have some impact on the
  * result returned by device detection.
  *
- * This example is available in full on [GitHub](https://github
- * .com/51Degrees/device-detection-dotnet/blob/master/device-detection
- * .examples/console/src/main/java/fiftyone/devicedetection/examples/console/MetadataCloud.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-dotnet/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/MetadataCloud.java).
  *
  * @include{doc} example-require-datafile.txt
  */

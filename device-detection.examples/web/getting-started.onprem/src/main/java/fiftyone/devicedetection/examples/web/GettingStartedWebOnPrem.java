@@ -122,14 +122,14 @@ public class GettingStartedWebOnPrem extends HttpServlet {
  *
  * @include{doc} example-getting-started-web.txt
  *
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/web/getting-started/onprem/src/main/java/fiftyone/devicedetection/examples/web/GettingStartedWebOnPrem.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/web/getting-started.onprem/src/main/java/fiftyone/devicedetection/examples/web/GettingStartedWebOnPrem.java).
  *
  * @include{doc} example-require-datafile.txt
  *
  * ## Overview
  *
- * The `PipelineFilter` to intercept requests and perform device detection. The results will be
- * stored in the HttpServletRequest object.
+ * The `PipelineFilter` is used to intercept requests and perform device detection. The results
+ * will be stored in the HttpServletRequest object.
  * The filter will also handle setting response headers (e.g. Accept-CH for User-Agent
  * Client Hints) and serving requests for client-side JavaScript and JSON resources.
  *
@@ -143,7 +143,7 @@ public class GettingStartedWebOnPrem extends HttpServlet {
  *
  * Results can also be accessed in client-side code by using the `fod` object. Note that the global
  * object name can be changed by using the setObjectName option on the
- * [JavaScriptBuilderElementBuilder](https://51degrees.com/pipeline-java/4.3/classfiftyone_1_1pipeline_1_1javascriptbuilder_1_1flowelements_1_1_java_script_builder_element_builder.html)
+ * [JavaScriptBuilderElementBuilder](//51degrees.com/pipeline-java/classfiftyone_1_1pipeline_1_1javascriptbuilder_1_1flowelements_1_1_java_script_builder_element_builder.html)
  *
  * ```{java}
  * window.onload = function () {
