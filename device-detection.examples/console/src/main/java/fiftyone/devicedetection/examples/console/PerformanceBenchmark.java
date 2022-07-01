@@ -329,7 +329,7 @@ public class PerformanceBenchmark {
                 // created by the device detection engine are freed.
                 try (FlowData flowData = pipeline.createFlowData()) {
                     flowData
-                            .addEvidence("header.user-agent", evidence)
+                            .addEvidence(evidence)
                             .process();
 
                     // Calculate a checksum to compare different runs on
