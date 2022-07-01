@@ -45,7 +45,7 @@ import fiftyone.pipeline.core.flowelements.Pipeline;
 public class MinimalExample {
 
     public static void main(String[] args) throws Exception {
-        String resource = args.length > 0 ? args[0] : "AQRWqjd1Fg3KrwpZ2kg";
+        String resource = args.length > 0 ? args[0] : null;
         run(resource);
     }
 
