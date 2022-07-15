@@ -79,8 +79,11 @@ platform/architecture) This section explains how to build this binary.
     - You will need either Visual Studio 2019 or the [C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/) installed.
       - Minimum platform toolset version is `v142`
       - Minimum Windows SDK version is `10.0.18362.0`
+    - Set the CMake command path in the PATH environment variable: 
+      - `set PATH="[Visual Studio Installation Path]\[Visual Studio Version]\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\";%PATH%`
+
   - Linux/MacOS:
-    - `sudo apt-get install g++ make libatomic1`
+    - `sudo apt-get install g++ make libatomic1 cmake`
 - Maven version 3.8.4 or higher is recommended, and what is used for our own build.
 - If you have not already done so, pull the git submodules that contain the native code:
   - `git submodule update --init --recursive`
@@ -91,7 +94,7 @@ Batch script and Bash script are provided to support building native binaries on
 These scripts are implicitly called by the Maven build step.
 
 ```
-mvn clean build
+mvn clean compile
 ```
 
 On Windows, the Platform Toolset version and Windows 10 SDK version can be overwritten when 
@@ -111,6 +114,8 @@ To verify the code:
 ```
 mvn clean test -DTestResourceKey=[Resource Key]
 ```
+For tests and examples that require a license key add the following option:
+- `-DLicenseKey=[License Key]`
 
 ## Projects
 
