@@ -26,20 +26,34 @@ import fiftyone.common.testhelpers.LogbackHelper;
 import fiftyone.pipeline.util.FileFinder;
 import org.junit.Test;
 
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
 import static fiftyone.devicedetection.examples.console.comparison.Comparer.*;
+import static fiftyone.devicedetection.examples.shared.Constants.MissingFileMessages.HIGHER_TIER_FILE_REQUIRED;
 
+import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeFalse;
 public class ComparerTest {
 
     @Test
     public void TestCompare() throws Exception {
         LogbackHelper.configureLogback(FileFinder.getFilePath("logback.xml"));
-        new Comparer().compare(Arrays.asList(DEFAULT_SOLUTIONS),
-                DEFAULT_NUMBER_OF_THREADS,
-                DEFAULT_NUMBER_OF_RESULTS,
-                new Reporting.Minimal(),
-                new PrintWriter(System.out, true));
+        try {
+            new Comparer().compare(Arrays.asList(DEFAULT_SOLUTIONS),
+                    DEFAULT_NUMBER_OF_THREADS,
+                    DEFAULT_NUMBER_OF_RESULTS,
+                    new Reporting.Minimal(),
+                    new PrintWriter(System.out, true));
+        }catch (FileNotFoundException e){
+            if(e.getMessage().equals(HIGHER_TIER_FILE_REQUIRED)) {
+                assumeFalse("Skipping test, 51Degrees Lite data file cannot be used with this test", true);
+            }
+            e.printStackTrace();
+            fail(e.getMessage());
+        }
+
+
     }
 }
