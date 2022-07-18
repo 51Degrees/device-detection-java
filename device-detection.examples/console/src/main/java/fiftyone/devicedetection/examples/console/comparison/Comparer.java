@@ -39,6 +39,9 @@ import java.util.concurrent.*;
 import static fiftyone.devicedetection.examples.shared.DataFileHelper.getEvidenceFile;
 
 /**
+ * Unlike other examples, use of this example requires a 51Degrees Enterprise data file, which can
+ * be obtained on a trial basis or purchased from our pricing page <a href="http://51degrees.com/pricing">here</a>.
+ *<p>
  * This class provides a framework and runner for comparing different device detection solutions.
  * It is provided in a basic form to compare detection time. Different solutions may be compared
  * by implementing the interfaces in {@link Detection}. In this example we have provided

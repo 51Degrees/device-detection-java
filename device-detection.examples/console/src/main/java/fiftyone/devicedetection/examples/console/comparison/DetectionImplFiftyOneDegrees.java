@@ -30,13 +30,18 @@ import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.Constants;
 
+import java.io.FileNotFoundException;
 import java.util.Objects;
+
+import static fiftyone.devicedetection.examples.shared.Constants.MissingFileMessages.HIGHER_TIER_FILE_REQUIRED;
+import static fiftyone.devicedetection.examples.shared.DataFileHelper.getDatafileMetaData;
 
 /**
  * Implementation of {@link Detection} for 51Degrees.
  */
 public class DetectionImplFiftyOneDegrees {
     public static final String FIFTY_ONE_DEGREES = "FiftyOneDegrees";
+    public static final String ENTERPRISE_HASH_DATA_FILE_NAME = "Enterprise-HashV41.hash";
 
     public static class FiftyOneConfig {
         String dataFile = DataFileHelper.getDataFileLocation(null);
@@ -73,6 +78,13 @@ public class DetectionImplFiftyOneDegrees {
         @Override
         public void initialise(int numberOfThreads) throws Exception {
             this.config = new FiftyOneConfig();
+            String fileName = config.dataFile;
+            DataFileHelper.DatafileInfo metadata = getDatafileMetaData(fileName);
+
+            if(metadata.getTier().equals("Lite")){
+                throw new FileNotFoundException(HIGHER_TIER_FILE_REQUIRED);
+            }
+
             pipeline = new DeviceDetectionPipelineBuilder()
                     .useOnPremise(this.config.dataFile, false)
                     .setPerformanceProfile(Constants.PerformanceProfiles.MaxPerformance)
