@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 
@@ -37,7 +38,7 @@ import static org.junit.Assume.assumeFalse;
 public class ComparerTest {
     static Logger logger = LoggerFactory.getLogger(ComparerTest.class);
     @Test
-    public void TestCompare() {
+    public void TestCompare() throws Exception {
         LogbackHelper.configureLogback(FileFinder.getFilePath("logback.xml"));
         try {
             new Comparer().compare(Arrays.asList(DEFAULT_SOLUTIONS),
@@ -45,12 +46,10 @@ public class ComparerTest {
                     DEFAULT_NUMBER_OF_RESULTS,
                     new Reporting.Minimal(),
                     new PrintWriter(System.out, true));
-        } catch (Exception e){
+        } catch (FileNotFoundException e){
             // this test is optional - requires Enterprise data file, skip on error
             logger.warn(e.getMessage());
             assumeFalse("Skipping test", true);
         }
-
-
     }
 }

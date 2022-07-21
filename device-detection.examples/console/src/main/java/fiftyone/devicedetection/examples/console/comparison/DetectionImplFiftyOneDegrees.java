@@ -23,7 +23,6 @@
 package fiftyone.devicedetection.examples.console.comparison;
 
 import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
-import fiftyone.devicedetection.examples.shared.DataFileHelper;
 import fiftyone.devicedetection.examples.shared.PropertyHelper;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
@@ -31,10 +30,8 @@ import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.Constants;
 import fiftyone.pipeline.util.FileFinder;
 
+import java.io.FileNotFoundException;
 import java.util.Objects;
-
-import static fiftyone.devicedetection.examples.shared.DataFileHelper.HIGHER_TIER_FILE_REQUIRED;
-import static fiftyone.devicedetection.examples.shared.DataFileHelper.getDatafileMetaData;
 
 /**
  * Implementation of {@link Detection} for 51Degrees.
@@ -42,7 +39,6 @@ import static fiftyone.devicedetection.examples.shared.DataFileHelper.getDatafil
 public class DetectionImplFiftyOneDegrees {
     public static final String FIFTY_ONE_DEGREES = "FiftyOneDegrees";
     public static final String ENTERPRISE_HASH_DATA_FILE_NAME = "Enterprise-HashV41.hash";
-
     public static class FiftyOneConfig {
         String dataFile;
 
@@ -80,12 +76,8 @@ public class DetectionImplFiftyOneDegrees {
         public void initialise(int numberOfThreads) throws Exception {
             try {
                 this.config = new FiftyOneConfig();
-                DataFileHelper.DatafileInfo metadata = getDatafileMetaData(config.dataFile);
-                if(metadata.getTier().equals("Lite")){
-                    throw new IllegalStateException(HIGHER_TIER_FILE_REQUIRED);
-                }
-            } catch (Exception e) {
-                throw new IllegalStateException("Could not find Enterprise Data file", e);
+            } catch (IllegalArgumentException e) {
+                throw new FileNotFoundException("Enterprise data file not found");
             }
 
             pipeline = new DeviceDetectionPipelineBuilder()
