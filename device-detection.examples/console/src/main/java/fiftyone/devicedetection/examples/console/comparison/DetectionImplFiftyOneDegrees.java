@@ -29,11 +29,11 @@ import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.Constants;
+import fiftyone.pipeline.util.FileFinder;
 
-import java.io.FileNotFoundException;
 import java.util.Objects;
 
-import static fiftyone.devicedetection.examples.shared.Constants.MissingFileMessages.HIGHER_TIER_FILE_REQUIRED;
+import static fiftyone.devicedetection.examples.shared.DataFileHelper.HIGHER_TIER_FILE_REQUIRED;
 import static fiftyone.devicedetection.examples.shared.DataFileHelper.getDatafileMetaData;
 
 /**
@@ -44,9 +44,10 @@ public class DetectionImplFiftyOneDegrees {
     public static final String ENTERPRISE_HASH_DATA_FILE_NAME = "Enterprise-HashV41.hash";
 
     public static class FiftyOneConfig {
-        String dataFile = DataFileHelper.getDataFileLocation(null);
+        String dataFile;
 
-        public FiftyOneConfig() throws Exception {
+        public FiftyOneConfig() throws IllegalArgumentException {
+            dataFile = FileFinder.getFilePath(ENTERPRISE_HASH_DATA_FILE_NAME).getAbsolutePath();
         }
     }
 
@@ -77,12 +78,14 @@ public class DetectionImplFiftyOneDegrees {
 
         @Override
         public void initialise(int numberOfThreads) throws Exception {
-            this.config = new FiftyOneConfig();
-            String fileName = config.dataFile;
-            DataFileHelper.DatafileInfo metadata = getDatafileMetaData(fileName);
-
-            if(metadata.getTier().equals("Lite")){
-                throw new FileNotFoundException(HIGHER_TIER_FILE_REQUIRED);
+            try {
+                this.config = new FiftyOneConfig();
+                DataFileHelper.DatafileInfo metadata = getDatafileMetaData(config.dataFile);
+                if(metadata.getTier().equals("Lite")){
+                    throw new IllegalStateException(HIGHER_TIER_FILE_REQUIRED);
+                }
+            } catch (Exception e) {
+                throw new IllegalStateException("Could not find Enterprise Data file", e);
             }
 
             pipeline = new DeviceDetectionPipelineBuilder()
