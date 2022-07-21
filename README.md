@@ -34,10 +34,9 @@ in this repository. It contains only a limited set of "essential" device detecti
 You may want to license our complete data file containing all properties. 
 [Details of our licenses](https://51degrees.com/pricing) are available on our website.
 
-If you want to use the lite file, you will need to install [GitLFS](https://git-lfs.github.com/):
+If you want to use the lite file, you will need to install [GitLFS](https://git-lfs.github.com/), then:
 
 ```
-sudo apt-get install git-lfs
 git lfs install
 ```
 
@@ -82,7 +81,7 @@ platform/architecture) This section explains how to build this binary.
     - Set the CMake command path in the PATH environment variable: 
       - `set PATH="[Visual Studio Installation Path]\[Visual Studio Version]\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\";%PATH%`
 
-  - Linux/MacOS:
+  - Linux:
     - `sudo apt-get install g++ make libatomic1 cmake`
 - Maven version 3.8.4 or higher is recommended, and what is used for our own build.
 - If you have not already done so, pull the git submodules that contain the native code:
@@ -94,7 +93,7 @@ Batch script and Bash script are provided to support building native binaries on
 These scripts are implicitly called by the Maven build step.
 
 ```
-mvn clean compile
+mvn clean install
 ```
 
 On Windows, the Platform Toolset version and Windows 10 SDK version can be overwritten when 
