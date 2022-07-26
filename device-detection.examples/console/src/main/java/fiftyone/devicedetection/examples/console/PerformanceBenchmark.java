@@ -73,12 +73,9 @@ public class PerformanceBenchmark {
 
     // a default set of configurations: (profile, allProperties, performanceGraph, predictiveGraph)
     public static PerformanceConfiguration [] DEFAULT_PERFORMANCE_CONFIGURATIONS = {
-            new PerformanceConfiguration(MaxPerformance, false, true, true),
             new PerformanceConfiguration(MaxPerformance, false, false, true),
-            new PerformanceConfiguration(MaxPerformance, true, true, false),
-            new PerformanceConfiguration(Balanced, false, true, true),
-            new PerformanceConfiguration(Balanced, false, false, true),
-            new PerformanceConfiguration(Balanced, true, true, false)
+            new PerformanceConfiguration(MaxPerformance, false, true, false),
+            new PerformanceConfiguration(MaxPerformance, true, true, false)
     };
 
 
@@ -260,7 +257,11 @@ public class PerformanceBenchmark {
         }
 
         // output the results from the benchmark to the console
+<<<<<<< Updated upstream
         double millisPerTest = ((double) totalMillis / (resultList.size() * totalChecks));
+=======
+        double millisPerTest = ((double) totalMillis / (numberOfThreads * totalChecks));
+>>>>>>> Stashed changes
         writer.format("Overall: %,d detections, Average millisecs per detection: %f, Detections per second: %,d\n",
                 totalChecks, millisPerTest, Math.round(1000.0/millisPerTest));
         writer.format("Overall: Concurrent threads: %d, Checksum: %x \n", numberOfThreads, checksum);
@@ -336,7 +337,8 @@ public class PerformanceBenchmark {
                     // the same data.
                     DeviceData device = flowData.get(DeviceData.class);
                     if (device != null) {
-                        for (Object value : device.asKeyMap().values()) {
+                        if (device.getIsMobile().hasValue()) {
+                            Object value = device.getIsMobile().getValue();
                             if (value != null) {
                                 result.checkSum += value.hashCode();
                             }
