@@ -27,7 +27,7 @@
     <parent>
         <artifactId>device-detection.examples</artifactId>
         <groupId>com.51degrees</groupId>
-        <version>4.4.11</version>
+        <version>4.4.12-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
