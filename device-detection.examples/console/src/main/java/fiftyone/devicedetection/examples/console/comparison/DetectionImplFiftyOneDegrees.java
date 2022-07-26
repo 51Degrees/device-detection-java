@@ -23,13 +23,14 @@
 package fiftyone.devicedetection.examples.console.comparison;
 
 import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
-import fiftyone.devicedetection.examples.shared.DataFileHelper;
 import fiftyone.devicedetection.examples.shared.PropertyHelper;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.Constants;
+import fiftyone.pipeline.util.FileFinder;
 
+import java.io.FileNotFoundException;
 import java.util.Objects;
 
 /**
@@ -37,11 +38,12 @@ import java.util.Objects;
  */
 public class DetectionImplFiftyOneDegrees {
     public static final String FIFTY_ONE_DEGREES = "FiftyOneDegrees";
-
+    public static final String ENTERPRISE_HASH_DATA_FILE_NAME = "Enterprise-HashV41.hash";
     public static class FiftyOneConfig {
-        String dataFile = DataFileHelper.getDataFileLocation(null);
+        String dataFile;
 
-        public FiftyOneConfig() throws Exception {
+        public FiftyOneConfig() throws IllegalArgumentException {
+            dataFile = FileFinder.getFilePath(ENTERPRISE_HASH_DATA_FILE_NAME).getAbsolutePath();
         }
     }
 
@@ -72,7 +74,12 @@ public class DetectionImplFiftyOneDegrees {
 
         @Override
         public void initialise(int numberOfThreads) throws Exception {
-            this.config = new FiftyOneConfig();
+            try {
+                this.config = new FiftyOneConfig();
+            } catch (IllegalArgumentException e) {
+                throw new FileNotFoundException("Enterprise data file not found");
+            }
+
             pipeline = new DeviceDetectionPipelineBuilder()
                     .useOnPremise(this.config.dataFile, false)
                     .setPerformanceProfile(Constants.PerformanceProfiles.MaxPerformance)

@@ -260,7 +260,7 @@ public class PerformanceBenchmark {
         }
 
         // output the results from the benchmark to the console
-        double millisPerTest = ((double) totalMillis / (4 * totalChecks));
+        double millisPerTest = ((double) totalMillis / (resultList.size() * totalChecks));
         writer.format("Overall: %,d detections, Average millisecs per detection: %f, Detections per second: %,d\n",
                 totalChecks, millisPerTest, Math.round(1000.0/millisPerTest));
         writer.format("Overall: Concurrent threads: %d, Checksum: %x \n", numberOfThreads, checksum);
@@ -329,7 +329,7 @@ public class PerformanceBenchmark {
                 // created by the device detection engine are freed.
                 try (FlowData flowData = pipeline.createFlowData()) {
                     flowData
-                            .addEvidence("header.user-agent", evidence)
+                            .addEvidence(evidence)
                             .process();
 
                     // Calculate a checksum to compare different runs on

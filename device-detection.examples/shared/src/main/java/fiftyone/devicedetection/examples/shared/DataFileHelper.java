@@ -43,7 +43,7 @@ import static fiftyone.pipeline.util.FileFinder.getFilePath;
 public class DataFileHelper {
     static Logger logger = LoggerFactory.getLogger(DataFileHelper.class);
 
-    public static class DatafileInfo {
+public static class DatafileInfo {
         FiftyOneDataFile fileInfo;
         String tier;
 
