@@ -5,7 +5,7 @@
 
     <groupId>com.51degrees</groupId>
     <artifactId>pipeline.device-detection</artifactId>
-    <version>4.4.11-SNAPSHOT</version>
+    <version>4.4.11</version>
     <packaging>pom</packaging>
 
     <name>51Degrees :: Pipeline :: Device Detection</name>
