@@ -153,6 +153,8 @@ stages:
         PathtoPublish: '$(build.artifactstagingdirectory)'
 
   - template: shared-git-tag-job.yml@ciTemplates
+    # Only tag this branch if it is the main branch
+    condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/master')))
     parameters:
       imageName: $(linuxImage)
       jobDependencies: [Versioning,Create_Packages]
