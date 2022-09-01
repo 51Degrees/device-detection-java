@@ -405,7 +405,7 @@ public class PerformanceBenchmark {
  * and (hash dataset options)[https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Performance]
  * for more information about adjusting performance.
  *
- * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-dotnet/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/Performance.java).
+ * This example is available in full on [GitHub](https://github.com/51Degrees/device-detection-java/blob/master/device-detection.examples/console/src/main/java/fiftyone/devicedetection/examples/console/PerformanceBenchmark.java).
  *
  * @include{doc} example-require-datafile.txt
  */

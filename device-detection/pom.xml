@@ -7,7 +7,7 @@
     <parent>
         <artifactId>pipeline.device-detection</artifactId>
         <groupId>com.51degrees</groupId>
-        <version>4.4.13</version>
+        <version>4.4.14</version>
     </parent>
 
     <artifactId>device-detection</artifactId>
