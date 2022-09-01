@@ -152,7 +152,7 @@ stages:
       inputs:
         PathtoPublish: '$(build.artifactstagingdirectory)'
 
-  - ${{ if and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))) }}:
+  - ${{ if or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/master')) }}:
     # Only tag this branch if it is the main branch
     - template: shared-git-tag-job.yml@ciTemplates
       parameters:
