@@ -1,10 +1,10 @@
 /* *********************************************************************
  * This Original Work is copyright of 51 Degrees Mobile Experts Limited.
- * Copyright 2019 51 Degrees Mobile Experts Limited, 5 Charlotte Close,
- * Caversham, Reading, Berkshire, United Kingdom RG4 7BY.
+ * Copyright 2022 51 Degrees Mobile Experts Limited, Davidson House,
+ * Forbury Square, Reading, Berkshire, United Kingdom RG1 3EU.
  *
- * This Original Work is licensed under the European Union Public Licence (EUPL) 
- * v.1.2 and is subject to its terms as set out below.
+ * This Original Work is licensed under the European Union Public Licence
+ * (EUPL) v.1.2 and is subject to its terms as set out below.
  *
  * If a copy of the EUPL was not distributed with this file, You can obtain
  * one at https://opensource.org/licenses/EUPL-1.2.
@@ -382,7 +382,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<List<String>> getHardwareModelVariants();
 	/**
-	 * Indicates the primary marketing name associated with the device, e.g. Xperia Z5.
+	 * Indicates the common marketing names associated with the device, e.g. Xperia Z5.
 	 */
 	AspectPropertyValue<List<String>> getHardwareName();
 	/**
@@ -834,7 +834,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Integer> getScreenMMDiagonalRounded();
 	/**
-	 * Refers to the screen height of the device in millimetres. This property will return 'Unknown' for desktops or for devices which do not have an integrated screen.
+	 * Refers to the screen height of the device in millimetres. This property will return 'Unknown' for desktops or for devices which do not have an integrated screen. For devices such as tablets or TV which are predominantly used in landscape mode, the screen height will be the smaller value compared to the screen width.
 	 */
 	AspectPropertyValue<Double> getScreenMMHeight();
 	/**
@@ -842,7 +842,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Integer> getScreenMMSquare();
 	/**
-	 * Refers to the screen width of the device in millimetres. This property will return 'Unknown' for desktops or for devices which do not have an integrated screen.
+	 * Refers to the screen width of the device in millimetres. This property will return 'Unknown' for desktops or for devices which do not have an integrated screen. For devices such as tablets or TV which are predominantly used in landscape mode, the screen height will be the smaller value compared to the screen width.
 	 */
 	AspectPropertyValue<Double> getScreenMMWidth();
 	/**
@@ -926,15 +926,15 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getSelector();
 	/**
-	 * Client hint that represents the browser's brand. This property accepts the values SEC-CH-UA,SEC-CH-UA-Full-Version. The default value is Unknown for this property.
+	 * Contains the Accept-CH HTTP header values to add to the HTTP response for the browser component. UACH values Sec-CH-UA, and Sec-CH-UA-Full-Version are relevant. The default value is Unknown if the browser does not fully support UACH.
 	 */
 	AspectPropertyValue<String> getSetHeaderBrowserAcceptCH();
 	/**
-	 * Client hint that represents the hardware's brand. This property accepts the values SEC-CH-UA-Model,SEC-CH-UA-Mobile,SEC-CH-UA-Arch. The default value is Unknown for this property.
+	 * Contains the Accept-CH HTTP header values to add to the HTTP response for the hardware component. UACH values Sec-CH-UA-Model, and Sec-CH-UA-Mobile are relevant. The default value is Unknown if the browser does not fully support UACH.
 	 */
 	AspectPropertyValue<String> getSetHeaderHardwareAcceptCH();
 	/**
-	 * Client hint that represents the platform's brand. This property accepts the values SEC-CH-UA-Platform,SEC-CH-UA-Platform-Version. The default value is Unknown for this property.
+	 * Contains the Accept-CH HTTP header values to add to the HTTP response for the platform component. UACH values Sec-CH-UA-Platform, and Sec-CH-UA-Platform-Version are relevant. The default value is Unknown if the browser does not fully support UACH.
 	 */
 	AspectPropertyValue<String> getSetHeaderPlatformAcceptCH();
 	/**
@@ -994,7 +994,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Double> getSuggestedLinkSizePoints();
 	/**
-	 * Indicate the list of wireless data technologies supported by the device, including Bluetooth. If the device supports phone calls, the SMS value is also returned.
+	 * Indicates the list of wireless data technologies supported by the device, including Bluetooth and Wi-Fi. For example, 4G cellular network technologies includes 'LTE' (Long Term Evolution), and 5G technologies includes 'NR' (New Radio). If the device supports phone calls, the SMS value is also returned.
 	 */
 	AspectPropertyValue<List<String>> getSupportedBearers();
 	/**
