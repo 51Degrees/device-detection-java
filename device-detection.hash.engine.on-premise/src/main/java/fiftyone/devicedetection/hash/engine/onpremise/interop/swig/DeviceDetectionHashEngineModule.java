@@ -9,4 +9,32 @@
 package fiftyone.devicedetection.hash.engine.onpremise.interop.swig;
 
 public class DeviceDetectionHashEngineModule {
+  public static void Evidence_AddFromBytes(EvidenceBaseSwig evidence, byte[] key, byte[] value) {
+    DeviceDetectionHashEngineModuleJNI.Evidence_AddFromBytes(EvidenceBaseSwig.getCPtr(evidence), evidence, key, value);
+  }
+
+  public static StringValueSwig Results_GetValueAsString(ResultsBaseSwig results, byte[] propertyName) {
+    return new StringValueSwig(DeviceDetectionHashEngineModuleJNI.Results_GetValueAsString(ResultsBaseSwig.getCPtr(results), results, propertyName), true);
+  }
+
+  public static VectorStringValuesSwig Results_GetValues(ResultsBaseSwig results, byte[] propertyName) {
+    return new VectorStringValuesSwig(DeviceDetectionHashEngineModuleJNI.Results_GetValues(ResultsBaseSwig.getCPtr(results), results, propertyName), true);
+  }
+
+  public static BoolValueSwig Results_GetValueAsBool(ResultsBaseSwig results, byte[] propertyName) {
+    return new BoolValueSwig(DeviceDetectionHashEngineModuleJNI.Results_GetValueAsBool(ResultsBaseSwig.getCPtr(results), results, propertyName), true);
+  }
+
+  public static IntegerValueSwig Results_GetValueAsInteger(ResultsBaseSwig results, byte[] propertyName) {
+    return new IntegerValueSwig(DeviceDetectionHashEngineModuleJNI.Results_GetValueAsInteger(ResultsBaseSwig.getCPtr(results), results, propertyName), true);
+  }
+
+  public static DoubleValueSwig Results_GetValueAsDouble(ResultsBaseSwig results, byte[] propertyName) {
+    return new DoubleValueSwig(DeviceDetectionHashEngineModuleJNI.Results_GetValueAsDouble(ResultsBaseSwig.getCPtr(results), results, propertyName), true);
+  }
+
+  public static boolean Results_ContainsProperty(ResultsBaseSwig results, byte[] propertyName) {
+    return DeviceDetectionHashEngineModuleJNI.Results_ContainsProperty(ResultsBaseSwig.getCPtr(results), results, propertyName);
+  }
+
 }
