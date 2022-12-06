@@ -85,7 +85,7 @@ public class DeviceDataTests extends TestsBase {
         clearInvocations(results);
         getMethod.invoke(data, "InvalidProperty");
         verify(results, times(expectedCount))
-            .containsProperty(anyString(), anyLong());
+            .containsProperty(any(byte[].class));
     }
 
     /**
@@ -106,11 +106,11 @@ public class DeviceDataTests extends TestsBase {
         when(doubleValue.hasValue()).thenReturn(false);
         when(vectorValue.hasValue()).thenReturn(false);
 
-        when(results.getValueAsString(anyString(), anyLong())).thenReturn(stringValue);
-        when(results.getValueAsBool(anyString(), anyLong())).thenReturn(boolValue);
-        when(results.getValueAsInteger(anyString(), anyLong())).thenReturn(intValue);
-        when(results.getValueAsDouble(anyString(), anyLong())).thenReturn(doubleValue);
-        when(results.getValues(anyString(), anyLong())).thenReturn(vectorValue);
+        when(results.getValueAsString(any(byte[].class))).thenReturn(stringValue);
+        when(results.getValueAsBool(any(byte[].class))).thenReturn(boolValue);
+        when(results.getValueAsInteger(any(byte[].class))).thenReturn(intValue);
+        when(results.getValueAsDouble(any(byte[].class))).thenReturn(doubleValue);
+        when(results.getValues(any(byte[].class))).thenReturn(vectorValue);
     }
 
     /**
@@ -130,7 +130,7 @@ public class DeviceDataTests extends TestsBase {
 	
 	        ResultsHashSwig results = mock(ResultsHashSwig.class);
 	        configureNativeGettersNoValue(results);
-	        when(results.containsProperty(anyString(), anyLong())).thenReturn(false);
+	        when(results.containsProperty(any(byte[].class))).thenReturn(false);
 	        data.setResults(results);
 	
 	        for (Method method : data.getClass().getMethods()) {
@@ -164,10 +164,10 @@ public class DeviceDataTests extends TestsBase {
 	
 	        ResultsHashSwig results1 = mock(ResultsHashSwig.class);
 	        configureNativeGettersNoValue(results1);
-	        when(results1.containsProperty(anyString(), anyLong())).thenReturn(false);
+	        when(results1.containsProperty(any(byte[].class))).thenReturn(false);
 	        ResultsHashSwig results2 = mock(ResultsHashSwig.class);
 	        configureNativeGettersNoValue(results2);
-	        when(results2.containsProperty(anyString(), anyLong())).thenReturn(false);
+	        when(results2.containsProperty(any(byte[].class))).thenReturn(false);
 	
 	        data.setResults(results1);
 	        data.setResults(results2);
@@ -207,7 +207,7 @@ public class DeviceDataTests extends TestsBase {
 	            missingPropertyService);
 	
 	        ResultsHashSwig results = mock(ResultsHashSwig.class);
-	        when(results.containsProperty(anyString(), anyLong())).thenReturn(false);
+	        when(results.containsProperty(any(byte[].class))).thenReturn(false);
 	        data.setResults(results);
 	
 	        try {
@@ -219,7 +219,7 @@ public class DeviceDataTests extends TestsBase {
 	        }
 	        verify(
 	            results, times(1))
-	            .containsProperty(anyString(), anyLong());	        
+	            .containsProperty(any(byte[].class));
         }
     }
 
@@ -239,9 +239,9 @@ public class DeviceDataTests extends TestsBase {
 	            missingPropertyService);
 	
 	        ResultsHashSwig results1 = mock(ResultsHashSwig.class);
-	        when(results1.containsProperty(anyString(), anyLong())).thenReturn(false);
+	        when(results1.containsProperty(any(byte[].class))).thenReturn(false);
 	        ResultsHashSwig results2 = mock(ResultsHashSwig.class);
-	        when(results2.containsProperty(anyString(), anyLong())).thenReturn(false);
+	        when(results2.containsProperty(any(byte[].class))).thenReturn(false);
 	
 	        data.setResults(results1);
 	        data.setResults(results2);
@@ -255,10 +255,10 @@ public class DeviceDataTests extends TestsBase {
 	        }
 	        verify(
 	            results1, times(1))
-	            .containsProperty(anyString(), anyLong());
+	            .containsProperty(any(byte[].class));
 	        verify(
 	            results2, times(1))
-	            .containsProperty(anyString(), anyLong());
+	            .containsProperty(any(byte[].class));
         }
     }
 

@@ -41,7 +41,7 @@ public class ResultsBaseSwig implements AutoCloseable {
   }
 
   public boolean containsProperty(String propertyName) {
-    return DeviceDetectionHashEngineModuleJNI.ResultsBaseSwig_containsProperty__SWIG_0(swigCPtr, this, propertyName);
+    return DeviceDetectionHashEngineModuleJNI.ResultsBaseSwig_containsProperty(swigCPtr, this, propertyName);
   }
 
   public VectorStringSwig getProperties() {
@@ -92,28 +92,23 @@ public class ResultsBaseSwig implements AutoCloseable {
     return new DoubleValueSwig(DeviceDetectionHashEngineModuleJNI.ResultsBaseSwig_getValueAsDouble__SWIG_1(swigCPtr, this, requiredPropertyIndex), true);
   }
 
-  public StringValueSwig getValueAsString(String propertyName, long propertyNameLength) {
-    return new StringValueSwig(DeviceDetectionHashEngineModuleJNI.ResultsBaseSwig_getValueAsString__SWIG_2(swigCPtr, this, propertyName, propertyNameLength), true);
+  public StringValueSwig getValueAsString(byte[] bytes) {
+    return DeviceDetectionHashEngineModule.Results_GetValueAsString(this, bytes);
   }
-
-  public VectorStringValuesSwig getValues(String propertyName, long propertyNameLength) {
-    return new VectorStringValuesSwig(DeviceDetectionHashEngineModuleJNI.ResultsBaseSwig_getValues__SWIG_2(swigCPtr, this, propertyName, propertyNameLength), true);
+  public VectorStringValuesSwig getValues(byte[] bytes) {
+    return DeviceDetectionHashEngineModule.Results_GetValues(this, bytes);
   }
-
-  public BoolValueSwig getValueAsBool(String propertyName, long propertyNameLength) {
-    return new BoolValueSwig(DeviceDetectionHashEngineModuleJNI.ResultsBaseSwig_getValueAsBool__SWIG_2(swigCPtr, this, propertyName, propertyNameLength), true);
+  public BoolValueSwig getValueAsBool(byte[] bytes) {
+    return DeviceDetectionHashEngineModule.Results_GetValueAsBool(this, bytes);
   }
-
-  public IntegerValueSwig getValueAsInteger(String propertyName, long propertyNameLength) {
-    return new IntegerValueSwig(DeviceDetectionHashEngineModuleJNI.ResultsBaseSwig_getValueAsInteger__SWIG_2(swigCPtr, this, propertyName, propertyNameLength), true);
+  public IntegerValueSwig getValueAsInteger(byte[] bytes) {
+    return DeviceDetectionHashEngineModule.Results_GetValueAsInteger(this, bytes);
   }
-
-  public DoubleValueSwig getValueAsDouble(String propertyName, long propertyNameLength) {
-    return new DoubleValueSwig(DeviceDetectionHashEngineModuleJNI.ResultsBaseSwig_getValueAsDouble__SWIG_2(swigCPtr, this, propertyName, propertyNameLength), true);
+  public DoubleValueSwig getValueAsDouble(byte[] bytes) {
+    return DeviceDetectionHashEngineModule.Results_GetValueAsDouble(this, bytes);
   }
-
-  public boolean containsProperty(String propertyName, long propertyNameLength) {
-    return DeviceDetectionHashEngineModuleJNI.ResultsBaseSwig_containsProperty__SWIG_1(swigCPtr, this, propertyName, propertyNameLength);
+  public boolean containsProperty(byte[] bytes) {
+    return DeviceDetectionHashEngineModule.Results_ContainsProperty(this, bytes);
   }
 
 }

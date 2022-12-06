@@ -315,13 +315,11 @@ public class DeviceDetectionHashEngine
                         break;
                     }
                 }
-
                 if (containsKey) {
-                    relevantEvidence.addFromBytes(
-                        evidenceItem.getKey(),
-                        evidenceItem.getKey().length(),
-                        evidenceItem.getValue().toString(),
-                        evidenceItem.getValue().toString().length());
+                    relevantEvidence
+                        .addFromBytes(
+                        Swig.asBytes(evidenceItem.getKey()),
+                        Swig.asBytes(evidenceItem.getValue().toString()));
                 }
             }
             ((DeviceDataHashDefault) deviceData).setResults(

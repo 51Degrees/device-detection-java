@@ -78,7 +78,7 @@ public class DeviceDetectionHashEngineModuleJNI {
   public final static native void delete_DoubleValueSwig(long jarg1);
   public final static native void delete_ResultsBaseSwig(long jarg1);
   public final static native int ResultsBaseSwig_getAvailableProperties(long jarg1, ResultsBaseSwig jarg1_);
-  public final static native boolean ResultsBaseSwig_containsProperty__SWIG_0(long jarg1, ResultsBaseSwig jarg1_, String jarg2);
+  public final static native boolean ResultsBaseSwig_containsProperty(long jarg1, ResultsBaseSwig jarg1_, String jarg2);
   public final static native long ResultsBaseSwig_getProperties(long jarg1, ResultsBaseSwig jarg1_);
   public final static native String ResultsBaseSwig_getPropertyName(long jarg1, ResultsBaseSwig jarg1_, int jarg2);
   public final static native long ResultsBaseSwig_getValues__SWIG_0(long jarg1, ResultsBaseSwig jarg1_, String jarg2);
@@ -91,12 +91,6 @@ public class DeviceDetectionHashEngineModuleJNI {
   public final static native long ResultsBaseSwig_getValueAsInteger__SWIG_1(long jarg1, ResultsBaseSwig jarg1_, int jarg2);
   public final static native long ResultsBaseSwig_getValueAsDouble__SWIG_0(long jarg1, ResultsBaseSwig jarg1_, String jarg2);
   public final static native long ResultsBaseSwig_getValueAsDouble__SWIG_1(long jarg1, ResultsBaseSwig jarg1_, int jarg2);
-  public final static native long ResultsBaseSwig_getValueAsString__SWIG_2(long jarg1, ResultsBaseSwig jarg1_, String jarg2, long jarg3);
-  public final static native long ResultsBaseSwig_getValues__SWIG_2(long jarg1, ResultsBaseSwig jarg1_, String jarg2, long jarg3);
-  public final static native long ResultsBaseSwig_getValueAsBool__SWIG_2(long jarg1, ResultsBaseSwig jarg1_, String jarg2, long jarg3);
-  public final static native long ResultsBaseSwig_getValueAsInteger__SWIG_2(long jarg1, ResultsBaseSwig jarg1_, String jarg2, long jarg3);
-  public final static native long ResultsBaseSwig_getValueAsDouble__SWIG_2(long jarg1, ResultsBaseSwig jarg1_, String jarg2, long jarg3);
-  public final static native boolean ResultsBaseSwig_containsProperty__SWIG_1(long jarg1, ResultsBaseSwig jarg1_, String jarg2, long jarg3);
   public final static native int Date_getYear(long jarg1, Date jarg1_);
   public final static native int Date_getMonth(long jarg1, Date jarg1_);
   public final static native int Date_getDay(long jarg1, Date jarg1_);
@@ -195,7 +189,6 @@ public class DeviceDetectionHashEngineModuleJNI {
   public final static native void delete_ConfigDeviceDetectionSwig(long jarg1);
   public final static native long new_EvidenceBaseSwig();
   public final static native void delete_EvidenceBaseSwig(long jarg1);
-  public final static native void EvidenceBaseSwig_addFromBytes(long jarg1, EvidenceBaseSwig jarg1_, String jarg2, long jarg3, String jarg4, long jarg5);
   public final static native long new_EvidenceDeviceDetectionSwig();
   public final static native void delete_EvidenceDeviceDetectionSwig(long jarg1);
   public final static native void EngineDeviceDetectionSwig_defaultElementDataKey_set(String jarg1);
@@ -269,6 +262,13 @@ public class DeviceDetectionHashEngineModuleJNI {
   public final static native long EngineHashSwig_processDeviceDetection__SWIG_0(long jarg1, EngineHashSwig jarg1_, long jarg2, EvidenceDeviceDetectionSwig jarg2_);
   public final static native long EngineHashSwig_processDeviceDetection__SWIG_1(long jarg1, EngineHashSwig jarg1_, String jarg2);
   public final static native void delete_EngineHashSwig(long jarg1);
+  public final static native void Evidence_AddFromBytes(long jarg1, EvidenceBaseSwig jarg1_, byte[] jarg2, byte[] jarg4);
+  public final static native long Results_GetValueAsString(long jarg1, ResultsBaseSwig jarg1_, byte[] jarg2);
+  public final static native long Results_GetValues(long jarg1, ResultsBaseSwig jarg1_, byte[] jarg2);
+  public final static native long Results_GetValueAsBool(long jarg1, ResultsBaseSwig jarg1_, byte[] jarg2);
+  public final static native long Results_GetValueAsInteger(long jarg1, ResultsBaseSwig jarg1_, byte[] jarg2);
+  public final static native long Results_GetValueAsDouble(long jarg1, ResultsBaseSwig jarg1_, byte[] jarg2);
+  public final static native boolean Results_ContainsProperty(long jarg1, ResultsBaseSwig jarg1_, byte[] jarg2);
 
   static {
     try {

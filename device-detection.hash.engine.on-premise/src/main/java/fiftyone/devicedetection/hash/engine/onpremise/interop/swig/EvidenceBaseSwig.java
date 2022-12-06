@@ -40,8 +40,8 @@ public class EvidenceBaseSwig extends MapStringStringSwig implements AutoCloseab
     this(DeviceDetectionHashEngineModuleJNI.new_EvidenceBaseSwig(), true);
   }
 
-  public void addFromBytes(String key, long keyLength, String value, long valueLength) {
-    DeviceDetectionHashEngineModuleJNI.EvidenceBaseSwig_addFromBytes(swigCPtr, this, key, keyLength, value, valueLength);
+  public void addFromBytes(byte[] key, byte[] value) {
+    DeviceDetectionHashEngineModule.Evidence_AddFromBytes(this, key, value);
   }
 
 }

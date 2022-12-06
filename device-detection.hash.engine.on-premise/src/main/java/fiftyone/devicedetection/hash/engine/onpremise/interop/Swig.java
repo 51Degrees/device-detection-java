@@ -24,7 +24,9 @@ package fiftyone.devicedetection.hash.engine.onpremise.interop;
 
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.VectorStringSwig;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -65,5 +67,20 @@ public class Swig {
         VectorStringSwig vector = new VectorStringSwig();
         vector.addAll(list);
         return vector;
+    }
+
+    /**
+     * Convert a string to a byte array, including the null terminator.
+     * This differs from the .getBytes method by adding the null terminator.
+     * @param str string to convert
+     * @return byte array containing the input string
+     */
+    public static byte[] asBytes(String str) {
+        // The Arrays.copyOf method pads with zeros, so there is no need to
+        // manually set the null terminator.
+        byte[] result = Arrays.copyOf(
+            str.getBytes(StandardCharsets.US_ASCII),
+            str.length() + 1);
+        return result;
     }
 }

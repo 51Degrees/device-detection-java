@@ -30,34 +30,62 @@ nofinalize(ResultsHash);
 %include "../device-detection-cxx/src/hash/hash.i"
 
 /* Avoid copying the key and value character by character and pass a pointer instead. */
-%apply (char *STRING, size_t LENGTH, char *STRING, size_t LENGTH) { (const char key[], size_t keyLength, const char value[], size_t valueLength) }
-%extend EvidenceBase {
-  void addFromBytes(const char key[], size_t keyLength, const char value[], size_t valueLength) {
-    (*$self)[key] = value;
+%apply (char *STRING, size_t LENGTH) { (const char propertyName[], size_t propertyNameLength) }
+%apply (char *STRING, size_t LENGTH) { (const char key[], size_t keyLength) }
+%apply (char *STRING, size_t LENGTH) { (const char value[], size_t valueLength) }
+%inline %{
+  void Evidence_AddFromBytes(EvidenceBase *evidence, const char key[], size_t keyLength, const char value[], size_t valueLength) {
+    (*evidence)[key] = value;
   }
-}
 
-/* Avoid copying the property name character by character and pass a pointer instead. */
-%apply (char *STRING, size_t LENGTH) { (const char propertyName, size_t propertyNameLength) }
+  Value<std::string> Results_GetValueAsString(ResultsBase *results, const char propertyName[], size_t propertyNameLength) {
+    return results->getValueAsString(propertyName);
+  }
+  Value<std::vector<std::string>> Results_GetValues(ResultsBase *results, const char propertyName[], size_t propertyNameLength) {
+    return results->getValues(propertyName);
+  }
+  Value<bool> Results_GetValueAsBool(ResultsBase *results, const char propertyName[], size_t propertyNameLength) {
+    return results->getValueAsBool(propertyName);
+  }
+  Value<int> Results_GetValueAsInteger(ResultsBase *results, const char propertyName[], size_t propertyNameLength) {
+    return results->getValueAsInteger(propertyName);
+  }
+  Value<double> Results_GetValueAsDouble(ResultsBase *results, const char propertyName[], size_t propertyNameLength) {
+    return results->getValueAsDouble(propertyName);
+  }
+  bool Results_ContainsProperty(ResultsBase *results, const char propertyName[], size_t propertyNameLength) {
+    return results->containsProperty(propertyName);
+  }
+%}
+
+%extend EvidenceBase {
+%proxycode %{
+  public void addFromBytes(byte[] key, byte[] value) {
+    DeviceDetectionHashEngineModule.Evidence_AddFromBytes(this, key, value);
+  }
+%}
+}
 %extend ResultsBase {
-  Value<std::string> getValueAsString(const char propertyName[], size_t propertyNameLength) {
-    return (*$self).getValueAsString(propertyName);
+%proxycode %{
+  public StringValueSwig getValueAsString(byte[] bytes) {
+    return DeviceDetectionHashEngineModule.Results_GetValueAsString(this, bytes);
   }
-  Value<std::vector<std::string>> getValues(const char propertyName[], size_t propertyNameLength) {
-    return (*$self).getValues(propertyName);
+  public VectorStringValuesSwig getValues(byte[] bytes) {
+    return DeviceDetectionHashEngineModule.Results_GetValues(this, bytes);
   }
-  Value<bool> getValueAsBool(const char propertyName[], size_t propertyNameLength) {
-    return (*$self).getValueAsBool(propertyName);
+  public BoolValueSwig getValueAsBool(byte[] bytes) {
+    return DeviceDetectionHashEngineModule.Results_GetValueAsBool(this, bytes);
   }
-  Value<int> getValueAsInteger(const char propertyName[], size_t propertyNameLength) {
-    return (*$self).getValueAsInteger(propertyName);
+  public IntegerValueSwig getValueAsInteger(byte[] bytes) {
+    return DeviceDetectionHashEngineModule.Results_GetValueAsInteger(this, bytes);
   }
-  Value<double> getValueAsDouble(const char propertyName[], size_t propertyNameLength) {
-    return (*$self).getValueAsDouble(propertyName);
+  public DoubleValueSwig getValueAsDouble(byte[] bytes) {
+    return DeviceDetectionHashEngineModule.Results_GetValueAsDouble(this, bytes);
   }
-  bool containsProperty(const char propertyName[], size_t propertyNameLength) {
-    return (*$self).containsProperty(propertyName);
+  public boolean containsProperty(byte[] bytes) {
+    return DeviceDetectionHashEngineModule.Results_ContainsProperty(this, bytes);
   }
+%}
 }
 
 /* Load the native library automatically. */

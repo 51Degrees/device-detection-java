@@ -113,7 +113,7 @@ public class DeviceDataHashDefault
      */
     private ResultsHashSwig getResultsContainingProperty(String propertyName) {
         for (ResultsHashSwig results : resultsList) {
-            if (results.containsProperty(propertyName, propertyName.length())) {
+            if (results.containsProperty(Swig.asBytes(propertyName))) {
                 return results;
             }
         }
@@ -243,7 +243,7 @@ public class DeviceDataHashDefault
     protected boolean propertyIsAvailable(String propertyName) {
         checkState();
         for (ResultsHashSwig results : resultsList) {
-            if (results.containsProperty(propertyName, propertyName.length())) {
+            if (results.containsProperty(Swig.asBytes(propertyName))) {
                 return true;
             }
         }
@@ -258,8 +258,7 @@ public class DeviceDataHashDefault
         ResultsHashSwig results = getSingleResults(propertyName);
         if (results != null) {
             try (VectorStringValuesSwig value = results.getValues(
-                propertyName,
-                propertyName.length())) {
+                Swig.asBytes(propertyName))) {
                 if (value.hasValue()) {
                     try (VectorStringSwig vector = value.getValue()) {
                         result.setValue(Collections.unmodifiableList(
@@ -279,9 +278,9 @@ public class DeviceDataHashDefault
         AspectPropertyValue<String> result = new AspectPropertyValueDefault<>();
         ResultsHashSwig results = getSingleResults(propertyName);
         if (results != null) {
+
             try (StringValueSwig value = results.getValueAsString(
-                propertyName,
-                propertyName.length())) {
+                Swig.asBytes(propertyName))) {
                 if (value.hasValue()) {
                     result.setValue(value.getValue());
                 }
@@ -301,8 +300,7 @@ public class DeviceDataHashDefault
         ResultsHashSwig results = getSingleResults(propertyName);
         if (results != null) {
             try (StringValueSwig value = results.getValueAsString(
-                propertyName,
-                propertyName.length())) {
+                Swig.asBytes(propertyName))) {
                 if (value.hasValue()) {
                     result.setValue(new JavaScript(value.getValue()));
                 }
@@ -321,8 +319,7 @@ public class DeviceDataHashDefault
         ResultsHashSwig results = getSingleResults(propertyName);
         if (results != null) {
             try (IntegerValueSwig value = results.getValueAsInteger(
-                propertyName,
-                propertyName.length())) {
+                Swig.asBytes(propertyName))) {
                 if (value.hasValue()) {
                     result.setValue(value.getValue());
                 }
@@ -340,8 +337,7 @@ public class DeviceDataHashDefault
         ResultsHashSwig results = getSingleResults(propertyName);
         if (results != null) {
             try (BoolValueSwig value = results.getValueAsBool(
-                propertyName,
-                propertyName.length())) {
+                Swig.asBytes(propertyName))) {
                 if (value.hasValue()) {
                     result.setValue(value.getValue());
                 }
@@ -359,8 +355,7 @@ public class DeviceDataHashDefault
         ResultsHashSwig results = getSingleResults(propertyName);
         if (results != null) {
             try (DoubleValueSwig value = results.getValueAsDouble(
-                propertyName,
-                propertyName.length())) {
+                Swig.asBytes(propertyName))) {
                 if (value.hasValue()) {
                     result.setValue(value.getValue());
                 }

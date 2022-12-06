@@ -415,30 +415,33 @@ SWIGINTERN void SWIG_JavaException(JNIEnv *jenv, int code, const char *msg) {
 #include <typeinfo>
 #include <stdexcept>
 
-SWIGINTERN Value< std::string > ResultsBase_getValueAsString__SWIG_2(ResultsBase *self,char const propertyName[],size_t propertyNameLength){
-    return (*self).getValueAsString(propertyName);
-  }
-SWIGINTERN Value< std::vector< std::string > > ResultsBase_getValues__SWIG_2(ResultsBase *self,char const propertyName[],size_t propertyNameLength){
-    return (*self).getValues(propertyName);
-  }
-SWIGINTERN Value< bool > ResultsBase_getValueAsBool__SWIG_2(ResultsBase *self,char const propertyName[],size_t propertyNameLength){
-    return (*self).getValueAsBool(propertyName);
-  }
-SWIGINTERN Value< int > ResultsBase_getValueAsInteger__SWIG_2(ResultsBase *self,char const propertyName[],size_t propertyNameLength){
-    return (*self).getValueAsInteger(propertyName);
-  }
-SWIGINTERN Value< double > ResultsBase_getValueAsDouble__SWIG_2(ResultsBase *self,char const propertyName[],size_t propertyNameLength){
-    return (*self).getValueAsDouble(propertyName);
-  }
-SWIGINTERN bool ResultsBase_containsProperty__SWIG_1(ResultsBase *self,char const propertyName[],size_t propertyNameLength){
-    return (*self).containsProperty(propertyName);
-  }
 
 #include <stdint.h>		// Use the C99 official header
 
-SWIGINTERN void EvidenceBase_addFromBytes(EvidenceBase *self,char const key[],size_t keyLength,char const value[],size_t valueLength){
-    (*self)[key] = value;
+
+  void Evidence_AddFromBytes(EvidenceBase *evidence, const char key[], size_t keyLength, const char value[], size_t valueLength) {
+    (*evidence)[key] = value;
   }
+
+  Value<std::string> Results_GetValueAsString(ResultsBase *results, const char propertyName[], size_t propertyNameLength) {
+    return results->getValueAsString(propertyName);
+  }
+  Value<std::vector<std::string>> Results_GetValues(ResultsBase *results, const char propertyName[], size_t propertyNameLength) {
+    return results->getValues(propertyName);
+  }
+  Value<bool> Results_GetValueAsBool(ResultsBase *results, const char propertyName[], size_t propertyNameLength) {
+    return results->getValueAsBool(propertyName);
+  }
+  Value<int> Results_GetValueAsInteger(ResultsBase *results, const char propertyName[], size_t propertyNameLength) {
+    return results->getValueAsInteger(propertyName);
+  }
+  Value<double> Results_GetValueAsDouble(ResultsBase *results, const char propertyName[], size_t propertyNameLength) {
+    return results->getValueAsDouble(propertyName);
+  }
+  bool Results_ContainsProperty(ResultsBase *results, const char propertyName[], size_t propertyNameLength) {
+    return results->containsProperty(propertyName);
+  }
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -3202,7 +3205,7 @@ SWIGEXPORT jint JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_inte
 }
 
 
-SWIGEXPORT jboolean JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_ResultsBaseSwig_1containsProperty_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+SWIGEXPORT jboolean JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_ResultsBaseSwig_1containsProperty(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
   jboolean jresult = 0 ;
   ResultsBase *arg1 = (ResultsBase *) 0 ;
   std::string *arg2 = 0 ;
@@ -4102,450 +4105,6 @@ SWIGEXPORT jlong JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_int
     }
   }
   *(Value< double > **)&jresult = new Value< double >((const Value< double > &)result); 
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_ResultsBaseSwig_1getValueAsString_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jlong jarg3) {
-  jlong jresult = 0 ;
-  ResultsBase *arg1 = (ResultsBase *) 0 ;
-  char *arg2 ;
-  size_t arg3 ;
-  Value< std::string > result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(ResultsBase **)&jarg1; 
-  arg2 = 0;
-  if (jarg2) {
-    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
-    if (!arg2) return 0;
-  }
-  arg3 = (size_t)jarg3; 
-  {
-    try {
-      result = ResultsBase_getValueAsString__SWIG_2(arg1,(char const (*))arg2,arg3);;
-    }
-    catch(FatalException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(NotImplementedException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(InvalidPropertyException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(EvidenceException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(TooManyValuesException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(NoValuesAvailableException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }	
-    catch(StatusCodeException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(runtime_error& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(invalid_argument& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return 0; 
-      };
-    }
-  }
-  *(Value< std::string > **)&jresult = new Value< std::string >((const Value< std::string > &)result); 
-  
-  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_ResultsBaseSwig_1getValues_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jlong jarg3) {
-  jlong jresult = 0 ;
-  ResultsBase *arg1 = (ResultsBase *) 0 ;
-  char *arg2 ;
-  size_t arg3 ;
-  Value< std::vector< std::string > > result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(ResultsBase **)&jarg1; 
-  arg2 = 0;
-  if (jarg2) {
-    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
-    if (!arg2) return 0;
-  }
-  arg3 = (size_t)jarg3; 
-  {
-    try {
-      result = ResultsBase_getValues__SWIG_2(arg1,(char const (*))arg2,arg3);;
-    }
-    catch(FatalException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(NotImplementedException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(InvalidPropertyException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(EvidenceException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(TooManyValuesException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(NoValuesAvailableException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }	
-    catch(StatusCodeException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(runtime_error& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(invalid_argument& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return 0; 
-      };
-    }
-  }
-  *(Value< std::vector< std::string > > **)&jresult = new Value< std::vector< std::string > >((const Value< std::vector< std::string > > &)result); 
-  
-  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_ResultsBaseSwig_1getValueAsBool_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jlong jarg3) {
-  jlong jresult = 0 ;
-  ResultsBase *arg1 = (ResultsBase *) 0 ;
-  char *arg2 ;
-  size_t arg3 ;
-  Value< bool > result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(ResultsBase **)&jarg1; 
-  arg2 = 0;
-  if (jarg2) {
-    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
-    if (!arg2) return 0;
-  }
-  arg3 = (size_t)jarg3; 
-  {
-    try {
-      result = ResultsBase_getValueAsBool__SWIG_2(arg1,(char const (*))arg2,arg3);;
-    }
-    catch(FatalException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(NotImplementedException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(InvalidPropertyException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(EvidenceException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(TooManyValuesException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(NoValuesAvailableException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }	
-    catch(StatusCodeException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(runtime_error& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(invalid_argument& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return 0; 
-      };
-    }
-  }
-  *(Value< bool > **)&jresult = new Value< bool >((const Value< bool > &)result); 
-  
-  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_ResultsBaseSwig_1getValueAsInteger_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jlong jarg3) {
-  jlong jresult = 0 ;
-  ResultsBase *arg1 = (ResultsBase *) 0 ;
-  char *arg2 ;
-  size_t arg3 ;
-  Value< int > result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(ResultsBase **)&jarg1; 
-  arg2 = 0;
-  if (jarg2) {
-    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
-    if (!arg2) return 0;
-  }
-  arg3 = (size_t)jarg3; 
-  {
-    try {
-      result = ResultsBase_getValueAsInteger__SWIG_2(arg1,(char const (*))arg2,arg3);;
-    }
-    catch(FatalException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(NotImplementedException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(InvalidPropertyException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(EvidenceException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(TooManyValuesException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(NoValuesAvailableException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }	
-    catch(StatusCodeException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(runtime_error& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(invalid_argument& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return 0; 
-      };
-    }
-  }
-  *(Value< int > **)&jresult = new Value< int >((const Value< int > &)result); 
-  
-  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
-  return jresult;
-}
-
-
-SWIGEXPORT jlong JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_ResultsBaseSwig_1getValueAsDouble_1_1SWIG_12(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jlong jarg3) {
-  jlong jresult = 0 ;
-  ResultsBase *arg1 = (ResultsBase *) 0 ;
-  char *arg2 ;
-  size_t arg3 ;
-  Value< double > result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(ResultsBase **)&jarg1; 
-  arg2 = 0;
-  if (jarg2) {
-    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
-    if (!arg2) return 0;
-  }
-  arg3 = (size_t)jarg3; 
-  {
-    try {
-      result = ResultsBase_getValueAsDouble__SWIG_2(arg1,(char const (*))arg2,arg3);;
-    }
-    catch(FatalException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(NotImplementedException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(InvalidPropertyException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(EvidenceException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(TooManyValuesException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(NoValuesAvailableException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }	
-    catch(StatusCodeException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(runtime_error& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(invalid_argument& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return 0; 
-      };
-    }
-  }
-  *(Value< double > **)&jresult = new Value< double >((const Value< double > &)result); 
-  
-  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
-  return jresult;
-}
-
-
-SWIGEXPORT jboolean JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_ResultsBaseSwig_1containsProperty_1_1SWIG_11(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jlong jarg3) {
-  jboolean jresult = 0 ;
-  ResultsBase *arg1 = (ResultsBase *) 0 ;
-  char *arg2 ;
-  size_t arg3 ;
-  bool result;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(ResultsBase **)&jarg1; 
-  arg2 = 0;
-  if (jarg2) {
-    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
-    if (!arg2) return 0;
-  }
-  arg3 = (size_t)jarg3; 
-  {
-    try {
-      result = (bool)ResultsBase_containsProperty__SWIG_1(arg1,(char const (*))arg2,arg3);;
-    }
-    catch(FatalException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(NotImplementedException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(InvalidPropertyException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(EvidenceException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(TooManyValuesException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(NoValuesAvailableException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }	
-    catch(StatusCodeException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(runtime_error& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
-      };
-    }
-    catch(invalid_argument& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return 0; 
-      };
-    }
-  }
-  jresult = (jboolean)result; 
-  
-  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
   return jresult;
 }
 
@@ -10857,86 +10416,6 @@ SWIGEXPORT void JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_inte
 }
 
 
-SWIGEXPORT void JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_EvidenceBaseSwig_1addFromBytes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2, jlong jarg3, jstring jarg4, jlong jarg5) {
-  EvidenceBase *arg1 = (EvidenceBase *) 0 ;
-  char *arg2 ;
-  size_t arg3 ;
-  char *arg4 ;
-  size_t arg5 ;
-  
-  (void)jenv;
-  (void)jcls;
-  (void)jarg1_;
-  arg1 = *(EvidenceBase **)&jarg1; 
-  arg2 = 0;
-  if (jarg2) {
-    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
-    if (!arg2) return ;
-  }
-  arg3 = (size_t)jarg3; 
-  arg4 = 0;
-  if (jarg4) {
-    arg4 = (char *)jenv->GetStringUTFChars(jarg4, 0);
-    if (!arg4) return ;
-  }
-  arg5 = (size_t)jarg5; 
-  {
-    try {
-      EvidenceBase_addFromBytes(arg1,(char const (*))arg2,arg3,(char const (*))arg4,arg5);;
-    }
-    catch(FatalException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
-      };
-    }
-    catch(NotImplementedException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
-      };
-    }
-    catch(InvalidPropertyException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
-      };
-    }
-    catch(EvidenceException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
-      };
-    }
-    catch(TooManyValuesException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
-      };
-    }
-    catch(NoValuesAvailableException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
-      };
-    }	
-    catch(StatusCodeException& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
-      };
-    }
-    catch(runtime_error& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
-      };
-    }
-    catch(invalid_argument& e) {
-      {
-        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return ; 
-      };
-    }
-  }
-  
-  
-  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
-  if (arg4) jenv->ReleaseStringUTFChars(jarg4, (const char *)arg4);
-}
-
-
 SWIGEXPORT jlong JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_new_1EvidenceDeviceDetectionSwig(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   EvidenceDeviceDetection *result = 0 ;
@@ -15558,6 +15037,570 @@ SWIGEXPORT void JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_inte
       };
     }
   }
+}
+
+
+SWIGEXPORT void JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_Evidence_1AddFromBytes(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jbyteArray jarg2, jbyteArray jarg4) {
+  EvidenceBase *arg1 = (EvidenceBase *) 0 ;
+  char *arg2 ;
+  size_t arg3 ;
+  char *arg4 ;
+  size_t arg5 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(EvidenceBase **)&jarg1; 
+  {
+    if (jarg2) {
+      arg2 = (char *) jenv->GetByteArrayElements(jarg2, 0);
+      arg3 = (size_t) jenv->GetArrayLength(jarg2);
+    } else {
+      arg2 = 0;
+      arg3 = 0;
+    }
+  }
+  {
+    if (jarg4) {
+      arg4 = (char *) jenv->GetByteArrayElements(jarg4, 0);
+      arg5 = (size_t) jenv->GetArrayLength(jarg4);
+    } else {
+      arg4 = 0;
+      arg5 = 0;
+    }
+  }
+  {
+    try {
+      Evidence_AddFromBytes(arg1,(char const (*))arg2,arg3,(char const (*))arg4,arg5);;
+    }
+    catch(FatalException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
+      };
+    }
+    catch(NotImplementedException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
+      };
+    }
+    catch(InvalidPropertyException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
+      };
+    }
+    catch(EvidenceException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
+      };
+    }
+    catch(TooManyValuesException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
+      };
+    }
+    catch(NoValuesAvailableException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
+      };
+    }	
+    catch(StatusCodeException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
+      };
+    }
+    catch(runtime_error& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return ; 
+      };
+    }
+    catch(invalid_argument& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return ; 
+      };
+    }
+  }
+  {
+    if (jarg2) jenv->ReleaseByteArrayElements(jarg2, (jbyte *)arg2, 0);
+  }
+  {
+    if (jarg4) jenv->ReleaseByteArrayElements(jarg4, (jbyte *)arg4, 0);
+  }
+  
+  
+}
+
+
+SWIGEXPORT jlong JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_Results_1GetValueAsString(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jbyteArray jarg2) {
+  jlong jresult = 0 ;
+  ResultsBase *arg1 = (ResultsBase *) 0 ;
+  char *arg2 ;
+  size_t arg3 ;
+  Value< std::string > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ResultsBase **)&jarg1; 
+  {
+    if (jarg2) {
+      arg2 = (char *) jenv->GetByteArrayElements(jarg2, 0);
+      arg3 = (size_t) jenv->GetArrayLength(jarg2);
+    } else {
+      arg2 = 0;
+      arg3 = 0;
+    }
+  }
+  {
+    try {
+      result = Results_GetValueAsString(arg1,(char const (*))arg2,arg3);;
+    }
+    catch(FatalException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(NotImplementedException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(InvalidPropertyException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(EvidenceException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(TooManyValuesException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(NoValuesAvailableException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }	
+    catch(StatusCodeException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(runtime_error& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(invalid_argument& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return 0; 
+      };
+    }
+  }
+  *(Value< std::string > **)&jresult = new Value< std::string >((const Value< std::string > &)result); 
+  {
+    if (jarg2) jenv->ReleaseByteArrayElements(jarg2, (jbyte *)arg2, 0);
+  }
+  
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_Results_1GetValues(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jbyteArray jarg2) {
+  jlong jresult = 0 ;
+  ResultsBase *arg1 = (ResultsBase *) 0 ;
+  char *arg2 ;
+  size_t arg3 ;
+  Value< std::vector< std::string > > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ResultsBase **)&jarg1; 
+  {
+    if (jarg2) {
+      arg2 = (char *) jenv->GetByteArrayElements(jarg2, 0);
+      arg3 = (size_t) jenv->GetArrayLength(jarg2);
+    } else {
+      arg2 = 0;
+      arg3 = 0;
+    }
+  }
+  {
+    try {
+      result = Results_GetValues(arg1,(char const (*))arg2,arg3);;
+    }
+    catch(FatalException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(NotImplementedException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(InvalidPropertyException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(EvidenceException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(TooManyValuesException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(NoValuesAvailableException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }	
+    catch(StatusCodeException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(runtime_error& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(invalid_argument& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return 0; 
+      };
+    }
+  }
+  *(Value< std::vector< std::string > > **)&jresult = new Value< std::vector< std::string > >((const Value< std::vector< std::string > > &)result); 
+  {
+    if (jarg2) jenv->ReleaseByteArrayElements(jarg2, (jbyte *)arg2, 0);
+  }
+  
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_Results_1GetValueAsBool(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jbyteArray jarg2) {
+  jlong jresult = 0 ;
+  ResultsBase *arg1 = (ResultsBase *) 0 ;
+  char *arg2 ;
+  size_t arg3 ;
+  Value< bool > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ResultsBase **)&jarg1; 
+  {
+    if (jarg2) {
+      arg2 = (char *) jenv->GetByteArrayElements(jarg2, 0);
+      arg3 = (size_t) jenv->GetArrayLength(jarg2);
+    } else {
+      arg2 = 0;
+      arg3 = 0;
+    }
+  }
+  {
+    try {
+      result = Results_GetValueAsBool(arg1,(char const (*))arg2,arg3);;
+    }
+    catch(FatalException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(NotImplementedException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(InvalidPropertyException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(EvidenceException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(TooManyValuesException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(NoValuesAvailableException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }	
+    catch(StatusCodeException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(runtime_error& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(invalid_argument& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return 0; 
+      };
+    }
+  }
+  *(Value< bool > **)&jresult = new Value< bool >((const Value< bool > &)result); 
+  {
+    if (jarg2) jenv->ReleaseByteArrayElements(jarg2, (jbyte *)arg2, 0);
+  }
+  
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_Results_1GetValueAsInteger(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jbyteArray jarg2) {
+  jlong jresult = 0 ;
+  ResultsBase *arg1 = (ResultsBase *) 0 ;
+  char *arg2 ;
+  size_t arg3 ;
+  Value< int > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ResultsBase **)&jarg1; 
+  {
+    if (jarg2) {
+      arg2 = (char *) jenv->GetByteArrayElements(jarg2, 0);
+      arg3 = (size_t) jenv->GetArrayLength(jarg2);
+    } else {
+      arg2 = 0;
+      arg3 = 0;
+    }
+  }
+  {
+    try {
+      result = Results_GetValueAsInteger(arg1,(char const (*))arg2,arg3);;
+    }
+    catch(FatalException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(NotImplementedException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(InvalidPropertyException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(EvidenceException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(TooManyValuesException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(NoValuesAvailableException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }	
+    catch(StatusCodeException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(runtime_error& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(invalid_argument& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return 0; 
+      };
+    }
+  }
+  *(Value< int > **)&jresult = new Value< int >((const Value< int > &)result); 
+  {
+    if (jarg2) jenv->ReleaseByteArrayElements(jarg2, (jbyte *)arg2, 0);
+  }
+  
+  return jresult;
+}
+
+
+SWIGEXPORT jlong JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_Results_1GetValueAsDouble(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jbyteArray jarg2) {
+  jlong jresult = 0 ;
+  ResultsBase *arg1 = (ResultsBase *) 0 ;
+  char *arg2 ;
+  size_t arg3 ;
+  Value< double > result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ResultsBase **)&jarg1; 
+  {
+    if (jarg2) {
+      arg2 = (char *) jenv->GetByteArrayElements(jarg2, 0);
+      arg3 = (size_t) jenv->GetArrayLength(jarg2);
+    } else {
+      arg2 = 0;
+      arg3 = 0;
+    }
+  }
+  {
+    try {
+      result = Results_GetValueAsDouble(arg1,(char const (*))arg2,arg3);;
+    }
+    catch(FatalException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(NotImplementedException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(InvalidPropertyException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(EvidenceException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(TooManyValuesException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(NoValuesAvailableException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }	
+    catch(StatusCodeException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(runtime_error& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(invalid_argument& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return 0; 
+      };
+    }
+  }
+  *(Value< double > **)&jresult = new Value< double >((const Value< double > &)result); 
+  {
+    if (jarg2) jenv->ReleaseByteArrayElements(jarg2, (jbyte *)arg2, 0);
+  }
+  
+  return jresult;
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_fiftyone_devicedetection_hash_engine_onpremise_interop_swig_DeviceDetectionHashEngineModuleJNI_Results_1ContainsProperty(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jbyteArray jarg2) {
+  jboolean jresult = 0 ;
+  ResultsBase *arg1 = (ResultsBase *) 0 ;
+  char *arg2 ;
+  size_t arg3 ;
+  bool result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ResultsBase **)&jarg1; 
+  {
+    if (jarg2) {
+      arg2 = (char *) jenv->GetByteArrayElements(jarg2, 0);
+      arg3 = (size_t) jenv->GetArrayLength(jarg2);
+    } else {
+      arg2 = 0;
+      arg3 = 0;
+    }
+  }
+  {
+    try {
+      result = (bool)Results_ContainsProperty(arg1,(char const (*))arg2,arg3);;
+    }
+    catch(FatalException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(NotImplementedException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(InvalidPropertyException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(EvidenceException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(TooManyValuesException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(NoValuesAvailableException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }	
+    catch(StatusCodeException& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(runtime_error& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, e.what()); return 0; 
+      };
+    }
+    catch(invalid_argument& e) {
+      {
+        SWIG_JavaException(jenv, SWIG_ValueError, e.what()); return 0; 
+      };
+    }
+  }
+  jresult = (jboolean)result; 
+  {
+    if (jarg2) jenv->ReleaseByteArrayElements(jarg2, (jbyte *)arg2, 0);
+  }
+  
+  return jresult;
 }
 
 
