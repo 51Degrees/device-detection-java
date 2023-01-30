@@ -60,7 +60,7 @@ the [latest version](https://mvnrepository.com/artifact/com.51degrees/device-det
 <dependency>
     <groupId>com.51degrees</groupId>
     <artifactId>device-detection</artifactId>
-    <version>4.4.9</version>
+    <version>4.4.19</version>
 </dependency>
 ```
 
