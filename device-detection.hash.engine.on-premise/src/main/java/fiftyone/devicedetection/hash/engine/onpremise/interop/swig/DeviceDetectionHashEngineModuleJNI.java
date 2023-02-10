@@ -9,6 +9,7 @@
 package fiftyone.devicedetection.hash.engine.onpremise.interop.swig;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
+import fiftyone.devicedetection.hash.engine.onpremise.interop.Constants;
 import fiftyone.pipeline.engines.fiftyone.flowelements.interop.LibLoader;
 import java.nio.ByteBuffer;
 
@@ -273,11 +274,23 @@ public class DeviceDetectionHashEngineModuleJNI {
   static {
     try {
       LibLoader.load(DeviceDetectionHashEngine.class);
+    } catch (UnsatisfiedLinkError e) {
+      if (e.getMessage().contains("libatomic")) {
+        throw new UnsatisfiedLinkError(
+            Constants.UNSATISFIED_LINK_LIBATOMIC_MESSAGE +
+                " Inner error: " +
+                e.getMessage());
+      }
+      else {
+        throw new UnsatisfiedLinkError(Constants.UNSATISFIED_LINK_MESSAGE +
+            " Inner error: " +
+            e.getMessage());
+      }
     } catch (Exception e) {
-      System.err.println("Native code library failed to load. \n" + e);
-      System.exit(1);
+      throw new RuntimeException(Constants.UNSATISFIED_LINK_MESSAGE, e);
     }
   }
+
 
   public final static native long ConfigDeviceDetectionSwig_SWIGUpcast(long jarg1);
   public final static native long EvidenceBaseSwig_SWIGUpcast(long jarg1);
