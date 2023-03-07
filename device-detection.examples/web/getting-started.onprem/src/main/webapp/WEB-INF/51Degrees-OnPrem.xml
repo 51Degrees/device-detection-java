@@ -27,10 +27,102 @@
             <BuildParameters>
                 <AutoUpdate>false</AutoUpdate>
                 <CreateTempDataCopy>false</CreateTempDataCopy>
+                <!-- You can set an environment or system variable called
+                TestDataFile to point to your data file, or use the default
+                Lite data file  indicated here -->
                 <DataFile>${TestDataFile:-device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash}</DataFile>
                 <PerformanceProfile>LowMemory</PerformanceProfile>
             </BuildParameters>
             <BuilderName>DeviceDetectionHashEngine</BuilderName>
         </Element>
+
+        <!-- The following are all the possible builders and elements relevant to this example -->
+
+        <!--<Element>
+           <BuilderName>ShareUsageBuilder</BuilderName>
+            <BuildParameters>
+             <IncludedQueryStringParameters>java.lang.String  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setIncludedQueryStringParameters(java.lang.String)</IncludedQueryStringParameters>
+             <IncludedQueryStringParameters>java.util.List  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setIncludedQueryStringParameters(java.util.List)</IncludedQueryStringParameters>
+             <IncludedQueryStringParameter>java.lang.String  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setIncludedQueryStringParameter(java.lang.String)</IncludedQueryStringParameter>
+             <IgnoreFlowDataEvidenceFilter>java.lang.String  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setIgnoreFlowDataEvidenceFilter(java.lang.String)</IgnoreFlowDataEvidenceFilter>
+             <MinimumEntriesPerMessage>int  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setMinimumEntriesPerMessage(int)</MinimumEntriesPerMessage>
+             <RepeatEvidenceIntervalMinutes>int  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setRepeatEvidenceIntervalMinutes(int)</RepeatEvidenceIntervalMinutes>
+             <MaximumQueueSize>int  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setMaximumQueueSize(int)</MaximumQueueSize>
+             <SessionCookieName>java.lang.String  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setSessionCookieName(java.lang.String)</SessionCookieName>
+             <TakeTimeout>int  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setTakeTimeout(int)</TakeTimeout>
+             <BlockedHttpHeader>java.lang.String  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setBlockedHttpHeader(java.lang.String)</BlockedHttpHeader>
+             <AddTimeout>int  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setAddTimeout(int)</AddTimeout>
+             <ShareUsageUrl>java.lang.String  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setShareUsageUrl(java.lang.String)</ShareUsageUrl>
+             <BlockedHttpHeaders>java.util.List  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setBlockedHttpHeaders(java.util.List)</BlockedHttpHeaders>
+             <TrackSession>boolean  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setTrackSession(boolean)</TrackSession>
+             <SharePercentage>double  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setSharePercentage(double)</SharePercentage>
+            </BuildParameters>
+        </Element>-->
+
+        <!--<Element>
+           <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
+            <BuilderName>HashDeviceDetection</BuilderName>
+            <BuildParameters>
+             <Drift>int  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setDrift(int)</Drift>
+             <ReuseTempFile>boolean  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setReuseTempFile(boolean)</ReuseTempFile>
+             <UpdateMatchedUserAgent>boolean  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setUpdateMatchedUserAgent(boolean)</UpdateMatchedUserAgent>
+             <PerformanceProfile>java.lang.String  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setPerformanceProfile(java.lang.String)</PerformanceProfile>
+             <Concurrency>int  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setConcurrency(int)</Concurrency>
+             <AllowUnmatched>boolean  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setAllowUnmatched(boolean)</AllowUnmatched>
+             <Difference>int  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setDifference(int)</Difference>
+             <UsePerformanceGraph>boolean  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setUsePerformanceGraph(boolean)</UsePerformanceGraph>
+             <UsePredictiveGraph>boolean  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setUsePredictiveGraph(boolean)</UsePredictiveGraph>
+             <dataFile>java.lang.String,boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#build(java.lang.String,boolean)</dataFile>
+             <createTempDataCopy>java.lang.String,boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#build(java.lang.String,boolean)</createTempDataCopy>
+             <DataUpdateUrl>java.lang.String  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateUrl(java.lang.String)</DataUpdateUrl>
+             <DataUpdateVerifyMd5>boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateVerifyMd5(boolean)</DataUpdateVerifyMd5>
+             <DataUpdateDecompress>boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateDecompress(boolean)</DataUpdateDecompress>
+             <AutoUpdate>boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setAutoUpdate(boolean)</AutoUpdate>
+             <DataFileSystemWatcher>boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataFileSystemWatcher(boolean)</DataFileSystemWatcher>
+             <UpdatePollingInterval>long  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setUpdatePollingInterval(long)</UpdatePollingInterval>
+             <UpdatePollingInterval>int  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setUpdatePollingInterval(int)</UpdatePollingInterval>
+             <UpdateRandomisationMax>long  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setUpdateRandomisationMax(long)</UpdateRandomisationMax>
+             <VerifyIfModifiedSince>boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setVerifyIfModifiedSince(boolean)</VerifyIfModifiedSince>
+             <DataUpdateLicenseKey>java.lang.String  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateLicenseKey(java.lang.String)</DataUpdateLicenseKey>
+             <DataUpdateLicenseKeys>java.lang.String;[]  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateLicenseKeys(java.lang.String;[])</DataUpdateLicenseKeys>
+             <DataUpdateOnStartup>boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateOnStartup(boolean)</DataUpdateOnStartup>
+             <TempDirPath>java.lang.String  see fiftyone.pipeline.engines.flowelements.OnPremiseAspectEngineBuilderBase#setTempDirPath(java.lang.String)</TempDirPath>
+             <Property>java.lang.String  see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperty(java.lang.String)</Property>
+             <Properties>java.lang.String  see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperties(java.lang.String)</Properties>
+             <Properties>java.util.List  see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperties(java.util.List)</Properties>
+             <Properties>java.util.Set  see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperties(java.util.Set)</Properties>
+            </BuildParameters>
+        </Element>-->
+
+        <!--<Element>
+           <BuilderName>SequenceElementBuilder</BuilderName>
+            <BuildParameters>
+            </BuildParameters>
+        </Element>-->
+
+        <!--<Element>
+           <BuilderName>SetHeadersElementBuilder</BuilderName>
+            <BuildParameters>
+            </BuildParameters>
+        </Element>-->
+
+        <!--<Element>
+           <BuilderName>JsonBuilderElementBuilder</BuilderName>
+            <BuildParameters>
+            </BuildParameters>
+        </Element>-->
+
+        <!--<Element>
+           <BuilderName>JavaScriptBuilderElementBuilder</BuilderName>
+            <BuildParameters>
+             <Host>java.lang.String  see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setHost(java.lang.String)</Host>
+             <Endpoint>java.lang.String  see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setEndpoint(java.lang.String)</Endpoint>
+             <ContextRoot>java.lang.String  see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setContextRoot(java.lang.String)</ContextRoot>
+             <ObjectName>java.lang.String  see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setObjectName(java.lang.String)</ObjectName>
+             <EnableCookies>boolean  see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setEnableCookies(boolean)</EnableCookies>
+             <Protocol>java.lang.String  see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setProtocol(java.lang.String)</Protocol>
+            </BuildParameters>
+        </Element>-->
+
     </Elements>
 </PipelineOptions>
