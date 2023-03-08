@@ -34,14 +34,12 @@
                 variable or System property called "TestResourceKey"
                 which will get inserted as the value.-->
                 <ResourceKey>${TestResourceKey}</ResourceKey>
+                <CacheSize>1024</CacheSize>
             </BuildParameters>
             <BuilderName>CloudRequestEngine</BuilderName>
         </Element>
         <Element>
             <BuilderName>DeviceDetectionCloudEngine</BuilderName>
-            <BuildParameters>
-                <CacheSize>1024</CacheSize>
-            </BuildParameters>
         </Element>
 
         <!-- The following are all the possible builders and elements relevant to this example -->
@@ -81,6 +79,7 @@
              <Endpoint>java.lang.String  see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setEndpoint(java.lang.String)</Endpoint>
              <EvidenceKeysEndpoint>java.lang.String  see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setEvidenceKeysEndpoint(java.lang.String)</EvidenceKeysEndpoint>
              <CloudRequestOrigin>java.lang.String  see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setCloudRequestOrigin(java.lang.String)</CloudRequestOrigin>
+             <CacheSize>int  see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setCacheSize(int)</CacheSize>
              <LicenseKey>java.lang.String  see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setLicenseKey(java.lang.String)</LicenseKey>
              <ResourceKey>java.lang.String  see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setResourceKey(java.lang.String)</ResourceKey>
              <TimeOutSeconds>int  see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setTimeOutSeconds(int)</TimeOutSeconds>
