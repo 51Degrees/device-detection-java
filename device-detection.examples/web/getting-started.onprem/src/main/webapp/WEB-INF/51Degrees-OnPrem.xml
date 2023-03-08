@@ -35,6 +35,9 @@
             </BuildParameters>
             <BuilderName>DeviceDetectionHashEngine</BuilderName>
         </Element>
+        <Element>
+            <BuilderName>ShareUsageBuilder</BuilderName>
+        </Element>
 
         <!-- The following are all the possible builders and elements relevant to this example -->
 
