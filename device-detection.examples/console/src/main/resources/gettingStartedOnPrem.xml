@@ -14,7 +14,14 @@
             <BuilderName>DeviceDetectionHashEngine</BuilderName>
         </Element>
 
-        <!-- The following are all the possible builders and elements relevant to this example -->
+<!--   Make sure to enable ShareUsage in live operation
+        <Element>
+            <BuilderName>ShareUsageBuilder</BuilderName>
+        </Element>
+-->
+
+
+<!-- The following are all the possible builders and elements relevant to this example -->
 
         <!--<Element>
            <BuilderName>ShareUsageBuilder</BuilderName>
