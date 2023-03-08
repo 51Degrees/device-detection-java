@@ -39,6 +39,9 @@
         </Element>
         <Element>
             <BuilderName>DeviceDetectionCloudEngine</BuilderName>
+            <BuildParameters>
+                <CacheSize>1024</CacheSize>
+            </BuildParameters>
         </Element>
 
         <!-- The following are all the possible builders and elements relevant to this example -->

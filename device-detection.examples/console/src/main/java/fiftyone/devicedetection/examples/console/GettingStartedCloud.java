@@ -23,6 +23,7 @@
 package fiftyone.devicedetection.examples.console;
 
 import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
+import fiftyone.devicedetection.cloud.flowelements.DeviceDetectionCloudEngineBuilder;
 import fiftyone.devicedetection.examples.shared.KeyHelper;
 import fiftyone.devicedetection.examples.shared.EvidenceHelper;
 import fiftyone.devicedetection.shared.DeviceData;
@@ -89,6 +90,7 @@ public class GettingStartedCloud {
         Note that we wrap the creation of a pipeline in a try/resources to control its lifecycle */
         try (Pipeline pipeline = new DeviceDetectionPipelineBuilder()
                 .useCloud(resourceKey)
+                .useResultsCache(1024)
                 .build()) {
 
 
