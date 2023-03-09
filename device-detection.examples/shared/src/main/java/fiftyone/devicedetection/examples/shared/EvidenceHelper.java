@@ -22,11 +22,9 @@
 
 package fiftyone.devicedetection.examples.shared;
 
-import org.yaml.snakeyaml.Yaml;
+import com.esotericsoftware.yamlbeans.YamlReader;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -86,21 +84,28 @@ public class EvidenceHelper {
      * @return an Iterable
      * @throws IOException for file errors
      */
+    public static Iterable <Map<String, String>> getEvidenceIterable(File yamlFile) throws IOException {
+        final Iterator<Object> objectIterator = new YamlReader(new FileReader(yamlFile)).readAll(Object.class);
+        return geIterator(objectIterator);
+    }
+    public static Iterable <Map<String, String>> getEvidenceIterable(InputStream is) throws IOException {
+        final Iterator<Object> objectIterator = new YamlReader(new InputStreamReader(is)).readAll(Object.class);
+        return geIterator(objectIterator);
+    }
+
     @SuppressWarnings("unchecked")
-    public static Iterable<Map<String, String>> getEvidenceIterable(File yamlFile) throws IOException {
-        final Iterator<Object> objectIterator =
-                new Yaml().loadAll(Files.newInputStream(yamlFile.toPath())).iterator();
+    private static Iterable<Map<String, String>> geIterator(Iterator<Object> objectIterator) {
         return () -> new Iterator<Map<String, String>>() {
             @Override
             public boolean hasNext() {
                 return objectIterator.hasNext();
             }
 
+            @SuppressWarnings("unchecked")
             @Override
             public Map<String, String> next() {
                 return (Map<String, String>) objectIterator.next();
             }
         };
     }
-
 }

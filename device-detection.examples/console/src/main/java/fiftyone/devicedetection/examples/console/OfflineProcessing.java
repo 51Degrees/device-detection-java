@@ -24,6 +24,7 @@ package fiftyone.devicedetection.examples.console;
 
 import fiftyone.devicedetection.DeviceDetectionPipelineBuilder;
 import fiftyone.devicedetection.examples.shared.DataFileHelper;
+import fiftyone.devicedetection.examples.shared.EvidenceHelper;
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
 import fiftyone.pipeline.core.data.FlowData;
@@ -32,13 +33,10 @@ import fiftyone.pipeline.engines.Constants;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -49,7 +47,7 @@ import static fiftyone.pipeline.util.FileFinder.getFilePath;
 /**
  * Provides an example of processing a YAML file containing evidence for device detection. There are
  * 20,000 examples in the supplied file of evidence representing HTTP Headers. For example:
- *
+ * <p>
  * <code><pre>
  *   header.user-agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36'
  *   header.sec-ch-ua: '" Not A;Brand";v="99", "Chromium";v="98", "Google Chrome";v="98"'
@@ -95,7 +93,6 @@ public class OfflineProcessing {
      * @param is       an InputStream containing YAML documents - one per device
      * @param os       an OutputStream for the processed data
      */
-    @SuppressWarnings("unchecked")
     public static void run(String dataFile, InputStream is, OutputStream os) throws Exception {
 
         String detectionFile;
@@ -106,18 +103,8 @@ public class OfflineProcessing {
             throw e;
         }
 
-        /*
-          ---- configure YAML for getting evidence and saving the results ----
-         */
-
-        DumperOptions dumperOptions = new DumperOptions();
-        dumperOptions.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-        dumperOptions.setDefaultScalarStyle(DumperOptions.ScalarStyle.PLAIN);
-        dumperOptions.setSplitLines(false);
-
         // get a YAML loader to iterate over the device evidence
-        Yaml yaml = new Yaml(dumperOptions);
-        Iterator<Object> evidenceIterator = yaml.loadAll(is).iterator();
+        Iterable<Map<String, String>> evidenceIterator = EvidenceHelper.getEvidenceIterable(is);
 
         /*
           ---- Build a pipeline ----
@@ -167,7 +154,7 @@ public class OfflineProcessing {
             try (Writer writer = new OutputStreamWriter(os)) {
                 // read a batch of device data from the stream
                 int count = 0;
-                while (evidenceIterator.hasNext() && count < 20) {
+                while (evidenceIterator.iterator().hasNext() && count < 20) {
                     // Flow data is the container for inputs and outputs that
                     // flow through the pipeline a flowdata instance is
                     // created by the pipeline factory method it's important
@@ -177,7 +164,7 @@ public class OfflineProcessing {
                         // as a Map<String, String> - add the evidence to the
                         // flowData
                         flowData.addEvidence(
-                                filterEvidence((Map<String, String>) evidenceIterator.next(),
+                                filterEvidence(evidenceIterator.iterator().next(),
                                         "header."));
 
                         /*
@@ -202,10 +189,13 @@ public class OfflineProcessing {
                         // to look at all device detection properties use the following:
                         // resultMap.putAll(getPopulatedProperties(device, "device."));
 
-                        // write document to output stream as a YAML document
+                        // write document to output stream
                         writer.write("---\n");
-                        yaml.dump(flowData.getEvidence().asKeyMap(), writer);
-                        yaml.dump(resultMap, writer);
+                        StringBuilder sb = new StringBuilder();
+                        flowData.getEvidence().asKeyMap()
+                                .forEach((k,v)->sb.append(String.format("%s: %s\n", k, v)));
+                        resultMap.forEach((k,v)->sb.append(String.format("%s: %s\n", k, v)));
+                        writer.write(sb.toString());
                         writer.flush();
                     }
                     count++;
