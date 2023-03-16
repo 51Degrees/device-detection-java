@@ -21,26 +21,25 @@
 -->
 
 
-<!-- The following are all the possible builders and elements relevant to this example -->
+<!-- The following are all the possible builders and elements  -->
 
         <!--<Element>
            <BuilderName>ShareUsageBuilder</BuilderName>
             <BuildParameters>
-             <IncludedQueryStringParameters>java.lang.String  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setIncludedQueryStringParameters(java.lang.String)</IncludedQueryStringParameters>
-             <IncludedQueryStringParameters>java.util.List  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setIncludedQueryStringParameters(java.util.List)</IncludedQueryStringParameters>
-             <IncludedQueryStringParameter>java.lang.String  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setIncludedQueryStringParameter(java.lang.String)</IncludedQueryStringParameter>
-             <IgnoreFlowDataEvidenceFilter>java.lang.String  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setIgnoreFlowDataEvidenceFilter(java.lang.String)</IgnoreFlowDataEvidenceFilter>
-             <MinimumEntriesPerMessage>int  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setMinimumEntriesPerMessage(int)</MinimumEntriesPerMessage>
-             <RepeatEvidenceIntervalMinutes>int  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setRepeatEvidenceIntervalMinutes(int)</RepeatEvidenceIntervalMinutes>
-             <MaximumQueueSize>int  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setMaximumQueueSize(int)</MaximumQueueSize>
-             <SessionCookieName>java.lang.String  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setSessionCookieName(java.lang.String)</SessionCookieName>
-             <TakeTimeout>int  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setTakeTimeout(int)</TakeTimeout>
-             <BlockedHttpHeader>java.lang.String  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setBlockedHttpHeader(java.lang.String)</BlockedHttpHeader>
-             <AddTimeout>int  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setAddTimeout(int)</AddTimeout>
-             <ShareUsageUrl>java.lang.String  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setShareUsageUrl(java.lang.String)</ShareUsageUrl>
-             <BlockedHttpHeaders>java.util.List  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setBlockedHttpHeaders(java.util.List)</BlockedHttpHeaders>
-             <TrackSession>boolean  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setTrackSession(boolean)</TrackSession>
-             <SharePercentage>double  see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setSharePercentage(double)</SharePercentage>
+             <SessionCookieName>JSESSIONID - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setSessionCookieName(java.lang.String)</SessionCookieName>
+             <TrackSession>false - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setTrackSession(boolean)</TrackSession>
+             <TakeTimeoutMillis>0 - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setTakeTimeoutMillis(int)</TakeTimeoutMillis>
+             <SharePercentage>1.0 - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setSharePercentage(double)</SharePercentage>
+             <BlockedHttpHeader>All HTTP Headers are shared except cookies that do not start with 51D_ - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setBlockedHttpHeader(java.lang.String)</BlockedHttpHeader>
+             <BlockedHttpHeaders>All HTTP Headers are shared except cookies that do not start with 51D_ - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setBlockedHttpHeaders(java.lang.String)</BlockedHttpHeaders>
+             <MaximumQueueSize>1000 - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setMaximumQueueSize(int)</MaximumQueueSize>
+             <AddTimeoutMillis>0 - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setAddTimeoutMillis(int)</AddTimeoutMillis>
+             <ShareUsageUrl>Send to 51D - https://devices-v4.51degrees.com/new.ashx - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setShareUsageUrl(java.lang.String)</ShareUsageUrl>
+             <IncludedQueryStringParameters>No sharing - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setIncludedQueryStringParameters(java.lang.String)</IncludedQueryStringParameters>
+             <IncludedQueryStringParameter>No sharing - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setIncludedQueryStringParameter(java.lang.String)</IncludedQueryStringParameter>
+             <IgnoreFlowDataEvidenceFilter>All values are shared - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setIgnoreFlowDataEvidenceFilter(java.lang.String)</IgnoreFlowDataEvidenceFilter>
+             <MinimumEntriesPerMessage>50 - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setMinimumEntriesPerMessage(int)</MinimumEntriesPerMessage>
+             <RepeatEvidenceIntervalMinutes>20 - see fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilderBase#setRepeatEvidenceIntervalMinutes(int)</RepeatEvidenceIntervalMinutes>
             </BuildParameters>
         </Element>-->
 
@@ -48,46 +47,48 @@
            <BuilderName>DeviceDetectionHashEngineBuilder</BuilderName>
             <BuilderName>HashDeviceDetection</BuilderName>
             <BuildParameters>
-             <Drift>int  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setDrift(int)</Drift>
-             <ReuseTempFile>boolean  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setReuseTempFile(boolean)</ReuseTempFile>
-             <UpdateMatchedUserAgent>boolean  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setUpdateMatchedUserAgent(boolean)</UpdateMatchedUserAgent>
-             <PerformanceProfile>java.lang.String  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setPerformanceProfile(java.lang.String)</PerformanceProfile>
-             <Concurrency>int  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setConcurrency(int)</Concurrency>
-             <AllowUnmatched>boolean  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setAllowUnmatched(boolean)</AllowUnmatched>
-             <Difference>int  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setDifference(int)</Difference>
-             <UsePerformanceGraph>boolean  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setUsePerformanceGraph(boolean)</UsePerformanceGraph>
-             <UsePredictiveGraph>boolean  see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setUsePredictiveGraph(boolean)</UsePredictiveGraph>
-             <dataFile>java.lang.String,boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#build(java.lang.String,boolean)</dataFile>
-             <createTempDataCopy>java.lang.String,boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#build(java.lang.String,boolean)</createTempDataCopy>
-             <DataUpdateUrl>java.lang.String  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateUrl(java.lang.String)</DataUpdateUrl>
-             <DataUpdateVerifyMd5>boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateVerifyMd5(boolean)</DataUpdateVerifyMd5>
-             <DataUpdateDecompress>boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateDecompress(boolean)</DataUpdateDecompress>
-             <AutoUpdate>boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setAutoUpdate(boolean)</AutoUpdate>
-             <DataFileSystemWatcher>boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataFileSystemWatcher(boolean)</DataFileSystemWatcher>
-             <UpdatePollingInterval>long  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setUpdatePollingInterval(long)</UpdatePollingInterval>
-             <UpdatePollingInterval>int  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setUpdatePollingInterval(int)</UpdatePollingInterval>
-             <UpdateRandomisationMax>long  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setUpdateRandomisationMax(long)</UpdateRandomisationMax>
-             <VerifyIfModifiedSince>boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setVerifyIfModifiedSince(boolean)</VerifyIfModifiedSince>
-             <DataUpdateLicenseKey>java.lang.String  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateLicenseKey(java.lang.String)</DataUpdateLicenseKey>
-             <DataUpdateLicenseKeys>java.lang.String;[]  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateLicenseKeys(java.lang.String;[])</DataUpdateLicenseKeys>
-             <DataUpdateOnStartup>boolean  see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateOnStartup(boolean)</DataUpdateOnStartup>
-             <TempDirPath>java.lang.String  see fiftyone.pipeline.engines.flowelements.OnPremiseAspectEngineBuilderBase#setTempDirPath(java.lang.String)</TempDirPath>
-             <Property>java.lang.String  see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperty(java.lang.String)</Property>
-             <Properties>java.lang.String  see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperties(java.lang.String)</Properties>
-             <Properties>java.util.List  see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperties(java.util.List)</Properties>
-             <Properties>java.util.Set  see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperties(java.util.Set)</Properties>
+             <dataFile>No default, value must be supplied - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#build(java.lang.String,boolean)</dataFile>
+             <createTempDataCopy>No default, value must be supplied - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#build(java.lang.String,boolean)</createTempDataCopy>
+             <ReuseTempFile>false - see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setReuseTempFile(boolean)</ReuseTempFile>
+             <UpdateMatchedUserAgent>true - see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setUpdateMatchedUserAgent(boolean)</UpdateMatchedUserAgent>
+             <PerformanceProfile>Balanced - see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setPerformanceProfile(java.lang.String)</PerformanceProfile>
+             <Concurrency>The result of Runtime#getRuntime().getAvailableProcessors() - see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setConcurrency(int)</Concurrency>
+             <AllowUnmatched>false - see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setAllowUnmatched(boolean)</AllowUnmatched>
+             <Difference>0 - see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setDifference(int)</Difference>
+             <UsePerformanceGraph>false - see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setUsePerformanceGraph(boolean)</UsePerformanceGraph>
+             <UsePredictiveGraph>true - see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setUsePredictiveGraph(boolean)</UsePredictiveGraph>
+             <Drift>0 - see fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder#setDrift(int)</Drift>
+             <DataUpdateUrl>51Degrees default, set by subclass - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateUrl(java.lang.String)</DataUpdateUrl>
+             <DataUpdateVerifyMd5>true - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateVerifyMd5(boolean)</DataUpdateVerifyMd5>
+             <DataUpdateDecompress>true - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateDecompress(boolean)</DataUpdateDecompress>
+             <AutoUpdate>true - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setAutoUpdate(boolean)</AutoUpdate>
+             <DataFileSystemWatcher>true - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataFileSystemWatcher(boolean)</DataFileSystemWatcher>
+             <VerifyIfModifiedSince>true - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setVerifyIfModifiedSince(boolean)</VerifyIfModifiedSince>
+             <DataUpdateLicenseKey>No licence keys - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateLicenseKey(java.lang.String)</DataUpdateLicenseKey>
+             <DataUpdateOnStartup>false - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setDataUpdateOnStartup(boolean)</DataUpdateOnStartup>
+             <UpdatePollingIntervalSeconds>1800 - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setUpdatePollingIntervalSeconds(int)</UpdatePollingIntervalSeconds>
+             <UpdatePollingIntervalMillis>1800000 - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setUpdatePollingIntervalMillis(long)</UpdatePollingIntervalMillis>
+             <UpdateRandomisationMaxMillis>600 - see fiftyone.pipeline.engines.flowelements.SingleFileAspectEngineBuilderBase#setUpdateRandomisationMaxMillis(long)</UpdateRandomisationMaxMillis>
+             <TempDirPath>System.getProperty(java.io.tmpdir)+"/fiftyone.tempfiles" - see fiftyone.pipeline.engines.flowelements.OnPremiseAspectEngineBuilderBase#setTempDirPath(java.lang.String)</TempDirPath>
+             <Property>All properties - see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperty(java.lang.String)</Property>
+             <Properties>All properties - see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperties(java.lang.String)</Properties>
             </BuildParameters>
         </Element>-->
 
         <!--<Element>
-           <BuilderName>SequenceElementBuilder</BuilderName>
+           <BuilderName>CloudRequestEngineBuilder</BuilderName>
             <BuildParameters>
-            </BuildParameters>
-        </Element>-->
-
-        <!--<Element>
-           <BuilderName>SetHeadersElementBuilder</BuilderName>
-            <BuildParameters>
+             <Endpoint>https://cloud.51degrees.com/api/v4 - see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setEndpoint(java.lang.String)</Endpoint>
+             <DataEndpoint>https://cloud.51degrees.com/api/v4{resourcekey}.json - see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setDataEndpoint(java.lang.String)</DataEndpoint>
+             <PropertiesEndpoint>https://cloud.51degrees.com/api/v4accessibleproperties - see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setPropertiesEndpoint(java.lang.String)</PropertiesEndpoint>
+             <EvidenceKeysEndpoint>https://cloud.51degrees.com/api/v4evidencekeys - see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setEvidenceKeysEndpoint(java.lang.String)</EvidenceKeysEndpoint>
+             <ResourceKey>No default - a resource key must be supplied - see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setResourceKey(java.lang.String)</ResourceKey>
+             <LicenseKey>No default - see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setLicenseKey(java.lang.String)</LicenseKey>
+             <TimeOutSeconds>100 - see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setTimeOutSeconds(int)</TimeOutSeconds>
+             <CloudRequestOrigin>None - see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setCloudRequestOrigin(java.lang.String)</CloudRequestOrigin>
+             <CacheSize>No cache - see fiftyone.pipeline.cloudrequestengine.flowelements.CloudRequestEngineBuilder#setCacheSize(int)</CacheSize>
+             <Property>All properties - see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperty(java.lang.String)</Property>
+             <Properties>All properties - see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperties(java.lang.String)</Properties>
             </BuildParameters>
         </Element>-->
 
@@ -100,12 +101,41 @@
         <!--<Element>
            <BuilderName>JavaScriptBuilderElementBuilder</BuilderName>
             <BuildParameters>
-             <Host>java.lang.String  see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setHost(java.lang.String)</Host>
-             <Endpoint>java.lang.String  see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setEndpoint(java.lang.String)</Endpoint>
-             <ContextRoot>java.lang.String  see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setContextRoot(java.lang.String)</ContextRoot>
-             <ObjectName>java.lang.String  see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setObjectName(java.lang.String)</ObjectName>
-             <EnableCookies>boolean  see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setEnableCookies(boolean)</EnableCookies>
-             <Protocol>java.lang.String  see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setProtocol(java.lang.String)</Protocol>
+             <Host>The host from the request - see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setHost(java.lang.String)</Host>
+             <Protocol>The protocol from the request - see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setProtocol(java.lang.String)</Protocol>
+             <Endpoint>Empty string - see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setEndpoint(java.lang.String)</Endpoint>
+             <ContextRoot>Value from evidence server.contextroot - see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setContextRoot(java.lang.String)</ContextRoot>
+             <ObjectName>fod - see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setObjectName(java.lang.String)</ObjectName>
+             <EnableCookies>true - see fiftyone.pipeline.javascriptbuilder.flowelements.JavaScriptBuilderElementBuilder#setEnableCookies(boolean)</EnableCookies>
+            </BuildParameters>
+        </Element>-->
+
+        <!--<Element>
+           <BuilderName>HardwareProfileCloudEngineBuilder</BuilderName>
+            <BuildParameters>
+             <Property>All properties - see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperty(java.lang.String)</Property>
+             <Properties>All properties - see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperties(java.lang.String)</Properties>
+            </BuildParameters>
+        </Element>-->
+
+        <!--<Element>
+           <BuilderName>SetHeadersElementBuilder</BuilderName>
+            <BuildParameters>
+            </BuildParameters>
+        </Element>-->
+
+        <!--<Element>
+           <BuilderName>DeviceDetectionCloudEngineBuilder</BuilderName>
+            <BuilderName>CloudDeviceDetection</BuilderName>
+            <BuildParameters>
+             <Property>All properties - see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperty(java.lang.String)</Property>
+             <Properties>All properties - see fiftyone.pipeline.engines.flowelements.AspectEngineBuilderBase#setProperties(java.lang.String)</Properties>
+            </BuildParameters>
+        </Element>-->
+
+        <!--<Element>
+           <BuilderName>SequenceElementBuilder</BuilderName>
+            <BuildParameters>
             </BuildParameters>
         </Element>-->
 
