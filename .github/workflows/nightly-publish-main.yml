@@ -14,4 +14,4 @@ jobs:
       repo-name: ${{ github.event.repository.name }}
     secrets: 
       token: ${{ secrets.ACCESS_TOKEN }}
-      asset-keys: '{ "DeviceDetection": "${{ secrets.DEVICE_DETECTION_KEY }}" }'
+      asset-keys: '{ "DeviceDetection": "${{ secrets.DEVICE_DETECTION_KEY }}" ,"JavaGpgKey": "${{ secrets.JAVA_GPG_KEY }}" }'
