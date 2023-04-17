@@ -1,0 +1,20 @@
+name: upload-artifact-example
+
+on: [push]
+
+jobs:
+  upload-artifact:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build artifact
+      run: |
+        # build your artifact here
+        mkdir my-artifact
+        echo "Hello, world!" > my-artifact/hello.txt
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: my-artifact
+        path: my-artifact
