@@ -6,8 +6,8 @@ param(
     [string]$ProjectDir = "."
 )
 
-git config --system core.longpaths true
-
 ./java/setup-enviroment.ps1 -RepoName "device-detection-java-test" -ProjectDir $ProjectDir -JavaSDKEnvVar $JavaSDKEnvVar
+
+Write-Output "TestResourceKey=$TestResourceKey" | Out-File -Encoding utf8 -FilePath $env:GITHUB_ENV -Append
 
 exit $LASTEXITCODE
