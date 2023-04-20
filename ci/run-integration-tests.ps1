@@ -2,7 +2,7 @@
 param(
     [string]$ProjectDir = ".",
     [string]$Name = "Windows_Java_8",
-    [string]PackageVersion = "0.0.0"
+    [string]$PackageVersion = "0.0.0"
     
 )
 
