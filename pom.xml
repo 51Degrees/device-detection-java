@@ -17,7 +17,6 @@
         <module>device-detection.hash.engine.on-premise</module>
         <module>device-detection.cloud</module>
         <module>device-detection</module>
-        <module>device-detection.examples</module>
     </modules>
 
     <developers>
