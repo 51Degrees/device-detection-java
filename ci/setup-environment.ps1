@@ -8,6 +8,4 @@ param(
 
 ./java/setup-enviroment.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -JavaSDKEnvVar $JavaSDKEnvVar
 
-Write-Output "TestResourceKey=$TestResourceKey" | Out-File -Encoding utf8 -FilePath $env:GITHUB_ENV -Append
-
 exit $LASTEXITCODE
