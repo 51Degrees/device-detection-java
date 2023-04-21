@@ -4,6 +4,89 @@ param(
     [string]$Name
 )
 
-./java/run-performance-tests.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -Name $Name
+
+$RepoName = "de-detection-java-test"
+
+#./java/run-performance-tests.ps1 -RepoName $RepoName -ProjectDir $ProjectDir -Name $Name
+$ExamplesDir = [IO.Path]::Combine($pwd, "device-detection-java-examples")
+Write-Output "Entering '$ExamplesDir'"
+Push-Location $ExamplesDir
+
+# Copy the test results into the test-results folder
+Get-ChildItem -Path . -Directory -Depth 1 | 
+Where-Object { Test-Path "$($_.FullName)\pom.xml" } | 
+ForEach-Object { 
+    $targetDir = "$($_.FullName)\target\surefire-reports"
+    $destDir = "..\de-detection-java-test\test-results\performance"
+    if(!(Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir }
+    if(Test-Path $targetDir) {
+        Get-ChildItem -Path $targetDir | 
+        Where-Object { $_.Name -like "*Performance*" } |
+        ForEach-Object {
+            Copy-Item -Path $_.FullName -Destination $destDir
+        }
+    }
+}
+
+Write-Output "Leaving '$ExamplesDir'"
+Pop-Location
+
+$RepoPath = [IO.Path]::Combine($pwd, $RepoName)
+
+Write-Output "Entering '$RepoPath'"
+Push-Location $RepoPath
+
+try{
+
+    $PerfResultsFile = [IO.Path]::Combine($RepoPath, "test-results", "performance", "fiftyone.devicedetection.examples.console.PerformanceBenchmarkTest-output.txt")
+    $outputFile = [IO.Path]::Combine($RepoPath, "test-results", "performance","results_$Name.json")
+
+    $profileNum = 0
+    $profiles = @{}
+    $currentThreadNum = 1
+
+    Get-Content $PerfResultsFile | ForEach-Object {
+        if($_ -match "MaxPerformance AllProperties: (true|false), performanceGraph: (true|false), predictiveGraph (true|false)") {
+
+            $AllProperties = [string]$Matches[1]
+            $PerformanceGraph = [string]$Matches[2]
+            $PredictiveGraph = [string]$Matches[3]
+
+            $profileNum++
+            $currentProfile = $profiles["MaxPerformance-$AllProperties-$PerformanceGraph-$PredictiveGraph"] = @{ "Threads" = @{} }
+            $currentThreadNum = 1
+        }
+        elseif($_ -match "Thread:  ([\d,]+) detections, elapsed ([\d.]+) seconds, ([\d,]+) Detections per second") {
+            $currentProfile["Threads"]["Thread_$currentThreadNum"] = @{
+                "Detections" = [int]($Matches[1].Replace(",", ""))
+                "ElapsedSeconds" = [double]$Matches[2]
+                "DetectionsPerSecond" = [int]($Matches[3].Replace(",", ""))
+            }
+            $currentThreadNum++
+        }
+        elseif($_ -match "Overall: ([\d,]+) detections, Average millisecs per detection: ([\d.]+), Detections per second: ([\d,]+)") {
+            $currentProfile["Overall"] = @{
+                "Detections" = [int]($Matches[1].Replace(",", ""))
+                "AvgMillisecsPerDetection" = [double]$Matches[2]
+                "DetectionsPerSecond" = [int]($Matches[3].Replace(",", ""))
+            }
+        }
+    }
+
+    Write-Output "{
+        'HigherIsBetter': {
+            'DetectionsPerSecond': $($profiles['MaxPerformance-true-true-false'].Overall.DetectionsPerSecond)
+            'AvgMillisecsPerDetection' : $($profiles['MaxPerformance-true-true-false'].Overall.AvgMillisecsPerDetection)
+        },
+        'LowerIsBetter': {
+
+        }
+    }" > $OutputFile
+}
+finally{
+    Write-Output "Leaving '$RepoPath'"
+    Pop-Location
+}
+
 
 exit $LASTEXITCODE
