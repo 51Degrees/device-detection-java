@@ -1,7 +1,6 @@
 param(
     [string]$ProjectDir = ".",
     [string]$Name,
-    [Parameter(Mandatory=$true)]
     [string]$Version
 )
 
