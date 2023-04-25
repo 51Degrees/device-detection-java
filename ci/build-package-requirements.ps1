@@ -6,11 +6,11 @@ param(
 
 $RepoName = "de-detection-java-test"
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
-$PathToBinaries = "$RepoPath/device-detection.hash.engine.on-premise/target/classes/"
+$PathToBinaries = "$RepoPath/device-detection.hash.engine.on-premise/target/classes"
 
 ./java/build-package-requirements.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -Name $Name 
 
-$Files = Get-ChildItem -Path $PathToBinaries/* -Include *.dll
+$Files = Get-ChildItem -Path $PathToBinaries/* -Include "*.dll", "*.so"
 
 # Create a directory for binary files from which they will be uploaded
 # as artifacts.
