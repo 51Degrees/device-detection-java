@@ -57,7 +57,7 @@ Push-Location $RepoPath
 try{
 
     $PerfResultsFile = [IO.Path]::Combine($RepoPath, "test-results", "performance", "fiftyone.devicedetection.examples.console.PerformanceBenchmarkTest-output.txt")
-    $outputFile = [IO.Path]::Combine($RepoPath, "test-results", "performance","results_$Name.json")
+    $outputFile = [IO.Path]::Combine($RepoPath, "test-results", "performance-summary","results_$Name.json")
 
     $profileNum = 0
     $profiles = @{}
