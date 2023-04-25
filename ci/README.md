@@ -32,10 +32,6 @@ Leave RepoPath: Changes the current working directory back to the initial locati
 
 ## Performance Tests
 
-As the performance test is included within the example tests, it relies on the Integration tests. Consequently, the performance tests run as part of the Integration tests, and their results are written to the "surefire-results" folder.
-
-Once the performance test results are saved in the "surefire-results" folder, they are copied to the "test-results/performance" folder for further processing. Since the performance tests are executed as part of the Integration tests and their output is already available, there is no need to rerun the performance tests during the processing stage. Instead, the script focuses on copying and processing the existing output.
-
 The output of the Performance Tests is written to the console. To enable the parsing of this output, the "redirectTestOutputToFile" option must be enabled in the examples project. This ensures that the test output is saved to a file, making it accessible for further processing.
 
 The performance test results are then parsed and organized using a hashtable data structure. This approach facilitates the extraction of relevant metrics, such as detections per second and average milliseconds per detection that are then written to a file following the convention outlined in the [Design.md](https://github.com/51Degrees/common-ci/blob/gh-refact/design.md)
