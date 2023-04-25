@@ -123,6 +123,7 @@ For tests and examples that require a license key add the following option:
 - **device-detection.cloud** - when you want to use our cloud detection.
 - **device-detection.shared** - Shared classes.
 
+## DELETE/UPDATE THE BELOW 
 The following examples are not distributed as maven jars and need to be built by you, please
 see the respective README for these projects:
 
