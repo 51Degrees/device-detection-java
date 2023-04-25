@@ -7,10 +7,28 @@ param(
 
 $RepoName = "de-detection-java-test"
 
-#./java/run-performance-tests.ps1 -RepoName $RepoName -ProjectDir $ProjectDir -Name $Name
 $ExamplesDir = [IO.Path]::Combine($pwd, "device-detection-java-examples")
-Write-Output "Entering '$ExamplesDir'"
+
+if(!(Test-Path -Path $ExamplesDir)){
+
+    Write-Output "Cloning '$ExamplesRepoName'"
+    ./steps/clone-repo.ps1 -RepoName "device-detection-java-examples"
+    
+    Write-Output "Moving TAC file for examples"
+    $TacFile = [IO.Path]::Combine($RepoPath, "TAC-HashV41.hash") 
+    Move-Item $TacFile device-detection-java-examples/device-detection-data/TAC-HashV41.hash
+    
+    Write-Output "Download Evidence file"
+    curl -o "device-detection-java-examples/device-detection-data/20000 Evidence Records.yml" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/master/20000%20Evidence%20Records.yml"
+    
+    Write-Output "Download User Agents file"
+    curl -o "device-detection-java-examples/device-detection-data/20000 User Agents.csv" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/master/20000%20User%20Agents.csv"
+
+}
+
 Push-Location $ExamplesDir
+
+mvn clean test -DfailIfNoTests=false -Dtest="*Performance*" 
 
 # Copy the test results into the test-results folder
 Get-ChildItem -Path . -Directory -Depth 1 | 
@@ -75,8 +93,8 @@ try{
 
     Write-Output "{
         'HigherIsBetter': {
-            'DetectionsPerSecond': $($profiles['MaxPerformance-true-true-false'].Overall.DetectionsPerSecond)
-            'AvgMillisecsPerDetection' : $($profiles['MaxPerformance-true-true-false'].Overall.AvgMillisecsPerDetection)
+            'DetectionsPerSecond': $($profiles['MaxPerformance-false-true-false'].Overall.DetectionsPerSecond)
+            'AvgMillisecsPerDetection' : $($profiles['MaxPerformance-false-true-false'].Overall.AvgMillisecsPerDetection)
         },
         'LowerIsBetter': {
 
