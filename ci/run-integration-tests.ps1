@@ -3,9 +3,6 @@ param(
     [string]$Name = "Windows_Java_8",
     [string]$Version = "0.0.0",
     # Keys contain the License and Resource Keys needed to run the tests.
-    # If running locally pass: 
-    # $Keys = @{"TestResourceKey" = "Insert Key here" "DeviceDetection" = "Insert Key here"}
-    [Parameter(Mandatory=$true)]
     [Hashtable]$Keys
     
 )
@@ -31,13 +28,17 @@ try {
     Write-Output "Entering device-detection-examples directory"
     Push-Location device-detection-java-examples 
 
+
+    if ($Version -eq "0.0.0"){
+        $Version = mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression="project.version" -q -DforceStdout
+    }
     Write-Output "Setting examples device-detection package dependency to version '$Version'"
     mvn versions:set-property -Dproperty="device-detection.version" "-DnewVersion=$Version"
 
     Write-Output "Testing Examples"
     mvn clean test "-DTestResourceKey=$($Keys.TestResourceKey)" "-DSuperResourceKey=$($Keys.TestResourceKey)" "-DLicenseKey=$($Keys.DeviceDetection)"
 
-    Write-Output "Copying test results"
+    Write-Output "Copying test results".
     # Copy the test results into the test-results folder
     Get-ChildItem -Path . -Directory -Depth 1 | 
     Where-Object { Test-Path "$($_.FullName)\pom.xml" } | 
