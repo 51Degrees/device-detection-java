@@ -15,4 +15,4 @@ jobs:
       build-platform: ubuntu-20.04
     secrets: 
       token: ${{ secrets.ACCESS_TOKEN }}
-      asset-keys: '{ "DeviceDetection": "${{ secrets.DEVICE_DETECTION_KEY }}" , "TestResourceKey": "${{ secrets.SUPER_RESOURCE_KEY}}" , "MavenSettings" : ''"${{ secrets.JAVA_STAGING_SETTINGS_BASE64 }}"'', "JavaGpgKeyPassphrase" : "${{ secrets.JAVA_GPG_KEY_PASSPHRASE }}", "CodeSigningCert" : ${{ secrets.CODE_SIGNING_CERT }}, "JavaPGP" : "${{ secrets.JAVA_KEY_PGP_FILE }}", "CodeSigningCertAlias" : "${{ secrets.CODE_SIGNING_CERT_ALIAS }}", "CodeSigningCertPassword" : "${{ secrets.CODE_SIGNING_CERT_PASSWORD }}" }'
+      asset-keys: '{ "DeviceDetection": "${{ secrets.DEVICE_DETECTION_KEY }}" , "TestResourceKey": "${{ secrets.SUPER_RESOURCE_KEY}}" , "MavenSettings" : "${{ secrets.JAVA_STAGING_SETTINGS_BASE64 }}", "JavaGpgKeyPassphrase" : "${{ secrets.JAVA_GPG_KEY_PASSPHRASE }}", "CodeSigningCert" : ${{ secrets.CODE_SIGNING_CERT }}, "JavaPGP" : "${{ secrets.JAVA_KEY_PGP_FILE }}", "CodeSigningCertAlias" : "${{ secrets.CODE_SIGNING_CERT_ALIAS }}", "CodeSigningCertPassword" : "${{ secrets.CODE_SIGNING_CERT_PASSWORD }}" }'
