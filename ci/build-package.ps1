@@ -22,7 +22,7 @@ $PackageFilesPath = "$RepoPath/package-files/"
 New-Item -path $BinariesPath -ItemType Directory -Force 
 
 # Copy files over from target to package-files folder
-$Files = Get-ChildItem -Path $PackageFilesPath/* -Include "*.dll", "*.so"
+$Files = Get-ChildItem -Path $PackageFilesPath/* -Recurse -Include "*.dll", "*.so"
 foreach($file in $Files){
     Copy-Item -Path $file -Destination "$BinariesPath/$($file.Name)"
 }
