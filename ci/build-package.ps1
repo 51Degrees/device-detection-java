@@ -27,7 +27,7 @@ foreach($file in $Files){
     Copy-Item -Path $file -Destination "$BinariesPath/$($file.Name)"
 }
 
-./java/build-package.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -Name $Name -Version $Version
+./java/build-package.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -Name $Name -Version $Version -ExtraArgs "-DskipNativeBuild=true"
 
 
 exit $LASTEXITCODE
