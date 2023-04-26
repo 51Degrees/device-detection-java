@@ -1,14 +1,7 @@
 [
   {
     "Image": "ubuntu-20.04",
-    "Name": "Ubuntu_Java_8",
-    "JavaSDKEnvVar": "JAVA_HOME_11_X64",
-    "RunPerformance": true,
-    "PackageRequirement" : true
-  },
-  {
-    "Image": "windows-latest",
-    "Name": "Ubuntu_Windows_8",
+    "Name": "Ubuntu_Java_11",
     "JavaSDKEnvVar": "JAVA_HOME_11_X64",
     "RunPerformance": true,
     "PackageRequirement" : true
