@@ -94,7 +94,7 @@ try{
 
     Write-Output "{
         'HigherIsBetter': {
-            'DetectionsPerSecond': $($profiles['MaxPerformance-false-true-false'].Overall.DetectionsPerSecond)
+            'DetectionsPerSecond': $($profiles['MaxPerformance-false-true-false'].Overall.DetectionsPerSecond),
             'AvgMillisecsPerDetection' : $($profiles['MaxPerformance-false-true-false'].Overall.AvgMillisecsPerDetection)
         },
         'LowerIsBetter': {
