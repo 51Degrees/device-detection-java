@@ -26,6 +26,7 @@ if(!(Test-Path -Path $ExamplesDir)){
 
 }
 
+Write-Output "Entering $ExamplesDir"
 Push-Location $ExamplesDir
 
 mvn clean test -DfailIfNoTests=false -Dtest="*Performance*" 
@@ -35,7 +36,7 @@ Get-ChildItem -Path . -Directory -Depth 1 |
 Where-Object { Test-Path "$($_.FullName)\pom.xml" } | 
 ForEach-Object { 
     $targetDir = "$($_.FullName)\target\surefire-reports"
-    $destDir = "..\de-detection-java-test\test-results\performance"
+    $destDir = "..\de-detection-java-test\test-results\performance-summary"
     if(!(Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir }
     if(Test-Path $targetDir) {
         Get-ChildItem -Path $targetDir | 
@@ -56,8 +57,8 @@ Push-Location $RepoPath
 
 try{
 
-    $PerfResultsFile = [IO.Path]::Combine($RepoPath, "test-results", "performance", "fiftyone.devicedetection.examples.console.PerformanceBenchmarkTest-output.txt")
-    $outputFile = [IO.Path]::Combine($RepoPath, "test-results", "performance","results_$Name.json")
+    $PerfResultsFile = [IO.Path]::Combine($RepoPath, "test-results", "performance-summary", "fiftyone.devicedetection.examples.console.PerformanceBenchmarkTest-output.txt")
+    $outputFile = [IO.Path]::Combine($RepoPath, "test-results", "performance-summary","results_$Name.json")
 
     $profileNum = 0
     $profiles = @{}
