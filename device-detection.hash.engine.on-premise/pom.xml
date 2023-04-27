@@ -129,6 +129,7 @@
                     <execution>
                         <phase>generate-sources</phase>
                         <configuration>
+                            <skip>${skipNativeBuild}</skip>
                             <executable>
                                 ${project.basedir}/src/main/cxx/PreBuild${script.extension}
                             </executable>
