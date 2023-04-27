@@ -36,7 +36,9 @@ Get-ChildItem -Path . -Directory -Depth 1 |
 Where-Object { Test-Path "$($_.FullName)\pom.xml" } | 
 ForEach-Object { 
     $targetDir = "$($_.FullName)\target\surefire-reports"
-    $destDir = "..\de-detection-java-test\test-results\performance-summary"
+    $destDir = "..\de-detection-java-test\test-results\performance"
+    $destDirSummary = "..\de-detection-java-test\test-results\performance-summary"
+
     if(!(Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir }
     if(Test-Path $targetDir) {
         Get-ChildItem -Path $targetDir | 
@@ -46,6 +48,9 @@ ForEach-Object {
         }
     }
 }
+
+Copy-Item -Path $destDir -Destination $destDirSummary -Recurse
+
 
 Write-Output "Leaving '$ExamplesDir'"
 Pop-Location
@@ -57,6 +62,7 @@ Push-Location $RepoPath
 
 try{
 
+    
     $PerfResultsFile = [IO.Path]::Combine($RepoPath, "test-results", "performance-summary", "fiftyone.devicedetection.examples.console.PerformanceBenchmarkTest-output.txt")
     $outputFile = [IO.Path]::Combine($RepoPath, "test-results", "performance-summary","results_$Name.json")
 
