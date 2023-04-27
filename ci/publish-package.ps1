@@ -14,6 +14,7 @@ param(
     [string]$CodeSigningCertPassword
 )
 
-./java/publish-package-maven.ps1 -RepoName "de-detection-java-test"
+./java/publish-package-maven.ps1 -RepoName "de-detection-java-test" -MavenSettings $MavenSettings -JavaGpgKeyPassphrase $JavaGpgKeyPassphrase -CodeSigningCert $CodeSigningCert -JavaPGP $JavaPGP -CodeSigningCertAlias $CodeSigningCertAlias -CodeSigningCertPassword $CodeSigningCertPassword 
+
 
 exit $LASTEXITCODE
