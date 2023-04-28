@@ -108,18 +108,18 @@
 
     <build>
         <pluginManagement>
-        <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>${nexus-staging-maven-plugin.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <serverId>${publishrepository.id}</serverId>
-                    <nexusUrl>${publishrepository.baseurl}</nexusUrl>
-                    <altStagingDirectory>${user.home}/.m2</altStagingDirectory>
-                </configuration>
-            </plugin>
             <plugins>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>${nexus-staging-maven-plugin.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>${publishrepository.id}</serverId>
+                        <nexusUrl>${publishrepository.baseurl}</nexusUrl>
+                        <altStagingDirectory>${user.home}/.m2</altStagingDirectory>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
