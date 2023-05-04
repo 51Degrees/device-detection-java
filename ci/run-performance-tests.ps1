@@ -98,6 +98,7 @@ try{
         }
     }
 
+    Write-Output $profiles
     Write-Output "{
         'HigherIsBetter': {
             'DetectionsPerSecond': $($profiles['MaxPerformance-false-true-false'].Overall.DetectionsPerSecond)
