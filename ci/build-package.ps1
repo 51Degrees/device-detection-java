@@ -12,7 +12,9 @@ param(
     [Parameter(Mandatory=$true)]
     [string]$CodeSigningCertAlias,
     [Parameter(Mandatory=$true)]
-    [string]$CodeSigningCertPassword
+    [string]$CodeSigningCertPassword,
+    [Parameter(Mandatory=$true)]
+    [string]$MavenSettings
 )
 
 # Name of this repository
@@ -37,7 +39,7 @@ foreach($file in $Files){
     Copy-Item -Path $file -Destination "$BinariesPath/$($file.Name)"
 }
 
-./java/build-package.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -Name $Name -Version $Version -ExtraArgs "-DskipNativeBuild=true" -JavaGpgKeyPassphrase $JavaGpgKeyPassphrase -CodeSigningCert $CodeSigningCert -JavaPGP $JavaPGP -CodeSigningCertAlias $CodeSigningCertAlias -CodeSigningCertPassword $CodeSigningCertPassword 
+./java/build-package.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -Name $Name -Version $Version -ExtraArgs "-DskipNativeBuild=true" -JavaGpgKeyPassphrase $JavaGpgKeyPassphrase -CodeSigningCert $CodeSigningCert -JavaPGP $JavaPGP -CodeSigningCertAlias $CodeSigningCertAlias -CodeSigningCertPassword $CodeSigningCertPassword -MavenSettings $MavenSettings 
 
 
 exit $LASTEXITCODE
