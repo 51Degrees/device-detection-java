@@ -25,10 +25,10 @@ try{
         Move-Item $TacFile device-detection-java-examples/device-detection-data/TAC-HashV41.hash
         
         Write-Output "Download Evidence file"
-        curl -o "device-detection-java-examples/device-detection-data/20000 Evidence Records.yml" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/master/20000%20Evidence%20Records.yml"
+        curl -o "device-detection-java-examples/device-detection-data/20000 Evidence Records.yml" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/main/20000%20Evidence%20Records.yml"
         
         Write-Output "Download User Agents file"
-        curl -o "device-detection-java-examples/device-detection-data/20000 User Agents.csv" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/master/20000%20User%20Agents.csv"
+        curl -o "device-detection-java-examples/device-detection-data/20000 User Agents.csv" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/main/20000%20User%20Agents.csv"
 
     }
 }
