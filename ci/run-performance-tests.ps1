@@ -1,11 +1,13 @@
 
 param(
     [string]$ProjectDir = ".",
+    [string]$Version = "0.0.0",
     [string]$Name
 )
 
-# Define the name of the project repository
+# Define the name of the project repository and path
 $RepoName = "de-detection-java-test"
+$RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 
 # Define the directory of the examples
 $ExamplesDir = [IO.Path]::Combine($pwd, "device-detection-java-examples")
@@ -34,12 +36,24 @@ catch {
     Write-Output "An error occurred while downloading or moving files: $_"
 }
 
-# Enter the Java project examples directory
-Write-Output "Entering $ExamplesDir"
-Push-Location $ExamplesDir
-
 # Run tests and copy files, catch errors if any
 try {
+
+    Write-Output "Entering '$RepoPath'"
+    Push-Location $RepoPath
+    # If the Version parameter is set to "0.0.0", set the Version variable to the version specified in the pom.xml file
+    if ($Version -eq "0.0.0"){
+        $Version = mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression="project.version" -q -DforceStdout
+    }
+    Pop-Location
+
+    # Enter the Java project examples directory
+    Write-Output "Entering $ExamplesDir"
+    Push-Location $ExamplesDir
+
+    Write-Output "Setting examples device-detection package dependency to version '$Version'"
+    mvn versions:set-property -Dproperty="device-detection.version" "-DnewVersion=$Version"
+
     mvn clean test -DfailIfNoTests=false -Dtest="*Performance*" 
 
     # Copy the test results into the test-results folder

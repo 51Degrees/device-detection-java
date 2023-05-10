@@ -32,6 +32,8 @@ Leave RepoPath: Changes the current working directory back to the initial locati
 
 ## Performance Tests
 
+The performance tests are located in the examples project, therefore, all of the above applies to performance tests.
+
 The output of the Performance Tests is written to the console. To enable the parsing of this output, the "redirectTestOutputToFile" option must be enabled in the examples project. This ensures that the test output is saved to a file, making it accessible for further processing.
 
 The performance test results are then parsed and organized using a hashtable data structure. This approach facilitates the extraction of relevant metrics, such as detections per second and average milliseconds per detection that are then written to a file following the convention outlined in the [Design.md](https://github.com/51Degrees/common-ci/blob/gh-refact/design.md)

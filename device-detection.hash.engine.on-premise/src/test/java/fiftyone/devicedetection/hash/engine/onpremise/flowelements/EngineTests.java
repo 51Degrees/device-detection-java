@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.engines.Constants;
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.LITE_HASH_DATA_FILE_NAME;
-import static fiftyone.devicedetection.shared.testhelpers.FileUtils.ENTERPRISE_HASH_DATA_FILE_NAME;
+import static fiftyone.devicedetection.shared.testhelpers.FileUtils.TAC_HASH_DATA_FILE_NAME;
 import static fiftyone.pipeline.util.FileFinder.getFilePath;
 
 public class EngineTests {
@@ -91,7 +91,7 @@ public class EngineTests {
 	 */
 	@Test
 	public void Engine_Hash_GetDataSourceTier_Enterprise() throws Exception {
-		testDataSourceTier(ENTERPRISE_HASH_DATA_FILE_NAME);
+		testDataSourceTier(TAC_HASH_DATA_FILE_NAME);
 	}
 
 }
