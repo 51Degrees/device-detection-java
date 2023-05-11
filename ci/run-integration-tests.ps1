@@ -7,7 +7,7 @@ param(
     
 )
 
-$RepoPath = [IO.Path]::Combine($pwd, "de-detection-java-test")
+$RepoPath = [IO.Path]::Combine($pwd, "device-detection-java")
 $ExamplesRepoName = "device-detection-java-examples"
 
 try {
@@ -50,7 +50,7 @@ try {
 
     ForEach-Object { 
         $targetDir = "$($_.FullName)\target\surefire-reports"
-        $destDir = "..\de-detection-java-test\test-results\integration"
+        $destDir = "..\device-detection-java\test-results\integration"
         if(!(Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir }
         if(Test-Path $targetDir) {
             Get-ChildItem -Path $targetDir |

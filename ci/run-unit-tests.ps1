@@ -4,6 +4,6 @@ param(
     [hashtable]$Keys
 )
 
-./java/run-unit-tests.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -Name $Name -ExtraArgs "-DTestResourceKey=$($Keys.TestResourceKey)"
+./java/run-unit-tests.ps1 -RepoName "device-detection-java" -ProjectDir $ProjectDir -Name $Name -ExtraArgs "-DTestResourceKey=$($Keys.TestResourceKey)"
 
 exit $LASTEXITCODE
