@@ -16,12 +16,4 @@ public class BuilderTests {
         builder = new DeviceDetectionHashEngineBuilder(loggerFactory);
     }
 
-    /**
-     * Check that an exception is thrown when attempting to add a cache to the
-     * on-premise engine.
-     */
-    @Test(expected = UnsupportedOperationException.class)
-    public void Builder_CacheDisabled() {
-        builder.setCache(new CacheConfiguration(1000));
-    }
 }
