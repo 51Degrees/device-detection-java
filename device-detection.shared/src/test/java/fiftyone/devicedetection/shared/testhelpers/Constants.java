@@ -28,7 +28,7 @@ import java.util.Objects;
 public class Constants {
     public static final int UAS_TO_TEST = 10;
 
-    public static final String[] ExcludedProperties = {"JavascriptImageOptimiser", "JavascriptBandwidth"};
+    public static final String[] ExcludedProperties = {"JavascriptImageOptimiser", "JavascriptBandwidth", "JavascriptGetHighEntropyValues"};
 
     public static final String MobileUserAgent =
         "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) " +
