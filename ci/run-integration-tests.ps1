@@ -19,19 +19,24 @@ try {
     Move-Item $TacFile device-detection-java-examples/device-detection-data/TAC-HashV41.hash
     
     Write-Output "Download Evidence file"
-    curl -o "device-detection-java-examples/device-detection-data/20000 Evidence Records.yml" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/master/20000%20Evidence%20Records.yml"
+    curl -o "device-detection-java-examples/device-detection-data/20000 Evidence Records.yml" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/main/20000%20Evidence%20Records.yml"
     
     Write-Output "Download User Agents file"
-    curl -o "device-detection-java-examples/device-detection-data/20000 User Agents.csv" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/master/20000%20User%20Agents.csv"
+    curl -o "device-detection-java-examples/device-detection-data/20000 User Agents.csv" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/main/20000%20User%20Agents.csv"
 
-
-    Write-Output "Entering device-detection-examples directory"
-    Push-Location device-detection-java-examples 
-
-
+    Write-Output "Entering device-detection-java directory"
+    Push-Location $RepoPath
+    # If the Version parameter is set to "0.0.0", set the Version variable to the version specified in the pom.xml file
     if ($Version -eq "0.0.0"){
         $Version = mvn org.apache.maven.plugins:maven-help-plugin:3.1.0:evaluate -Dexpression="project.version" -q -DforceStdout
     }
+
+    Pop-Location
+
+    Write-Output "Entering device-detection-examples directory"
+    Push-Location $ExamplesRepoName
+
+
     Write-Output "Setting examples device-detection package dependency to version '$Version'"
     mvn versions:set-property -Dproperty="device-detection.version" "-DnewVersion=$Version"
 
@@ -58,7 +63,7 @@ try {
 
 finally {
 
-    Write-Output "Leaving '$RepoPath'"
+    Write-Output "Leaving '$ExamplesRepoName'"
     Pop-Location
 
 }

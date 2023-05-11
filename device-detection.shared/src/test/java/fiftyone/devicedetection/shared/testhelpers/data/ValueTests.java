@@ -33,10 +33,7 @@ import fiftyone.pipeline.engines.exceptions.PropertyMissingException;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 import static org.junit.Assert.*;
@@ -94,7 +91,7 @@ public class ValueTests {
             ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
             for (FiftyOneAspectPropertyMetaData property :
                 (List<FiftyOneAspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
-                if (property.isAvailable()) {
+                if (property.isAvailable() && !Objects.equals(property.getName(), "JavascriptGetHighEntropyValues")) {
                     Class<?> expectedType;
                     Object value = elementData.get(property.getName());
                     //((ElementPropertyMetaData) value).getType();

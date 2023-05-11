@@ -10,13 +10,13 @@ $PathToBinaries = "$RepoPath/device-detection.hash.engine.on-premise/target/clas
 
 ./java/build-package-requirements.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -Name $Name 
 
-$Files = Get-ChildItem -Path $PathToBinaries/* -Include "*.dll", "*.so"
+$Files = Get-ChildItem -Path $PathToBinaries/* -Include "*.dll", "*.so", "*.dylib"
 
 # Create a directory for binary files from which they will be uploaded
 # as artifacts.
 New-Item -path "$RepoPath/package-files/" -ItemType Directory -Force 
 
-# Copy dll files over 
+# Copy binary files over 
 foreach($file in $Files){
     Copy-Item -Path $file -Destination "$RepoPath/package-files/$($file.Name)"
 }

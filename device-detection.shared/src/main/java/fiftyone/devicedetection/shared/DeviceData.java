@@ -1,6 +1,6 @@
 /* *********************************************************************
  * This Original Work is copyright of 51 Degrees Mobile Experts Limited.
- * Copyright 2022 51 Degrees Mobile Experts Limited, Davidson House,
+ * Copyright 2023 51 Degrees Mobile Experts Limited, Davidson House,
  * Forbury Square, Reading, Berkshire, United Kingdom RG1 3EU.
  *
  * This Original Work is licensed under the European Union Public Licence
@@ -454,6 +454,10 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getHistory();
 	/**
+	 * Indicates if the browser is able to use media inputs, e.g. webcam and microphone, in a script and as an input for forms, e.g. '&lt;input type="file" accept="image/*" id="capture"&gt;' would prompt image- capturing software to open.
+	 */
+	AspectPropertyValue<Boolean> getHtmlMediaCapture();
+	/**
 	 * Indicates if the browser supports the new markup in HTML 5 that also refers to 'New Semantic Elements' such as <header>, <nav>, <section>, <aside>,<footer> etc.
 	 */
 	AspectPropertyValue<Boolean> getHtml5();
@@ -465,10 +469,6 @@ public interface DeviceData extends AspectData
 	 * Lists what video formats, if any, the browser supports using the HTLM5 <video> tag.
 	 */
 	AspectPropertyValue<List<String>> getHtml5Video();
-	/**
-	 * Indicates if the browser is able to use media inputs, e.g. webcam and microphone, in a script and as an input for forms, e.g. '&lt;input type="file" accept="image/*" id="capture"&gt;' would prompt image- capturing software to open.
-	 */
-	AspectPropertyValue<Boolean> getHtmlMediaCapture();
 	/**
 	 * Refers to the latest version of HyperText Markup Language (HTML) supported by the browser.
 	 */
@@ -585,6 +585,10 @@ public interface DeviceData extends AspectData
 	 * Indicates if the browser supports JavaScript that is able to access HTML elements from their ID using the getElementById method.
 	 */
 	AspectPropertyValue<Boolean> getJavascriptGetElementById();
+	/**
+	 * Contains Javascript to get high entropy values.
+	 */
+	AspectPropertyValue<JavaScript> getJavascriptGetHighEntropyValues();
 	/**
 	 * JavaScript that can override the profile found by the server using information on the client device. This property is applicable for Apple devices which do not provide information about the model in the User-Agent string.
 	 */
@@ -806,7 +810,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<List<String>> getSatelliteNavigationTypes();
 	/**
-	 * Indicates the diagonal size of the device's screen in inches. This property is not applicable for a device that does not have a screen.
+	 * Indicates the diagonal size of the device's screen in inches, to a maximum of two decimal points. Where screens have curved corners, the actual viewable area may be less.
 	 */
 	AspectPropertyValue<Double> getScreenInchesDiagonal();
 	/**
