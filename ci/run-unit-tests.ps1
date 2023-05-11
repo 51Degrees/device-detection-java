@@ -1,5 +1,5 @@
 param(
-    [string]$ProjectDir = "."
+    [string]$ProjectDir = ".",
     [string]$Name,
     [hashtable]$Keys
 )
