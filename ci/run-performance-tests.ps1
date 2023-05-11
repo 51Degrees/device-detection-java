@@ -19,16 +19,11 @@ try{
 
         Write-Output "Cloning '$ExamplesRepoName'"
         ./steps/clone-repo.ps1 -RepoName "device-detection-java-examples"
-        
+
         Write-Output "Moving TAC file for examples"
         $TacFile = [IO.Path]::Combine($RepoPath, "TAC-HashV41.hash") 
         Move-Item $TacFile device-detection-java-examples/device-detection-data/TAC-HashV41.hash
         
-        Write-Output "Moving evidence files for examples"
-        $UAFile = [IO.Path]::Combine($RepoPath, "20000 User Agents.csv") 
-        $EvidenceFile = [IO.Path]::Combine($RepoPath, "20000 Evidence Records.yml")
-        Move-Item $UAFile device-detection-java-examples/device-detection-data/TAC-HashV41.hash
-        Move-Item $EvidenceFile device-detection-java-examples/device-detection-data/TAC-HashV41.hash
     }
 }
 catch {

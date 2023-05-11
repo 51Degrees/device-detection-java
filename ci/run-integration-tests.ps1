@@ -21,8 +21,8 @@ try {
     Write-Output "Moving evidence files for examples"
     $UAFile = [IO.Path]::Combine($RepoPath, "20000 User Agents.csv") 
     $EvidenceFile = [IO.Path]::Combine($RepoPath, "20000 Evidence Records.yml")
-    Move-Item $UAFile "device-detection-java-examples/device-detection-data/20000 User Agents.csv"
-    Move-Item $EvidenceFile "device-detection-java-examples/device-detection-data/20000 Evidence Records.yml"
+    # Move-Item $UAFile "device-detection-java-examples/device-detection-data/20000 User Agents.csv"
+    # Move-Item $EvidenceFile "device-detection-java-examples/device-detection-data/20000 Evidence Records.yml"
     
     Write-Output "Entering device-detection-java directory"
     Push-Location $RepoPath
