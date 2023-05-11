@@ -284,7 +284,17 @@ public class DeviceDetectionHashEngineBuilder
         config.setUsePredictiveGraph(use);
         return this;
     }
-
+    
+    @Override
+    public DeviceDetectionHashEngineBuilder setCache(
+        CacheConfiguration cacheConfiguration) {
+        throw new UnsupportedOperationException(
+            "A results cache cannot be configured in the on-premise Hash " +
+            "engine. The overhead of having to manage native object " + 
+            "lifetimes when a cache is enabled outweighs the benefit of the " +
+            "cache.");
+    }
+    
     /**
      * The default value to use for the 'Type' parameter when sending
      * a request to the Distributor
