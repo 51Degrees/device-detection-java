@@ -13,7 +13,7 @@
     "PackageRequirement" : true
   },
   {
-    "Image": "ubuntu-20.04",
+    "Image": "ubuntu-latest",
     "Name": "Ubuntu_Java_8",
     "JavaSDKEnvVar": "JAVA_HOME_8_X64",
     "RunPerformance": true
