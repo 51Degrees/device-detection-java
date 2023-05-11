@@ -27,6 +27,7 @@ import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.ConfigHashSwi
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.RequiredPropertiesConfigSwig;
 import fiftyone.devicedetection.hash.engine.onpremise.interop.swig.VectorStringSwig;
 import fiftyone.devicedetection.shared.flowelements.OnPremiseDeviceDetectionEngineBuilderBase;
+import fiftyone.pipeline.annotations.DefaultValue;
 import fiftyone.pipeline.annotations.ElementBuilder;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.data.factories.ElementDataFactory;
@@ -49,6 +50,8 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 /**
  * Builder for the {@link DeviceDetectionHashEngine}. All options for the engine
  * should be set here.
+ * <p>
+ * Default values are taken from device-detection-cxx/src/hash/hash.c
  */
 @ElementBuilder(alternateName = "HashDeviceDetection")
 public class DeviceDetectionHashEngineBuilder
@@ -68,8 +71,7 @@ public class DeviceDetectionHashEngineBuilder
      * returned by {@link LoggerFactory#getILoggerFactory()}.
      */
     public DeviceDetectionHashEngineBuilder() {
-        super(LoggerFactory.getILoggerFactory());
-        config.setConcurrency(Runtime.getRuntime().availableProcessors());
+        this(LoggerFactory.getILoggerFactory());
     }
 
     /**
@@ -77,8 +79,7 @@ public class DeviceDetectionHashEngineBuilder
      * @param loggerFactory the logger factory to use
      */
     public DeviceDetectionHashEngineBuilder(ILoggerFactory loggerFactory) {
-        super(loggerFactory, null);
-        config.setConcurrency(Runtime.getRuntime().availableProcessors());
+        this(loggerFactory, null);
     }
 
     /**
@@ -96,22 +97,28 @@ public class DeviceDetectionHashEngineBuilder
     }
 
     /**
-     * Set whether or not an existing temp file should be used if one is found
+     * Set whether an existing temp file should be used if one is found
      * in the temp directory.
+     * <p>
+     * Default is false.
      * @param reuse true if an existing file should be used
      * @return this builder
      */
+    @DefaultValue("false")
     public DeviceDetectionHashEngineBuilder setReuseTempFile(boolean reuse) {
         config.setReuseTempFile(reuse);
         return this;
     }
 
     /**
-     * Set whether or not the matched characters of the User-Agent should
+     * Set whether the matched characters of the User-Agent should
      * be stored to be returned in the results.
+     * <p>
+     * Default is true
      * @param update true if the matched User-Agent should be stored
      * @return this builder
      */
+    @DefaultValue("true")
     public DeviceDetectionHashEngineBuilder setUpdateMatchedUserAgent(
         boolean update) {
         config.setUpdateMatchedUserAgent(update);
@@ -120,9 +127,12 @@ public class DeviceDetectionHashEngineBuilder
 
     /**
      * Set the performance profile to use when constructing the data set.
+     * <p>
+     * Default value is Balanced.
      * @param profileName name of the profile to use
      * @return this builder
      */
+    @DefaultValue("Balanced")
     public DeviceDetectionHashEngineBuilder setPerformanceProfile(
         String profileName) {
         PerformanceProfiles profile;
@@ -173,18 +183,47 @@ public class DeviceDetectionHashEngineBuilder
         return this;
     }
 
+    /**
+     * Provide a hint as to how many threads will access the pipeline simultaneously
+     * <p>
+     * Default is the result of {@link Runtime#getRuntime()#getAvailableProcessors()}
+     * @see <a href="https://51degrees.com/documentation/_device_detection__features__concurrent_processing.html">Concurrent processing</a>
+     * @param concurrency expected concurrent accesses
+     * @return this builder
+     */
+    @DefaultValue("The result of Runtime#getRuntime().getAvailableProcessors()")
     @Override
     public DeviceDetectionHashEngineBuilder setConcurrency(int concurrency) {
         config.setConcurrency(concurrency);
         return this;
     }
 
+    /**
+     * Whether to return a default profile if no match
+     * <p>
+     * Default false
+     * @see <a href="https://51degrees.com/documentation/_device_detection__features__false_positive_control.html">No Match Found</a>
+     * @param allow true if results with no matched hash nodes should be
+     *              considered valid
+     * @return this builder
+     */
+    @DefaultValue("false")
     @Override
     public DeviceDetectionHashEngineBuilder setAllowUnmatched(boolean allow) {
         config.setAllowUnmatched(allow);
         return this;
     }
 
+    /**
+     * The difference tolerance allows for User-Agents where some characters differ
+     * slightly from what is expected.
+     * <p>
+     * Default is 0.
+     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
+     * @param difference to allow
+     * @return this builder
+     */
+    @DefaultValue(intValue = 0)
     @Override
     public DeviceDetectionHashEngineBuilder setDifference(int difference) {
         config.setDifference(difference);
@@ -194,48 +233,58 @@ public class DeviceDetectionHashEngineBuilder
     /**
      * Set the maximum drift to allow when matching hashes. If the drift is
      * exceeded, the result is considered invalid and values will not be
-     * returned. By default this is 0.
+     * returned.
+     * <p>
+     * Default is 0.
+     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
      * @param drift to set
      * @return this builder
      */
+    @DefaultValue(intValue = 0)
     public DeviceDetectionHashEngineBuilder setDrift(int drift) {
         config.setDrift(drift);
         return this;
     }
 
     /**
-     * Set whether or not the performance optimized graph is used
+     * Set whether the performance optimized graph is used
      * for processing. When processing evidence, the performance
-     * graph is optimised to find an answer as quick as possible.
+     * graph is optimized to find an answer as quickly as possible.
      * However, this can be at the expense of finding the best
      * match for evidence which was not in the training data. If
      * the predictive graph is also enabled, it will be used
      * next if there was no match in the performance graph.
+     * <p>
+     * Default is false
      * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
      * @param use true if the performance graph should be used
      * @return this builder
      */
+    @DefaultValue("false")
     public DeviceDetectionHashEngineBuilder setUsePerformanceGraph(boolean use) {
         config.setUsePerformanceGraph(use);
         return this;
     }
 
     /**
-     * Set whether or not the predictive optimized graph is used
+     * Set whether the predictive optimized graph is used
      * for processing. When processing evidence, the predictive
      * graph is optimised to find the best answer for evidence
      * which was not in the training data. However, this is at the
      * expense of processing time, as more possibilities are taken into
      * consideration.
+     * <p>
+     * Default is true
      * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
      * @param use true if the predictive graph should be used
      * @return this builder
      */
+    @DefaultValue("true")
     public DeviceDetectionHashEngineBuilder setUsePredictiveGraph(boolean use) {
         config.setUsePredictiveGraph(use);
         return this;
     }
-
+    
     @Override
     public DeviceDetectionHashEngineBuilder setCache(
         CacheConfiguration cacheConfiguration) {
@@ -245,7 +294,7 @@ public class DeviceDetectionHashEngineBuilder
             "lifetimes when a cache is enabled outweighs the benefit of the " +
             "cache.");
     }
-
+    
     /**
      * The default value to use for the 'Type' parameter when sending
      * a request to the Distributor
