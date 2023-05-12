@@ -44,6 +44,7 @@ import static fiftyone.pipeline.util.StringManipulation.stringJoin;
 /**
  * Internal implementation of the {@link DeviceDataHash} interface. This can
  * only be constructed by the {@link DeviceDetectionHashEngine}.
+ * @see <a href="https://github.com/51Degrees/specifications/blob/main/device-detection-specification/pipeline-elements/device-detection-on-premise.md#element-data">Specification</a>
  */
 public class DeviceDataHashDefault
     extends DeviceDataBaseOnPremise

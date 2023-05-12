@@ -29,6 +29,7 @@ import java.util.List;
 
 /**
  * Hash specific interface for {@link DeviceData}.
+ * @see <a href="https://github.com/51Degrees/specifications/blob/main/device-detection-specification/pipeline-elements/device-detection-on-premise.md#element-data">Specification</a>
  */
 public interface DeviceDataHash extends DeviceData {
 

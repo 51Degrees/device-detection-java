@@ -48,6 +48,7 @@ import static org.apache.commons.lang3.BooleanUtils.isFalse;
  * Hash device detection engine. This engine takes User-Agents and other
  * relevant HTTP headers and returns properties about the device which produced
  * them e.g. DeviceType or ReleaseDate.
+ * @see <a href="https://github.com/51Degrees/specifications/blob/main/device-detection-specification/pipeline-elements/device-detection-on-premise.md">Specification</a>
  */
 public class DeviceDetectionHashEngine
     extends FiftyOneOnPremiseAspectEngineBase<DeviceDataHash,
