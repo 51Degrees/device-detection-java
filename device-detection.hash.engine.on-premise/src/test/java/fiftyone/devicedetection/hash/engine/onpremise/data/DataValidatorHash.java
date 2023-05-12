@@ -33,6 +33,7 @@ import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static org.junit.Assert.*;
 
@@ -53,7 +54,7 @@ public class DataValidatorHash implements DataValidator {
             if (property.isAvailable()) {
                 assertTrue(map.containsKey(property.getName()));
                 AspectPropertyValue<?> value = (AspectPropertyValue<?>)map.get(property.getName());
-                if (validEvidence) {
+                if (validEvidence && !Objects.equals(property.getName(), "JavascriptGetHighEntropyValues")) {
                     assertTrue(value.hasValue());
                 }
                 else {

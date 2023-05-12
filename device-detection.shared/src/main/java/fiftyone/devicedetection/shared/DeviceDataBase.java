@@ -1,6 +1,6 @@
 /* *********************************************************************
  * This Original Work is copyright of 51 Degrees Mobile Experts Limited.
- * Copyright 2022 51 Degrees Mobile Experts Limited, Davidson House,
+ * Copyright 2023 51 Degrees Mobile Experts Limited, Davidson House,
  * Forbury Square, Reading, Berkshire, United Kingdom RG1 3EU.
  *
  * This Original Work is licensed under the European Union Public Licence
@@ -738,7 +738,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Double> getMIDP() { return getAs("midp", AspectPropertyValue.class, Double.class); }
 	/**
-	 * Indicates the diagonal size of the device's screen in inches. This property is not applicable for a device that does not have a screen.
+	 * Indicates the diagonal size of the device's screen in inches, to a maximum of two decimal points. Where screens have curved corners, the actual viewable area may be less.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1589,6 +1589,12 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getSetHeaderPlatformAcceptCH() { return getAs("setheaderplatformaccept-ch", AspectPropertyValue.class, String.class); }
+	/**
+	 * Contains Javascript to get high entropy values.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<JavaScript> getJavascriptGetHighEntropyValues() { return getAs("javascriptgethighentropyvalues", AspectPropertyValue.class, JavaScript.class); }
 	/**
 	 * Indicates the number of hash nodes matched within the evidence.
 	 */

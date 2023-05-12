@@ -60,6 +60,7 @@ jobs:
     # Only run if there are any pull requests to check
     if: ${{ needs.Get_Pull_Requests.outputs.pull_request_ids != '' }}
     strategy:
+      fail-fast: false
       matrix:
         id: ${{ fromJSON(needs.Get_Pull_Requests.outputs.pull_request_ids) }}
       
@@ -69,4 +70,4 @@ jobs:
       pull-request-id: ${{ matrix.id }}
     secrets: 
       token: ${{ secrets.ACCESS_TOKEN }}
-      asset-keys: '{ "DeviceDetection": "${{ secrets.DEVICE_DETECTION_KEY }}" , "TestResourceKey": "${{ secrets.SUPER_RESOURCE_KEY}}" }'
+      asset-keys: '{ "DeviceDetection": "${{ secrets.DEVICE_DETECTION_KEY }}" , "TestResourceKey": "${{ secrets.SUPER_RESOURCE_KEY}}", "DeviceDetectionUrl": "${{ secrets.DEVICE_DETECTION_URL }}" }'
