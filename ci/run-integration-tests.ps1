@@ -3,11 +3,15 @@ param(
     [string]$Name = "Windows_Java_8",
     [string]$Version = "0.0.0",
     # Keys contain the License and Resource Keys needed to run the tests.
-    [Hashtable]$Keys
+    [Parameter(Mandatory=$true)]
+    [Hashtable]$Keys,
+    [Parameter(Mandatory=$true)]
+    [string]$RepoName
+
     
 )
 
-$RepoPath = [IO.Path]::Combine($pwd, "de-detection-java-test")
+$RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 $ExamplesRepoName = "device-detection-java-examples"
 
 try {
@@ -50,7 +54,7 @@ try {
 
     ForEach-Object { 
         $targetDir = "$($_.FullName)\target\surefire-reports"
-        $destDir = "..\de-detection-java-test\test-results\integration"
+        $destDir = "..\$RepoName\test-results\integration"
         if(!(Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir }
         if(Test-Path $targetDir) {
             Get-ChildItem -Path $targetDir |
