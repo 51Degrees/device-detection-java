@@ -15,11 +15,12 @@ $Files = Get-ChildItem -Path $PathToBinaries/* -Include "*.dll", "*.so", "*.dyli
 
 # Create a directory for binary files from which they will be uploaded
 # as artifacts.
-New-Item -path "$RepoPath/package-files/" -ItemType Directory -Force 
+$PackageFolder = "package-files"
+New-Item -path $PackageFolder  -ItemType Directory -Force 
 
 # Copy binary files over 
 foreach($file in $Files){
-    Copy-Item -Path $file -Destination "$RepoPath/package-files/$($file.Name)"
+    Copy-Item -Path $file -Destination "$PackageFolder/$($file.Name)"
 }
 
 exit $LASTEXITCODE
