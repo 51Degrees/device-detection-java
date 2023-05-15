@@ -6,6 +6,6 @@ param(
     [string]$ProjectDir = "."
 )
 
-./java/setup-enviroment.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -JavaSDKEnvVar $JavaSDKEnvVar
+./java/setup-enviroment.ps1 -RepoName $RepoName -ProjectDir $ProjectDir -JavaSDKEnvVar $JavaSDKEnvVar
 
 exit $LASTEXITCODE
