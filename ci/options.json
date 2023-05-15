@@ -1,8 +1,9 @@
 [  
-  {
+ {
     "Image": "ubuntu-latest",
-    "Name": "Ubuntu_Java_17",
-    "JavaSDKEnvVar": "JAVA_HOME_17_X64",
-    "RunPerformance": true
+    "Name": "Ubuntu_Java_11",
+    "JavaSDKEnvVar": "JAVA_HOME_11_X64",
+    "RunPerformance": true,
+    "PackageRequirement" : true
   }
 ]
