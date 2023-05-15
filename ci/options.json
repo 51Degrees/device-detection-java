@@ -4,58 +4,5 @@
     "Name": "Ubuntu_Java_17",
     "JavaSDKEnvVar": "JAVA_HOME_17_X64",
     "RunPerformance": true
-  },
-  {
-    "Image": "ubuntu-latest",
-    "Name": "Ubuntu_Java_11",
-    "JavaSDKEnvVar": "JAVA_HOME_11_X64",
-    "RunPerformance": true,
-    "PackageRequirement" : true
-  },
-  {
-    "Image": "ubuntu-latest",
-    "Name": "Ubuntu_Java_8",
-    "JavaSDKEnvVar": "JAVA_HOME_8_X64",
-    "RunPerformance": true
-  },
-  {
-    "Image": "windows-latest",
-    "Name": "Windows_Java_17",
-    "JavaSDKEnvVar": "JAVA_HOME_17_X64",
-    "RunPerformance": true,
-    "PackageRequirement" : false
-  },
-  {
-    "Image": "windows-latest",
-    "Name": "Windows_Java_11",
-    "JavaSDKEnvVar": "JAVA_HOME_11_X64",
-    "RunPerformance": true,
-    "PackageRequirement" : true
-  },
-  {
-    "Image": "windows-latest",
-    "Name": "Windows_Java_8",
-    "JavaSDKEnvVar": "JAVA_HOME_8_X64",
-    "RunPerformance": true
-  },
-  {
-    "Image": "macos-latest",
-    "Name": "MacOS_Java_17",
-    "JavaSDKEnvVar": "JAVA_HOME_17_X64",
-    "RunPerformance": true
-  },
-  {
-    "Image": "macos-latest",
-    "Name": "MacOS_Java_11",
-    "JavaSDKEnvVar": "JAVA_HOME_11_X64",
-    "RunPerformance": true,
-    "PackageRequirement" : true
-  },
-    {
-    "Image": "macos-latest",
-    "Name": "MacOS_Java_8",
-    "JavaSDKEnvVar": "JAVA_HOME_8_X64",
-    "RunPerformance": true
   }
-  
 ]
