@@ -1,14 +1,15 @@
 
 param(
     [string]$ProjectDir = ".",
-    [string]$Name
+    [string]$Name,
+    [Parameter(Mandatory=$true)]
+    $RepoName
 )
 
-$RepoName = "de-detection-java-test"
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 $PathToBinaries = "$RepoPath/device-detection.hash.engine.on-premise/target/classes"
 
-./java/build-package-requirements.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -Name $Name 
+./java/build-package-requirements.ps1 -RepoName $RepoName -ProjectDir $ProjectDir -Name $Name 
 
 $Files = Get-ChildItem -Path $PathToBinaries/* -Include "*.dll", "*.so", "*.dylib"
 
