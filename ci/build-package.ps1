@@ -4,21 +4,10 @@ param(
     [string]$Name,
     [string]$Version,
     [Parameter(Mandatory=$true)]
-    [string]$JavaGpgKeyPassphrase,
+    [string]$RepoName,
     [Parameter(Mandatory=$true)]
-    [string]$CodeSigningCert,
-    [Parameter(Mandatory=$true)]
-    [string]$JavaPGP,
-    [Parameter(Mandatory=$true)]
-    [string]$CodeSigningCertAlias,
-    [Parameter(Mandatory=$true)]
-    [string]$CodeSigningCertPassword,
-    [Parameter(Mandatory=$true)]
-    [string]$MavenSettings
+    [Hashtable]$Keys
 )
-
-# Name of this repository
-$RepoName = "de-detection-java-test"
 
 # Path to this repository
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
@@ -39,7 +28,7 @@ foreach($file in $Files){
     Copy-Item -Path $file -Destination "$BinariesPath/$($file.Name)"
 }
 
-./java/build-package.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -Name $Name -Version $Version -ExtraArgs "-DskipNativeBuild=true" -JavaGpgKeyPassphrase $JavaGpgKeyPassphrase -CodeSigningCert $CodeSigningCert -JavaPGP $JavaPGP -CodeSigningCertAlias $CodeSigningCertAlias -CodeSigningCertPassword $CodeSigningCertPassword -MavenSettings $MavenSettings 
+./java/build-package.ps1 -RepoName $RepoName -ProjectDir $ProjectDir -Name $Name -Version $Version -ExtraArgs "-DskipNativeBuild=true" -JavaGpgKeyPassphrase $Keys['JavaGpgKeyPassphrase'] -CodeSigningCert $Keys['CodeSigningCert'] -JavaPGP $Keys['JavaPGP'] -CodeSigningCertAlias $Keys['CodeSigningCertAlias'] -CodeSigningCertPassword $Keys['CodeSigningCertPassword'] -MavenSettings $Keys['MavenSettings'] 
 
 
 exit $LASTEXITCODE
