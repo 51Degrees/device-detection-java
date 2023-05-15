@@ -1,0 +1,18 @@
+name: Nigthly Publish Main
+
+on:
+  workflow_dispatch:
+#   schedule:
+#     # * is a special character in YAML so quote this string
+#     - cron:  '0 1 * * *'
+    
+jobs:
+  # Run the common workflow to test and publish the main branch
+  Nightly_Publish_Main:
+    uses: 51Degrees/common-ci/.github/workflows/nightly-publish-main.yml@main
+    with:
+      repo-name: ${{ github.event.repository.name }}
+      build-platform: ubuntu-20.04
+    secrets: 
+      token: ${{ secrets.ACCESS_TOKEN }}
+      asset-keys: '{ "DeviceDetection": "${{ secrets.DEVICE_DETECTION_KEY }}", "DeviceDetectionUrl": "${{ secrets.DEVICE_DETECTION_URL }}", "TestResourceKey": "${{ secrets.SUPER_RESOURCE_KEY}}" , "MavenSettings" : "${{ secrets.JAVA_STAGING_SETTINGS_BASE64 }}", "JavaGpgKeyPassphrase" : "${{ secrets.JAVA_GPG_KEY_PASSPHRASE }}", "CodeSigningCert" : "${{ secrets.CODE_SIGNING_CERT }}", "JavaPGP" : "${{ secrets.JAVA_KEY_PGP_FILE }}", "CodeSigningCertAlias" : "${{ secrets.CODE_SIGNING_CERT_ALIAS }}", "CodeSigningCertPassword" : "${{ secrets.CODE_SIGNING_CERT_PASSWORD }}" }'
