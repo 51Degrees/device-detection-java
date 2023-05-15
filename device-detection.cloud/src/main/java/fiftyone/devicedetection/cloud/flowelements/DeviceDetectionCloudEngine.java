@@ -51,6 +51,7 @@ import org.json.JSONArray;
 /**
  * Engine that takes the JSON response from the {@link CloudRequestEngine} and
  * uses it populate a {@link DeviceDataCloud} instance for easier consumption.
+ * @see <a href="https://github.com/51Degrees/specifications/blob/main/device-detection-specification/pipeline-elements/device-detection-cloud.md">Specification</a>
  */
 public class DeviceDetectionCloudEngine
     extends CloudAspectEngineBase<DeviceDataCloud> {

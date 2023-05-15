@@ -40,6 +40,7 @@ import java.util.List;
 /**
  * Hash on-premise implementation of the {@link FiftyOneAspectPropertyMetaData}
  * interface.
+ * @see <a href="https://github.com/51Degrees/specifications/blob/main/data-model-specification/README.md#property">Specification</a>
  */
 public class PropertyMetaDataHash implements FiftyOneAspectPropertyMetaData {
 

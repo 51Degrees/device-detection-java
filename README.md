@@ -6,7 +6,7 @@
 
 ## Introduction
 
-This repository contains the device detection engines for the Java implementation of the Pipeline API.
+This repository contains Java implementation of the device detection [specification](https://github.com/51Degrees/specifications/blob/main/device-detection-specification/README.md).
 
 ## Dependencies
 

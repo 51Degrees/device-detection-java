@@ -425,11 +425,11 @@ public class DeviceDetectionOnPremisePipelineBuilder
         }
         // Configure update polling interval.
         if(updatePollingInterval != null) {
-            builder.setUpdatePollingInterval(updatePollingInterval);
+            builder.setUpdatePollingIntervalMillis(updatePollingInterval);
         }
         // Configure update polling interval randomisation.
         if(updateRandomisationMax != null) {
-            builder.setUpdateRandomisationMax(updateRandomisationMax);
+            builder.setUpdateRandomisationMaxMillis(updateRandomisationMax);
         }
         // Configure data update license key.
         if (dataUpdateLicenseKey != null) {

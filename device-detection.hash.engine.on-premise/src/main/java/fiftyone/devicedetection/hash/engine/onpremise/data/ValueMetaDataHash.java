@@ -31,6 +31,7 @@ import java.io.IOException;
 
 /**
  * Hash on-premise implementation of the {@link ValueMetaData} interface.
+ * @see <a href="https://github.com/51Degrees/specifications/blob/main/data-model-specification/README.md#value">Specification</a>
  */
 public class ValueMetaDataHash implements ValueMetaData {
 
