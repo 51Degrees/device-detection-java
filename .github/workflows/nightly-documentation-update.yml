@@ -1,4 +1,4 @@
-name: Nightly PR to Main
+name: Nightly Documentation Update
 
 on:
   workflow_dispatch:
@@ -8,10 +8,10 @@ on:
 
 jobs:
   # Run the common workflow on each pull request
-  Nightly_PR_to_Main:
-    uses: 51Degrees/common-ci/.github/workflows/nightly-prs-to-main.yml@main
+  Nightly_Documentation_Update:
+    uses: 51Degrees/common-ci/.github/workflows/nightly-documentation-update.yml@main
     with:
       repo-name: ${{ github.event.repository.name }}
     secrets: 
       token: ${{ secrets.ACCESS_TOKEN }}
-      asset-keys: '{ "DeviceDetection": "${{ secrets.DEVICE_DETECTION_KEY }}" , "TestResourceKey": "${{ secrets.SUPER_RESOURCE_KEY}}" }'
+    

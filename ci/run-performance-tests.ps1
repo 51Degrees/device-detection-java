@@ -6,7 +6,7 @@ param(
 )
 
 # Define the name of the project repository and path
-$RepoName = "de-detection-java-test"
+$RepoName = "device-detection-java"
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 
 # Define the directory of the examples
@@ -19,17 +19,11 @@ try{
 
         Write-Output "Cloning '$ExamplesRepoName'"
         ./steps/clone-repo.ps1 -RepoName "device-detection-java-examples"
-        
+
         Write-Output "Moving TAC file for examples"
         $TacFile = [IO.Path]::Combine($RepoPath, "TAC-HashV41.hash") 
         Move-Item $TacFile device-detection-java-examples/device-detection-data/TAC-HashV41.hash
         
-        Write-Output "Download Evidence file"
-        curl -o "device-detection-java-examples/device-detection-data/20000 Evidence Records.yml" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/main/20000%20Evidence%20Records.yml"
-        
-        Write-Output "Download User Agents file"
-        curl -o "device-detection-java-examples/device-detection-data/20000 User Agents.csv" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/main/20000%20User%20Agents.csv"
-
     }
 }
 catch {
@@ -61,8 +55,8 @@ try {
     Where-Object { Test-Path "$($_.FullName)\pom.xml" } | 
     ForEach-Object { 
         $targetDir = "$($_.FullName)\target\surefire-reports"
-        $destDir = "..\de-detection-java-test\test-results\performance"
-        $destDirSummary = "..\de-detection-java-test\test-results\performance-summary"
+        $destDir = "..\device-detection-java\test-results\performance"
+        $destDirSummary = "..\device-detection-java\test-results\performance-summary"
 
         if(!(Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir }
         if(Test-Path $targetDir) {

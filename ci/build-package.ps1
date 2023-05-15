@@ -18,7 +18,7 @@ param(
 )
 
 # Name of this repository
-$RepoName = "de-detection-java-test"
+$RepoName = "device-detection-java"
 
 # Path to this repository
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
@@ -39,7 +39,7 @@ foreach($file in $Files){
     Copy-Item -Path $file -Destination "$BinariesPath/$($file.Name)"
 }
 
-./java/build-package.ps1 -RepoName "de-detection-java-test" -ProjectDir $ProjectDir -Name $Name -Version $Version -ExtraArgs "-DskipNativeBuild=true" -JavaGpgKeyPassphrase $JavaGpgKeyPassphrase -CodeSigningCert $CodeSigningCert -JavaPGP $JavaPGP -CodeSigningCertAlias $CodeSigningCertAlias -CodeSigningCertPassword $CodeSigningCertPassword -MavenSettings $MavenSettings 
+./java/build-package.ps1 -RepoName $RepoName -ProjectDir $ProjectDir -Name $Name -Version $Version -ExtraArgs "-DskipNativeBuild=true" -JavaGpgKeyPassphrase $JavaGpgKeyPassphrase -CodeSigningCert $CodeSigningCert -JavaPGP $JavaPGP -CodeSigningCertAlias $CodeSigningCertAlias -CodeSigningCertPassword $CodeSigningCertPassword -MavenSettings $MavenSettings 
 
 
 exit $LASTEXITCODE

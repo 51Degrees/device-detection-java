@@ -3,7 +3,7 @@ param (
     [string]$VariableName
 )
 
-./java/get-next-package-version.ps1 -RepoName "de-detection-java-test" -VariableName $VariableName
+./java/get-next-package-version.ps1 -RepoName "device-detection-java" -VariableName $VariableName
 
 
 exit $LASTEXITCODE
