@@ -17,7 +17,7 @@ $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 $BinariesPath = "$RepoPath/device-detection.hash.engine.on-premise/target/classes/"
 
 # Path to where the dll files are downloaded for all the platfoms
-$PackageFilesPath = "$RepoPath/package-files/"
+$PackageFilesPath = "package-files/"
 
 # Create a directory for binary files from which they will be uploaded
 # as artifacts.
