@@ -1,13 +1,16 @@
 
 param(
-    [string]$ProjectDir = ".",
-    [string]$Name,
-    [string]$Version,
     [Parameter(Mandatory=$true)]
     [string]$RepoName,
+    [string]$ProjectDir = ".",
+    [string]$Name,
     [Parameter(Mandatory=$true)]
-    [Hashtable]$Keys
+    [Hashtable]$Options
 )
+
+# Retrieve the values from the Options parameter
+$Keys = $Options['Keys']
+$Version = $Options['Version']
 
 # Path to this repository
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
