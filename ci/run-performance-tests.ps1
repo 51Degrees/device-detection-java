@@ -2,11 +2,11 @@
 param(
     [string]$ProjectDir = ".",
     [string]$Version = "0.0.0",
-    [string]$Name
+    [string]$Name,
+    [Parameter(Mandatory=$true)]
+    [string]$RepoName
 )
 
-# Define the name of the project repository and path
-$RepoName = "de-detection-java-test"
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 
 # Define the directory of the examples
@@ -55,8 +55,8 @@ try {
     Where-Object { Test-Path "$($_.FullName)\pom.xml" } | 
     ForEach-Object { 
         $targetDir = "$($_.FullName)\target\surefire-reports"
-        $destDir = "..\de-detection-java-test\test-results\performance"
-        $destDirSummary = "..\de-detection-java-test\test-results\performance-summary"
+        $destDir = "..\$RepoName\test-results\performance"
+        $destDirSummary = "..\$RepoName\test-results\performance-summary"
 
         if(!(Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir }
         if(Test-Path $targetDir) {
