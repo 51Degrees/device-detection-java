@@ -9,4 +9,3 @@ param(
 ./java/run-update-dependencies.ps1 -RepoName $RepoName -ProjectDir $ProjectDir -Name $Name
 
 exit $LASTEXITCODE
-
