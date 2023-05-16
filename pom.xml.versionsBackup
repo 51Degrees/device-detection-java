@@ -35,8 +35,8 @@
         <pipeline.version>4.4.12</pipeline.version>
 
         <junit.version>4.13.2</junit.version>
-        <slf4j-api.version>1.7.36</slf4j-api.version>
-        <logback-classic.version>1.2.12</logback-classic.version>
+        <slf4j-api.version>1.7.33</slf4j-api.version>
+        <logback-classic.version>1.2.10</logback-classic.version>
         <mockito-core.version>4.3.1</mockito-core.version>
         <org.json.version>20211205</org.json.version>
 
@@ -45,11 +45,11 @@
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
-        <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.4.0</maven-javadoc-plugin.version>
         <maven-jarsigner-plugin.version>3.0.0</maven-jarsigner-plugin.version>
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-project-info-reports-plugin.version>2.6</maven-project-info-reports-plugin.version>
-        <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
+        <maven-site-plugin.version>3.7</maven-site-plugin.version>
         <dependency-check-maven.version>6.5.3</dependency-check-maven.version>
 
         <publishrepository.id>ossrh</publishrepository.id>
