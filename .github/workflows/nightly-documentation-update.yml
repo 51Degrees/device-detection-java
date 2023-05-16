@@ -6,6 +6,7 @@ on:
 #     # * is a special character in YAML so quote this string
 #     - cron:  '0 1 * * *'
 
+
 jobs:
   # Run the common workflow on each pull request
   Nightly_Documentation_Update:

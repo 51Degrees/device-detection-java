@@ -5,7 +5,7 @@
     <parent>
         <artifactId>pipeline.device-detection</artifactId>
         <groupId>com.51degrees</groupId>
-        <version>4.4.20</version>
+        <version>4.4.21-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -129,6 +129,7 @@
                     <execution>
                         <phase>generate-sources</phase>
                         <configuration>
+                            <skip>${skipNativeBuild}</skip>
                             <executable>
                                 ${project.basedir}/src/main/cxx/PreBuild${script.extension}
                             </executable>

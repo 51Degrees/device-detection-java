@@ -39,6 +39,8 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public class FileUtils {
     public static final String ENTERPRISE_HASH_DATA_FILE_NAME = "Enterprise-HashV41.hash";
+
+    public static final String TAC_HASH_DATA_FILE_NAME = "TAC-HashV41.hash";
     public static final String LITE_HASH_DATA_FILE_NAME = "51Degrees-LiteV4.1.hash";
     private static  Optional<File> HASH_DATA_FILE;
     public static final String UA_FILE_NAME = "20000 User Agents.csv";
@@ -66,16 +68,22 @@ public class FileUtils {
                 return HASH_DATA_FILE.orElse(null);
             }
             // following throws exception if not found
-            HASH_DATA_FILE = Optional.of(getFilePath(ENTERPRISE_HASH_DATA_FILE_NAME));
+            HASH_DATA_FILE = Optional.of(getFilePath(TAC_HASH_DATA_FILE_NAME));
             return HASH_DATA_FILE.get();
         } catch (Exception e) {
             try {
                 // following throws exception if not found
-                HASH_DATA_FILE = Optional.of(getFilePath(LITE_HASH_DATA_FILE_NAME));
+                HASH_DATA_FILE = Optional.of(getFilePath(ENTERPRISE_HASH_DATA_FILE_NAME));
                 return HASH_DATA_FILE.get();
             } catch (Exception ex) {
-                HASH_DATA_FILE = Optional.empty();
-                return null;
+                try {
+                    // following throws exception if not found
+                    HASH_DATA_FILE = Optional.of(getFilePath(LITE_HASH_DATA_FILE_NAME));
+                    return HASH_DATA_FILE.get();
+                } catch (Exception exc) {
+                    HASH_DATA_FILE = Optional.empty();
+                    return null;
+                }
             }
         }
     }

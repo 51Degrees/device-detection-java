@@ -1,4 +1,0 @@
-variables:
-# jdk version used in package creation
-- name: jdkVersionDefault
-  value: '1.8'

@@ -5,7 +5,7 @@
 
     <groupId>com.51degrees</groupId>
     <artifactId>pipeline.device-detection</artifactId>
-    <version>4.4.20</version>
+    <version>4.4.21-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>51Degrees :: Pipeline :: Device Detection</name>
@@ -17,7 +17,6 @@
         <module>device-detection.hash.engine.on-premise</module>
         <module>device-detection.cloud</module>
         <module>device-detection</module>
-        <module>device-detection.examples</module>
     </modules>
 
     <developers>
@@ -42,6 +41,8 @@
 
         <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
         <exec-maven-plugin.version>1.6.0</exec-maven-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+        <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
@@ -52,8 +53,11 @@
         <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
         <dependency-check-maven.version>6.5.3</dependency-check-maven.version>
 
+        <ossrh.baseurl>https://oss.sonatype.org</ossrh.baseurl>
+        <snapshot-repository.id>ossrh</snapshot-repository.id>
+        <snapshot-repository.url>${ossrh.baseurl}/content/repositories/snapshots/</snapshot-repository.url>
         <publishrepository.id>ossrh</publishrepository.id>
-        <publishrepository.url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</publishrepository.url>
+        <publishrepository.url>${ossrh.baseurl}/service/local/staging/deploy/maven2/</publishrepository.url>
         <fetchrepository.id>central</fetchrepository.id>
         <fetchrepository.url>https://repo1.maven.org/maven2</fetchrepository.url>
 
@@ -126,10 +130,40 @@
                         </compilerArgs>
                     </configuration>
                 </plugin>
+                <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>${maven-install-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>default-install</id>
+                        <configuration>
+                            <skip>${deployOnly}</skip>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>default-test</id>
+                        <configuration>
+                            <skip>${deployOnly}</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             </plugins>
         </pluginManagement>
 
         <plugins>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${nexus-staging-maven-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>${publishrepository.id}</serverId>
+                    <nexusUrl>${ossrh.baseurl}</nexusUrl>
+                    <altStagingDirectory>${user.home}/.m2</altStagingDirectory>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -285,8 +319,8 @@
             <url>${publishrepository.url}</url>
         </repository>
         <snapshotRepository>
-            <id>${snapshotrepository.id}</id>
-            <url>${snapshotrepository.url}</url>
+            <id>${snapshot-repository.id}</id>
+            <url>${snapshot-repository.url}</url>
         </snapshotRepository>
         <site>
             <id>local</id>
@@ -301,36 +335,21 @@
             <releases>
                 <enabled>true</enabled>
             </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>${snapshot-repository.id}</id>
+            <url>${snapshot-repository.url}</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
     </repositories>
-
-    <profiles>
-        <profile>
-            <id>snapshot</id>
-            <activation>
-                <property>
-                    <name>SNAPSHOT</name>
-                </property>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>${snapshotrepository.id}</id>
-                    <url>${snapshotrepository.url}</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                        <updatePolicy>always</updatePolicy>
-                    </snapshots>
-                </repository>
-            </repositories>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>${snapshotrepository.id}</id>
-                    <url>${snapshotrepository.url}</url>
-                </snapshotRepository>
-            </distributionManagement>
-        </profile>
-    </profiles>
-
 
     <licenses>
         <license>
