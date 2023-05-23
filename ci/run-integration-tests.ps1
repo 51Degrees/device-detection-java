@@ -16,7 +16,7 @@ $ExamplesRepoName = "device-detection-java-examples"
 
 try {
     Write-Output "Cloning '$ExamplesRepoName'"
-    ./steps/clone-repo.ps1 -RepoName "device-detection-java-examples"
+    ./steps/clone-repo.ps1 -RepoName "device-detection-java-examples" -OrgName "51Degrees"
     
     Write-Output "Moving TAC file for examples"
     $TacFile = [IO.Path]::Combine($RepoPath, "TAC-HashV41.hash") 
