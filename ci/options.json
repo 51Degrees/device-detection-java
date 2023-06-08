@@ -3,7 +3,7 @@
     "Image": "ubuntu-latest",
     "Name": "Ubuntu_Java_17",
     "JavaSDKEnvVar": "JAVA_HOME_17_X64",
-    "RunPerformance": true,
+    "RunPerformance": true
   },
   {
     "Image": "ubuntu-latest",
