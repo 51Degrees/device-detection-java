@@ -48,12 +48,12 @@ public class TestsBase {
 
     protected void testInitialize() throws Exception {
         String resourceKey = KeyUtils.getNamedKey("TestResourceKey");
-        if (resourceKey == null) {
+        if (resourceKey == null || resourceKey == "") {
             ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
             Logger logger = loggerFactory.getLogger(getClass().getName());
             logger.warn("No Cloud resource key was provided. Test will be skipped.");
         }
-        assumeNotNull(resourceKey);
+        assumeTrue(resourceKey != null && resourceKey != "");
         wrapper = new WrapperCloud(resourceKey);
         userAgents = new UserAgentGenerator(
             FileFinder.getFilePath(UA_FILE_NAME));
