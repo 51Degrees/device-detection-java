@@ -53,6 +53,7 @@ public class TestsBase {
             Logger logger = loggerFactory.getLogger(getClass().getName());
             logger.warn("No Cloud resource key was provided. Test will be skipped.");
         }
+        System.out.println("THIS RESOURCE KEY: " + resourceKey);
         assumeTrue(resourceKey != null && resourceKey != "");
         wrapper = new WrapperCloud(resourceKey);
         userAgents = new UserAgentGenerator(
