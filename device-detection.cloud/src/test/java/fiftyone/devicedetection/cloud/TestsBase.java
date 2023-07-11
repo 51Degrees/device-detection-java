@@ -28,6 +28,7 @@ import fiftyone.pipeline.util.FileFinder;
 
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
 import static org.junit.Assume.assumeNotNull;
