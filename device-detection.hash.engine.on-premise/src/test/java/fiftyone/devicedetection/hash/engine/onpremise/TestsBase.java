@@ -53,7 +53,7 @@ public class TestsBase {
         File dataFile = FileUtils.getHashFile();
         if (dataFile == null || dataFile.exists() == false) {
             ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-            ILogger logger = loggerFactory.getLogger(getClass().getName());
+            Logger logger = loggerFactory.getLogger(getClass().getName());
             logger.warn("No Hash data file was available. Test will be skipped.");
         }
         assumeTrue(dataFile != null && dataFile.exists());
