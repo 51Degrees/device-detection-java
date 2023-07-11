@@ -8,7 +8,7 @@ param (
 
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 
-if ($DeviceDetection -ne $Null) {
+if ($DeviceDetection -ne "") {
     ./steps/fetch-hash-assets.ps1 -RepoName $RepoName -LicenseKey $DeviceDetection -Url $DeviceDetectionUrl
 }
 Write-Output "Download Lite file"
