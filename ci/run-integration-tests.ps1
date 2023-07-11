@@ -11,18 +11,28 @@ param(
 
     
 )
-
+function Get-CurrentFileName {
+    $MyInvocation.ScriptName
+}
+function Get-CurrentLineNumber {
+    $MyInvocation.ScriptLineNumber
+}
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 $ExamplesRepoName = "$RepoName-examples"
 
 try {
     Write-Output "Cloning '$ExamplesRepoName'"
     ./steps/clone-repo.ps1 -RepoName "device-detection-java-examples" -OrgName $OrgName
+   
+    if ($Keys.DeviceDetection -ne "") {
+        Write-Output "Moving TAC file for examples"
+        $TacFile = [IO.Path]::Combine($RepoPath, "TAC-HashV41.hash") 
+        Copy-Item $TacFile device-detection-java-examples/device-detection-data/TAC-HashV41.hash
+    }
+    else {
+        Write-Output "::warn file=$(Get-CurrentFileName),line=$(Get-CurrentLineNumber),endLine=$(Get-CurrentLineNumber),title=No On-Premise Data File::No on-premise license was provided, so some tests will not run."
+    }
     
-    Write-Output "Moving TAC file for examples"
-    $TacFile = [IO.Path]::Combine($RepoPath, "TAC-HashV41.hash") 
-    Copy-Item $TacFile device-detection-java-examples/device-detection-data/TAC-HashV41.hash
-
     Write-Output "Moving evidence files for examples"
     $UAFile = [IO.Path]::Combine($RepoPath, "20000 User Agents.csv") 
     $EvidenceFile = [IO.Path]::Combine($RepoPath, "20000 Evidence Records.yml")
