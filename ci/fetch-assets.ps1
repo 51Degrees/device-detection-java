@@ -8,7 +8,7 @@ param (
 
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 
-if ($DeviceDetection != $Null) {
+if ($DeviceDetection -ne $Null) {
     ./steps/fetch-hash-assets.ps1 -RepoName $RepoName -LicenseKey $DeviceDetection -Url $DeviceDetectionUrl
 }
 else {
