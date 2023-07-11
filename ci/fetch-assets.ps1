@@ -2,13 +2,13 @@
 param (
     [Parameter(Mandatory=$true)]
     [string]$RepoName,
-    [string]$DeviceDetection = $Null,
-    [string]$DeviceDetectionUrl = $Null
+    [string]$DeviceDetection = "",
+    [string]$DeviceDetectionUrl = ""
 )
 
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 
-if ($DeviceDetection -ne $Null) {
+if ($DeviceDetection -ne "") {
     ./steps/fetch-hash-assets.ps1 -RepoName $RepoName -LicenseKey $DeviceDetection -Url $DeviceDetectionUrl
 }
 else {
