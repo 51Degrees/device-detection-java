@@ -2,7 +2,7 @@
 param (
     [Parameter(Mandatory=$true)]
     [string]$RepoName,
-    [string]$DeviceDetection,
+    [string]$DeviceDetection = $Null,
     [string]$DeviceDetectionUrl
 )
 
