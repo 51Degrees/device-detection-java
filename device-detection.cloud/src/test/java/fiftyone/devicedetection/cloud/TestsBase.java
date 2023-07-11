@@ -49,7 +49,7 @@ public class TestsBase {
         String resourceKey = KeyUtils.getNamedKey("TestResourceKey");
         if (resourceKey == null) {
             ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-            ILogger logger = loggerFactory.getLogger(getClass().getName());
+            Logger logger = loggerFactory.getLogger(getClass().getName());
             logger.warn("No Cloud resource key was provided. Test will be skipped.");
         }
         assumeNotNull(resourceKey);
