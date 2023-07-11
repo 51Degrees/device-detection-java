@@ -3,7 +3,7 @@ param (
     [Parameter(Mandatory=$true)]
     [string]$RepoName,
     [string]$DeviceDetection = $Null,
-    [string]$DeviceDetectionUrl
+    [string]$DeviceDetectionUrl = $Null
 )
 
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
