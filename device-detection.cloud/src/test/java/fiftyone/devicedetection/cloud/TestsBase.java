@@ -22,10 +22,15 @@
 
 package fiftyone.devicedetection.cloud;
 
+import fiftyone.devicedetection.shared.testhelpers.KeyUtils;
 import fiftyone.devicedetection.shared.testhelpers.UserAgentGenerator;
 import fiftyone.pipeline.util.FileFinder;
 
+import org.slf4j.ILoggerFactory;
+import org.slf4j.LoggerFactory;
+
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
+import static org.junit.Assume.assumeNotNull;
 
 public class TestsBase {
 
@@ -41,7 +46,14 @@ public class TestsBase {
     }
 
     protected void testInitialize() throws Exception {
-        wrapper = new WrapperCloud();
+        String resourceKey = KeyUtils.getNamedKey("TestResourceKey");
+        if (resourceKey == null) {
+            ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
+            ILogger logger = loggerFactory.getLogger(getClass().getName());
+            logger.warn("No Cloud resource key was provided. Test will be skipped.");
+        }
+        assumeNotNull(resourceKey);
+        wrapper = new WrapperCloud(resourceKey);
         userAgents = new UserAgentGenerator(
             FileFinder.getFilePath(UA_FILE_NAME));
     }

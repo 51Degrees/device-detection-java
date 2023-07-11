@@ -26,8 +26,15 @@ import fiftyone.devicedetection.shared.testhelpers.UserAgentGenerator;
 import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.engines.Constants;
 
+import java.io.File;
+
+import org.slf4j.ILoggerFactory;
+import org.slf4j.LoggerFactory;
+
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
 import static fiftyone.pipeline.util.FileFinder.getFilePath;
+import static org.junit.Assume.assumeNotNull;
+import static org.junit.Assume.assumeTrue;
 
 public class TestsBase {
 
@@ -43,8 +50,16 @@ public class TestsBase {
     }
 
     protected void testInitialize(Constants.PerformanceProfiles profile) throws Exception {
+        File dataFile = FileUtils.getHashFile();
+        if (dataFile == null || dataFile.exists() == false) {
+            ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
+            ILogger logger = loggerFactory.getLogger(getClass().getName());
+            logger.warn("No Hash data file was available. Test will be skipped.");
+        }
+        assumeTrue(dataFile != null && dataFile.exists());
+
         wrapper = new WrapperHash(
-            FileUtils.getHashFile(),
+            dataFile,
             profile);
         userAgents = new UserAgentGenerator(
             getFilePath(UA_FILE_NAME));

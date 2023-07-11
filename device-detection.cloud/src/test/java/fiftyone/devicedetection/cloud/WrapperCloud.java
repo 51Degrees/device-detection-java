@@ -44,10 +44,10 @@ public class WrapperCloud implements Closeable {
     public CloudRequestEngine cloudRequestEngine;
     public DeviceDetectionCloudEngine deviceDetectionCloudEngine;
 
-    public WrapperCloud() throws Exception {
+    public WrapperCloud(String resourceKey) throws Exception {
         cloudRequestEngine = 
                 new CloudRequestEngineBuilder(loggerFactory)
-                .setResourceKey(KeyUtils.getNamedKey("TestResourceKey"))
+                .setResourceKey(resourceKey)
                 .build();
         deviceDetectionCloudEngine = new DeviceDetectionCloudEngineBuilder(loggerFactory)
                 .build();
