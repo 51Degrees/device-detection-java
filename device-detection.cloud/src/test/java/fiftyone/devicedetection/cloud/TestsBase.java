@@ -26,10 +26,6 @@ import fiftyone.devicedetection.shared.testhelpers.KeyUtils;
 import fiftyone.devicedetection.shared.testhelpers.UserAgentGenerator;
 import fiftyone.pipeline.util.FileFinder;
 
-import org.slf4j.ILoggerFactory;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
 import static org.junit.Assume.assumeTrue;
 
@@ -48,13 +44,9 @@ public class TestsBase {
 
     protected void testInitialize() throws Exception {
         String resourceKey = KeyUtils.getNamedKey("TestResourceKey");
-        if (resourceKey == null || resourceKey == "") {
-            ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-            Logger logger = loggerFactory.getLogger(getClass().getName());
-            logger.warn("No Cloud resource key was provided. Test will be skipped.");
-        }
-        System.out.println("THIS RESOURCE KEY: " + resourceKey);
-        assumeTrue(resourceKey != null && resourceKey != "");
+        assumeTrue(
+            "No Cloud resource key was provided. Test will be skipped.",
+            resourceKey != null && resourceKey.length() > 0);
         wrapper = new WrapperCloud(resourceKey);
         userAgents = new UserAgentGenerator(
             FileFinder.getFilePath(UA_FILE_NAME));
