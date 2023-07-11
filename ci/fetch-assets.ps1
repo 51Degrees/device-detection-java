@@ -8,8 +8,9 @@ param (
 
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 
-./steps/fetch-hash-assets.ps1 -RepoName $RepoName -LicenseKey $DeviceDetection -Url $DeviceDetectionUrl
-
+if ($DeviceDetection -ne $Null) {
+    ./steps/fetch-hash-assets.ps1 -RepoName $RepoName -LicenseKey $DeviceDetection -Url $DeviceDetectionUrl
+}
 Write-Output "Download Lite file"
 curl -L -o "$RepoPath/51Degrees-LiteV4.1.hash" "https://github.com/51Degrees/device-detection-data/raw/main/51Degrees-LiteV4.1.hash"
 
