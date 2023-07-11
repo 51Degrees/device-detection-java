@@ -28,10 +28,6 @@ import fiftyone.pipeline.engines.Constants;
 
 import java.io.File;
 
-import org.slf4j.ILoggerFactory;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Logger;
-
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
 import static fiftyone.pipeline.util.FileFinder.getFilePath;
 import static org.junit.Assume.assumeNotNull;
@@ -52,12 +48,9 @@ public class TestsBase {
 
     protected void testInitialize(Constants.PerformanceProfiles profile) throws Exception {
         File dataFile = FileUtils.getHashFile();
-        if (dataFile == null || dataFile.exists() == false) {
-            ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
-            Logger logger = loggerFactory.getLogger(getClass().getName());
-            logger.warn("No Hash data file was available. Test will be skipped.");
-        }
-        assumeTrue(dataFile != null && dataFile.exists());
+        assumeTrue(
+            "No Hash data file was available. Test will be skipped.",
+            dataFile != null && dataFile.exists());
 
         wrapper = new WrapperHash(
             dataFile,
