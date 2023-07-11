@@ -5,6 +5,12 @@ param (
     [string]$DeviceDetection,
     [string]$DeviceDetectionUrl
 )
+function Get-CurrentFileName {
+    $MyInvocation.ScriptName
+}
+function Get-CurrentLineNumber {
+    $MyInvocation.ScriptLineNumber
+}
 
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 
@@ -12,6 +18,7 @@ if ($DeviceDetection -ne "") {
     ./steps/fetch-hash-assets.ps1 -RepoName $RepoName -LicenseKey $DeviceDetection -Url $DeviceDetectionUrl
 }
 else {
+    Write-Output "::warn file=$(Get-CurrentFileName),line=$(Get-CurrentLineNumber),endLine=$(Get-CurrentLineNumber),title=No On-Premise Data File::A device detection license was not provided. So Hash data file will not be downloaded."
     Write-Warning "A device detection license was not provided. So Hash data file will not be downloaded."
 }
 Write-Output "Download Lite file"
