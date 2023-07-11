@@ -30,6 +30,7 @@ import java.io.File;
 
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
 import static fiftyone.pipeline.util.FileFinder.getFilePath;
