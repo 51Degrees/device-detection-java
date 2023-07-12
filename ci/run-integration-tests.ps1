@@ -35,7 +35,7 @@ try {
     }
 
     if ($Keys.TestResourceKey -eq "") {
-        Write-Output "::warning file=$(Get-CurrentFileName),line=$(Get-CurrentLineNumber),endLine=$(Get-CurrentLineNumber),title=No resource key was provided, so cloud tests will not run."
+        Write-Output "::warning file=$(Get-CurrentFileName),line=$(Get-CurrentLineNumber),endLine=$(Get-CurrentLineNumber),title=No Resource Key::No resource key was provided, so cloud tests will not run."
     }
     
     Write-Output "Moving evidence files for examples"
