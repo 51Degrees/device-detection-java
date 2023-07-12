@@ -31,7 +31,7 @@ try {
     }
     else {
         Copy-Item $RepoPath/device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash device-detection-java-examples/device-detection-data/51Degrees-LiteV4.1.hash
-        Write-Output "::warn file=$(Get-CurrentFileName),line=$(Get-CurrentLineNumber),endLine=$(Get-CurrentLineNumber),title=No On-Premise Data File::No on-premise license was provided, so some tests will not run."
+        Write-Output "::warning file=$(Get-CurrentFileName),line=$(Get-CurrentLineNumber),endLine=$(Get-CurrentLineNumber),title=No On-Premise Data File::No on-premise license was provided, so some tests will not run."
     }
     
     Write-Output "Moving evidence files for examples"
