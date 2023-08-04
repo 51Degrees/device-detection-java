@@ -876,25 +876,25 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Integer> getMaxStandbyTime() { return getAs("maxstandbytime", AspectPropertyValue.class, Integer.class); }
 	/**
-	 * Indicates the dynamic contrast ratio of the device's screen. This property is applicable only for TVs.
+	 * Indicates the dynamic contrast ratio of the device's screen.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getDynamicContrastRatio() { return getAs("dynamiccontrastratio", AspectPropertyValue.class, String.class); }
 	/**
-	 * Indicates if the device supports Wireless Display Technology. This property is only applicable for TVs.
+	 * Indicates if the device supports Wireless Display Technology.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getSupportsWiDi() { return getAs("supportswidi", AspectPropertyValue.class, Boolean.class); }
 	/**
-	 * Indicates the annual energy consumption of the device per year in kWh. This property is applicable only for TVs.
+	 * Indicates the annual energy consumption of the device per year in kWh.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Integer> getEnergyConsumptionPerYear() { return getAs("energyconsumptionperyear", AspectPropertyValue.class, Integer.class); }
 	/**
-	 * Indicates if the device supports 24p; a video format that operates at 24 frames per second. This property is applicable only for TVs.
+	 * Indicates if the device supports 24p; a video format that operates at 24 frames per second.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -906,7 +906,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getSupportedIO() { return getAs("supportedi/o", AspectPropertyValue.class, List.class); }
 	/**
-	 * Indicates the number of frames per second the television can display in Hertz. This property is applicable only for TVs.
+	 * Indicates the number of frames per second the television can display in Hertz.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -918,13 +918,13 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<String> getScreenType() { return getAs("screentype", AspectPropertyValue.class, String.class); }
 	/**
-	 * Indicates the power consumption of the device while switched on. This property is applicable only for TVs.
+	 * Indicates the power consumption of the device while switched on.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Integer> getOnPowerConsumption() { return getAs("onpowerconsumption", AspectPropertyValue.class, Integer.class); }
 	/**
-	 * Indicates the contrast ratio of the device. This property is applicable only for TVs.
+	 * Indicates the contrast ratio of the device.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override

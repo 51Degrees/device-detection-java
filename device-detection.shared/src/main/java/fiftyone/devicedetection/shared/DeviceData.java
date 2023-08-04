@@ -154,7 +154,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Double> getCLDC();
 	/**
-	 * Indicates the contrast ratio of the device. This property is applicable only for TVs.
+	 * Indicates the contrast ratio of the device.
 	 */
 	AspectPropertyValue<String> getContrastRatio();
 	/**
@@ -294,11 +294,11 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<List<String>> getDurability();
 	/**
-	 * Indicates the dynamic contrast ratio of the device's screen. This property is applicable only for TVs.
+	 * Indicates the dynamic contrast ratio of the device's screen.
 	 */
 	AspectPropertyValue<String> getDynamicContrastRatio();
 	/**
-	 * Indicates the annual energy consumption of the device per year in kWh. This property is applicable only for TVs.
+	 * Indicates the annual energy consumption of the device per year in kWh.
 	 */
 	AspectPropertyValue<Integer> getEnergyConsumptionPerYear();
 	/**
@@ -702,7 +702,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<String> getOEM();
 	/**
-	 * Indicates the power consumption of the device while switched on. This property is applicable only for TVs.
+	 * Indicates the power consumption of the device while switched on.
 	 */
 	AspectPropertyValue<Integer> getOnPowerConsumption();
 	/**
@@ -790,7 +790,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getPrompts();
 	/**
-	 * Indicates the number of frames per second the television can display in Hertz. This property is applicable only for TVs.
+	 * Indicates the number of frames per second the television can display in Hertz.
 	 */
 	AspectPropertyValue<Integer> getRefreshRate();
 	/**
@@ -1026,7 +1026,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<List<String>> getSupportedSIMCardTypes();
 	/**
-	 * Indicates if the device supports 24p; a video format that operates at 24 frames per second. This property is applicable only for TVs.
+	 * Indicates if the device supports 24p; a video format that operates at 24 frames per second.
 	 */
 	AspectPropertyValue<Boolean> getSupports24p();
 	/**
@@ -1042,7 +1042,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getSupportsWebGL();
 	/**
-	 * Indicates if the device supports Wireless Display Technology. This property is only applicable for TVs.
+	 * Indicates if the device supports Wireless Display Technology.
 	 */
 	AspectPropertyValue<Boolean> getSupportsWiDi();
 	/**
