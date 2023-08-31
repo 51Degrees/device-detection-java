@@ -22,10 +22,12 @@
 
 package fiftyone.devicedetection.cloud;
 
+import fiftyone.devicedetection.shared.testhelpers.KeyUtils;
 import fiftyone.devicedetection.shared.testhelpers.UserAgentGenerator;
 import fiftyone.pipeline.util.FileFinder;
 
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
+import static org.junit.Assume.assumeTrue;
 
 public class TestsBase {
 
@@ -41,7 +43,11 @@ public class TestsBase {
     }
 
     protected void testInitialize() throws Exception {
-        wrapper = new WrapperCloud();
+        String resourceKey = KeyUtils.getNamedKey("TestResourceKey");
+        assumeTrue(
+            "No Cloud resource key was provided. Test will be skipped.",
+            resourceKey != null && resourceKey.length() > 0);
+        wrapper = new WrapperCloud(resourceKey);
         userAgents = new UserAgentGenerator(
             FileFinder.getFilePath(UA_FILE_NAME));
     }

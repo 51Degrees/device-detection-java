@@ -26,8 +26,12 @@ import fiftyone.devicedetection.shared.testhelpers.UserAgentGenerator;
 import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.engines.Constants;
 
+import java.io.File;
+
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.UA_FILE_NAME;
 import static fiftyone.pipeline.util.FileFinder.getFilePath;
+import static org.junit.Assume.assumeNotNull;
+import static org.junit.Assume.assumeTrue;
 
 public class TestsBase {
 
@@ -43,8 +47,13 @@ public class TestsBase {
     }
 
     protected void testInitialize(Constants.PerformanceProfiles profile) throws Exception {
+        File dataFile = FileUtils.getHashFile();
+        assumeTrue(
+            "No Hash data file was available. Test will be skipped.",
+            dataFile != null && dataFile.exists());
+
         wrapper = new WrapperHash(
-            FileUtils.getHashFile(),
+            dataFile,
             profile);
         userAgents = new UserAgentGenerator(
             getFilePath(UA_FILE_NAME));
