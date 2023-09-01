@@ -4,8 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     # * is a special character in YAML so quote this string
-    - cron:  '0 1 * * *'
-
+    - cron:  '30 3 * * *'
 
 jobs:
   # Run the common workflow on each pull request
@@ -14,5 +13,5 @@ jobs:
     with:
       repo-name: ${{ github.event.repository.name }}
       separate-examples: true
-    secrets: 
+    secrets:
       token: ${{ secrets.ACCESS_TOKEN }}
