@@ -1,0 +1,13 @@
+var classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig =
+[
+    [ "ConfigDeviceDetectionSwig", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#a07d129fc1bb732d1decc9f9a0b42a4f1", null ],
+    [ "delete", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#acbb5e5a26dc35923acfd1c9be1eea5a6", null ],
+    [ "finalize", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#ab4c304480fa68c30c53ef67f9a11988d", null ],
+    [ "getAllowUnmatched", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#a1efd78813acfd8eb237a6fead8fced10", null ],
+    [ "getCPtr", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#afd4bb03420ece6d38ea8eb71e7a1bb78", null ],
+    [ "getMaxMatchedUserAgentLength", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#a2cac0f2e14e436a7fd217718fb79b179", null ],
+    [ "getUpdateMatchedUserAgent", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#ac39b0c9953fcfac073d6a0e963b9c127", null ],
+    [ "setAllowUnmatched", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#a0276ecb69d4f268a614878ec6db0a01d", null ],
+    [ "setMaxMatchedUserAgentLength", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#a331177868fec8e6a376a685dfda8460e", null ],
+    [ "setUpdateMatchedUserAgent", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#a888297e242877adca23180403beda2a0", null ]
+];

@@ -1,0 +1,7 @@
+var classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_brows_cap_1_1_brows_cap_solution =
+[
+    [ "close", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_brows_cap_1_1_brows_cap_solution.html#a83fc917d74a8b72de38aeb26f8f410c6", null ],
+    [ "detect", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_brows_cap_1_1_brows_cap_solution.html#ad704661d5d178ab45d86c670a09ee71a", null ],
+    [ "getVendorId", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_brows_cap_1_1_brows_cap_solution.html#ad4334ecebb3267aa34d72ccdeed32fc1", null ],
+    [ "initialise", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_brows_cap_1_1_brows_cap_solution.html#a86129e7ea3d4fd039bcc02d1130251a6", null ]
+];

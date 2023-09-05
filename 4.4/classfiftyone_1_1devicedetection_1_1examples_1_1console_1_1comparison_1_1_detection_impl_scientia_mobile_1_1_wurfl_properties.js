@@ -1,0 +1,5 @@
+var classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_scientia_mobile_1_1_wurfl_properties =
+[
+    [ "WurflProperties", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_scientia_mobile_1_1_wurfl_properties.html#a1aff63ce8bbbf002fb4a146e8230a25a", null ],
+    [ "getVendorId", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_scientia_mobile_1_1_wurfl_properties.html#ac4a2e0bdf443b819f5db6f6da4866076", null ]
+];

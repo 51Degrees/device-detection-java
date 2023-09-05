@@ -1,0 +1,4 @@
+<map id="fiftyone.devicedetection.cloud.flowelements.DeviceDetectionCloudEngine" name="fiftyone.devicedetection.cloud.flowelements.DeviceDetectionCloudEngine">
+<area shape="rect" id="node1" title="Engine that takes the JSON response from the CloudRequestEngine and uses it populate a DeviceDataClou..." alt="" coords="295,20,609,61"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,5,247,76"/>
+</map>

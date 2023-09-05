@@ -1,0 +1,5 @@
+<map id="fiftyone.devicedetection.cloud.data.MultiDeviceDataCloud" name="fiftyone.devicedetection.cloud.data.MultiDeviceDataCloud">
+<area shape="rect" id="node1" title="Encapsulates a list of DeviceData instances which can be returned by the 51Degrees cloud service when..." alt="" coords="37,109,292,151"/>
+<area shape="rect" id="node2" title=" " alt="" coords="5,20,135,47"/>
+<area shape="rect" id="node3" title=" " alt="" coords="159,5,359,61"/>
+</map>

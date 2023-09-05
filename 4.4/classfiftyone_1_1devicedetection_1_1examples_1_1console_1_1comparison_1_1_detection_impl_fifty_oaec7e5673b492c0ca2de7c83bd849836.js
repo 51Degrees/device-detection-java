@@ -1,0 +1,7 @@
+var classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_fifty_oaec7e5673b492c0ca2de7c83bd849836 =
+[
+    [ "close", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_fifty_oaec7e5673b492c0ca2de7c83bd849836.html#a99935a9711c4ccc9f3601870b6d22737", null ],
+    [ "detect", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_fifty_oaec7e5673b492c0ca2de7c83bd849836.html#a90529f36c9280158462fca5050f16af2", null ],
+    [ "getVendorId", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_fifty_oaec7e5673b492c0ca2de7c83bd849836.html#a1dbcf9683492819b85b2ff943271bfb1", null ],
+    [ "initialise", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_fifty_oaec7e5673b492c0ca2de7c83bd849836.html#af9430ef1d887579f69351e5824127fb3", null ]
+];

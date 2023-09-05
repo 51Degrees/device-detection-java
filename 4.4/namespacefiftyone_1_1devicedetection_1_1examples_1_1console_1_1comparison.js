@@ -1,0 +1,16 @@
+var namespacefiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison =
+[
+    [ "Comparer", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_comparer.html", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_comparer" ],
+    [ "ComparerTest", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_comparer_test.html", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_comparer_test" ],
+    [ "Detection", "interfacefiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection.html", [
+      [ "BenchmarkResult", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_1_1_benchmark_result.html", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_1_1_benchmark_result" ],
+      [ "Properties", "interfacefiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_1_1_properties.html", "interfacefiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_1_1_properties" ],
+      [ "Request", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_1_1_request.html", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_1_1_request" ],
+      [ "Solution", "interfacefiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_1_1_solution.html", "interfacefiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_1_1_solution" ]
+    ] ],
+    [ "DetectionImplBrowsCap", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_brows_cap.html", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_brows_cap" ],
+    [ "DetectionImplDeviceAtlas", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_device_atlas.html", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_device_atlas" ],
+    [ "DetectionImplFiftyOneDegrees", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_fifty_one_degrees.html", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_fifty_one_degrees" ],
+    [ "DetectionImplScientiaMobile", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_scientia_mobile.html", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_scientia_mobile" ],
+    [ "Reporting", "interfacefiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_reporting.html", "interfacefiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_reporting" ]
+];

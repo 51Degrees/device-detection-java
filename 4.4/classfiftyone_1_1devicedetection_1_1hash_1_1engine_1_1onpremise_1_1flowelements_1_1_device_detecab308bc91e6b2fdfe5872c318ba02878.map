@@ -1,0 +1,5 @@
+<map id="fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder" name="fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngineBuilder">
+<area shape="rect" id="node1" title="Builder for the DeviceDetectionHashEngine." alt="" coords="663,27,1093,69"/>
+<area shape="rect" id="node2" href="$classfiftyone_1_1devicedetection_1_1shared_1_1flowelements_1_1_on_premise_device_detection_engine_builder_base.html" title="Base builder class for 51Degrees on&#45;premise device detection engines." alt="" coords="315,5,615,91"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,5,267,91"/>
+</map>

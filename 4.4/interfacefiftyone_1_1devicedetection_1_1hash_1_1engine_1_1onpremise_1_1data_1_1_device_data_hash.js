@@ -1,0 +1,4 @@
+var interfacefiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1data_1_1_device_data_hash =
+[
+    [ "getValues", "interfacefiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1data_1_1_device_data_hash.html#ae4cf3de20407dfcc62f1d7c7ab8cf108", null ]
+];

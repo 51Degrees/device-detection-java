@@ -1,0 +1,12 @@
+var classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_required_properties_config_swig =
+[
+    [ "RequiredPropertiesConfigSwig", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_required_properties_config_swig.html#aed047a5ddadc62c7128849c4f1850c91", null ],
+    [ "RequiredPropertiesConfigSwig", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_required_properties_config_swig.html#a7c18be197cbafc592310ba9ca6c95a34", null ],
+    [ "RequiredPropertiesConfigSwig", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_required_properties_config_swig.html#a523bbee93c9a5f8a1a0d6469301388d5", null ],
+    [ "RequiredPropertiesConfigSwig", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_required_properties_config_swig.html#a4d5af322b5b7e839df96440e4cf4fd6f", null ],
+    [ "delete", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_required_properties_config_swig.html#a259307a235e961069793d8c5bbc8fa17", null ],
+    [ "finalize", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_required_properties_config_swig.html#a042d96a0705e3c97770f56ab11a24353", null ],
+    [ "getCPtr", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_required_properties_config_swig.html#a56420098bd251bfdf5c2a8633d73ee36", null ],
+    [ "getProperties", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_required_properties_config_swig.html#a9cecfbbef084738d9b11cb566de237ac", null ],
+    [ "swigCMemOwn", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_required_properties_config_swig.html#aef82a5ce806e9d925ec5829f16aee5ea", null ]
+];

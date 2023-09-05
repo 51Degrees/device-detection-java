@@ -1,0 +1,5 @@
+var classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_brows_cap_1_1_brows_cap_properties =
+[
+    [ "BrowsCapProperties", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_brows_cap_1_1_brows_cap_properties.html#acb8565f536c3d9f5c172f14b3bd95647", null ],
+    [ "getVendorId", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_brows_cap_1_1_brows_cap_properties.html#a89393c9cc1cc428c59983b7f979bca42", null ]
+];

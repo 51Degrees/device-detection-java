@@ -1,0 +1,4 @@
+var classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1_performance_benchmark_1_1_performance_configuration =
+[
+    [ "PerformanceConfiguration", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1_performance_benchmark_1_1_performance_configuration.html#ad9ad71bae8ce8fc0b8d5617c5ec7a9e5", null ]
+];
