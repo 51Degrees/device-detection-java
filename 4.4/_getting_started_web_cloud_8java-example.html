@@ -65,7 +65,7 @@ $(document).ready(function(){initNavTree('_getting_started_web_cloud_8java-examp
 <h2 class="g-docs__page-title">GettingStartedWebCloud.java</h2></div><!--header-->
 <div class="g-docs__inner">
 <div class="g-docs__primary" id="primary">
-<p>This example is available in full on <a href="https://github.com/51Degrees/device-detection-java/blob/master/device-detection-java-examples/web/getting-started.cloud/src/main/java/fiftyone/devicedetection/examples/web/GettingStartedWebCloud.java">GitHub</a>.</p>
+<p>This example is available in full on <a href="https://github.com/51Degrees/device-detection-java-examples/blob/master/web/getting-started.cloud/src/main/java/fiftyone/devicedetection/examples/web/GettingStartedWebCloud.java">GitHub</a>.</p>
 <h2>Overview</h2>
 <p>The <code>PipelineFilter</code> to intercept requests and perform device detection. The results will be stored in the HttpServletRequest object. The filter will also handle setting response headers (e.g. Accept-CH for User-Agent Client Hints) and serving requests for client-side JavaScript and JSON resources.</p>
 <p>The results of detection can be accessed by using a FlowDataProvider which is responsible for managing the lifecycle of the flowData - do NOT dispose </p><div class="c-code__block c-code__block--outline"><div class="c-code__line">FlowData flowData = flowDataProvider.getFlowData(request);</div><div class="c-code__line">DeviceData device = flowData.get(DeviceData.class);</div><div class="c-code__line">...</div></div><p>Results can also be accessed in client-side code by using the <code>fod</code> object.</p>
