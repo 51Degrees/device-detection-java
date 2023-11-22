@@ -1,5 +1,8 @@
 var NAVTREEINDEX1 =
 {
+"classfiftyone_1_1devicedetection_1_1examples_1_1shared_1_1_key_helper.html#aef4271008064948dca5e7c34d39dccfd":[3,0,0,1,1,2,6],
+"classfiftyone_1_1devicedetection_1_1examples_1_1shared_1_1_property_helper.html":[3,0,0,1,1,3],
+"classfiftyone_1_1devicedetection_1_1examples_1_1shared_1_1_property_helper.html#a6f01c28e0153cb951c626ab45ff31a6e":[3,0,0,1,1,3,0],
 "classfiftyone_1_1devicedetection_1_1examples_1_1shared_1_1_property_helper.html#ad855605679c9548acfbd4da8e25e665d":[3,0,0,1,1,3,1],
 "classfiftyone_1_1devicedetection_1_1examples_1_1shared_1_1_property_helper_test.html":[3,0,0,1,1,4],
 "classfiftyone_1_1devicedetection_1_1examples_1_1shared_1_1_property_helper_test.html#a5a44edb2ce3316c6ed6269ad501fa389":[3,0,0,1,1,4,3],
@@ -246,8 +249,5 @@ var NAVTREEINDEX1 =
 "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_base_swig.html#aff248a716261cc3c62e564f378d1f85e":[3,0,0,2,0,0,2,0,4,13],
 "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html":[3,0,0,2,0,0,2,0,5],
 "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#a0276ecb69d4f268a614878ec6db0a01d":[3,0,0,2,0,0,2,0,5,7],
-"classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#a07d129fc1bb732d1decc9f9a0b42a4f1":[3,0,0,2,0,0,2,0,5,0],
-"classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#a1efd78813acfd8eb237a6fead8fced10":[3,0,0,2,0,0,2,0,5,3],
-"classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#a2cac0f2e14e436a7fd217718fb79b179":[3,0,0,2,0,0,2,0,5,5],
-"classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#a331177868fec8e6a376a685dfda8460e":[3,0,0,2,0,0,2,0,5,8]
+"classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_config_device_detection_swig.html#a07d129fc1bb732d1decc9f9a0b42a4f1":[3,0,0,2,0,0,2,0,5,0]
 };

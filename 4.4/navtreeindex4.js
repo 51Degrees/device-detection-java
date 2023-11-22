@@ -1,5 +1,8 @@
 var NAVTREEINDEX4 =
 {
+"classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a377b1c3077c55053a23791658bf42a18":[3,0,0,2,0,0,2,0,24,23],
+"classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a3d12c32fcf03a67605d52806452bd959":[3,0,0,2,0,0,2,0,24,24],
+"classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a5f093b1fd4031bfdd57890686f1a7893":[3,0,0,2,0,0,2,0,24,12],
 "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a5f36c3cea70d77394ab22f7a81542ca5":[3,0,0,2,0,0,2,0,24,22],
 "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a724af37d4cde9329be72f87b5b02dbba":[3,0,0,2,0,0,2,0,24,2],
 "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a781f2322a864a8ffe715559ab6adcc72":[3,0,0,2,0,0,2,0,24,16],
@@ -246,8 +249,5 @@ var NAVTREEINDEX4 =
 "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a66f7b6952cc521f414f7ecf0d7d8e175":[3,0,0,3,4,249],
 "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a67d3b608d4f151c33ed73da82fdf3f3e":[3,0,0,3,4,49],
 "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a680fa96570a29d2b8369240b70acd1e3":[3,0,0,3,4,58],
-"classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a6866ca404dcd7533a61a3f9a2472b5fb":[3,0,0,3,4,85],
-"classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a6873b036d89135b4e88d6b7841093b5e":[3,0,0,3,4,0],
-"classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a68eab733c00f973a107ecb06082272a2":[3,0,0,3,4,130],
-"classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a6abd0a08fc4e722f7ce63dcf27878ef2":[3,0,0,3,4,153]
+"classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a6866ca404dcd7533a61a3f9a2472b5fb":[3,0,0,3,4,85]
 };

@@ -243,6 +243,27 @@ Public Member Functions</h2>
 </div></td></tr>
 <!-- member dec start -->
 <!-- startMemberItem() -->
+<tr class="c-table__row memitem:a7da43eed8f24258723336c55fae6cf46"><td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1_device_detection_on_premise_pipeline_builder.html">DeviceDetectionOnPremisePipelineBuilder</a><!-- insertMemberAlign -->
+&#160;</td><td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1_device_detection_on_premise_pipeline_builder.html#a7da43eed8f24258723336c55fae6cf46">setDataUpdateUrl</a> (String url)
+<!-- startMemberDescription -->
+<div class="c-table__desc memdesc:a7da43eed8f24258723336c55fae6cf46">Configure the engine to use the specified URL when looking for an updated data file.  <a href="#a7da43eed8f24258723336c55fae6cf46">More...</a><!-- endMemberDescription -->
+</div></td></tr>
+<!-- member dec start -->
+<!-- startMemberItem() -->
+<tr class="c-table__row memitem:aa6793ab615d5c1a9fa06279c928afe09"><td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1_device_detection_on_premise_pipeline_builder.html">DeviceDetectionOnPremisePipelineBuilder</a><!-- insertMemberAlign -->
+&#160;</td><td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1_device_detection_on_premise_pipeline_builder.html#aa6793ab615d5c1a9fa06279c928afe09">setDataUpdateVerifyMd5</a> (Boolean verify)
+<!-- startMemberDescription -->
+<div class="c-table__desc memdesc:aa6793ab615d5c1a9fa06279c928afe09">Set a value indicating if the <a class="el" href="">DataUpdateService</a> should expect the response from the data update URL to contain a 'content-md5' HTTP header that can be used to verify the integrity of the content.  <a href="#aa6793ab615d5c1a9fa06279c928afe09">More...</a><!-- endMemberDescription -->
+</div></td></tr>
+<!-- member dec start -->
+<!-- startMemberItem() -->
+<tr class="c-table__row memitem:a2ca539e44959acda349d16f67c9f7f98"><td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1_device_detection_on_premise_pipeline_builder.html">DeviceDetectionOnPremisePipelineBuilder</a><!-- insertMemberAlign -->
+&#160;</td><td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1_device_detection_on_premise_pipeline_builder.html#a2ca539e44959acda349d16f67c9f7f98">setDataUpdateUrlFormatter</a> (DataUpdateUrlFormatter formatter)
+<!-- startMemberDescription -->
+<div class="c-table__desc memdesc:a2ca539e44959acda349d16f67c9f7f98">Specify a <a class="el" href="">DataUpdateUrlFormatter</a> to be used by the <a class="el" href="">DataUpdateService</a> when building the complete URL to query for updated data.  <a href="#a2ca539e44959acda349d16f67c9f7f98">More...</a><!-- endMemberDescription -->
+</div></td></tr>
+<!-- member dec start -->
+<!-- startMemberItem() -->
 <tr class="c-table__row memitem:a24519e077f145d7982031f86b81d5d41"><td class="c-table__cell">Pipeline<!-- insertMemberAlign -->
 &#160;</td><td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1_device_detection_on_premise_pipeline_builder.html#a24519e077f145d7982031f86b81d5d41">build</a> ()  throws Exception 
 <!-- startMemberDescription -->
@@ -660,6 +681,137 @@ boolean<!-- insertMemberAlign -->
   </dd>
 </dl>
 <dl class="c-list-definition return"><dt class="c-list-definition__title">Returns</dt><dd class="c-list-definition__desc">This builder instance. </dd></dl>
+<!-- endIndent -->
+
+</div>
+</div>
+</article>
+<article class="c-member">
+<a id="a7da43eed8f24258723336c55fae6cf46"></a><!-- startMemberDoc -->
+
+<h2 class="c-member__title"><span class="c-member__anchor"><a href="#a7da43eed8f24258723336c55fae6cf46">&#9670;&nbsp;</a></span>setDataUpdateUrl()</h2>
+
+<div class="c-member__main">
+<div class="c-member__head">
+<!-- startMemberDocName -->
+      <div class="c-member__split">
+        <div class="g-table g-table--overflow">
+          <table class="c-table c-table--article">
+            <tr class="c-table__row">
+              <td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1_device_detection_on_premise_pipeline_builder.html">DeviceDetectionOnPremisePipelineBuilder</a> fiftyone.devicedetection.DeviceDetectionOnPremisePipelineBuilder.setDataUpdateUrl <!-- endMemberDocName -->
+</td>
+<!-- startParameterList -->
+          <td>(</td>
+<!-- startFirstParameterType -->
+          <td class="c-table__cell">String<!-- endParameterType -->
+&#160;</td>
+<!-- startParameterName -->
+          <td class="c-table__cell"><em>url</em><!-- endParameterName -->
+</td><td>)</td>
+          <td><!-- endParameterList -->
+</td>
+        </tr>
+<!-- endMemberDoc -->
+          </table>
+        </div>
+      </div>
+</div><!-- startIndent -->
+<div class="c-member__body">
+
+<p>Configure the engine to use the specified URL when looking for an updated data file. </p>
+<p>Default is the 51Degrees update URL</p>
+<dl class="c-list-definition"><dt class="c-list-definition__title">Parameters</dt><dd class="c-list-definition__desc">
+    <tr><dd class="c-list-definition__desc"><span class="b-text--red">url</span> - the URL to check for a new data file </dd>
+  </dd>
+</dl>
+<dl class="c-list-definition return"><dt class="c-list-definition__title">Returns</dt><dd class="c-list-definition__desc">this builder </dd></dl>
+<!-- endIndent -->
+
+</div>
+</div>
+</article>
+<article class="c-member">
+<a id="a2ca539e44959acda349d16f67c9f7f98"></a><!-- startMemberDoc -->
+
+<h2 class="c-member__title"><span class="c-member__anchor"><a href="#a2ca539e44959acda349d16f67c9f7f98">&#9670;&nbsp;</a></span>setDataUpdateUrlFormatter()</h2>
+
+<div class="c-member__main">
+<div class="c-member__head">
+<!-- startMemberDocName -->
+      <div class="c-member__split">
+        <div class="g-table g-table--overflow">
+          <table class="c-table c-table--article">
+            <tr class="c-table__row">
+              <td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1_device_detection_on_premise_pipeline_builder.html">DeviceDetectionOnPremisePipelineBuilder</a> fiftyone.devicedetection.DeviceDetectionOnPremisePipelineBuilder.setDataUpdateUrlFormatter <!-- endMemberDocName -->
+</td>
+<!-- startParameterList -->
+          <td>(</td>
+<!-- startFirstParameterType -->
+          <td class="c-table__cell">DataUpdateUrlFormatter<!-- endParameterType -->
+&#160;</td>
+<!-- startParameterName -->
+          <td class="c-table__cell"><em>formatter</em><!-- endParameterName -->
+</td><td>)</td>
+          <td><!-- endParameterList -->
+</td>
+        </tr>
+<!-- endMemberDoc -->
+          </table>
+        </div>
+      </div>
+</div><!-- startIndent -->
+<div class="c-member__body">
+
+<p>Specify a <a class="el" href="">DataUpdateUrlFormatter</a> to be used by the <a class="el" href="">DataUpdateService</a> when building the complete URL to query for updated data. </p>
+<dl class="c-list-definition"><dt class="c-list-definition__title">Parameters</dt><dd class="c-list-definition__desc">
+    <tr><dd class="c-list-definition__desc"><span class="b-text--red">formatter</span> - the formatter to use </dd>
+  </dd>
+</dl>
+<dl class="c-list-definition return"><dt class="c-list-definition__title">Returns</dt><dd class="c-list-definition__desc">this builder </dd></dl>
+<!-- endIndent -->
+
+</div>
+</div>
+</article>
+<article class="c-member">
+<a id="aa6793ab615d5c1a9fa06279c928afe09"></a><!-- startMemberDoc -->
+
+<h2 class="c-member__title"><span class="c-member__anchor"><a href="#aa6793ab615d5c1a9fa06279c928afe09">&#9670;&nbsp;</a></span>setDataUpdateVerifyMd5()</h2>
+
+<div class="c-member__main">
+<div class="c-member__head">
+<!-- startMemberDocName -->
+      <div class="c-member__split">
+        <div class="g-table g-table--overflow">
+          <table class="c-table c-table--article">
+            <tr class="c-table__row">
+              <td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1_device_detection_on_premise_pipeline_builder.html">DeviceDetectionOnPremisePipelineBuilder</a> fiftyone.devicedetection.DeviceDetectionOnPremisePipelineBuilder.setDataUpdateVerifyMd5 <!-- endMemberDocName -->
+</td>
+<!-- startParameterList -->
+          <td>(</td>
+<!-- startFirstParameterType -->
+          <td class="c-table__cell">Boolean<!-- endParameterType -->
+&#160;</td>
+<!-- startParameterName -->
+          <td class="c-table__cell"><em>verify</em><!-- endParameterName -->
+</td><td>)</td>
+          <td><!-- endParameterList -->
+</td>
+        </tr>
+<!-- endMemberDoc -->
+          </table>
+        </div>
+      </div>
+</div><!-- startIndent -->
+<div class="c-member__body">
+
+<p>Set a value indicating if the <a class="el" href="">DataUpdateService</a> should expect the response from the data update URL to contain a 'content-md5' HTTP header that can be used to verify the integrity of the content. </p>
+<p>Default true</p>
+<dl class="c-list-definition"><dt class="c-list-definition__title">Parameters</dt><dd class="c-list-definition__desc">
+    <tr><dd class="c-list-definition__desc"><span class="b-text--red">verify</span> - true if the content should be verified with the Md5 hash. False otherwise </dd>
+  </dd>
+</dl>
+<dl class="c-list-definition return"><dt class="c-list-definition__title">Returns</dt><dd class="c-list-definition__desc">this builder </dd></dl>
 <!-- endIndent -->
 
 </div>
