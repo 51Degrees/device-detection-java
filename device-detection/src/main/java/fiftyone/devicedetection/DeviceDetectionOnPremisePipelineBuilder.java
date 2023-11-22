@@ -29,6 +29,7 @@ import fiftyone.pipeline.core.flowelements.Pipeline;
 import fiftyone.pipeline.engines.Constants;
 import fiftyone.pipeline.engines.data.AspectData;
 import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
+import fiftyone.pipeline.engines.data.DataUpdateUrlFormatter;
 import fiftyone.pipeline.engines.fiftyone.flowelements.ShareUsageBuilder;
 import fiftyone.pipeline.engines.flowelements.AspectEngine;
 import fiftyone.pipeline.engines.flowelements.PrePackagedPipelineBuilderBase;
@@ -64,6 +65,9 @@ public class DeviceDetectionOnPremisePipelineBuilder
     private Long updatePollingInterval = null;
     private Long updateRandomisationMax = null;
     private String dataUpdateLicenseKey = null;
+    private String dataUpdateUrl = null;
+    private Boolean dataUpdateVerifyMd5 = null;
+    private DataUpdateUrlFormatter dataUpdateUrlFormatter = null;
     private Constants.PerformanceProfiles performanceProfile =
         Constants.PerformanceProfiles.Balanced;
 
@@ -372,6 +376,49 @@ public class DeviceDetectionOnPremisePipelineBuilder
     }
 
     /**
+     * Configure the engine to use the specified URL when looking for
+     * an updated data file.
+     * <p>
+     * Default is the 51Degrees update URL
+     *
+     * @param url the URL to check for a new data file
+     * @return this builder
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setDataUpdateUrl(String url) {
+        dataUpdateUrl = url;
+        return this;
+    }
+
+    /**
+     * Set a value indicating if the {@link DataUpdateService} should expect the
+     * response from the data update URL to contain a 'content-md5' HTTP header
+     * that can be used to verify the integrity of the content.
+     * <p>
+     * Default true
+     *
+     * @param verify true if the content should be verified with the Md5 hash.
+     *               False otherwise
+     * @return this builder
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setDataUpdateVerifyMd5(Boolean verify) {
+        dataUpdateVerifyMd5 = verify;
+        return this;
+    }
+
+    /**
+     * Specify a {@link DataUpdateUrlFormatter} to be used by the
+     * {@link DataUpdateService} when building the complete URL to query for
+     * updated data.
+     *
+     * @param formatter the formatter to use
+     * @return this builder
+     */
+    public DeviceDetectionOnPremisePipelineBuilder setDataUpdateUrlFormatter(DataUpdateUrlFormatter formatter) {
+        dataUpdateUrlFormatter = formatter;
+        return this;
+    }
+
+    /**
      * Build and return a pipeline that can perform device detection.
      * @return the built pipeline
      * @throws Exception on error
@@ -467,6 +514,18 @@ public class DeviceDetectionOnPremisePipelineBuilder
         // Configure predictive graph
         if (usePredictiveGraph != null) {
             builder.setUsePredictiveGraph(usePredictiveGraph);
+        }
+        // Configure update url
+        if (dataUpdateUrl != null) {
+            builder.setDataUpdateUrl(dataUpdateUrl);
+        }
+        // Configure md5 verification
+        if (dataUpdateVerifyMd5 != null) {
+            builder.setDataUpdateVerifyMd5(dataUpdateVerifyMd5);
+        }
+        // Configure data url formatter
+        if (dataUpdateUrlFormatter != null) {
+            builder.setDataUpdateUrlFormatter(dataUpdateUrlFormatter);
         }
 
         // Build the engine
