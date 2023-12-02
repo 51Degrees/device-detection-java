@@ -31,11 +31,11 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
 
-        <pipeline.version>4.4.31</pipeline.version>
+        <pipeline.version>4.4.32</pipeline.version>
 
         <junit.version>4.13.2</junit.version>
         <slf4j-api.version>1.7.36</slf4j-api.version>
-        <logback-classic.version>1.2.12</logback-classic.version>
+        <logback-classic.version>1.2.13</logback-classic.version>
         <mockito-core.version>4.3.1</mockito-core.version>
         <org.json.version>20211205</org.json.version>
 
