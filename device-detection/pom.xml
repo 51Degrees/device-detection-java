@@ -12,6 +12,7 @@
 
     <artifactId>device-detection</artifactId>
     <name>51Degrees :: Device Detection</name>
+    <description>Parse HTTP headers to detect the device type, model, OS, browser, and crawler information. This is an alternative to popular UAParser, DeviceAtlas, and WURFL packages.</description>
     <url>https://51degrees.com</url>
 
     <dependencies>
