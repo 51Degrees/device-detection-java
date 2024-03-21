@@ -256,10 +256,20 @@
                 </executions>
                 <configuration>
                     <skip>${skippackagesign}</skip>
-                    <keystore>${keystore}</keystore>
-                    <alias>${alias}</alias>
-                    <storepass>${keystorepass}</storepass>
-                    <keypass>${keypass}</keypass>
+                    <keystore>NONE</keystore>
+                    <storetype>AZUREKEYVAULT</storetype>
+                    <alias>${keyvaultCertName}</alias>
+                    <storepass>${keyvaultAccessToken}</storepass>
+                    <providerClass>net.jsign.jca.JsignJcaProvider</providerClass>
+                    <providerArg>${keyvaultVaultName}</providerArg>
+                    <tsa>http://timestamp.globalsign.com/tsa/r6advanced1</tsa>
+                    <certchain>${keyvaultCertChain}</certchain>
+                    <arguments>
+                        <argument>-J-cp</argument>
+                        <argument>-J${keyvaultJcaJar}</argument>
+                        <argument>-J--add-modules</argument>
+                        <argument>-Jjava.sql</argument>
+                    </arguments>
                 </configuration>
             </plugin>
             <plugin>
