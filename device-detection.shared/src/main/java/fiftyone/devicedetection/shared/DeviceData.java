@@ -86,6 +86,10 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<String> getBrowserFamily();
 	/**
+	 * A list of logos associated with the Browser. The string contains the caption, followed by the full image URL separated with a tab character.
+	 */
+	AspectPropertyValue<List<String>> getBrowserLogos();
+	/**
 	 * Indicates the name of the browser. Many mobile browsers, by default, come with an operating system (OS). Unless specifically named, these browsers are named after the accompanying OS and/or the layout engine. 
 	 */
 	AspectPropertyValue<String> getBrowserName();
@@ -725,6 +729,10 @@ public interface DeviceData extends AspectData
 	 * The year in which further development for the platform version is stopped by the platform vendor. This occurs when a new stable version of the platform is released.
 	 */
 	AspectPropertyValue<Integer> getPlatformDiscontinuedYear();
+	/**
+	 * A list of logos associated with the Software. The string contains the caption, followed by the full image URL separated with a tab character.
+	 */
+	AspectPropertyValue<List<String>> getPlatformLogos();
 	/**
 	 * Indicates the name of the operating system the device is using.
 	 */
