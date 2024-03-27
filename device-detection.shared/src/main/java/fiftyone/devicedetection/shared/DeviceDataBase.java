@@ -1596,6 +1596,18 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<JavaScript> getJavascriptGetHighEntropyValues() { return getAs("javascriptgethighentropyvalues", AspectPropertyValue.class, JavaScript.class); }
 	/**
+	 * A list of logos associated with the Browser. The string contains the caption, followed by the full image URL separated with a tab character.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<List<String>> getBrowserLogos() { return getAs("browserlogos", AspectPropertyValue.class, List.class); }
+	/**
+	 * A list of logos associated with the Software. The string contains the caption, followed by the full image URL separated with a tab character.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<List<String>> getPlatformLogos() { return getAs("platformlogos", AspectPropertyValue.class, List.class); }
+	/**
 	 * Indicates the number of hash nodes matched within the evidence.
 	 */
 	@SuppressWarnings("unchecked")
