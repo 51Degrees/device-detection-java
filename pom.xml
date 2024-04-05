@@ -21,8 +21,8 @@
 
     <developers>
         <developer>
-            <name>51Degrees</name>
-            <email>support@51degrees.com</email>
+            <name>51Degrees Engineering</name>
+            <email>engineering@51degrees.com</email>
         </developer>
     </developers>
 
@@ -31,11 +31,11 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
 
-        <pipeline.version>4.4.17</pipeline.version>
+        <pipeline.version>4.4.42</pipeline.version>
 
         <junit.version>4.13.2</junit.version>
-        <slf4j-api.version>1.7.36</slf4j-api.version>
-        <logback-classic.version>1.2.12</logback-classic.version>
+        <slf4j-api.version>2.0.12</slf4j-api.version>
+        <logback-classic.version>1.3.14</logback-classic.version>
         <mockito-core.version>4.3.1</mockito-core.version>
         <org.json.version>20211205</org.json.version>
 
@@ -256,10 +256,20 @@
                 </executions>
                 <configuration>
                     <skip>${skippackagesign}</skip>
-                    <keystore>${keystore}</keystore>
-                    <alias>${alias}</alias>
-                    <storepass>${keystorepass}</storepass>
-                    <keypass>${keypass}</keypass>
+                    <keystore>NONE</keystore>
+                    <storetype>AZUREKEYVAULT</storetype>
+                    <alias>${keyvaultCertName}</alias>
+                    <storepass>${keyvaultAccessToken}</storepass>
+                    <providerClass>net.jsign.jca.JsignJcaProvider</providerClass>
+                    <providerArg>${keyvaultVaultName}</providerArg>
+                    <tsa>http://timestamp.globalsign.com/tsa/r6advanced1</tsa>
+                    <certchain>${keyvaultCertChain}</certchain>
+                    <arguments>
+                        <argument>-J-cp</argument>
+                        <argument>-J${keyvaultJcaJar}</argument>
+                        <argument>-J--add-modules</argument>
+                        <argument>-Jjava.sql</argument>
+                    </arguments>
                 </configuration>
             </plugin>
             <plugin>

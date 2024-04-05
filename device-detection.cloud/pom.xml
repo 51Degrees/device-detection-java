@@ -11,6 +11,7 @@
 
     <artifactId>device-detection.cloud</artifactId>
     <name>51Degrees :: Device Detection :: Cloud</name>
+    <description>Device detection that consumes the 51Degrees cloud service.</description>
     <url>https://51degrees.com</url>
 
     <dependencies>

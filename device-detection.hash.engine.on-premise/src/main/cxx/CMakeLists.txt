@@ -27,7 +27,9 @@ if (MSVC)
     endif()
 
 else()
-    if (${CMAKE_SYSTEM_PROCESSOR} MATCHES ^armhf)
+    if (DEFINED ARCH)
+        # Use the defined ARCH
+    elseif (${CMAKE_SYSTEM_PROCESSOR} MATCHES ^armhf)
         set(ARCH armhf)
     elseif (${CMAKE_SYSTEM_PROCESSOR} MATCHES ^aarch64)
         set(ARCH aarch64)

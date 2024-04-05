@@ -11,6 +11,7 @@
 
     <artifactId>device-detection.shared</artifactId>
     <name>51Degrees :: Device Detection :: Shared</name>
+    <description>Shared functionality for implementing device detection engine for the 51Degrees Pipeline API</description>
     <url>https://51degrees.com</url>
 
     <dependencies>
