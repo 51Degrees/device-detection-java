@@ -50,11 +50,5 @@
     "JavaSDKEnvVar": "JAVA_HOME_11_X64",
     "RunPerformance": true,
     "PackageRequirement" : true
-  },
-    {
-    "Image": "macos-latest",
-    "Name": "MacOS_Java_8",
-    "JavaSDKEnvVar": "JAVA_HOME_8_X64",
-    "RunPerformance": true
   }
 ]
