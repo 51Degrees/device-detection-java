@@ -1,4 +1,4 @@
-[  
+[
  {
     "Image": "ubuntu-20.04",
     "Name": "Ubuntu_Java_17",
@@ -39,16 +39,22 @@
     "RunPerformance": true
   },
   {
-    "Image": "macos-latest",
+    "Image": "macos-13",
     "Name": "MacOS_Java_17",
     "JavaSDKEnvVar": "JAVA_HOME_17_X64",
     "RunPerformance": true
   },
   {
-    "Image": "macos-latest",
+    "Image": "macos-13",
     "Name": "MacOS_Java_11",
     "JavaSDKEnvVar": "JAVA_HOME_11_X64",
     "RunPerformance": true,
     "PackageRequirement" : true
+  },
+    {
+    "Image": "macos-13",
+    "Name": "MacOS_Java_8",
+    "JavaSDKEnvVar": "JAVA_HOME_8_X64",
+    "RunPerformance": true
   }
 ]
