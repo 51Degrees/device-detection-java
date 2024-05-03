@@ -1,5 +1,11 @@
 [
- {
+  {
+    "Image": "ubuntu-20.04",
+    "Name": "Ubuntu_Java_21",
+    "JavaSDKEnvVar": "JAVA_HOME_21_X64",
+    "RunPerformance": true
+  },
+  {
     "Image": "ubuntu-20.04",
     "Name": "Ubuntu_Java_17",
     "JavaSDKEnvVar": "JAVA_HOME_17_X64",
@@ -20,6 +26,13 @@
   },
   {
     "Image": "windows-latest",
+    "Name": "Windows_Java_21",
+    "JavaSDKEnvVar": "JAVA_HOME_21_X64",
+    "RunPerformance": true,
+    "PackageRequirement" : false
+  },
+  {
+    "Image": "windows-latest",
     "Name": "Windows_Java_17",
     "JavaSDKEnvVar": "JAVA_HOME_17_X64",
     "RunPerformance": true,
@@ -36,6 +49,12 @@
     "Image": "windows-latest",
     "Name": "Windows_Java_8",
     "JavaSDKEnvVar": "JAVA_HOME_8_X64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "macos-13",
+    "Name": "MacOS_Java_21",
+    "JavaSDKEnvVar": "JAVA_HOME_21_X64",
     "RunPerformance": true
   },
   {
