@@ -1,22 +1,35 @@
 [
- {
-    "Image": "ubuntu-20.04",
+  {
+    "Image": "ubuntu-latest",
+    "Name": "Ubuntu_Java_21",
+    "JavaSDKEnvVar": "JAVA_HOME_21_X64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "ubuntu-latest",
     "Name": "Ubuntu_Java_17",
     "JavaSDKEnvVar": "JAVA_HOME_17_X64",
     "RunPerformance": true
   },
   {
-    "Image": "ubuntu-20.04",
+    "Image": "ubuntu-latest",
     "Name": "Ubuntu_Java_11",
     "JavaSDKEnvVar": "JAVA_HOME_11_X64",
     "RunPerformance": true,
     "PackageRequirement" : true
   },
   {
-    "Image": "ubuntu-20.04",
+    "Image": "ubuntu-latest",
     "Name": "Ubuntu_Java_8",
     "JavaSDKEnvVar": "JAVA_HOME_8_X64",
     "RunPerformance": true
+  },
+  {
+    "Image": "windows-latest",
+    "Name": "Windows_Java_21",
+    "JavaSDKEnvVar": "JAVA_HOME_21_X64",
+    "RunPerformance": true,
+    "PackageRequirement" : false
   },
   {
     "Image": "windows-latest",
@@ -40,21 +53,46 @@
   },
   {
     "Image": "macos-13",
-    "Name": "MacOS_Java_17",
+    "Name": "MacOS_13_Java_21",
+    "JavaSDKEnvVar": "JAVA_HOME_21_X64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "macos-13",
+    "Name": "MacOS_13_Java_17",
     "JavaSDKEnvVar": "JAVA_HOME_17_X64",
     "RunPerformance": true
   },
   {
     "Image": "macos-13",
-    "Name": "MacOS_Java_11",
+    "Name": "MacOS_13_Java_11",
     "JavaSDKEnvVar": "JAVA_HOME_11_X64",
     "RunPerformance": true,
     "PackageRequirement" : true
   },
-    {
+  {
     "Image": "macos-13",
-    "Name": "MacOS_Java_8",
+    "Name": "MacOS_13_Java_8",
     "JavaSDKEnvVar": "JAVA_HOME_8_X64",
     "RunPerformance": true
+  },
+  {
+    "Image": "macos-14",
+    "Name": "MacOS_14_Java_21",
+    "JavaSDKEnvVar": "JAVA_HOME_21_arm64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "macos-14",
+    "Name": "MacOS_14_Java_17",
+    "JavaSDKEnvVar": "JAVA_HOME_17_arm64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "macos-14",
+    "Name": "MacOS_14_Java_11",
+    "JavaSDKEnvVar": "JAVA_HOME_11_arm64",
+    "RunPerformance": true,
+    "PackageRequirement" : true
   }
 ]
