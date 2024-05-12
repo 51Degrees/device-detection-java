@@ -1596,42 +1596,6 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<JavaScript> getJavascriptGetHighEntropyValues() { return getAs("javascriptgethighentropyvalues", AspectPropertyValue.class, JavaScript.class); }
 	/**
-	 * Javascript snippet that determines the actual current browser instance and overrides the proerty value.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<JavaScript> getJavascriptBrowserOverride() { return getAs("javascriptbrowseroverride", AspectPropertyValue.class, JavaScript.class); }
-	/**
-	 * Name of the underlying browser source project.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getBrowserSourceProject() { return getAs("browsersourceproject", AspectPropertyValue.class, String.class); }
-	/**
-	 * Indicates the version or subversion of the underlying browser source project.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getBrowserSourceProjectVersion() { return getAs("browsersourceprojectversion", AspectPropertyValue.class, String.class); }
-	/**
-	 * Indicates if a client's browser session has the Privacy Sandbox Topics API enabled.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getTopicsAPIEnabled() { return getAs("topicsapienabled", AspectPropertyValue.class, String.class); }
-	/**
-	 * Indicates if a client's browser session has the Privacy Sandbox Shared Storage API enabled.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getSharedStorageAPIEnabled() { return getAs("sharedstorageapienabled", AspectPropertyValue.class, String.class); }
-	/**
-	 * Indicates if a client?s browser session has the Privacy Sandbox Protected Audience API enabled.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getProtectedAudienceAPIEnabled() { return getAs("protectedaudienceapienabled", AspectPropertyValue.class, String.class); }
-	/**
 	 * A list of logos associated with the Browser. The string contains the caption, followed by the full image URL separated with a tab character.
 	 */
 	@SuppressWarnings("unchecked")
@@ -1643,30 +1607,6 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<List<String>> getPlatformLogos() { return getAs("platformlogos", AspectPropertyValue.class, List.class); }
-	/**
-	 * Indicates if the browser session supports the Privacy Sandbox APIs.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getBrowserSupportsPrivacySandbox() { return getAs("browsersupportsprivacysandbox", AspectPropertyValue.class, String.class); }
-	/**
-	 * JavaScript that overrides the property value to indicate if a client's browser session has the Privacy Sandbox Topics API enabled. 
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<JavaScript> getTopicsAPIEnabledJavaScript() { return getAs("topicsapienabledjavascript", AspectPropertyValue.class, JavaScript.class); }
-	/**
-	 * JavaScript that overrides the property value to indicate if a client's browser session has the Privacy Sandbox Shared Storage API enabled. 
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<JavaScript> getSharedStorageAPIEnabledJavaScript() { return getAs("sharedstorageapienabledjavascript", AspectPropertyValue.class, JavaScript.class); }
-	/**
-	 * JavaScript that overrides the property value and indicates if a client's browser session has the Privacy Sandbox Protected Audience API enabled. 
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<JavaScript> getProtectedAudienceAPIEnabledJavaScript() { return getAs("protectedaudienceapienabledjavascript", AspectPropertyValue.class, JavaScript.class); }
 	/**
 	 * Indicates the number of hash nodes matched within the evidence.
 	 */
