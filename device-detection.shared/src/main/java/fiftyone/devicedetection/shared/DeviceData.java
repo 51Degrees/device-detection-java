@@ -126,18 +126,6 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Integer> getBrowserReleaseYear();
 	/**
-	 * Name of the underlying browser source project.
-	 */
-	AspectPropertyValue<String> getBrowserSourceProject();
-	/**
-	 * Indicates the version or subversion of the underlying browser source project.
-	 */
-	AspectPropertyValue<String> getBrowserSourceProjectVersion();
-	/**
-	 * Indicates if the browser session supports the Privacy Sandbox APIs.
-	 */
-	AspectPropertyValue<String> getBrowserSupportsPrivacySandbox();
-	/**
 	 * Indicates the name of the company which created the browser.
 	 */
 	AspectPropertyValue<String> getBrowserVendor();
@@ -590,10 +578,6 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getJavascript();
 	/**
-	 * Javascript snippet that determines the actual current browser instance and overrides the proerty value.
-	 */
-	AspectPropertyValue<JavaScript> getJavascriptBrowserOverride();
-	/**
 	 * Indicates if the browser supports the JavaScript that can manipulate CSS on the browser's web page.
 	 */
 	AspectPropertyValue<Boolean> getJavascriptCanManipulateCSS();
@@ -814,14 +798,6 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getPrompts();
 	/**
-	 * Indicates if a client?s browser session has the Privacy Sandbox Protected Audience API enabled.
-	 */
-	AspectPropertyValue<String> getProtectedAudienceAPIEnabled();
-	/**
-	 * JavaScript that overrides the property value and indicates if a client's browser session has the Privacy Sandbox Protected Audience API enabled. 
-	 */
-	AspectPropertyValue<JavaScript> getProtectedAudienceAPIEnabledJavaScript();
-	/**
 	 * Indicates the number of frames per second the television can display in Hertz.
 	 */
 	AspectPropertyValue<Integer> getRefreshRate();
@@ -974,14 +950,6 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<String> getSetHeaderPlatformAcceptCH();
 	/**
-	 * Indicates if a client's browser session has the Privacy Sandbox Shared Storage API enabled.
-	 */
-	AspectPropertyValue<String> getSharedStorageAPIEnabled();
-	/**
-	 * JavaScript that overrides the property value to indicate if a client's browser session has the Privacy Sandbox Shared Storage API enabled. 
-	 */
-	AspectPropertyValue<JavaScript> getSharedStorageAPIEnabledJavaScript();
-	/**
 	 * Indicates the primary marketing name of the System on Chip (chipset) which includes the CPU, GPU and modem. e.g. Snapdragon S4
 	 */
 	AspectPropertyValue<String> getSoC();
@@ -1093,14 +1061,6 @@ public interface DeviceData extends AspectData
 	 * Indicates the Type Allocation Code (TAC) for devices supporting GSM/3GPP networks which come from multiple sources. This property will return 'N/A' if we cannot determine the device TAC authenticy.
 	 */
 	AspectPropertyValue<List<String>> getTAC();
-	/**
-	 * Indicates if a client's browser session has the Privacy Sandbox Topics API enabled.
-	 */
-	AspectPropertyValue<String> getTopicsAPIEnabled();
-	/**
-	 * JavaScript that overrides the property value to indicate if a client's browser session has the Privacy Sandbox Topics API enabled. 
-	 */
-	AspectPropertyValue<JavaScript> getTopicsAPIEnabledJavaScript();
 	/**
 	 * Indicates if the browser supports the method of registering and interpreting finder (or stylus) activity on touch screens or trackpads.
 	 */
