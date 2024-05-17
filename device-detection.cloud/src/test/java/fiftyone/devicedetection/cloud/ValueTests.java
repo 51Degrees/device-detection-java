@@ -87,19 +87,17 @@ public class ValueTests {
     @SuppressWarnings("unchecked")
     public static void valueTypes(WrapperCloud wrapper) throws Exception {
         try (FlowData data = wrapper.getPipeline().createFlowData()) {
-            data.addEvidence("header.user-agent", Constants.MobileUserAgent)
+            data.addEvidence("header.user-agent", Constants.ChromeUserAgent)
                 .process();
             ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
             for (AspectPropertyMetaData property :
                 (List<AspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
-                if (Arrays.asList(Constants.ExcludedProperties)
-                        .contains(property.getName()) == false) {
                 if (property.isAvailable()) {
                     Class<?> expectedType;
                     Object value = elementData.get(property.getName());
-                               
+
                     expectedType = getPropertyType(property.getType());
-                   
+
                     assertNotNull("Value of " + property.getName() + " is null. ", value);
                     assertTrue(AspectPropertyValue.class.isAssignableFrom(value.getClass()));
                     assertTrue("Value of '" + property.getName() +
@@ -112,7 +110,6 @@ public class ValueTests {
             }
         }
     }
-  }
     
     @SuppressWarnings("unchecked")
     public static void availableProperties(WrapperCloud wrapper) throws Exception {
