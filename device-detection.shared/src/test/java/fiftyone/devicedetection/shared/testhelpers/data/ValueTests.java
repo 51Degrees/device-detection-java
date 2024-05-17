@@ -86,12 +86,13 @@ public class ValueTests {
     @SuppressWarnings("unchecked")
     public static void valueTypes(Wrapper wrapper) throws Exception {
         try (FlowData data = wrapper.getPipeline().createFlowData()) {
-            data.addEvidence("header.user-agent", Constants.MobileUserAgent)
+            data.addEvidence("header.user-agent",
+                            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
                 .process();
             ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
             for (FiftyOneAspectPropertyMetaData property :
                 (List<FiftyOneAspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
-                if (property.isAvailable() && !Objects.equals(property.getName(), "JavascriptGetHighEntropyValues")) {
+                if (property.isAvailable() ) {
                     Class<?> expectedType;
                     Object value = elementData.get(property.getName());
                     //((ElementPropertyMetaData) value).getType();
