@@ -81,7 +81,7 @@ public class ProcessTests {
         DataValidator validator) throws Exception {
         try (FlowData data = wrapper.getPipeline().createFlowData()) {
             data
-                .addEvidence("header.USER-AGENT", Constants.MobileUserAgent)
+                .addEvidence("header.USER-AGENT", Constants.ChromeUserAgent)
                 .process();
             validator.validateData(data, true);            
         }

@@ -54,7 +54,7 @@ public class DataValidatorHash implements DataValidator {
             if (property.isAvailable()) {
                 assertTrue(map.containsKey(property.getName()));
                 AspectPropertyValue<?> value = (AspectPropertyValue<?>)map.get(property.getName());
-                if (validEvidence && !Objects.equals(property.getName(), "JavascriptGetHighEntropyValues")) {
+                if (validEvidence) {
                     assertTrue(value.hasValue());
                 }
                 else {

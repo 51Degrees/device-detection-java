@@ -35,5 +35,9 @@ public class Constants {
             "AppleWebKit/537.51.2 (KHTML, like Gecko) Version/7.0 Mobile" +
             "/11D167 Safari/9537.53";
     
+
+    public static final String ChromeUserAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 " +
+            "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
+
     public static final String RESOURCE_KEY_ENV_VAR = "TestResourceKey";
 }
