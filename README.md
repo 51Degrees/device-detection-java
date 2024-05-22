@@ -82,7 +82,9 @@ platform/architecture) This section explains how to build this binary.
       - `set PATH="[Visual Studio Installation Path]\[Visual Studio Version]\BuildTools\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\";%PATH%`
 
   - Linux:
-    - `sudo apt-get install g++ make libatomic1 cmake`
+    - Ubuntu: `sudo apt-get install g++ make libatomic1 cmake`
+    - RHEL / CentOS / Fedora: `sudo yum install cmake gcc-c++ libatomic`
+
 - Maven version 3.8.4 or higher is recommended, and what is used for our own build.
 - If you have not already done so, pull the git submodules that contain the native code:
   - `git submodule update --init --recursive`
