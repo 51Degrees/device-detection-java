@@ -38,8 +38,9 @@ public class Constants {
         "The native library failed to load. This may mean that either " +
         "the library itself or one of its dependencies is not " +
         "accessible or not in the correct format for the target OS or " +
-        "architecture. A common missing library is libatomic1 on Linux. " +
-        "If this is the case, " + USE_PACKAGE_MANAGER ;
+        "architecture. Common reasons: /tmp mounted with noexec flag, or libatomic is missing. " +
+        "In the former case provide a different dir (with execute permissions) via `java.io.tmpdir` option. " +
+        "In the latter case, " + USE_PACKAGE_MANAGER ;
 
     /**
      * Message returned when the native library could not be loaded, and it is
