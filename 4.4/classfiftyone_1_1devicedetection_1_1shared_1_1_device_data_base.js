@@ -214,6 +214,8 @@ var classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base =
     [ "getScreenMMWidth", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a1920ce9ffb65f93135fe3542abcb2f9c", null ],
     [ "getScreenPixelsHeight", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a887591015373034941cdb6a90c2728dc", null ],
     [ "getScreenPixelsHeightJavaScript", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#ac4842ab6c96acffd2d8dd22cfaeec180", null ],
+    [ "getScreenPixelsPhysicalHeight", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#aefa7371209fd850640ad15a2ffab3428", null ],
+    [ "getScreenPixelsPhysicalWidth", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#ad21c97fb7606eb35c0f2ba4e56fe0416", null ],
     [ "getScreenPixelsWidth", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a0c53406bc8cc3e110b9fc7bde37a2c89", null ],
     [ "getScreenPixelsWidthJavaScript", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a4ceddc737e67370c6e0b67a3dc56c6b7", null ],
     [ "getScreenType", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a9e63119da00bf0013bbeec06cec6f97c", null ],
