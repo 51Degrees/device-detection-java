@@ -890,6 +890,14 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<JavaScript> getScreenPixelsHeightJavaScript();
 	/**
+	 * Indicates the height of the device's screen in physical pixels. This property is not applicable for a device that does not have a screen. For devices such as tablets or TV which are predominantly used in landscape mode, the pixel height will be the smaller value compared to the pixel width. 
+	 */
+	AspectPropertyValue<Integer> getScreenPixelsPhysicalHeight();
+	/**
+	 * Indicates the width of the device's screen in physical pixels. This property is not applicable for a device that does not have a screen. For devices such as tablets or TV which are predominantly used in landscape mode, the pixel width will be the larger value compared to the pixel height.
+	 */
+	AspectPropertyValue<Integer> getScreenPixelsPhysicalWidth();
+	/**
 	 * Indicates the width of the device's screen in pixels. This property is not applicable for a device that does not have a screen. For devices such as tablets or TV which are predominantly used in landscape mode, the pixel width will be the larger value compared to the pixel height.
 	 */
 	AspectPropertyValue<Integer> getScreenPixelsWidth();
