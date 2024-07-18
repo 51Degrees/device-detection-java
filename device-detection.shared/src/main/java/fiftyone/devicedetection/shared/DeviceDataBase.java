@@ -1668,6 +1668,18 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<JavaScript> getProtectedAudienceAPIEnabledJavaScript() { return getAs("protectedaudienceapienabledjavascript", AspectPropertyValue.class, JavaScript.class); }
 	/**
+	 * Indicates the height of the device's screen in physical pixels. This property is not applicable for a device that does not have a screen. For devices such as tablets or TV which are predominantly used in landscape mode, the pixel height will be the smaller value compared to the pixel width. 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getScreenPixelsPhysicalHeight() { return getAs("screenpixelsphysicalheight", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Indicates the width of the device's screen in physical pixels. This property is not applicable for a device that does not have a screen. For devices such as tablets or TV which are predominantly used in landscape mode, the pixel width will be the larger value compared to the pixel height.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getScreenPixelsPhysicalWidth() { return getAs("screenpixelsphysicalwidth", AspectPropertyValue.class, Integer.class); }
+	/**
 	 * Indicates the number of hash nodes matched within the evidence.
 	 */
 	@SuppressWarnings("unchecked")
