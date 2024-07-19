@@ -900,7 +900,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Boolean> getSupports24p() { return getAs("supports24p", AspectPropertyValue.class, Boolean.class); }
 	/**
-	 * Indicates the list of input and output communications the device can support, for example 3.5mm audio jack, micro-USB etc.
+	 * Indicates the list of input and output communications the device can support, for example 3.5mm jack, micro-USB etc.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override

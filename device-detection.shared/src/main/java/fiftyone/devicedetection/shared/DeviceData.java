@@ -1062,7 +1062,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<List<String>> getSupportedChargerTypes();
 	/**
-	 * Indicates the list of input and output communications the device can support, for example 3.5mm audio jack, micro-USB etc.
+	 * Indicates the list of input and output communications the device can support, for example 3.5mm jack, micro-USB etc.
 	 */
 	AspectPropertyValue<List<String>> getSupportedIO();
 	/**
