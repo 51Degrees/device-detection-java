@@ -906,7 +906,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getSupportedIO() { return getAs("supportedi/o", AspectPropertyValue.class, List.class); }
 	/**
-	 * Indicates the number of frames per second the television can display in Hertz.
+	 * Indicates the maximum number of frames per second of the output image of the device in Hertz.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override

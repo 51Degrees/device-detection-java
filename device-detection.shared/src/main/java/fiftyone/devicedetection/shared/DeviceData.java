@@ -822,7 +822,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<JavaScript> getProtectedAudienceAPIEnabledJavaScript();
 	/**
-	 * Indicates the number of frames per second the television can display in Hertz.
+	 * Indicates the maximum number of frames per second of the output image of the device in Hertz.
 	 */
 	AspectPropertyValue<Integer> getRefreshRate();
 	/**
