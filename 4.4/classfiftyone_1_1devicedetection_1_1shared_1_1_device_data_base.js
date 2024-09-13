@@ -254,6 +254,8 @@ var classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base =
     [ "getSuggestedLinkSizePixels", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a32bbf4881d857d4befe1fd7c997ef69b", null ],
     [ "getSuggestedLinkSizePoints", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a4222aa448a996aed0caa692cc2deef5f", null ],
     [ "getSupportedBearers", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a5c3bb5abfb787d8350f1a7d253aeff47", null ],
+    [ "getSupportedBluetooth", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a8e3a35032ec82752c622c1fd0bcfca50", null ],
+    [ "getSupportedBluetoothProfiles", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#af0a50fd4967d91e20701d4c45f686d91", null ],
     [ "getSupportedBluetoothVersion", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#af65ac8353424e6a27106b9f55965e40e", null ],
     [ "getSupportedCameraFeatures", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a205be8fd8a0f37e49a0f2d6a51b64d7d", null ],
     [ "getSupportedChargerTypes", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a660469dbfee0f0426be1da73cbfecc94", null ],
