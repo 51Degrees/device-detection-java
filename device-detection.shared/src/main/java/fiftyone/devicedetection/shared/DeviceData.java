@@ -1052,6 +1052,14 @@ public interface DeviceData extends AspectData
 	/**
 	 * Indicates the highest version of Bluetooth the device supports.
 	 */
+	AspectPropertyValue<Double> getSupportedBluetooth();
+	/**
+	 * Indicates the Bluetooth profiles the device supports.
+	 */
+	AspectPropertyValue<List<String>> getSupportedBluetoothProfiles();
+	/**
+	 * Indicates the highest version of Bluetooth the device supports.
+	 */
 	AspectPropertyValue<String> getSupportedBluetoothVersion();
 	/**
 	 * Indicates the list of features the device's camera supports.

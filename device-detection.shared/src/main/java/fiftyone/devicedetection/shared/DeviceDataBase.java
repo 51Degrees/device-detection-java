@@ -1680,6 +1680,18 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Integer> getScreenPixelsPhysicalWidth() { return getAs("screenpixelsphysicalwidth", AspectPropertyValue.class, Integer.class); }
 	/**
+	 * Indicates the highest version of Bluetooth the device supports.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Double> getSupportedBluetooth() { return getAs("supportedbluetooth", AspectPropertyValue.class, Double.class); }
+	/**
+	 * Indicates the Bluetooth profiles the device supports.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<List<String>> getSupportedBluetoothProfiles() { return getAs("supportedbluetoothprofiles", AspectPropertyValue.class, List.class); }
+	/**
 	 * Indicates the number of hash nodes matched within the evidence.
 	 */
 	@SuppressWarnings("unchecked")
