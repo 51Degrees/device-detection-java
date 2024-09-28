@@ -514,6 +514,10 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getInVRMode();
 	/**
+	 * Indicates whether the crawler is confirmed by the crawler controller to be used to train artificial intelligence.
+	 */
+	AspectPropertyValue<String> getIsArtificialIntelligence();
+	/**
 	 * Indicates if the device is primarily a game console, such as an Xbox or Playstation.
 	 */
 	AspectPropertyValue<Boolean> getIsConsole();
