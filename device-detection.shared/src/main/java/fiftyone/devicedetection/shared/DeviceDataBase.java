@@ -1692,6 +1692,12 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getSupportedBluetoothProfiles() { return getAs("supportedbluetoothprofiles", AspectPropertyValue.class, List.class); }
 	/**
+	 * Indicates whether the crawler is confirmed by the crawler controller to be used to train artificial intelligence.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getIsArtificialIntelligence() { return getAs("isartificialintelligence", AspectPropertyValue.class, String.class); }
+	/**
 	 * Indicates the number of hash nodes matched within the evidence.
 	 */
 	@SuppressWarnings("unchecked")
