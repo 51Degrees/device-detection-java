@@ -119,6 +119,7 @@ var interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data =
     [ "getIndexedDB", "interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html#a7459452efa4347dd8eb6687bb8a47601", null ],
     [ "getInternalStorageVariants", "interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html#a7e459846205f0ea726c53be4ac33619e", null ],
     [ "getInVRMode", "interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html#aa862e671f3882ed99050b80a860b3cf8", null ],
+    [ "getIsArtificialIntelligence", "interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html#a2f5c60d4abaf21d42d7aed0e3fa9b0b7", null ],
     [ "getIsConsole", "interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html#a750feb2c567f07a7a3a0e032b56609af", null ],
     [ "getIsCrawler", "interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html#aedfa35fa9908d9103e4db8fdef816ed9", null ],
     [ "getIsDataMinimising", "interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html#a6aa7f8e094558f0343527c88d8cb2b1e", null ],
