@@ -1062,7 +1062,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<List<String>> getSupportedBluetoothProfiles();
 	/**
-	 * Indicates the highest version of Bluetooth the device supports.
+	 * This Property is no longer being supported. Please see Properties, SupportedBluetooth and SupportedBluetoothProfiles for the relevant data.
 	 */
 	AspectPropertyValue<String> getSupportedBluetoothVersion();
 	/**
