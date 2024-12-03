@@ -210,7 +210,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getSupportedBearers() { return getAs("supportedbearers", AspectPropertyValue.class, List.class); }
 	/**
-	 * Indicates the highest version of Bluetooth the device supports.
+	 * This Property is no longer being supported. Please see Properties, SupportedBluetooth and SupportedBluetoothProfiles for the relevant data.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
