@@ -350,9 +350,15 @@ public class DeviceDetectionHashEngine
 
     private void setEngineMetaData() {
         evidenceKeys = getKeysFromEngine(engine);
+        evidenceKeys.add(Constants.EVIDENCE_COOKIE_GHEV);
+        evidenceKeys.add(Constants.EVIDENCE_QUERY_GHEV);
+        evidenceKeys.add(Constants.EVIDENCE_COOKIE_SUA);
+        evidenceKeys.add(Constants.EVIDENCE_QUERY_SUA);
+
         evidenceKeyFilter = new EvidenceKeyFilterWhitelist(
             evidenceKeys,
             String.CASE_INSENSITIVE_ORDER);
+
         propertiesPopulated = false;
         // Populate these data file properties from the native engine.
         FiftyOneDataFile dataFileMetaData =

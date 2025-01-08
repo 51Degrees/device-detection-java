@@ -56,4 +56,21 @@ public class Constants {
 			"carried out in order to find a match. This is the number of nodes " +
 			"in the graph which have been visited.";
 	}
+
+	private static final String ghev = "gethighentropyvalues";
+	public static final String EVIDENCE_COOKIE_GHEV =
+			fiftyone.pipeline.core.Constants.EVIDENCE_COOKIE_PREFIX +
+					fiftyone.pipeline.core.Constants.EVIDENCE_SEPERATOR +
+					fiftyone.pipeline.engines.Constants.FIFTYONE_COOKIE_PREFIX + ghev;
+	public static final String EVIDENCE_QUERY_GHEV = fiftyone.pipeline.core.Constants.EVIDENCE_QUERY_PREFIX +
+			fiftyone.pipeline.core.Constants.EVIDENCE_SEPERATOR +
+			fiftyone.pipeline.engines.Constants.FIFTYONE_COOKIE_PREFIX + ghev;
+
+	private static final String sua = "structureduseragent";
+	public static final String EVIDENCE_COOKIE_SUA = fiftyone.pipeline.core.Constants.EVIDENCE_COOKIE_PREFIX +
+			fiftyone.pipeline.core.Constants.EVIDENCE_SEPERATOR +
+			fiftyone.pipeline.engines.Constants.FIFTYONE_COOKIE_PREFIX + sua;
+	public static final String EVIDENCE_QUERY_SUA = fiftyone.pipeline.core.Constants.EVIDENCE_QUERY_PREFIX +
+			fiftyone.pipeline.core.Constants.EVIDENCE_SEPERATOR +
+			fiftyone.pipeline.engines.Constants.FIFTYONE_COOKIE_PREFIX + sua;
 }
