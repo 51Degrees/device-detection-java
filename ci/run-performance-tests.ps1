@@ -4,7 +4,8 @@ param(
     [string]$Version = "0.0.0",
     [string]$Name,
     [Parameter(Mandatory=$true)]
-    [string]$RepoName
+    [string]$RepoName,
+    [string]$Branch = "main" # this is actually the examples branch, but the name has to just be 'Branch' to be recognized by run-repo-script.ps1
 )
 
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
@@ -18,7 +19,7 @@ try{
     if(!(Test-Path -Path $ExamplesDir)){
 
         Write-Output "Cloning '$ExamplesRepoName'"
-        ./steps/clone-repo.ps1 -RepoName "device-detection-java-examples"
+        ./steps/clone-repo.ps1 -RepoName "device-detection-java-examples" -Branch $Branch
 
         Write-Output "Moving TAC file for examples"
         $TacFile = [IO.Path]::Combine($RepoPath, "TAC-HashV41.hash") 
