@@ -18,4 +18,13 @@ if [[ $OSTYPE == darwin* ]]; then
 	cmake ../../src/main/cxx -DARCH=aarch64 -DCMAKE_OSX_ARCHITECTURES=arm64 -DBUILD_TESTING=OFF
 	echo "cmake build"
 	cmake --build . --target fiftyone-hash-java
+elif [[ $OSTYPE == linux* ]] && command -v zig >/dev/null; then
+	echo "additional ARM64 build"
+	export CC="zig cc -target aarch64-linux-gnu.2.26 -s" CXX="zig c++ -target aarch64-linux-gnu.2.26 -s"
+	echo "configure"
+	sed -i '/^if (NOT MSVC AND NOT APPLE)/,/^endif()/s/^/#/' ../../src/main/cxx/device-detection-cxx/src/common-cxx/CMakeLists.txt # 🤡
+	cmake ../../src/main/cxx -DARCH=aarch64 -DBUILD_TESTING=OFF --fresh
+	echo "cmake build"
+	cmake --build . --target fiftyone-hash-java --clean-first
+	sed -i '/^#if (NOT MSVC AND NOT APPLE)/,/^#endif()/s/^#//' ../../src/main/cxx/device-detection-cxx/src/common-cxx/CMakeLists.txt # 🤡
 fi
