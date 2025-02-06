@@ -62,3 +62,8 @@ The performance tests are located in the examples project, therefore, all of the
 The output of the Performance Tests is written to the console. To enable the parsing of this output, the "redirectTestOutputToFile" option must be enabled in the examples project. This ensures that the test output is saved to a file, making it accessible for further processing.
 
 The performance test results are then parsed and organized using a hashtable data structure. This approach facilitates the extraction of relevant metrics, such as detections per second and average milliseconds per detection that are then written to a file following the convention outlined in the [Design.md](https://github.com/51Degrees/common-ci/blob/gh-refact/design.md)
+
+## Linux ARM build specifics
+
+Currently Linux ARM builds use Zig to cross-compile the [device-detection-cxx](https://github.com/51Degrees/device-detection-cxx) library for older glibc version. See
+[PreBuild.sh](../device-detection.hash.engine.on-premise/src/main/cxx/PreBuild.sh) for details.
