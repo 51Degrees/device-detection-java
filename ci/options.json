@@ -23,8 +23,6 @@
     "Name": "Ubuntu_ARM_Java_11",
     "JavaSDKEnvVar": "JAVA_HOME_11_X64",
     "RunPerformance": true,
-    "Language": "zig",
-    "LanguageVersion": "0.13.0",
     "PackageRequirement" : true
   },
   {

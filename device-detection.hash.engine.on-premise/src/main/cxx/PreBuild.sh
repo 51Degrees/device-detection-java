@@ -2,12 +2,12 @@
 set -eu
 
 # A client uses Amazon Linux 2 based container with glibc 2.26. Until they
-# update we use Zig as a C/C++ cross-compiler to target that glibc version. Only
-# for ARM, as that's the platform the client is currently using.
-if [[ $OSTYPE == linux* && $(uname -m) == aarch64 ]] && command -v zig >/dev/null; then
+# update we use Zig as a C/C++ cross-compiler to target that glibc version.
+if [[ $OSTYPE == linux* ]] && command -v zig >/dev/null; then
 	echo "using zig cc to target GLIBC 2.26"
-	export CC="zig cc -target aarch64-linux-gnu.2.26 -s" CXX="zig c++ -target aarch64-linux-gnu.2.26 -s"
-	export CMAKE_LIBRARY_PATH=/lib/aarch64-linux-gnu
+	export CC="zig cc -target native-linux-gnu.2.26 -s" CXX="zig c++ -target native-linux-gnu.2.26 -s"
+	# Help CMake find libatomic on ARM, even though we shouldn't need it with Zig:
+	case $(uname -m) in aarch64) export CMAKE_LIBRARY_PATH=/lib/aarch64-linux-gnu; esac
 fi
 
 # mvn clean will delete target so that's the place to be building
