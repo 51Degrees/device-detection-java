@@ -16,5 +16,5 @@ jobs:
       org-name: ${{ github.event.repository.owner.login }}
     secrets:
       token: ${{ secrets.ACCESS_TOKEN }}
-      device-detection-key: ${{ secrets.DEVICE_DETECTION_KEY }}
-      device-detection-url: ${{ secrets.DEVICE_DETECTION_URL }}
+      data-key: ${{ secrets.DEVICE_DETECTION_KEY }}
+      data-url: ${{ secrets.DEVICE_DETECTION_URL }}
