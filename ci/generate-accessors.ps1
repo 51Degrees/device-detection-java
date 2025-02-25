@@ -1,8 +1,10 @@
+param (
+    [Parameter(Mandatory)][string]$RepoName,
+    [string]$DataFile = "$RepoName/TAC-HashV41.hash"
+)
+$ErrorActionPreference = "Stop"
 
-./tools/ci/generate-dd-accessors.ps1
+./tools/ci/generate-accessors.ps1 @PSBoundParameters
 
-$ToolsPath = [IO.Path]::Combine($pwd, "tools")
-$DdPath = [IO.Path]::Combine($pwd, "device-detection-java")
-
-Copy-Item "$ToolsPath/Java/DeviceDataBase.java" "$DdPath/device-detection.shared/src/main/java/fiftyone/devicedetection/shared/"
-Copy-Item "$ToolsPath/Java/DeviceData.java" "$DdPath/device-detection.shared/src/main/java/fiftyone/devicedetection/shared/"
+Copy-Item "tools/Java/DeviceDataBase.java" "device-detection-java/device-detection.shared/src/main/java/fiftyone/devicedetection/shared/"
+Copy-Item "tools/Java/DeviceData.java" "device-detection-java/device-detection.shared/src/main/java/fiftyone/devicedetection/shared/"
