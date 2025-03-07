@@ -97,9 +97,6 @@ set_target_properties(fiftyone-hash-java
     OUTPUT_NAME "DeviceDetectionHashEngine-${OS}-${ARCH}"
 )
 target_link_libraries(fiftyone-hash-java fiftyone-hash-cxx)
-if (NOT MSVC)
-    target_compile_options(fiftyone-hash-java INTERFACE "-static-libgcc -static-libstdc++")
-endif()
 
 if (MSVC)
 	target_compile_options(fiftyone-hash-java PRIVATE "/D_CRT_SECURE_NO_WARNINGS" "/W4" "/WX")
@@ -115,5 +112,6 @@ if(APPLE)
     target_include_directories(fiftyone-hash-java PUBLIC ${JAVA_INCLUDE_PATH}/darwin)
 endif()
 if(UNIX AND NOT APPLE)
+    target_link_options(fiftyone-hash-java PRIVATE "-static-libgcc" "-static-libstdc++")
     target_include_directories(fiftyone-hash-java PUBLIC ${JAVA_INCLUDE_PATH}/linux)
 endif()
