@@ -2,6 +2,14 @@ name: Nightly PRs to Main
 
 on:
   workflow_dispatch:
+    inputs:
+      dryrun:
+        description: Dry Run
+        type: boolean
+        default: false
+      prs:
+        description: PRs (comma-separated)
+        type: string
   workflow_run:
     workflows: [Nightly Submodule Update]
     types: [completed]
@@ -13,6 +21,8 @@ jobs:
     with:
       repo-name: ${{ github.event.repository.name }}
       org-name: ${{ github.event.repository.owner.login }}
+      dryrun: ${{ inputs.dryrun || false }}
+      prs: ${{ inputs.prs }}
     secrets:
       token: ${{ secrets.ACCESS_TOKEN }}
       DeviceDetection: ${{ secrets.DEVICE_DETECTION_KEY }}
