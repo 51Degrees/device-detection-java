@@ -105,6 +105,19 @@ running `mvn` by adding following options:
 
 This is not recommended unless absolutely necessary and should be used with caution.
 
+### Build for older Linux distributions
+As outlined in the [Runners Policy](https://github.com/51Degrees/common-ci/blob/main/README.md#runners-policy), GitHub standard runners define the minimum versions of glibc and libstdc++. If your system uses older versions, you’ll need to build the library in your own environment.
+
+You can do this using Docker or Podman. An example Dockerfile is provided, targeting Ubuntu 16.04 by default, but it can be easily adapted for other distributions or Java versions.
+
+To build the library, run:
+
+```sh
+docker build --output /tmp/51d-jars -f Dockerfile.example .
+```
+
+The compiled JARs will be output to /tmp/51d-jars.
+
 ## Tests
 
 You will need [resource keys](https://51degrees.com/documentation/_info__resource_keys.html)

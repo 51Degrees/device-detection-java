@@ -1,0 +1,23 @@
+FROM ubuntu:16.04 AS build
+RUN apt-get update && apt-get -y upgrade && apt-get -y install curl build-essential openjdk-8-jdk git && rm -rf /var/lib/apt/lists/*
+
+ARG BUILD_CMAKE_VERSION=3.31.6
+RUN mkdir -p /opt/cmake \
+	&& curl -fsSL "https://github.com/Kitware/CMake/releases/download/v$BUILD_CMAKE_VERSION/cmake-$BUILD_CMAKE_VERSION-linux-$(uname -m).tar.gz" \
+	| tar -xzC /opt/cmake --strip-components=1 \
+	&& ln -sf /opt/cmake/bin/* /usr/local/bin/
+
+ARG BUILD_MAVEN_VERSION=3.9.9
+RUN mkdir -p /opt/maven \
+	&& curl -fsSL "https://dlcdn.apache.org/maven/maven-3/$BUILD_MAVEN_VERSION/binaries/apache-maven-$BUILD_MAVEN_VERSION-bin.tar.gz" \
+	| tar -xzC /opt/maven --strip-components=1 \
+	&& ln -sf /opt/maven/bin/* /usr/local/bin/
+
+COPY . /src
+WORKDIR /src
+RUN mvn -B versions:set -DnewVersion="$(git describe --tags)" \
+	&& JAVA_HOME=/usr/lib/jvm/java-8-openjdk-$(dpkg --print-architecture) mvn -B install -f pom.xml -DXmx2048m -DskipTests -DfailIfNoTests=false
+
+FROM scratch
+COPY --from=build /src/*/target/*.jar /
+
