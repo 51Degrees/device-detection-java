@@ -116,7 +116,45 @@ To build the library, run:
 docker build --output /tmp/51d-jars -f Dockerfile.example .
 ```
 
-The compiled JARs will be output to /tmp/51d-jars.
+The compiled JARs will be output to `/tmp/51d-jars`.  Make sure you specify the correct version and paths to these dependencies in your pom.xml:
+```xml
+<properties>
+    <fiftyone-device-detection.version>4.4-SNAPSHOT</fiftyone-device-detection.version>
+</properties>
+<dependency>
+    <groupId>com.51degrees</groupId>
+    <artifactId>device-detection.hash.engine.on-premise</artifactId>
+    <version>${fiftyone-device-detection.version}</version>
+    <scope>system</scope>
+    <systemPath>${basedir}/lib/device-detection.hash.engine.on-premise-${fiftyone-device-detection.version}.jar</systemPath>
+</dependency>
+
+<dependency>
+    <groupId>com.51degrees</groupId>
+    <artifactId>device-detection</artifactId>
+    <version>${fiftyone-device-detection.version}</version>
+    <scope>system</scope>
+    <systemPath>${basedir}/lib/device-detection-${fiftyone-device-detection.version}.jar</systemPath>
+</dependency>
+
+<dependency>
+    <groupId>com.51degrees</groupId>
+    <artifactId>device-detection.shared</artifactId>
+    <version>${fiftyone-device-detection.version}</version>
+    <scope>system</scope>
+    <systemPath>${basedir}/lib/device-detection.shared-${fiftyone-device-detection.version}.jar</systemPath>
+</dependency>
+```
+
+and also add a transitive dependency these jars need (would have been added by Maven if we used Maven package instead of .jars): 
+```xml
+<!-- make sure you use the latest from https://mvnrepository.com/artifact/com.51degrees/pipeline.engines.fiftyone -->
+<dependency>
+    <groupId>com.51degrees</groupId>
+    <artifactId>pipeline.engines.fiftyone</artifactId>
+    <version>4.4.65</version>
+</dependency>
+```
 
 ## Tests
 
