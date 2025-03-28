@@ -127,6 +127,11 @@ $(document).ready(function(){initNavTree('md__home_runner_work_device-detection-
 <li><code>-DwindowsSDKVersion=[ Windows 10 SDK Version ]</code></li>
 </ul>
 <p>This is not recommended unless absolutely necessary and should be used with caution.</p>
+<h3>Build for older Linux distributions</h3>
+<p>As outlined in the <a href="https://github.com/51Degrees/common-ci/blob/main/README.md#runners-policy">Runners Policy</a>, GitHub standard runners define the minimum versions of glibc and libstdc++. If your system uses older versions, you’ll need to build the library in your own environment.</p>
+<p>You can do this using Docker or Podman. An example Dockerfile is provided, targeting Ubuntu 16.04 by default, but it can be easily adapted for other distributions or Java versions.</p>
+<p>To build the library, run:</p>
+<div class="c-code__block c-code__block--outline"><div class="c-code__line">docker build --output /tmp/51d-jars -f Dockerfile.example .</div></div><p>The compiled JARs will be output to /tmp/51d-jars.</p>
 <h2>Tests</h2>
 <p>You will need <a href="https://51degrees.com/documentation/_info__resource_keys.html">resource keys</a> (see above) to complete the tests and run examples which include exercising the cloud API.</p>
 <p>To verify the code:</p>
