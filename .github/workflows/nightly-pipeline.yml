@@ -5,14 +5,14 @@ on:
     inputs:
       dryrun:
         type: boolean
-        default: false
+        default: true
   schedule:
     - cron: '0 3 * * *'
 
 jobs:
   DataFileChange:
     name: Nightly Data File Change
-    uses: 51Degrees/common-ci/.github/workflows/nightly-data-file-change.yml@main
+    uses: 51Degrees/common-ci/.github/workflows/nightly-data-file-change.yml@fix-compare-performance-images
     with:
       repo-name: ${{ github.event.repository.name }}
       org-name: ${{ github.event.repository.owner.login }}
@@ -24,7 +24,7 @@ jobs:
 
   PackageUpdate:
     name: Nightly Package Update
-    uses: 51Degrees/common-ci/.github/workflows/nightly-package-update.yml@main
+    uses: 51Degrees/common-ci/.github/workflows/nightly-package-update.yml@fix-compare-performance-images
     with:
       repo-name: ${{ github.event.repository.name }}
       org-name: ${{ github.event.repository.owner.login }}
@@ -34,7 +34,7 @@ jobs:
 
   DocumentationUpdate:
     name: Nightly Documentation Update
-    uses: 51Degrees/common-ci/.github/workflows/nightly-documentation-update.yml@main
+    uses: 51Degrees/common-ci/.github/workflows/nightly-documentation-update.yml@fix-compare-performance-images
     with:
       repo-name: ${{ github.event.repository.name }}
       org-name: ${{ github.event.repository.owner.login }}
@@ -45,7 +45,7 @@ jobs:
 
   SubmoduleUpdate:
     name: Nightly Submodule Update
-    uses: 51Degrees/common-ci/.github/workflows/nightly-submodule-update.yml@main
+    uses: 51Degrees/common-ci/.github/workflows/nightly-submodule-update.yml@fix-compare-performance-images
     with:
       repo-name: ${{ github.event.repository.name }}
       org-name: ${{ github.event.repository.owner.login }}
@@ -57,11 +57,12 @@ jobs:
     if: ${{ !cancelled() }}
     needs: [DataFileChange, PackageUpdate, DocumentationUpdate, SubmoduleUpdate]
     name: Nightly Pull Requests
-    uses: 51Degrees/common-ci/.github/workflows/nightly-pull-requests.yml@main
+    uses: 51Degrees/common-ci/.github/workflows/nightly-pull-requests.yml@fix-compare-performance-images
     with:
       repo-name: ${{ github.event.repository.name }}
       org-name: ${{ github.event.repository.owner.login }}
       dryrun: ${{ inputs.dryrun || false }}
+      common-ci-ref: fix-compare-performance-images
       cache-assets: true
     secrets:
       token: ${{ secrets.ACCESS_TOKEN }}
@@ -73,11 +74,12 @@ jobs:
     if: ${{ !cancelled() }}
     needs: PullRequests
     name: Nightly Publish
-    uses: 51Degrees/common-ci/.github/workflows/nightly-publish.yml@main
+    uses: 51Degrees/common-ci/.github/workflows/nightly-publish.yml@fix-compare-performance-images
     with:
       repo-name: ${{ github.event.repository.name }}
       org-name: ${{ github.event.repository.owner.login }}
       dryrun: ${{ inputs.dryrun || false }}
+      common-ci-ref: fix-compare-performance-images
       cache-assets: true
     secrets:
       token: ${{ secrets.ACCESS_TOKEN }}
