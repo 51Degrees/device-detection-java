@@ -21,8 +21,8 @@
  * ********************************************************************* */
 
 package fiftyone.devicedetection.shared;
-import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.core.data.types.JavaScript;
+import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.engines.data.AspectData;
 import fiftyone.pipeline.engines.data.AspectDataBase;
 import fiftyone.pipeline.engines.data.AspectPropertyMetaData;
