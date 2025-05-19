@@ -2,7 +2,6 @@
 param(
     [Parameter(Mandatory=$true)]
     [string]$RepoName,
-    [string]$ProjectDir = ".",
     [string]$Name,
     [Parameter(Mandatory=$true)]
     [string]$Version,
@@ -31,7 +30,6 @@ foreach($file in $Files){
 
 ./java/build-package.ps1 `
     -RepoName $RepoName `
-    -ProjectDir $ProjectDir `
     -Name $Name `
     -Version $Version `
     -ExtraArgs "-DskipNativeBuild=true" `
