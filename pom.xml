@@ -317,21 +317,6 @@
          </plugins>
     </reporting>
 
-    <distributionManagement>
-        <repository>
-            <id>${publishrepository.id}</id>
-            <url>${publishrepository.url}</url>
-        </repository>
-        <snapshotRepository>
-            <id>${snapshot-repository.id}</id>
-            <url>${snapshot-repository.url}</url>
-        </snapshotRepository>
-        <site>
-            <id>local</id>
-            <url>file:///${maven.multiModuleProjectDirectory}/site/</url>
-        </site>
-    </distributionManagement>
-
     <licenses>
         <license>
             <name>European Union Public License 1.2</name>
