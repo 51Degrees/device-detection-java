@@ -84,7 +84,7 @@ jobs:
       DeviceDetection: ${{ secrets.DEVICE_DETECTION_KEY }}
       DeviceDetectionUrl: ${{ secrets.DEVICE_DETECTION_URL }}
       TestResourceKey: ${{ secrets.SUPER_RESOURCE_KEY}}
-      MavenSettings: ${{ secrets.JAVA_STAGING_SETTINGS_BASE64 }}
+      MavenSettings: ${{ secrets.MAVEN_SETTINGS }}
       JavaGpgKeyPassphrase: ${{ secrets.JAVA_GPG_KEY_PASSPHRASE }}
       JavaPGP: ${{ secrets.JAVA_KEY_PGP_FILE }}
       CodeSigningKeyVaultName: ${{ secrets.CODE_SIGNING_KEY_VAULT_NAME }}
