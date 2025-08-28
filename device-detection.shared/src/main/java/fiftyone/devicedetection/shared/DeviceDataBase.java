@@ -1136,7 +1136,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getHardwareAudioCodecsDecode() { return getAs("hardwareaudiocodecsdecode", AspectPropertyValue.class, List.class, String.class); }
 	/**
-	 * Refers to the list of video codecs supported for decoding by a Chipset. An video codec is a program used to playback digital video files. The values of this property are the codec's common name. 
+	 * Refers to the list of video codecs supported for decoding by a Chipset. A video codec is a program used to playback digital video files. The values of this property are the codec's common name. 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1244,7 +1244,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getHardwareAudioCodecsEncode() { return getAs("hardwareaudiocodecsencode", AspectPropertyValue.class, List.class, String.class); }
 	/**
-	 * Refers to the list of video codecs supported for encoding by a Chipset. An video codec is a program used to capture digital video files. The values of this property are the codec's common name. 
+	 * Refers to the list of video codecs supported for encoding by a Chipset. A video codec is a program used to capture digital video files. The values of this property are the codec's common name. 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
