@@ -410,11 +410,11 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<String> getHardwareVendor();
 	/**
-	 * Refers to the list of video codecs supported for decoding by a Chipset. An video codec is a program used to playback digital video files. The values of this property are the codec's common name. 
+	 * Refers to the list of video codecs supported for decoding by a Chipset. A video codec is a program used to playback digital video files. The values of this property are the codec's common name. 
 	 */
 	AspectPropertyValue<List<String>> getHardwareVideoCodecsDecode();
 	/**
-	 * Refers to the list of video codecs supported for encoding by a Chipset. An video codec is a program used to capture digital video files. The values of this property are the codec's common name. 
+	 * Refers to the list of video codecs supported for encoding by a Chipset. A video codec is a program used to capture digital video files. The values of this property are the codec's common name. 
 	 */
 	AspectPropertyValue<List<String>> getHardwareVideoCodecsEncode();
 	/**
