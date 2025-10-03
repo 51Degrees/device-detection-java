@@ -554,6 +554,10 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getIsMobile();
 	/**
+	 * Indicates whether the PlatformVendor is providing a frozen or incorrect platform version in the User-Agent evidence. When True, the PlatformVersion will be the most likely version and may be different to the value provided in the evidence.
+	 */
+	AspectPropertyValue<String> getIsPlatformVersionFrozen();
+	/**
 	 * Indicates whether the device screen is foldable or not. If the device does not have a screen or the screen is not foldable, 'False' is returned.
 	 */
 	AspectPropertyValue<Boolean> getIsScreenFoldable();
@@ -786,7 +790,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<String> getPlatformVendor();
 	/**
-	 * Indicates the version or subversion of the software platform.
+	 * Indicates the version or subversion of the software platform. Where the PlatformVendor is Apple, the PlatformVersion returned will be the most likely version. It may be different to the value provided in the evidence.
 	 */
 	AspectPropertyValue<String> getPlatformVersion();
 	/**
