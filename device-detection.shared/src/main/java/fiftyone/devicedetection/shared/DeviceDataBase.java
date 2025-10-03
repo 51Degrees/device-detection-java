@@ -122,7 +122,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<String> getPlatformName() { return getAs("platformname", AspectPropertyValue.class, String.class); }
 	/**
-	 * Indicates the version or subversion of the software platform.
+	 * Indicates the version or subversion of the software platform. Where the PlatformVendor is Apple, the PlatformVersion returned will be the most likely version. It may be different to the value provided in the evidence.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1693,6 +1693,12 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getIsArtificialIntelligence() { return getAs("isartificialintelligence", AspectPropertyValue.class, String.class); }
+	/**
+	 * Indicates whether the PlatformVendor is providing a frozen or incorrect platform version in the User-Agent evidence. When True, the PlatformVersion will be the most likely version and may be different to the value provided in the evidence.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getIsPlatformVersionFrozen() { return getAs("isplatformversionfrozen", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates the number of hash nodes matched within the evidence.
 	 */
