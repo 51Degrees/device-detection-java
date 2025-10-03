@@ -131,6 +131,7 @@ var classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base =
     [ "getIsHardwareGroup", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#ac6ca7d30f55cb6681aa717c5737f704a", null ],
     [ "getIsMediaHub", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a55c71a75613d47886a27e9b878709432", null ],
     [ "getIsMobile", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a2a417251c9ea83c0772aa6def34b355a", null ],
+    [ "getIsPlatformVersionFrozen", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a26b1aa094587529cfcd3205b59cb63d1", null ],
     [ "getIsScreenFoldable", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a1967d7e62120857b38f000ed4fbcdfa7", null ],
     [ "getIsSmallScreen", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#afa70dd117b5072b08d45bf3961e46115", null ],
     [ "getIsSmartPhone", "classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a4963d9db7f810b22a988fa8d689bab57", null ],
