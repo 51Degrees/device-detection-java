@@ -1058,7 +1058,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Boolean> getSupportsPhoneCalls() { return getAs("supportsphonecalls", AspectPropertyValue.class, Boolean.class); }
 	/**
-	 * Indicates if a web page is accessed from an application whose main function is not browsing the World Wide Web or managing emails, e.g. the Facebook App. The application must be downloaded and installed onto the device from an app marketplace such as Apple's App Store or the Google Play Store, or via a third party as an .apk file or similar. This property will return a 'False' value for mobile browsers such as Chrome Mobile or email browsers (such as Hotmail).
+	 * Indicates if the browser or app is being used to access a web page through a WebView.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
