@@ -155,6 +155,11 @@ and also add a transitive dependency these jars need (would have been added by M
     <version>4.4.65</version>
 </dependency>
 ```
+## Examples
+
+Examples can be found in
+[device-detection-java-examples](https://github.com/51Degrees/device-detection-java-examples)
+repository.
 
 ## Tests
 
