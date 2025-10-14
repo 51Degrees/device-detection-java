@@ -1433,7 +1433,7 @@ AspectPropertyValue&lt;&#160;String&#160;&gt;<!-- insertMemberAlign -->
 <tr class="c-table__row memitem:a8f78e3a25cb10d8b6010f069c6589927"><td class="c-table__cell">AspectPropertyValue&lt;&#160;List&lt;&#160;String&#160;&gt;&#160;&gt;<!-- insertMemberAlign -->
 &#160;</td><td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a8f78e3a25cb10d8b6010f069c6589927">getNativeModel</a> ()
 <!-- startMemberDescription -->
-<div class="c-table__desc memdesc:a8f78e3a25cb10d8b6010f069c6589927">Refers to the 'Model' value returned for Android Google Play native applications, when the android.os.Build.MODEL javascript is used to display the class.  <a href="#a8f78e3a25cb10d8b6010f069c6589927">More...</a><!-- endMemberDescription -->
+<div class="c-table__desc memdesc:a8f78e3a25cb10d8b6010f069c6589927">Refers to the 'Model' value returned for Android Google Play or Amazon native applications when the android.os.Build.MODEL javascript is used to display the class.  <a href="#a8f78e3a25cb10d8b6010f069c6589927">More...</a><!-- endMemberDescription -->
 </div></td></tr>
 <!-- member dec start -->
 <!-- startMemberItem() -->
@@ -2165,10 +2165,10 @@ AspectPropertyValue&lt;&#160;String&#160;&gt;<!-- insertMemberAlign -->
 </div></td></tr>
 <!-- member dec start -->
 <!-- startMemberItem() -->
-<tr class="c-table__row memitem:a26b1aa094587529cfcd3205b59cb63d1"><td class="c-table__cell">AspectPropertyValue&lt;&#160;String&#160;&gt;<!-- insertMemberAlign -->
-&#160;</td><td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a26b1aa094587529cfcd3205b59cb63d1">getIsPlatformVersionFrozen</a> ()
+<tr class="c-table__row memitem:a9f2efc4371e3e58e8e255010efa17b6f"><td class="c-table__cell">AspectPropertyValue&lt;&#160;Boolean&#160;&gt;<!-- insertMemberAlign -->
+&#160;</td><td class="c-table__cell"><a class="el" href="classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html#a9f2efc4371e3e58e8e255010efa17b6f">getIsPlatformVersionFrozen</a> ()
 <!-- startMemberDescription -->
-<div class="c-table__desc memdesc:a26b1aa094587529cfcd3205b59cb63d1">Indicates whether the PlatformVendor is providing a frozen or incorrect platform version in the User-Agent evidence.  <a href="#a26b1aa094587529cfcd3205b59cb63d1">More...</a><!-- endMemberDescription -->
+<div class="c-table__desc memdesc:a9f2efc4371e3e58e8e255010efa17b6f">Indicates whether the PlatformVendor is providing a frozen or incorrect platform version in the User-Agent evidence.  <a href="#a9f2efc4371e3e58e8e255010efa17b6f">More...</a><!-- endMemberDescription -->
 </div></td></tr>
 <!-- member dec start -->
 <!-- startMemberItem() -->
@@ -4517,9 +4517,9 @@ Protected Member Functions</h2>
 </div>
 </article>
 <article class="c-member">
-<a id="a26b1aa094587529cfcd3205b59cb63d1"></a><!-- startMemberDoc -->
+<a id="a9f2efc4371e3e58e8e255010efa17b6f"></a><!-- startMemberDoc -->
 
-<h2 class="c-member__title"><span class="c-member__anchor"><a href="#a26b1aa094587529cfcd3205b59cb63d1">&#9670;&nbsp;</a></span>getIsPlatformVersionFrozen()</h2>
+<h2 class="c-member__title"><span class="c-member__anchor"><a href="#a9f2efc4371e3e58e8e255010efa17b6f">&#9670;&nbsp;</a></span>getIsPlatformVersionFrozen()</h2>
 
 <div class="c-member__main">
 <div class="c-member__head">
@@ -4528,7 +4528,7 @@ Protected Member Functions</h2>
         <div class="g-table g-table--overflow">
           <table class="c-table c-table--article">
             <tr class="c-table__row">
-              <td class="c-table__cell">AspectPropertyValue&lt;String&gt; fiftyone.devicedetection.shared.DeviceDataBase.getIsPlatformVersionFrozen <!-- endMemberDocName -->
+              <td class="c-table__cell">AspectPropertyValue&lt;Boolean&gt; fiftyone.devicedetection.shared.DeviceDataBase.getIsPlatformVersionFrozen <!-- endMemberDocName -->
 </td>
 <!-- startParameterList -->
           <td>(</td>
@@ -4548,7 +4548,7 @@ Protected Member Functions</h2>
 <p>Indicates whether the PlatformVendor is providing a frozen or incorrect platform version in the User-Agent evidence. </p>
 <p>When True, the PlatformVersion will be the most likely version and may be different to the value provided in the evidence. </p>
 
-<p>Implements <a class="el" href="interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html#a5c269ee1970087287497643ed71f3ae4">fiftyone.devicedetection.shared.DeviceData</a>.</p>
+<p>Implements <a class="el" href="interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html#a32536f7ddd43ecf5319474f38a383506">fiftyone.devicedetection.shared.DeviceData</a>.</p>
 <!-- endIndent -->
 
 </div>
@@ -5191,8 +5191,8 @@ Protected Member Functions</h2>
 </div><!-- startIndent -->
 <div class="c-member__body">
 
-<p>Refers to the 'Model' value returned for Android Google Play native applications, when the android.os.Build.MODEL javascript is used to display the class. </p>
-<p>For Apple devices this property refers to the device identifier which appears in the native application from the developer usage log, for example 'iPad5,4'. </p>
+<p>Refers to the 'Model' value returned for Android Google Play or Amazon native applications when the android.os.Build.MODEL javascript is used to display the class. </p>
+<p>For Apple devices, this property refers to the device identifier, for example 'iPad5,4'. This may be obtained by calling sysctlbyname and passing hw.machine as a name parameter or alternatively by obtaining "machine" member from a populated utsname structure using uname API. </p>
 
 <p>Implements <a class="el" href="interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html#a4bcaac951a25dc08281673e7c629b920">fiftyone.devicedetection.shared.DeviceData</a>.</p>
 <!-- endIndent -->
