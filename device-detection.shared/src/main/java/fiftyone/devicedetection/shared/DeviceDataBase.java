@@ -1094,7 +1094,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getNativeDevice() { return getAs("nativedevice", AspectPropertyValue.class, List.class, String.class); }
 	/**
-	 * Refers to the 'Model' value returned for Android Google Play native applications, when the android.os.Build.MODEL javascript is used to display the class. For Apple devices this property refers to the device identifier which appears in the native application from the developer usage log, for example 'iPad5,4'.
+	 * Refers to the 'Model' value returned for Android Google Play or Amazon native applications when the android.os.Build.MODEL javascript is used to display the class. For Apple devices, this property refers to the device identifier, for example 'iPad5,4'. This may be obtained by calling sysctlbyname and passing hw.machine as a name parameter or alternatively by obtaining "machine" member from a populated utsname structure using uname API.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1698,7 +1698,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public AspectPropertyValue<String> getIsPlatformVersionFrozen() { return getAs("isplatformversionfrozen", AspectPropertyValue.class, String.class); }
+	public AspectPropertyValue<Boolean> getIsPlatformVersionFrozen() { return getAs("isplatformversionfrozen", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates the number of hash nodes matched within the evidence.
 	 */
