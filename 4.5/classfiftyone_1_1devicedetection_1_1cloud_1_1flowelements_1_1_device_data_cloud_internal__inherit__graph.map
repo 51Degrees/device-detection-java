@@ -1,0 +1,8 @@
+<map id="fiftyone.devicedetection.cloud.flowelements.DeviceDataCloudInternal" name="fiftyone.devicedetection.cloud.flowelements.DeviceDataCloudInternal">
+<area shape="rect" id="node1" title="Internal implementation of the DeviceDataCloud interface." alt="" coords="732,39,1047,80"/>
+<area shape="rect" id="node2" href="$classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html" title=" " alt="" coords="441,5,672,47"/>
+<area shape="rect" id="node3" title=" " alt="" coords="201,13,331,39"/>
+<area shape="rect" id="node4" href="$interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html" title="Interface exposing typed accessors for properties related to a device returned by a device detection ..." alt="" coords="151,67,381,108"/>
+<area shape="rect" id="node6" href="$interfacefiftyone_1_1devicedetection_1_1cloud_1_1data_1_1_device_data_cloud.html" title="Cloud specific interface for DeviceData." alt="" coords="429,71,684,112"/>
+<area shape="rect" id="node5" title=" " alt="" coords="5,74,103,101"/>
+</map>

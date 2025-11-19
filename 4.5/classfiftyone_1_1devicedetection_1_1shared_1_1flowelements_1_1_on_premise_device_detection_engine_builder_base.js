@@ -1,0 +1,8 @@
+var classfiftyone_1_1devicedetection_1_1shared_1_1flowelements_1_1_on_premise_device_detection_engine_builder_base =
+[
+    [ "OnPremiseDeviceDetectionEngineBuilderBase", "classfiftyone_1_1devicedetection_1_1shared_1_1flowelements_1_1_on_premise_device_detection_engine_builder_base.html#af2fc7695f7194ce3a9b8bf110377f28c", null ],
+    [ "OnPremiseDeviceDetectionEngineBuilderBase", "classfiftyone_1_1devicedetection_1_1shared_1_1flowelements_1_1_on_premise_device_detection_engine_builder_base.html#ac576c5a471f8a592eb54550b28f2ea2f", null ],
+    [ "OnPremiseDeviceDetectionEngineBuilderBase", "classfiftyone_1_1devicedetection_1_1shared_1_1flowelements_1_1_on_premise_device_detection_engine_builder_base.html#a884cc77dc89d2bf0fa9ffa5a5a37a185", null ],
+    [ "setAllowUnmatched", "classfiftyone_1_1devicedetection_1_1shared_1_1flowelements_1_1_on_premise_device_detection_engine_builder_base.html#ac87ce3bd35b11ee67bdcec3acbdf5490", null ],
+    [ "setDifference", "classfiftyone_1_1devicedetection_1_1shared_1_1flowelements_1_1_on_premise_device_detection_engine_builder_base.html#a83e4eea44ba5899674454df4269e92df", null ]
+];

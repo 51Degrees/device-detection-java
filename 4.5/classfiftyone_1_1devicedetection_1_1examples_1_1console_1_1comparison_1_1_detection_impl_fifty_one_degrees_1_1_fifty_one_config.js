@@ -1,0 +1,4 @@
+var classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_fifty_one_degrees_1_1_fifty_one_config =
+[
+    [ "FiftyOneConfig", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_fifty_one_degrees_1_1_fifty_one_config.html#a55f6557aa17e6d0998927350eafed5e9", null ]
+];

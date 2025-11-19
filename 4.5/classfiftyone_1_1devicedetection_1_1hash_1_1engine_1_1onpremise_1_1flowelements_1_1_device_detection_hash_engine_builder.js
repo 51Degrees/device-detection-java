@@ -1,0 +1,19 @@
+var classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder =
+[
+    [ "DeviceDetectionHashEngineBuilder", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a9fe972c51e2152be77cdf4aefed7bc7a", null ],
+    [ "DeviceDetectionHashEngineBuilder", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a946bf7cd42a906950dbcc9816d6c436f", null ],
+    [ "DeviceDetectionHashEngineBuilder", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a5ce6fa34370c06d4b34b83c6a601aaf6", null ],
+    [ "getDefaultDataDownloadType", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#aaf35f038fa3d7cb6acf12d8135ea58af", null ],
+    [ "newEngine", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a42242516b52d6a7897f0a4d2f999ca78", null ],
+    [ "setAllowUnmatched", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a01b479fa48ede7ce07dd8e4aa71ee058", null ],
+    [ "setCache", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a479f4aaa0bb49de9fc02313da50d6b9a", null ],
+    [ "setConcurrency", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a05529f2623e61c5482fc3efe3c752d22", null ],
+    [ "setDifference", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a52796bd87f8659342d3ea92f3960c444", null ],
+    [ "setDrift", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a034d604fe7fc90720bd5edcdd12d4c5b", null ],
+    [ "setPerformanceProfile", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a3d1dbb50c6f976390e2b91f792c0ecab", null ],
+    [ "setPerformanceProfile", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a2c1ebc35e85cb780b2f4c1ae56915ce1", null ],
+    [ "setReuseTempFile", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a0425b996a8af0b0126b0dfd2018b3ce8", null ],
+    [ "setUpdateMatchedUserAgent", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a621ee7dca5201509b77704458193e902", null ],
+    [ "setUsePerformanceGraph", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a226ae7d24d29eb784049aca33b135624", null ],
+    [ "setUsePredictiveGraph", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_detection_hash_engine_builder.html#a7aa88464222477c443db125b768f81cf", null ]
+];

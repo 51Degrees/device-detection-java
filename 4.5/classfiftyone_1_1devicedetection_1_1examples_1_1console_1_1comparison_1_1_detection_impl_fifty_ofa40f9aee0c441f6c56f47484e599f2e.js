@@ -1,0 +1,4 @@
+var classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_fifty_ofa40f9aee0c441f6c56f47484e599f2e =
+[
+    [ "getVendorId", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_fifty_ofa40f9aee0c441f6c56f47484e599f2e.html#a44176bb2a9b0fac5623fb13a7013c770", null ]
+];

@@ -1,0 +1,12 @@
+<map id="fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDataHashDefault" name="fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDataHashDefault">
+<area shape="rect" id="node1" title="Internal implementation of the DeviceDataHash interface." alt="" coords="1532,64,1963,105"/>
+<area shape="rect" id="node2" href="$classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base_on_premise.html" title="Base class used for all 51Degrees on&#45;premise device detection results classes." alt="" coords="1252,64,1483,105"/>
+<area shape="rect" id="node3" href="$classfiftyone_1_1devicedetection_1_1shared_1_1_device_data_base.html" title=" " alt="" coords="601,64,832,105"/>
+<area shape="rect" id="node4" title=" " alt="" coords="203,79,332,106"/>
+<area shape="rect" id="node5" href="$interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html" title="Interface exposing typed accessors for properties related to a device returned by a device detection ..." alt="" coords="152,9,383,51"/>
+<area shape="rect" id="node9" href="$interfacefiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1data_1_1_device_data_hash.html" title="Hash specific interface for DeviceData." alt="" coords="856,5,1228,47"/>
+<area shape="rect" id="node6" title=" " alt="" coords="5,17,103,43"/>
+<area shape="rect" id="node7" title=" " alt="" coords="609,130,825,157"/>
+<area shape="rect" id="node8" title=" " alt="" coords="242,130,293,157"/>
+<area shape="rect" id="node10" title=" " alt="" coords="1309,130,1425,157"/>
+</map>

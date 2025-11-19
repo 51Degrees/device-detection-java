@@ -1,0 +1,10 @@
+var classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_device_detection_hash_engine_module =
+[
+    [ "Evidence_AddFromBytes", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_device_detection_hash_engine_module.html#a8ae5592c8e2fb6b74b44cd84a325bd91", null ],
+    [ "Results_ContainsProperty", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_device_detection_hash_engine_module.html#a603e9606d56a51650f5760d92823a649", null ],
+    [ "Results_GetValueAsBool", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_device_detection_hash_engine_module.html#ad3cc7e701e36f0c62bca8896f64c8946", null ],
+    [ "Results_GetValueAsDouble", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_device_detection_hash_engine_module.html#a5345911e246e0826d5a30d0c37eb36c2", null ],
+    [ "Results_GetValueAsInteger", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_device_detection_hash_engine_module.html#ae1432beb4ef10f520bab9bd8b2e4fff6", null ],
+    [ "Results_GetValueAsString", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_device_detection_hash_engine_module.html#a6bed27cc9779ebc09c5d1ab0fe25499f", null ],
+    [ "Results_GetValues", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_device_detection_hash_engine_module.html#aa71eeb03eb32f1cf9dae783c8cdb2717", null ]
+];

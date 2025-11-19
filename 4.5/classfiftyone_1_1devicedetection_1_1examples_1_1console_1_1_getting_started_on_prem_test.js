@@ -1,0 +1,4 @@
+var classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1_getting_started_on_prem_test =
+[
+    [ "gettingStartedOnPremTest", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1_getting_started_on_prem_test.html#a65ae7fb64a94e9da7a5c8cef1f62d54e", null ]
+];

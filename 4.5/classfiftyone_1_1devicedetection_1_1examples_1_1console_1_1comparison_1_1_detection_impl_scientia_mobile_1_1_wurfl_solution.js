@@ -1,0 +1,7 @@
+var classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_scientia_mobile_1_1_wurfl_solution =
+[
+    [ "close", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_scientia_mobile_1_1_wurfl_solution.html#a3db85d4fa404d202e03298295018f025", null ],
+    [ "detect", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_scientia_mobile_1_1_wurfl_solution.html#a6aebb5f6c5de111cd5c14e86cf338dd0", null ],
+    [ "getVendorId", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_scientia_mobile_1_1_wurfl_solution.html#a5aed7dbae47ffd75c5dd8f0b10847c49", null ],
+    [ "initialise", "classfiftyone_1_1devicedetection_1_1examples_1_1console_1_1comparison_1_1_detection_impl_scientia_mobile_1_1_wurfl_solution.html#a0917ee7162b67a655c0d51bec77ca621", null ]
+];

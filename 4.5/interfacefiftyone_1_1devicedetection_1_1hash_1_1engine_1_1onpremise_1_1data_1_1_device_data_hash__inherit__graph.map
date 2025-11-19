@@ -1,0 +1,6 @@
+<map id="fiftyone.devicedetection.hash.engine.onpremise.data.DeviceDataHash" name="fiftyone.devicedetection.hash.engine.onpremise.data.DeviceDataHash">
+<area shape="rect" id="node1" title="Hash specific interface for DeviceData." alt="" coords="429,5,801,47"/>
+<area shape="rect" id="node4" href="$classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1flowelements_1_1_device_data_hash_default.html" title="Internal implementation of the DeviceDataHash interface." alt="" coords="849,5,1280,47"/>
+<area shape="rect" id="node2" href="$interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html" title="Interface exposing typed accessors for properties related to a device returned by a device detection ..." alt="" coords="151,5,381,47"/>
+<area shape="rect" id="node3" title=" " alt="" coords="5,13,103,39"/>
+</map>

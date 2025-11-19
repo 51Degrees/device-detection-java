@@ -1,0 +1,28 @@
+var classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig =
+[
+    [ "ResultsBaseSwig", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a186d2cf3cd946e1cc970aacb115cfb93", null ],
+    [ "close", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#ab934f42fda8bb61f24fb0866097b61bc", null ],
+    [ "containsProperty", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a724af37d4cde9329be72f87b5b02dbba", null ],
+    [ "containsProperty", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a8e24c32054ce08cf3c5e94cfa7b9cdb9", null ],
+    [ "delete", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#ad840deb9f681380519ac0b6129ef46bd", null ],
+    [ "getAvailableProperties", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#ab4c170be8f687eb52635b20ed2fe37b9", null ],
+    [ "getCPtr", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a79e6387edf1cd454b98ccc2b27d504c9", null ],
+    [ "getProperties", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a98ab03c3a515d01c03c3c961530bdbe4", null ],
+    [ "getPropertyName", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#af2bab837b4a16499a48ffff0ef435b4a", null ],
+    [ "getValueAsBool", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a7b4ee98384da4e796a23577f762d13d2", null ],
+    [ "getValueAsBool", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a90b1b51eab4c747228b23de796b4199e", null ],
+    [ "getValueAsBool", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#af86561a1f658d08f8cc96f3cdd2eaf47", null ],
+    [ "getValueAsDouble", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a5f093b1fd4031bfdd57890686f1a7893", null ],
+    [ "getValueAsDouble", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#aee966a196b8512df320d458c4db198ba", null ],
+    [ "getValueAsDouble", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#adba3a634e74377a10f2fc3484ea938f8", null ],
+    [ "getValueAsInteger", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a91ec652aab532ff0556bf170e7315793", null ],
+    [ "getValueAsInteger", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a781f2322a864a8ffe715559ab6adcc72", null ],
+    [ "getValueAsInteger", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#ac4e92175e76368363349327017a31003", null ],
+    [ "getValueAsString", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a8e86e5d7428dcb35677703f12b1efc03", null ],
+    [ "getValueAsString", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#af92918ba1a84231a3c2f0a09380f5599", null ],
+    [ "getValueAsString", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#aba10b4b17902f2e67ba66adcc16de3fc", null ],
+    [ "getValues", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a1d31edd49cd57451c899f471c138bf67", null ],
+    [ "getValues", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a5f36c3cea70d77394ab22f7a81542ca5", null ],
+    [ "getValues", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a377b1c3077c55053a23791658bf42a18", null ],
+    [ "swigCMemOwn", "classfiftyone_1_1devicedetection_1_1hash_1_1engine_1_1onpremise_1_1interop_1_1swig_1_1_results_base_swig.html#a3d12c32fcf03a67605d52806452bd959", null ]
+];

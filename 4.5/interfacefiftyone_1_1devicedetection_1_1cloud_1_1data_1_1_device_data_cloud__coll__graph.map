@@ -1,0 +1,5 @@
+<map id="fiftyone.devicedetection.cloud.data.DeviceDataCloud" name="fiftyone.devicedetection.cloud.data.DeviceDataCloud">
+<area shape="rect" id="node1" title="Cloud specific interface for DeviceData." alt="" coords="5,169,260,211"/>
+<area shape="rect" id="node2" href="$interfacefiftyone_1_1devicedetection_1_1shared_1_1_device_data.html" title="Interface exposing typed accessors for properties related to a device returned by a device detection ..." alt="" coords="17,80,248,121"/>
+<area shape="rect" id="node3" title=" " alt="" coords="84,5,181,32"/>
+</map>
