@@ -54,19 +54,19 @@
   {
     "Image": "macos-latest",
     "Name": "MacOS_Java_21",
-    "JavaSDKEnvVar": "JAVA_HOME_21_X64",
+    "JavaSDKEnvVar": "JAVA_HOME_21_arm64",
     "RunPerformance": true
   },
   {
     "Image": "macos-latest",
     "Name": "MacOS_Java_17",
-    "JavaSDKEnvVar": "JAVA_HOME_17_X64",
+    "JavaSDKEnvVar": "JAVA_HOME_17_arm64",
     "RunPerformance": true
   },
   {
     "Image": "macos-latest",
     "Name": "MacOS_Java_11",
-    "JavaSDKEnvVar": "JAVA_HOME_11_X64",
+    "JavaSDKEnvVar": "JAVA_HOME_11_arm64",
     "RunPerformance": true,
     "PackageRequirement" : true
   },
