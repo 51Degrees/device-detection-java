@@ -270,6 +270,10 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getDataUrl();
 	/**
+	 * Indicates which app stores are available on the device and come pre-installed by the manufacturer.
+	 */
+	AspectPropertyValue<List<String>> getDefaultAppStores();
+	/**
 	 * Indicates what certifications apply to this device.
 	 */
 	AspectPropertyValue<List<String>> getDeviceCertifications();
@@ -794,6 +798,10 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<String> getPlatformVersion();
 	/**
+	 * Refers to the number of unique client IPs from which this device has been seen.
+	 */
+	AspectPropertyValue<String> getPopularity();
+	/**
 	 * Indicates if the browser supports messages between different documents.
 	 */
 	AspectPropertyValue<Boolean> getPostMessage();
@@ -805,6 +813,10 @@ public interface DeviceData extends AspectData
 	 * Indicates a price range describing the recommended retail price of the device at the date of release, inclusive of tax (where applicable).  Prices are in United States Dollars (USD); if the price is not originally in USD it will be converted to USD using the relevant exchange rate at the time of launch. Prices are for the SIM-free version of the device (if applicable). In cases where there are several versions of the same model of the device, the price will reflect the device that was used to populate the specifications.
 	 */
 	AspectPropertyValue<String> getPriceBand();
+	/**
+	 * 
+	 */
+	AspectPropertyValue<String> getProfiles();
 	/**
 	 * Indicates if the browser supports progress reports, such as with HTTP requests. The progress element can be used to display the progress of the task. This property doesn't represent a scalar measurement. If the browser supports a gauge, the meter property should be used.
 	 */
