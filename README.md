@@ -60,7 +60,7 @@ the [latest version](https://mvnrepository.com/artifact/com.51degrees/device-det
 <dependency>
     <groupId>com.51degrees</groupId>
     <artifactId>device-detection</artifactId>
-    <version>4.4.19</version>
+    <version>4.5.x</version>
 </dependency>
 ```
 
@@ -104,6 +104,62 @@ running `mvn` by adding following options:
 - `-DwindowsSDKVersion=[ Windows 10 SDK Version ]`
 
 This is not recommended unless absolutely necessary and should be used with caution.
+
+### Build for older Linux distributions
+As outlined in the [Runners Policy](https://github.com/51Degrees/common-ci/blob/main/README.md#runners-policy), GitHub standard runners define the minimum versions of glibc and libstdc++. If your system uses older versions, you’ll need to build the library in your own environment.
+
+You can do this using Docker or Podman. An example Dockerfile is provided, targeting Ubuntu 16.04 by default, but it can be easily adapted for other distributions or Java versions.
+
+To build the library, run:
+
+```sh
+docker build --output /tmp/51d-jars -f Dockerfile.example .
+```
+
+The compiled JARs will be output to `/tmp/51d-jars`.  Make sure you specify the correct version and paths to these dependencies in your pom.xml:
+```xml
+<properties>
+    <fiftyone-device-detection.version>4.5-SNAPSHOT</fiftyone-device-detection.version>
+</properties>
+<dependency>
+    <groupId>com.51degrees</groupId>
+    <artifactId>device-detection.hash.engine.on-premise</artifactId>
+    <version>${fiftyone-device-detection.version}</version>
+    <scope>system</scope>
+    <systemPath>${basedir}/lib/device-detection.hash.engine.on-premise-${fiftyone-device-detection.version}.jar</systemPath>
+</dependency>
+
+<dependency>
+    <groupId>com.51degrees</groupId>
+    <artifactId>device-detection</artifactId>
+    <version>${fiftyone-device-detection.version}</version>
+    <scope>system</scope>
+    <systemPath>${basedir}/lib/device-detection-${fiftyone-device-detection.version}.jar</systemPath>
+</dependency>
+
+<dependency>
+    <groupId>com.51degrees</groupId>
+    <artifactId>device-detection.shared</artifactId>
+    <version>${fiftyone-device-detection.version}</version>
+    <scope>system</scope>
+    <systemPath>${basedir}/lib/device-detection.shared-${fiftyone-device-detection.version}.jar</systemPath>
+</dependency>
+```
+
+and also add a transitive dependency these jars need (would have been added by Maven if we used Maven package instead of .jars): 
+```xml
+<!-- make sure you use the latest from https://mvnrepository.com/artifact/com.51degrees/pipeline.engines.fiftyone -->
+<dependency>
+    <groupId>com.51degrees</groupId>
+    <artifactId>pipeline.engines.fiftyone</artifactId>
+    <version>4.5.x</version>
+</dependency>
+```
+## Examples
+
+Examples can be found in
+[device-detection-java-examples](https://github.com/51Degrees/device-detection-java-examples)
+repository.
 
 ## Tests
 
