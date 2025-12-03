@@ -1700,6 +1700,18 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getDefaultAppStores() { return getAs("defaultappstores", AspectPropertyValue.class, List.class, String.class); }
 	/**
+	 * Indicates whether third party cookies are enabled. Where the JavaScript contained in ThirdPartyCookiesEnabledJavaScript has not run this will indicate the likely status.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getThirdPartyCookiesEnabled() { return getAs("thirdpartycookiesenabled", AspectPropertyValue.class, String.class); }
+	/**
+	 * Contains JavaScript that can override the property ThirdPartyCookiesEnabled. This property returns NotSupported for browsers which cannot support third party cookies.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<JavaScript> getThirdPartyCookiesEnabledJavaScript() { return getAs("thirdpartycookiesenabledjavascript", AspectPropertyValue.class, JavaScript.class); }
+	/**
 	 * Indicates the Type Allocation Code (TAC) for devices supporting GSM/3GPP networks which come from multiple sources. This property will return 'N/A' if we cannot determine the device TAC authenticy.
 	 */
 	@SuppressWarnings("unchecked")

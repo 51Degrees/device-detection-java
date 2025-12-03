@@ -1126,6 +1126,14 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<List<String>> getTAC();
 	/**
+	 * Indicates whether third party cookies are enabled. Where the JavaScript contained in ThirdPartyCookiesEnabledJavaScript has not run this will indicate the likely status.
+	 */
+	AspectPropertyValue<String> getThirdPartyCookiesEnabled();
+	/**
+	 * Contains JavaScript that can override the property ThirdPartyCookiesEnabled. This property returns NotSupported for browsers which cannot support third party cookies.
+	 */
+	AspectPropertyValue<JavaScript> getThirdPartyCookiesEnabledJavaScript();
+	/**
 	 * Refers to the experimental Privacy Sandbox Topics API proposal from Google. Indicates if the API caller has observed one or more topics for a user and checks whether the website has not blocked the Topics API using a Permissions Policy.
 	 */
 	AspectPropertyValue<String> getTopicsAPIEnabled();
