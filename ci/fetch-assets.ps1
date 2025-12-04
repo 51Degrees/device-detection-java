@@ -1,31 +1,13 @@
-
 param (
-    [Parameter(Mandatory=$true)]
-    [string]$RepoName,
-    [Parameter(Mandatory=$true)]
     [string]$DeviceDetection,
     [string]$DeviceDetectionUrl
 )
+$ErrorActionPreference = "Stop"
 
-$RepoPath = [IO.Path]::Combine($pwd, $RepoName)
+$deviceDetectionData = "$PSScriptRoot/../device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx/device-detection-data"
 
-./steps/fetch-hash-assets.ps1 -RepoName $RepoName -LicenseKey $DeviceDetection -Url $DeviceDetectionUrl
-
-Write-Output "Download Lite file"
-curl -L -o "$RepoPath/51Degrees-LiteV4.1.hash" "https://github.com/51Degrees/device-detection-data/raw/main/51Degrees-LiteV4.1.hash"
-
-Write-Output "Download Evidence file"
-curl -o "$RepoPath/20000 Evidence Records.yml" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/main/20000%20Evidence%20Records.yml"    
-
-Write-Output "Download User Agents file"
-curl -o "$RepoPath/20000 User Agents.csv" "https://media.githubusercontent.com/media/51Degrees/device-detection-data/main/20000%20User%20Agents.csv"
-
-
-Copy-Item "$RepoPath/20000 Evidence Records.yml"  "$RepoPath/device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx/device-detection-data/20000 Evidence Records.yml"
-
-Copy-Item "$RepoPath/20000 User Agents.csv"  "$RepoPath/device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx/device-detection-data/20000 User Agents.csv"
-
-Copy-Item $RepoPath/51Degrees-LiteV4.1.hash  $RepoPath/device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx/device-detection-data/51Degrees-LiteV4.1.hash
-
-Copy-Item $RepoPath/TAC-HashV41.hash  $RepoPath/device-detection.hash.engine.on-premise/src/main/cxx/device-detection-cxx/device-detection-data/TAC-HashV41.hash
-
+$assets = "TAC-HashV41.hash", "51Degrees-LiteV4.1.hash", "20000 Evidence Records.yml", "20000 User Agents.csv"
+./steps/fetch-assets.ps1 -DeviceDetection:$DeviceDetection -DeviceDetectionUrl:$DeviceDetectionUrl -Assets $assets
+foreach ($asset in $assets) {
+    New-Item -ItemType SymbolicLink -Force -Target "$PWD/assets/$asset" -Path "$PSScriptRoot/../$asset", "$deviceDetectionData/$asset"
+}
