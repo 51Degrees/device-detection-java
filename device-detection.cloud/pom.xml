@@ -11,7 +11,7 @@
 
     <artifactId>device-detection.cloud</artifactId>
     <name>51Degrees :: Device Detection :: Cloud</name>
-    <description>Device detection that consumes the 51Degrees cloud service.</description>
+    <description>Cloud-based device detection for Java that uses the 51Degrees cloud service via the Pipeline API. Parses HTTP headers to identify device hardware, operating systems, browsers, and crawlers.</description>
     <url>https://51degrees.com</url>
 
     <dependencies>
