@@ -83,7 +83,7 @@ public class ProcessTests {
             data
                 .addEvidence("header.USER-AGENT", Constants.ChromeUserAgent)
                 .process();
-            validator.validateData(data, true);            
+            validator.validateData(data, true);
         }
     }
 
