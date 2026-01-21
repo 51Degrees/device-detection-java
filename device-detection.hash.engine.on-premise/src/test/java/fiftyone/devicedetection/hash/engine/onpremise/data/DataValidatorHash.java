@@ -24,6 +24,7 @@ package fiftyone.devicedetection.hash.engine.onpremise.data;
 
 import fiftyone.devicedetection.hash.engine.onpremise.flowelements.DeviceDetectionHashEngine;
 import fiftyone.devicedetection.shared.DeviceData;
+import fiftyone.devicedetection.shared.testhelpers.Constants;
 import fiftyone.devicedetection.shared.testhelpers.data.DataValidator;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
@@ -45,6 +46,10 @@ public class DataValidatorHash implements DataValidator {
         this.engine = engine;
     }
 
+    private boolean shouldSkipProperty(String propertyName) {
+        return Arrays.asList(Constants.PropertiesWithoutValuesForAllDeviceTypes).contains(propertyName);
+    }
+
     @Override
     public void validateData(FlowData data, boolean validEvidence) throws NoValueException {
         DeviceData elementData = data.getFromElement(engine);
@@ -52,10 +57,13 @@ public class DataValidatorHash implements DataValidator {
         for (FiftyOneAspectPropertyMetaData property :
                 engine.getProperties()) {
             if (property.isAvailable()) {
-                assertTrue(map.containsKey(property.getName()));
+                assertTrue("Property " + property.getName() + " not in map", map.containsKey(property.getName()));
                 AspectPropertyValue<?> value = (AspectPropertyValue<?>)map.get(property.getName());
                 if (validEvidence) {
-                    assertTrue(value.hasValue());
+                    // Skip properties that may legitimately not have values for all device types
+                    if (!shouldSkipProperty(property.getName())) {
+                        assertTrue("Property " + property.getName() + " should have value but doesn't", value.hasValue());
+                    }
                 }
                 else {
                     if (property.getCategory().equals("Device Metrics")) {
@@ -79,7 +87,7 @@ public class DataValidatorHash implements DataValidator {
                 validKeys++;
             }
         }
-        assertEquals(validKeys, elementData.getUserAgents().getValue().size());
+        assertEquals("validKeys vs userAgents size mismatch", validKeys, elementData.getUserAgents().getValue().size());
     }
 
     @Override

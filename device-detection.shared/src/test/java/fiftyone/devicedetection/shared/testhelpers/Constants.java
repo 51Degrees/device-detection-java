@@ -28,7 +28,19 @@ import java.util.Objects;
 public class Constants {
     public static final int UAS_TO_TEST = 10;
 
-    public static final String[] ExcludedProperties = {"JavascriptImageOptimiser", "JavascriptBandwidth", "JavascriptGetHighEntropyValues"};
+    // Properties excluded from typed getter tests (no dedicated getter methods in DeviceData)
+    public static final String[] ExcludedProperties = {
+        "JavascriptImageOptimiser",
+        "JavascriptBandwidth",
+        "JavascriptGetHighEntropyValues"
+    };
+
+    // Properties that may not have values for all device types
+    // (e.g., hardware properties only have values for mobile/hardware devices, not desktop browsers)
+    public static final String[] PropertiesWithoutValuesForAllDeviceTypes = {
+        "HardwareNamePrefix",
+        "HardwareNameVersion"
+    };
 
     public static final String MobileUserAgent =
         "Mozilla/5.0 (iPhone; CPU iPhone OS 7_1 like Mac OS X) " +
