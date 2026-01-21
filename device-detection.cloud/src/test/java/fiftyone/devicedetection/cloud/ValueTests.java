@@ -92,7 +92,9 @@ public class ValueTests {
             ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
             for (AspectPropertyMetaData property :
                 (List<AspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
-                if (property.isAvailable()) {
+                // Skip properties that don't have values for all device types (e.g., hardware properties for desktop UA)
+                if (property.isAvailable() &&
+                    !Arrays.asList(Constants.PropertiesWithoutValuesForAllDeviceTypes).contains(property.getName())) {
                     Class<?> expectedType;
                     Object value = elementData.get(property.getName());
 
