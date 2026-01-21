@@ -1711,6 +1711,18 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<JavaScript> getThirdPartyCookiesEnabledJavaScript() { return getAs("thirdpartycookiesenabledjavascript", AspectPropertyValue.class, JavaScript.class); }
 	/**
+	 * Marketed name of the device or series (e.g., iPhone). If a device does not have an established naming system, this field will be an empty string.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getHardwareNamePrefix() { return getAs("hardwarenameprefix", AspectPropertyValue.class, String.class); }
+	/**
+	 * Marketed version of the device or series (e.g., 17 Pro Max). If a device does not have an established naming system, this field will be an empty string.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getHardwareNameVersion() { return getAs("hardwarenameversion", AspectPropertyValue.class, String.class); }
+	/**
 	 * Indicates the Type Allocation Code (TAC) for devices supporting GSM/3GPP networks which come from multiple sources. This property will return 'N/A' if we cannot determine the device TAC authenticy.
 	 */
 	@SuppressWarnings("unchecked")
