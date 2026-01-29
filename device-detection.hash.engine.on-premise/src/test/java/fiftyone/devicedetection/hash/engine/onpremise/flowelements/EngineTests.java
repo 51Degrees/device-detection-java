@@ -26,6 +26,7 @@ import static org.junit.Assert.*;
 import static org.junit.Assume.assumeTrue;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.junit.Test;
 import org.slf4j.ILoggerFactory;
@@ -33,6 +34,9 @@ import org.slf4j.LoggerFactory;
 
 import fiftyone.devicedetection.shared.testhelpers.FileUtils;
 import fiftyone.pipeline.engines.Constants;
+import fiftyone.pipeline.engines.services.DataUpdateService;
+import fiftyone.pipeline.engines.services.DataUpdateServiceDefault;
+
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.LITE_HASH_DATA_FILE_NAME;
 import static fiftyone.devicedetection.shared.testhelpers.FileUtils.TAC_HASH_DATA_FILE_NAME;
 import static fiftyone.pipeline.util.FileFinder.getFilePath;
@@ -40,16 +44,18 @@ import static fiftyone.pipeline.util.FileFinder.getFilePath;
 public class EngineTests {
 	protected static final ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
 
-	private DeviceDetectionHashEngine createEngine(File dataFile) throws Exception {
-		return new DeviceDetectionHashEngineBuilder(loggerFactory, null)
-                .setPerformanceProfile(Constants.PerformanceProfiles.HighPerformance)
-                .setUpdateMatchedUserAgent(true)
-                .setAutoUpdate(false)
-                .build(dataFile.toString(), false);
+	private DeviceDetectionHashEngine createEngine(File dataFile, DataUpdateService dataUpdateService)
+			throws Exception {
+		return new DeviceDetectionHashEngineBuilder(loggerFactory, dataUpdateService)
+				.setPerformanceProfile(Constants.PerformanceProfiles.HighPerformance)
+				.setUpdateMatchedUserAgent(true)
+				.setAutoUpdate(false)
+				.build(dataFile.toString(), false);
 	}
-	
+
 	/**
 	 * Shared method for dataDataSourceTier tests.
+	 * 
 	 * @param fileName
 	 * @throws Exception
 	 */
@@ -57,36 +63,41 @@ public class EngineTests {
 		File dataFile = null;
 		try {
 			dataFile = getFilePath(fileName);
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			assumeTrue(e.getMessage(), false);
 		}
-		
-		DeviceDetectionHashEngine engine = createEngine(dataFile);
-		String tier = engine.getDataSourceTier();
-		engine.close();
-		
-		if (fileName.equals(LITE_HASH_DATA_FILE_NAME)) {
-			assertEquals("Lite", tier);
-		}
-		else {
-			assertTrue(tier.equalsIgnoreCase("Enterprise") ||
-					tier.equalsIgnoreCase("TAC"));
+
+		DataUpdateService dataUpdateService = new DataUpdateServiceDefault();
+		try {
+			DeviceDetectionHashEngine engine = createEngine(dataFile, dataUpdateService);
+			String tier = engine.getDataSourceTier();
+			engine.close();
+
+			if (fileName.equals(LITE_HASH_DATA_FILE_NAME)) {
+				assertEquals("Lite", tier);
+			} else {
+				assertTrue(tier.equalsIgnoreCase("Enterprise") ||
+						tier.equalsIgnoreCase("TAC"));
+			}
+		} finally {
+			dataUpdateService.close();
 		}
 	}
-	
+
 	/**
 	 * Check that getDataSourceTier returns correct product for Lite data file
+	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void Engine_Hash_GetDataSourceTier_Lite() throws Exception {
 		testDataSourceTier(LITE_HASH_DATA_FILE_NAME);
 	}
-	
+
 	/**
 	 * Check that getDataSourceTier returns correct product for Enterprise data
 	 * file
+	 * 
 	 * @throws Exception
 	 */
 	@Test
