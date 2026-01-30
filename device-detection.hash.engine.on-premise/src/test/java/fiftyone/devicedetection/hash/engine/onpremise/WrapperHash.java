@@ -32,24 +32,19 @@ import fiftyone.pipeline.engines.fiftyone.data.ComponentMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.ProfileMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.ValueMetaData;
-import fiftyone.pipeline.engines.services.DataUpdateService;
-import fiftyone.pipeline.engines.services.DataUpdateServiceDefault;
 import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
 
 public class WrapperHash implements Wrapper {
 
     protected static final ILoggerFactory loggerFactory = LoggerFactory.getILoggerFactory();
     private Pipeline pipeline;
     private DeviceDetectionHashEngine engine;
-    private DataUpdateService dataUpdateService;
 
     public WrapperHash(File dataFile, Constants.PerformanceProfiles profile) throws Exception {
-        dataUpdateService = new DataUpdateServiceDefault();
-        engine = new DeviceDetectionHashEngineBuilder(loggerFactory, dataUpdateService)
+        engine = new DeviceDetectionHashEngineBuilder(loggerFactory, null)
                 .setPerformanceProfile(profile)
                 .setUpdateMatchedUserAgent(true)
                 .setAutoUpdate(false)
@@ -90,30 +85,16 @@ public class WrapperHash implements Wrapper {
     @Override
     public void close() {
         try {
-            if (pipeline != null) {
-                pipeline.close();
-            }
+            pipeline.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         pipeline = null;
-
         try {
-            if (engine != null) {
-                engine.close();
-            }
+            engine.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         engine = null;
-
-        try {
-            if (dataUpdateService != null) {
-                dataUpdateService.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        dataUpdateService = null;
     }
 }
