@@ -1723,6 +1723,12 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<String> getHardwareNameVersion() { return getAs("hardwarenameversion", AspectPropertyValue.class, String.class); }
 	/**
+	 * Indicates the purpose for which a crawler accesses content, including search, AI indexing, AI model training, and archiving data.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<List<String>> getCrawlerUsage() { return getAs("crawlerusage", AspectPropertyValue.class, List.class, String.class); }
+	/**
 	 * Indicates the Type Allocation Code (TAC) for devices supporting GSM/3GPP networks which come from multiple sources. This property will return 'N/A' if we cannot determine the device TAC authenticy.
 	 */
 	@SuppressWarnings("unchecked")
