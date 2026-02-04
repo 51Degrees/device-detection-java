@@ -193,6 +193,10 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<String> getCrawlerName();
 	/**
+	 * Indicates the purpose for which a crawler accesses content, including search, AI indexing, AI model training, and archiving data.
+	 */
+	AspectPropertyValue<List<String>> getCrawlerUsage();
+	/**
 	 * Indicates if the browser supports CSS3 background properties (such as background-image, background-color, etc.) that allow styling of the border and the background of an object, and create a shadow effect.
 	 */
 	AspectPropertyValue<Boolean> getCssBackground();
