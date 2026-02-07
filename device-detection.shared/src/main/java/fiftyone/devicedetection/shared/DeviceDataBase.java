@@ -1729,6 +1729,12 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getCrawlerUsage() { return getAs("crawlerusage", AspectPropertyValue.class, List.class, String.class); }
 	/**
+	 * Identification tokens, defined by the IETF, that a crawler includes in the User-Agent request header field to identify the crawler software.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<List<String>> getCrawlerProductTokens() { return getAs("crawlerproducttokens", AspectPropertyValue.class, List.class, String.class); }
+	/**
 	 * Indicates the Type Allocation Code (TAC) for devices supporting GSM/3GPP networks which come from multiple sources. This property will return 'N/A' if we cannot determine the device TAC authenticy.
 	 */
 	@SuppressWarnings("unchecked")

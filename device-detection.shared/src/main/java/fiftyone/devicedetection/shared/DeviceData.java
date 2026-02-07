@@ -193,6 +193,10 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<String> getCrawlerName();
 	/**
+	 * Identification tokens, defined by the IETF, that a crawler includes in the User-Agent request header field to identify the crawler software.
+	 */
+	AspectPropertyValue<List<String>> getCrawlerProductTokens();
+	/**
 	 * Indicates the purpose for which a crawler accesses content, including search, AI indexing, AI model training, and archiving data.
 	 */
 	AspectPropertyValue<List<String>> getCrawlerUsage();
