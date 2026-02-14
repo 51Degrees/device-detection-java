@@ -129,10 +129,6 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<String> getBrowserSourceProjectVersion();
 	/**
-	 * Indicates if the browser supports the experimental Privacy Sandbox API proposals from Google.
-	 */
-	AspectPropertyValue<String> getBrowserSupportsPrivacySandbox();
-	/**
 	 * Indicates the name of the company which created the browser.
 	 */
 	AspectPropertyValue<String> getBrowserVendor();
@@ -196,6 +192,10 @@ public interface DeviceData extends AspectData
 	 * Identification tokens, defined by the IETF, that a crawler includes in the User-Agent request header field to identify the crawler software.
 	 */
 	AspectPropertyValue<List<String>> getCrawlerProductTokens();
+	/**
+	 * The url of the web page containing information from the crawler controller about the crawler. Where there is no publicly available information about the crawler, this instead links to their public website.
+	 */
+	AspectPropertyValue<String> getCrawlerUrl();
 	/**
 	 * Indicates the purpose for which a crawler accesses content, including search, AI indexing, AI model training, and archiving data.
 	 */
@@ -529,7 +529,7 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getInVRMode();
 	/**
-	 * Indicates whether the crawler is confirmed by the crawler controller to be used to train artificial intelligence.
+	 * Indicates whether the crawler operates for an AI related purpose, as defined by the values in the CrawlerUsage property. This is based on our judgement of information available from the crawler controller or other trusted research.
 	 */
 	AspectPropertyValue<String> getIsArtificialIntelligence();
 	/**
@@ -845,14 +845,6 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getPrompts();
 	/**
-	 * Refers to the experimental Privacy Sandbox Protected Audience API proposal from Google. Indicates whether the API caller can register an "AdInterestGroup" and checks whether the website has not blocked the Protected Audience API using a Permissions Policy. Please be aware we have observed latency issues when interacting with the API.
-	 */
-	AspectPropertyValue<String> getProtectedAudienceAPIEnabled();
-	/**
-	 * JavaScript that overrides the property value for the ProtectedAudienceAPIEnabled property.
-	 */
-	AspectPropertyValue<JavaScript> getProtectedAudienceAPIEnabledJavaScript();
-	/**
 	 * Indicates the maximum number of frames per second of the output image of the device in Hertz.
 	 */
 	AspectPropertyValue<Integer> getRefreshRate();
@@ -1013,14 +1005,6 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<String> getSetHeaderPlatformAcceptCH();
 	/**
-	 * Refers to the experimental Privacy Sandbox Shared Storage API proposal from Google. Indicates whether the API caller can access "Shared Storage" and checks whether the website has not blocked the Shared Storage API using a Permissions Policy.
-	 */
-	AspectPropertyValue<String> getSharedStorageAPIEnabled();
-	/**
-	 * JavaScript that overrides the property value for the SharedStorageAPIEnabled property.
-	 */
-	AspectPropertyValue<JavaScript> getSharedStorageAPIEnabledJavaScript();
-	/**
 	 * Indicates the primary marketing name of the System on Chip (chipset) which includes the CPU, GPU and modem. e.g. Snapdragon S4
 	 */
 	AspectPropertyValue<String> getSoC();
@@ -1148,14 +1132,6 @@ public interface DeviceData extends AspectData
 	 * Contains JavaScript that can override the property ThirdPartyCookiesEnabled. This property returns NotSupported for browsers which cannot support third party cookies.
 	 */
 	AspectPropertyValue<JavaScript> getThirdPartyCookiesEnabledJavaScript();
-	/**
-	 * Refers to the experimental Privacy Sandbox Topics API proposal from Google. Indicates if the API caller has observed one or more topics for a user and checks whether the website has not blocked the Topics API using a Permissions Policy.
-	 */
-	AspectPropertyValue<String> getTopicsAPIEnabled();
-	/**
-	 * JavaScript that overrides the property value for the TopicsAPIEnabled property.
-	 */
-	AspectPropertyValue<JavaScript> getTopicsAPIEnabledJavaScript();
 	/**
 	 * Indicates if the browser supports the method of registering and interpreting finder (or stylus) activity on touch screens or trackpads.
 	 */
