@@ -1399,6 +1399,18 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Boolean> getInVRMode() { return getAs("invrmode", AspectPropertyValue.class, Boolean.class); }
 	/**
+	 * Indicates the Type Allocation Code (TAC) for devices supporting GSM/3GPP networks which come from multiple sources. This property will return 'N/A' if we cannot determine the device TAC authenticy.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<List<String>> getTAC() { return getAs("tac", AspectPropertyValue.class, List.class, String.class); }
+	/**
+	 * Indicates the list of frequency bands supported by the device.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<List<String>> getFrequencyBands() { return getAs("frequencybands", AspectPropertyValue.class, List.class, String.class); }
+	/**
 	 * Indicates if the browser supports the WebP image format.
 	 */
 	@SuppressWarnings("unchecked")
@@ -1597,42 +1609,6 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getBrowserLogos() { return getAs("browserlogos", AspectPropertyValue.class, List.class, String.class); }
 	/**
-	 * JavaScript that overrides the property value for the SharedStorageAPIEnabled property.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<JavaScript> getSharedStorageAPIEnabledJavaScript() { return getAs("sharedstorageapienabledjavascript", AspectPropertyValue.class, JavaScript.class); }
-	/**
-	 * JavaScript that overrides the property value for the ProtectedAudienceAPIEnabled property.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<JavaScript> getProtectedAudienceAPIEnabledJavaScript() { return getAs("protectedaudienceapienabledjavascript", AspectPropertyValue.class, JavaScript.class); }
-	/**
-	 * Indicates if the browser supports the experimental Privacy Sandbox API proposals from Google.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getBrowserSupportsPrivacySandbox() { return getAs("browsersupportsprivacysandbox", AspectPropertyValue.class, String.class); }
-	/**
-	 * JavaScript that overrides the property value for the TopicsAPIEnabled property.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<JavaScript> getTopicsAPIEnabledJavaScript() { return getAs("topicsapienabledjavascript", AspectPropertyValue.class, JavaScript.class); }
-	/**
-	 * Refers to the experimental Privacy Sandbox Shared Storage API proposal from Google. Indicates whether the API caller can access "Shared Storage" and checks whether the website has not blocked the Shared Storage API using a Permissions Policy.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getSharedStorageAPIEnabled() { return getAs("sharedstorageapienabled", AspectPropertyValue.class, String.class); }
-	/**
-	 * Refers to the experimental Privacy Sandbox Protected Audience API proposal from Google. Indicates whether the API caller can register an "AdInterestGroup" and checks whether the website has not blocked the Protected Audience API using a Permissions Policy. Please be aware we have observed latency issues when interacting with the API.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getProtectedAudienceAPIEnabled() { return getAs("protectedaudienceapienabled", AspectPropertyValue.class, String.class); }
-	/**
 	 * JavaScript that checks for browser specific features and overrides the ProfileID.
 	 */
 	@SuppressWarnings("unchecked")
@@ -1650,12 +1626,6 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getBrowserSourceProjectVersion() { return getAs("browsersourceprojectversion", AspectPropertyValue.class, String.class); }
-	/**
-	 * Refers to the experimental Privacy Sandbox Topics API proposal from Google. Indicates if the API caller has observed one or more topics for a user and checks whether the website has not blocked the Topics API using a Permissions Policy.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getTopicsAPIEnabled() { return getAs("topicsapienabled", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates the height of the device's screen in physical pixels. This property is not applicable for a device that does not have a screen. For devices such as tablets or TV which are predominantly used in landscape mode, the pixel height will be the smaller value compared to the pixel width. 
 	 */
@@ -1681,7 +1651,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getSupportedBluetoothProfiles() { return getAs("supportedbluetoothprofiles", AspectPropertyValue.class, List.class, String.class); }
 	/**
-	 * Indicates whether the crawler is confirmed by the crawler controller to be used to train artificial intelligence.
+	 * Indicates whether the crawler operates for an AI related purpose, as defined by the values in the CrawlerUsage property. This is based on our judgement of information available from the crawler controller or other trusted research.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1735,17 +1705,11 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getCrawlerProductTokens() { return getAs("crawlerproducttokens", AspectPropertyValue.class, List.class, String.class); }
 	/**
-	 * Indicates the Type Allocation Code (TAC) for devices supporting GSM/3GPP networks which come from multiple sources. This property will return 'N/A' if we cannot determine the device TAC authenticy.
+	 * The url of the web page containing information from the crawler controller about the crawler. Where there is no publicly available information about the crawler, this instead links to their public website.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public AspectPropertyValue<List<String>> getTAC() { return getAs("tac", AspectPropertyValue.class, List.class, String.class); }
-	/**
-	 * Indicates the list of frequency bands supported by the device.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<List<String>> getFrequencyBands() { return getAs("frequencybands", AspectPropertyValue.class, List.class, String.class); }
+	public AspectPropertyValue<String> getCrawlerUrl() { return getAs("crawlerurl", AspectPropertyValue.class, String.class); }
 	/**
 	 * 
 	 */
@@ -1753,35 +1717,11 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<String> getProfiles() { return getAs("profiles", AspectPropertyValue.class, String.class); }
 	/**
-	 * Used when detection method is not Exact or None. This is an integer value and the larger the value the less confident the detector is in this result.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getDifference() { return getAs("difference", AspectPropertyValue.class, Integer.class); }
-	/**
-	 * The number of iterations carried out in order to find a match. This is the number of nodes in the graph which have been visited.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getIterations() { return getAs("iterations", AspectPropertyValue.class, Integer.class); }
-	/**
-	 * Consists of four components separated by a hyphen symbol: Hardware-Platform-Browser-IsCrawler where each Component represents an ID of the corresponding Profile.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getDeviceId() { return getAs("deviceid", AspectPropertyValue.class, String.class); }
-	/**
 	 * The method used to determine the match result.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getMethod() { return getAs("method", AspectPropertyValue.class, String.class); }
-	/**
-	 * Indicates the number of hash nodes matched within the evidence.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getMatchedNodes() { return getAs("matchednodes", AspectPropertyValue.class, Integer.class); }
 	/**
 	 * The matched User-Agents.
 	 */
@@ -1789,9 +1729,33 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getUserAgents() { return getAs("useragents", AspectPropertyValue.class, List.class, String.class); }
 	/**
+	 * The number of iterations carried out in order to find a match. This is the number of nodes in the graph which have been visited.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getIterations() { return getAs("iterations", AspectPropertyValue.class, Integer.class); }
+	/**
 	 * Total difference in character positions where the substrings hashes were found away from where they were expected.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Integer> getDrift() { return getAs("drift", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Indicates the number of hash nodes matched within the evidence.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getMatchedNodes() { return getAs("matchednodes", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Used when detection method is not Exact or None. This is an integer value and the larger the value the less confident the detector is in this result.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getDifference() { return getAs("difference", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Consists of four components separated by a hyphen symbol: Hardware-Platform-Browser-IsCrawler where each Component represents an ID of the corresponding Profile.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getDeviceId() { return getAs("deviceid", AspectPropertyValue.class, String.class); }
 }
