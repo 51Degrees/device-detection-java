@@ -1399,6 +1399,18 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Boolean> getInVRMode() { return getAs("invrmode", AspectPropertyValue.class, Boolean.class); }
 	/**
+	 * Indicates the Type Allocation Code (TAC) for devices supporting GSM/3GPP networks which come from multiple sources. This property will return 'N/A' if we cannot determine the device TAC authenticy.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<List<String>> getTAC() { return getAs("tac", AspectPropertyValue.class, List.class, String.class); }
+	/**
+	 * Indicates the list of frequency bands supported by the device.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<List<String>> getFrequencyBands() { return getAs("frequencybands", AspectPropertyValue.class, List.class, String.class); }
+	/**
 	 * Indicates if the browser supports the WebP image format.
 	 */
 	@SuppressWarnings("unchecked")
@@ -1699,41 +1711,11 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<String> getCrawlerUrl() { return getAs("crawlerurl", AspectPropertyValue.class, String.class); }
 	/**
-	 * Indicates the Type Allocation Code (TAC) for devices supporting GSM/3GPP networks which come from multiple sources. This property will return 'N/A' if we cannot determine the device TAC authenticy.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<List<String>> getTAC() { return getAs("tac", AspectPropertyValue.class, List.class, String.class); }
-	/**
-	 * Indicates the list of frequency bands supported by the device.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<List<String>> getFrequencyBands() { return getAs("frequencybands", AspectPropertyValue.class, List.class, String.class); }
-	/**
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getProfiles() { return getAs("profiles", AspectPropertyValue.class, String.class); }
-	/**
-	 * Used when detection method is not Exact or None. This is an integer value and the larger the value the less confident the detector is in this result.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getDifference() { return getAs("difference", AspectPropertyValue.class, Integer.class); }
-	/**
-	 * The number of iterations carried out in order to find a match. This is the number of nodes in the graph which have been visited.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getIterations() { return getAs("iterations", AspectPropertyValue.class, Integer.class); }
-	/**
-	 * Consists of four components separated by a hyphen symbol: Hardware-Platform-Browser-IsCrawler where each Component represents an ID of the corresponding Profile.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getDeviceId() { return getAs("deviceid", AspectPropertyValue.class, String.class); }
 	/**
 	 * The method used to determine the match result.
 	 */
@@ -1741,21 +1723,39 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<String> getMethod() { return getAs("method", AspectPropertyValue.class, String.class); }
 	/**
-	 * Indicates the number of hash nodes matched within the evidence.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getMatchedNodes() { return getAs("matchednodes", AspectPropertyValue.class, Integer.class); }
-	/**
 	 * The matched User-Agents.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<List<String>> getUserAgents() { return getAs("useragents", AspectPropertyValue.class, List.class, String.class); }
 	/**
+	 * The number of iterations carried out in order to find a match. This is the number of nodes in the graph which have been visited.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getIterations() { return getAs("iterations", AspectPropertyValue.class, Integer.class); }
+	/**
 	 * Total difference in character positions where the substrings hashes were found away from where they were expected.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Integer> getDrift() { return getAs("drift", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Indicates the number of hash nodes matched within the evidence.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getMatchedNodes() { return getAs("matchednodes", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Used when detection method is not Exact or None. This is an integer value and the larger the value the less confident the detector is in this result.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getDifference() { return getAs("difference", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Consists of four components separated by a hyphen symbol: Hardware-Platform-Browser-IsCrawler where each Component represents an ID of the corresponding Profile.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getDeviceId() { return getAs("deviceid", AspectPropertyValue.class, String.class); }
 }
