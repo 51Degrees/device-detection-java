@@ -49,11 +49,11 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 		super(logger, flowData, engine, missingPropertyService);
 	}
 	/**
-	 * JavaScript that can override the property value found by the server using information on the client device. This property is applicable for browsers that support screen pixels height cookie.
+	 * Indicates if the browser supports the 'Iframe' element, used to embed another document within a current HTML document.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public AspectPropertyValue<JavaScript> getScreenPixelsHeightJavaScript() { return getAs("screenpixelsheightjavascript", AspectPropertyValue.class, JavaScript.class); }
+	public AspectPropertyValue<Boolean> getIframe() { return getAs("iframe", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the device is primarily marketed as a tablet or phablet and has a screen size equal to or greater than 7 inches.
 	 */
@@ -109,11 +109,11 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Boolean> getIsConsole() { return getAs("isconsole", AspectPropertyValue.class, Boolean.class); }
 	/**
-	 * Indicates the name of the company that developed the operating system.
+	 * Indicates if the browser has the ability to embed custom data attributes on all HTML elements using the 'data-' prefix.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public AspectPropertyValue<String> getPlatformVendor() { return getAs("platformvendor", AspectPropertyValue.class, String.class); }
+	public AspectPropertyValue<Boolean> getDataSet() { return getAs("dataset", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates the name of the operating system the device is using.
 	 */
@@ -469,12 +469,6 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Boolean> getCssUI() { return getAs("cssui", AspectPropertyValue.class, Boolean.class); }
 	/**
-	 * Indicates if the browser has the ability to embed custom data attributes on all HTML elements using the 'data-' prefix.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getDataSet() { return getAs("dataset", AspectPropertyValue.class, Boolean.class); }
-	/**
 	 * Indicates if the browser allows encoded data to be contained in a URL.
 	 */
 	@SuppressWarnings("unchecked")
@@ -534,12 +528,6 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getHtmlMediaCapture() { return getAs("html-media-capture", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Indicates if the browser supports the 'Iframe' element, used to embed another document within a current HTML document.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getIframe() { return getAs("iframe", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports an indexed local database.
 	 */
@@ -757,11 +745,41 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<String> getContrastRatio() { return getAs("contrastratio", AspectPropertyValue.class, String.class); }
 	/**
-	 * JavaScript that can override the profile found by the server using information on the client device. This property is applicable for Apple devices which do not provide information about the model in the User-Agent string.
+	 * Indicates if the device is a media hub or set top box that requires an external display(s).
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public AspectPropertyValue<JavaScript> getJavascriptHardwareProfile() { return getAs("javascripthardwareprofile", AspectPropertyValue.class, JavaScript.class); }
+	public AspectPropertyValue<Boolean> getIsMediaHub() { return getAs("ismediahub", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates the area of the device's screen in square millimetres rounded to the nearest whole number. This property will return the value  'Unknown' for desktop or for devices which do not have an integrated screen.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getScreenMMSquare() { return getAs("screenmmsquare", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Indicate the diagonal size of the device's screen in millimetres rounded to the nearest whole number. This property will return the value 'Unknown' for desktop or for devices which do not have an integrated screen.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getScreenMMDiagonalRounded() { return getAs("screenmmdiagonalrounded", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Indicates the area of the device's screen in square inches rounded to the nearest whole number. This property will return the value 'Unknown' for desktop or for devices which do not have an integrated screen.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getScreenInchesSquare() { return getAs("screeninchessquare", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Indicates the diagonal size of the device's screen in inches rounded to the nearest whole number. This property will return the value 'Unknown' for desktop or for devices which do not have an integrated screen.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getScreenInchesDiagonalRounded() { return getAs("screeninchesdiagonalrounded", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Indicates the type of the device based on values set in other properties, such as IsMobile, IsTablet, IsSmartphone, IsSmallScreen etc.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getDeviceType() { return getAs("devicetype", AspectPropertyValue.class, String.class); }
 	/**
 	 * Refers to the JavaScript snippet used to optimise images.
 	 */
@@ -774,6 +792,180 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<List<String>> getHardwareImages() { return getAs("hardwareimages", AspectPropertyValue.class, List.class, String.class); }
+	/**
+	 * Indicates the source from which browser properties have been validated. Primary browser data are retrieved from the internal test and populated manually, then they might be validated against an external source such as Caniuse or RingMark. 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getBrowserPropertySource() { return getAs("browserpropertysource", AspectPropertyValue.class, String.class); }
+	/**
+	 * Indicates if the device's primary data connection is wireless and the device is designed to operate mostly by battery power (e.g. mobile phone, smartphone or tablet). This property does not indicate if the device is a mobile phone or not. Laptops are not classified as mobile devices under this definition and so 'IsMobile' will be 'False'.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getIsMobile() { return getAs("ismobile", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates the name of the company that developed the operating system.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getPlatformVendor() { return getAs("platformvendor", AspectPropertyValue.class, String.class); }
+	/**
+	 * Indicates if the browser supports WebGL technology to generate hardware-accelerated 3D graphics.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getSupportsWebGL() { return getAs("supportswebgl", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates if the mobile device accessing a web page emulates a desktop computer. This property is not applicable for desktops, media hubs, TVs and consoles.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getIsEmulatingDesktop() { return getAs("isemulatingdesktop", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates if the device can receive and make telephone calls using available bearers without any additional software such as VoIP. Devices that support voice calls do not necessarily support phone calls.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getSupportsPhoneCalls() { return getAs("supportsphonecalls", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates if the browser supports the new markup in HTML 5 that also refers to 'New Semantic Elements' such as <header>, <nav>, <section>, <aside>,<footer> etc.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getHtml5() { return getAs("html5", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates if the browser supports the canvas element, useful for drawing graphics via scripting (usually JavaScript).
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getCanvas() { return getAs("canvas", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates if the browser or app is being used to access a web page through a WebView.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getIsWebApp() { return getAs("iswebapp", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates if the browser supports a meter element that represents a scalar measurement within a known range or fractional value. This property does not indicate whether the browser supports the progress bar indication. For this purpose, the progress property should be used.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getMeter() { return getAs("meter", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates if the device is a web enabled computerised wristwatch with other capabilities beyond timekeeping, such as push notifications. It runs on a Smart Operating System i.e. Android, WatchOS, Tizen, Ubuntu Touch and is designed to be wearable technology.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getIsSmartWatch() { return getAs("issmartwatch", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * JavaScript that can override the property value found by the server using information on the client device. This property is applicable for browsers that support screen pixels height cookie.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<JavaScript> getScreenPixelsHeightJavaScript() { return getAs("screenpixelsheightjavascript", AspectPropertyValue.class, JavaScript.class); }
+	/**
+	 * JavaScript that can override the property value found by the server using information on the client device. This property is applicable for browsers that support screen pixels width cookie. 
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<JavaScript> getScreenPixelsWidthJavaScript() { return getAs("screenpixelswidthjavascript", AspectPropertyValue.class, JavaScript.class); }
+	/**
+	 * Lists what audio formats, if any, the browser supports using the HTML5 <audio> tag.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<List<String>> getHtml5Audio() { return getAs("html5audio", AspectPropertyValue.class, List.class, String.class); }
+	/**
+	 * Lists what video formats, if any, the browser supports using the HTLM5 <video> tag.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<List<String>> getHtml5Video() { return getAs("html5video", AspectPropertyValue.class, List.class, String.class); }
+	/**
+	 * Indicates the dynamic contrast ratio of the device's screen.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getDynamicContrastRatio() { return getAs("dynamiccontrastratio", AspectPropertyValue.class, String.class); }
+	/**
+	 * Indicates the crawler name when applicable. Returns NotCrawler when the device is not a crawler.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getCrawlerName() { return getAs("crawlername", AspectPropertyValue.class, String.class); }
+	/**
+	 * Indicates the level of support for the Promise object. The Promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getPromise() { return getAs("promise", AspectPropertyValue.class, String.class); }
+	/**
+	 * Indicates the source of the profile's specifications. This property will return 'Manufacturer' value if the profile data was obtained from the manufacturer of the device or the device itself. This property will return 'Authoritative' value if the profile data was not obtained from the manufacturer or the device itself but other third party sources (this may include retailers, social media, carriers, etc). This property will return 'Legacy' value if the profile data was obtained prior to 51degrees differentiating between Manufacturer and Authoritative. This property will return 'N/A' value if the profile data was not obtained due to unidentifiable User-Agent. The example profiles are: Generic Android Unknown, Unknown Tablet, etc.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getHardwareProfileSource() { return getAs("hardwareprofilesource", AspectPropertyValue.class, String.class); }
+	/**
+	 * Indicates if a web page is accessed through a VR headset.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getInVRMode() { return getAs("invrmode", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates if the browser supports the WebP image format.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getWebP() { return getAs("webp", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates if the browser supports the Fetch API.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getFetch() { return getAs("fetch", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates if the browser supports all CSS grid properties.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getCssGrid() { return getAs("cssgrid", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates whether the device screen is foldable or not. If the device does not have a screen or the screen is not foldable, 'False' is returned.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getIsScreenFoldable() { return getAs("isscreenfoldable", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates the number of screens the device has. This property is not applicable for a device that does not have a screen. A display is only considered a screen if it could be used to display a web page.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getNumberOfScreens() { return getAs("numberofscreens", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Indicates if the browser supports HTTP version 2.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getHttp2() { return getAs("http2", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates if the browser can prefetch resources without executing them.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getPreload() { return getAs("preload", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * Indicates the browser supports JPEG 2000 image format.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Boolean> getJpeg2000() { return getAs("jpeg2000", AspectPropertyValue.class, Boolean.class); }
+	/**
+	 * JavaScript that can override the profile found by the server using information on the client device. This property is applicable for Apple devices which do not provide information about the model in the User-Agent string.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<JavaScript> getJavascriptHardwareProfile() { return getAs("javascripthardwareprofile", AspectPropertyValue.class, JavaScript.class); }
 	/**
 	 * Indicates the resolution of the device's back camera in megapixels. For a device that has a rotating camera the same value is returned for front and back megapixels properties.
 	 */
@@ -943,119 +1135,17 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getSupportedSIMCardTypes() { return getAs("supportedsimcardtypes", AspectPropertyValue.class, List.class, String.class); }
 	/**
-	 * Indicates the type of the device based on values set in other properties, such as IsMobile, IsTablet, IsSmartphone, IsSmallScreen etc.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getDeviceType() { return getAs("devicetype", AspectPropertyValue.class, String.class); }
-	/**
-	 * Indicates the diagonal size of the device's screen in inches rounded to the nearest whole number. This property will return the value 'Unknown' for desktop or for devices which do not have an integrated screen.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getScreenInchesDiagonalRounded() { return getAs("screeninchesdiagonalrounded", AspectPropertyValue.class, Integer.class); }
-	/**
-	 * Indicate the diagonal size of the device's screen in millimetres rounded to the nearest whole number. This property will return the value 'Unknown' for desktop or for devices which do not have an integrated screen.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getScreenMMDiagonalRounded() { return getAs("screenmmdiagonalrounded", AspectPropertyValue.class, Integer.class); }
-	/**
-	 * Indicates the area of the device's screen in square millimetres rounded to the nearest whole number. This property will return the value  'Unknown' for desktop or for devices which do not have an integrated screen.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getScreenMMSquare() { return getAs("screenmmsquare", AspectPropertyValue.class, Integer.class); }
-	/**
-	 * Indicates the area of the device's screen in square inches rounded to the nearest whole number. This property will return the value 'Unknown' for desktop or for devices which do not have an integrated screen.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getScreenInchesSquare() { return getAs("screeninchessquare", AspectPropertyValue.class, Integer.class); }
-	/**
 	 * Indicates a price range describing the recommended retail price of the device at the date of release, inclusive of tax (where applicable).  Prices are in United States Dollars (USD); if the price is not originally in USD it will be converted to USD using the relevant exchange rate at the time of launch. Prices are for the SIM-free version of the device (if applicable). In cases where there are several versions of the same model of the device, the price will reflect the device that was used to populate the specifications.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getPriceBand() { return getAs("priceband", AspectPropertyValue.class, String.class); }
 	/**
-	 * Indicates if the device is a media hub or set top box that requires an external display(s).
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getIsMediaHub() { return getAs("ismediahub", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Indicates the source from which browser properties have been validated. Primary browser data are retrieved from the internal test and populated manually, then they might be validated against an external source such as Caniuse or RingMark. 
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getBrowserPropertySource() { return getAs("browserpropertysource", AspectPropertyValue.class, String.class); }
-	/**
-	 * Indicates if the browser supports the new markup in HTML 5 that also refers to 'New Semantic Elements' such as <header>, <nav>, <section>, <aside>,<footer> etc.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getHtml5() { return getAs("html5", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Indicates if the browser supports the canvas element, useful for drawing graphics via scripting (usually JavaScript).
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getCanvas() { return getAs("canvas", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Indicates if the browser supports WebGL technology to generate hardware-accelerated 3D graphics.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getSupportsWebGL() { return getAs("supportswebgl", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Indicates if the mobile device accessing a web page emulates a desktop computer. This property is not applicable for desktops, media hubs, TVs and consoles.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getIsEmulatingDesktop() { return getAs("isemulatingdesktop", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Indicates if the device can receive and make telephone calls using available bearers without any additional software such as VoIP. Devices that support voice calls do not necessarily support phone calls.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getSupportsPhoneCalls() { return getAs("supportsphonecalls", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Indicates if the browser or app is being used to access a web page through a WebView.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getIsWebApp() { return getAs("iswebapp", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Indicates if the browser supports a meter element that represents a scalar measurement within a known range or fractional value. This property does not indicate whether the browser supports the progress bar indication. For this purpose, the progress property should be used.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getMeter() { return getAs("meter", AspectPropertyValue.class, Boolean.class); }
-	/**
 	 * Indicates  the device's supported satellite navigation types.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<List<String>> getSatelliteNavigationTypes() { return getAs("satellitenavigationtypes", AspectPropertyValue.class, List.class, String.class); }
-	/**
-	 * Indicates if the device is a web enabled computerised wristwatch with other capabilities beyond timekeeping, such as push notifications. It runs on a Smart Operating System i.e. Android, WatchOS, Tizen, Ubuntu Touch and is designed to be wearable technology.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getIsSmartWatch() { return getAs("issmartwatch", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * JavaScript that can override the property value found by the server using information on the client device. This property is applicable for browsers that support screen pixels width cookie. 
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<JavaScript> getScreenPixelsWidthJavaScript() { return getAs("screenpixelswidthjavascript", AspectPropertyValue.class, JavaScript.class); }
-	/**
-	 * Indicates if the device's primary data connection is wireless and the device is designed to operate mostly by battery power (e.g. mobile phone, smartphone or tablet). This property does not indicate if the device is a mobile phone or not. Laptops are not classified as mobile devices under this definition and so 'IsMobile' will be 'False'.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getIsMobile() { return getAs("ismobile", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates the resolution of the device's second back camera in megapixels.
 	 */
@@ -1176,18 +1266,6 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getIsDataMinimising() { return getAs("isdataminimising", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Lists what audio formats, if any, the browser supports using the HTML5 <audio> tag.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<List<String>> getHtml5Audio() { return getAs("html5audio", AspectPropertyValue.class, List.class, String.class); }
-	/**
-	 * Lists what video formats, if any, the browser supports using the HTLM5 <video> tag.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<List<String>> getHtml5Video() { return getAs("html5video", AspectPropertyValue.class, List.class, String.class); }
 	/**
 	 * Refers to the list of audio codecs supported by an operating system. This list of codecs is supported for playback on a  basic software installation. The values of this property are the codec's common name.
 	 */
@@ -1357,24 +1435,6 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Double> getSecondFrontCameraMegaPixels() { return getAs("secondfrontcameramegapixels", AspectPropertyValue.class, Double.class); }
 	/**
-	 * Indicates the dynamic contrast ratio of the device's screen.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getDynamicContrastRatio() { return getAs("dynamiccontrastratio", AspectPropertyValue.class, String.class); }
-	/**
-	 * Indicates the crawler name when applicable. Returns NotCrawler when the device is not a crawler.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getCrawlerName() { return getAs("crawlername", AspectPropertyValue.class, String.class); }
-	/**
-	 * Indicates the level of support for the Promise object. The Promise object represents the eventual completion (or failure) of an asynchronous operation, and its resulting value.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getPromise() { return getAs("promise", AspectPropertyValue.class, String.class); }
-	/**
 	 * Indicates the internal persistent storage (ROM capacity) options the device can be supplied with in gigabytes (GB), including the device's Operating System and bundled applications. This could also be referred to as "Electrically Erasable Programmable Read-Only Memory (EEPROM)" or "Non Volatile Random Access Memory (NVRAM)". If no variants are found, then the value returned will be the same as "MaxInternalStorage".
 	 */
 	@SuppressWarnings("unchecked")
@@ -1387,18 +1447,6 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getDeviceRAMVariants() { return getAs("deviceramvariants", AspectPropertyValue.class, List.class, String.class); }
 	/**
-	 * Indicates the source of the profile's specifications. This property will return 'Manufacturer' value if the profile data was obtained from the manufacturer of the device or the device itself. This property will return 'Authoritative' value if the profile data was not obtained from the manufacturer or the device itself but other third party sources (this may include retailers, social media, carriers, etc). This property will return 'Legacy' value if the profile data was obtained prior to 51degrees differentiating between Manufacturer and Authoritative. This property will return 'N/A' value if the profile data was not obtained due to unidentifiable User-Agent. The example profiles are: Generic Android Unknown, Unknown Tablet, etc.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getHardwareProfileSource() { return getAs("hardwareprofilesource", AspectPropertyValue.class, String.class); }
-	/**
-	 * Indicates if a web page is accessed through a VR headset.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getInVRMode() { return getAs("invrmode", AspectPropertyValue.class, Boolean.class); }
-	/**
 	 * Indicates the Type Allocation Code (TAC) for devices supporting GSM/3GPP networks which come from multiple sources. This property will return 'N/A' if we cannot determine the device TAC authenticy.
 	 */
 	@SuppressWarnings("unchecked")
@@ -1410,30 +1458,6 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<List<String>> getFrequencyBands() { return getAs("frequencybands", AspectPropertyValue.class, List.class, String.class); }
-	/**
-	 * Indicates if the browser supports the WebP image format.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getWebP() { return getAs("webp", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Indicates if the browser supports the Fetch API.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getFetch() { return getAs("fetch", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Indicates if the browser supports all CSS grid properties.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getCssGrid() { return getAs("cssgrid", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Indicates whether the device screen is foldable or not. If the device does not have a screen or the screen is not foldable, 'False' is returned.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getIsScreenFoldable() { return getAs("isscreenfoldable", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates the diagonal size of the device's second screen in inches. This property is not applicable for a device that does not have a second screen.
 	 */
@@ -1452,24 +1476,6 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Integer> getSecondScreenPixelsHeight() { return getAs("secondscreenpixelsheight", AspectPropertyValue.class, Integer.class); }
-	/**
-	 * Indicates the number of screens the device has. This property is not applicable for a device that does not have a screen. A display is only considered a screen if it could be used to display a web page.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getNumberOfScreens() { return getAs("numberofscreens", AspectPropertyValue.class, Integer.class); }
-	/**
-	 * Indicates if the browser supports HTTP version 2.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getHttp2() { return getAs("http2", AspectPropertyValue.class, Boolean.class); }
-	/**
-	 * Indicates if the browser can prefetch resources without executing them.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getPreload() { return getAs("preload", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Refers to the second screen width of the device in millimetres. This property will return 'N/A' for desktops or for devices which do not have a second screen.
 	 */
@@ -1524,12 +1530,6 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Double> getSecondScreenInchesWidth() { return getAs("secondscreenincheswidth", AspectPropertyValue.class, Double.class); }
-	/**
-	 * Indicates the browser supports JPEG 2000 image format.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Boolean> getJpeg2000() { return getAs("jpeg2000", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Refers to the list of audio codecs in specific formats supported for Decode by the Web Browser. This list of codecs is supported for playback on a basic browser installation.
 	 */
@@ -1717,29 +1717,11 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<String> getProfiles() { return getAs("profiles", AspectPropertyValue.class, String.class); }
 	/**
-	 * The method used to determine the match result.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<String> getMethod() { return getAs("method", AspectPropertyValue.class, String.class); }
-	/**
 	 * The matched User-Agents.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<List<String>> getUserAgents() { return getAs("useragents", AspectPropertyValue.class, List.class, String.class); }
-	/**
-	 * The number of iterations carried out in order to find a match. This is the number of nodes in the graph which have been visited.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getIterations() { return getAs("iterations", AspectPropertyValue.class, Integer.class); }
-	/**
-	 * Total difference in character positions where the substrings hashes were found away from where they were expected.
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public AspectPropertyValue<Integer> getDrift() { return getAs("drift", AspectPropertyValue.class, Integer.class); }
 	/**
 	 * Indicates the number of hash nodes matched within the evidence.
 	 */
@@ -1747,11 +1729,29 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Integer> getMatchedNodes() { return getAs("matchednodes", AspectPropertyValue.class, Integer.class); }
 	/**
+	 * The number of iterations carried out in order to find a match. This is the number of nodes in the graph which have been visited.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getIterations() { return getAs("iterations", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * The method used to determine the match result.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getMethod() { return getAs("method", AspectPropertyValue.class, String.class); }
+	/**
 	 * Used when detection method is not Exact or None. This is an integer value and the larger the value the less confident the detector is in this result.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Integer> getDifference() { return getAs("difference", AspectPropertyValue.class, Integer.class); }
+	/**
+	 * Total difference in character positions where the substrings hashes were found away from where they were expected.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<Integer> getDrift() { return getAs("drift", AspectPropertyValue.class, Integer.class); }
 	/**
 	 * Consists of four components separated by a hyphen symbol: Hardware-Platform-Browser-IsCrawler where each Component represents an ID of the corresponding Profile.
 	 */
