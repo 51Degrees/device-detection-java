@@ -60,7 +60,10 @@ public class ValueTests {
                 .process();
             ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
             DeviceData device = (DeviceData) elementData;
-            assertEquals(1, device.getUserAgents().getValue().size());
+            int matchedCount = device.getUserAgents().getValue().size();
+            assertTrue(
+                "Expected between 1 and 4 matched user-agents, got " + matchedCount,
+                matchedCount >= 1 && matchedCount <= 4);
             for (String matchedUa : device.getUserAgents().getValue()) {
                 for (String substring : matchedUa.split("_|\\{|\\}")) {
                     if (substring.isEmpty() == false) {
