@@ -73,4 +73,36 @@ finally {
 
 }
 
-exit $LASTEXITCODE
+$status = $LASTEXITCODE
+
+Write-Host 'Running Selenium tests...'
+try {
+    # Build and start the cloud example (already pinned to the dev version above).
+    Push-Location "device-detection-java-examples"
+    try {
+        mvn -B --no-transfer-progress -pl web/getting-started.cloud -am package -DskipTests
+        $jar = (Get-ChildItem web/getting-started.cloud/target/*-jar-with-dependencies.jar | Select-Object -First 1).FullName
+        $env:PORT = 8099
+        $env:TestCloudEndpoint = "https://cloud.51degrees.com/api/v4"
+        $env:TestResourceKey = $Keys.TestResourceKey
+        $example = java -jar $jar 2>&1 &
+    } finally { Pop-Location }
+
+    # Get the shared contract tests.
+    if (-not (Test-Path selenium-api-tests)) {
+        git clone --depth 1 https://github.com/51Degrees/selenium-api-tests.git
+    }
+    # Wait for the example to come up.
+    curl -sS -o /dev/null --retry 5 --retry-connrefused "http://localhost:$env:PORT"
+
+    $env:CLOUD_ROOT_URL = "https://cloud.51degrees.com/"
+    $env:PAID_RESOURCE_KEY = $Keys.TestResourceKey
+    $env:EXAMPLE_URL = "http://localhost:$env:PORT"
+    $env:EXAMPLE_LANG = 'java'
+    dotnet test selenium-api-tests -c Release --filter TestCategory=Contract
+} catch {
+    if ($example) { Write-Host '>>> example app output >>>'; Receive-Job $example | Out-Host; Write-Host '<<< app output <<<' }
+    throw
+} finally {
+    if ($example) { Remove-Job -Force $example }
+}
