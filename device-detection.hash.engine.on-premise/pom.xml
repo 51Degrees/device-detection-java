@@ -12,7 +12,7 @@
     <artifactId>device-detection.hash.engine.on-premise</artifactId>
     <name>51Degrees :: Device Detection :: Hash :: On Premise</name>
 	<description>High-performance on-premise hash-based device detection engine for Java, built for the 51Degrees Pipeline API. Parses HTTP headers locally to identify device hardware, operating systems, browsers, and crawlers, with no external service calls.</description>
-    <url>https://51degrees.com</url>
+    <url>https://51degrees.com?utm_source=maven&amp;utm_medium=package&amp;utm_campaign=device-detection-java&amp;utm_content=device-detection.hash.engine.on-premise-pom.xml&amp;utm_term=url</url>
 
     <dependencies>
         <dependency>

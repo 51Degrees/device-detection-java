@@ -145,7 +145,7 @@ public class DeviceDetectionPipelineBuilder {
     /**
      * Use the 51Degrees Cloud service to perform device detection.
      * @param resourceKey The resource key to use when querying the cloud service. 
-     * Obtain one from https://configure.51degrees.com
+     * Obtain one from https://configure.51degrees.com?utm_source=code&utm_medium=comment&utm_campaign=device-detection-java&utm_content=device-detection-src-main-java-fiftyone-devicedetection-devicedetectionpipelinebuilder.java&utm_term=usecloud
      * @return A builder that can be used to configure and build a pipeline
      * that will use the cloud device detection engine.
      */
