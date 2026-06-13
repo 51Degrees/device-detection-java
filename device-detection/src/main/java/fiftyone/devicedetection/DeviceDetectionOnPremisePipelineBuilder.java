@@ -339,7 +339,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
      * match for evidence which was not in the training data. If
      * the predictive graph is also enabled, it will be used
      * next if there was no match in the performance graph.
-     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Performance">Hash Algorithm</a>
+     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html?utm_source=code&amp;utm_medium=comment&amp;utm_campaign=device-detection-java&amp;utm_content=device-detection-src-main-java-fiftyone-devicedetection-devicedetectiononpremisepipelinebuilder.java&amp;utm_term=setuseperformancegraph#DeviceDetection_Hash_DataSetProduction_Performance">Hash Algorithm</a>
      * @param use true if the performance graph should be used
      * @return this builder
      */
@@ -355,7 +355,7 @@ public class DeviceDetectionOnPremisePipelineBuilder
      * which was not in the training data. However, this is at the
      * expense of processing time, as more possibilities are taken into
      * consideration.
-     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
+     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html?utm_source=code&amp;utm_medium=comment&amp;utm_campaign=device-detection-java&amp;utm_content=device-detection-src-main-java-fiftyone-devicedetection-devicedetectiononpremisepipelinebuilder.java&amp;utm_term=setusepredictivegraph#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
      * @param use true if the predictive graph should be used
      * @return this builder
      */

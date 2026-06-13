@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <name>51Degrees :: Pipeline :: Device Detection</name>
-    <url>https://51degrees.com</url>
+    <url>https://51degrees.com?utm_source=maven&amp;utm_medium=package&amp;utm_campaign=device-detection-java&amp;utm_content=pom.xml&amp;utm_term=url</url>
     <description>Device detection engines for the 51Degrees Pipeline API</description>
 
     <modules>

@@ -187,7 +187,7 @@ public class DeviceDetectionHashEngineBuilder
      * Provide a hint as to how many threads will access the pipeline simultaneously
      * <p>
      * Default is the result of {@link Runtime#getRuntime()#getAvailableProcessors()}
-     * @see <a href="https://51degrees.com/documentation/_device_detection__features__concurrent_processing.html">Concurrent processing</a>
+     * @see <a href="https://51degrees.com/documentation/_device_detection__features__concurrent_processing.html?utm_source=code&amp;utm_medium=comment&amp;utm_campaign=device-detection-java&amp;utm_content=device-detection.hash.engine.on-premise-src-main-java-fiftyone-devicedetection-hash-engine-onpremise-flowelements-devicedetectionhashenginebuilder.java&amp;utm_term=setconcurrency">Concurrent processing</a>
      * @param concurrency expected concurrent accesses
      * @return this builder
      */
@@ -202,7 +202,7 @@ public class DeviceDetectionHashEngineBuilder
      * Whether to return a default profile if no match
      * <p>
      * Default false
-     * @see <a href="https://51degrees.com/documentation/_device_detection__features__false_positive_control.html">No Match Found</a>
+     * @see <a href="https://51degrees.com/documentation/_device_detection__features__false_positive_control.html?utm_source=code&amp;utm_medium=comment&amp;utm_campaign=device-detection-java&amp;utm_content=device-detection.hash.engine.on-premise-src-main-java-fiftyone-devicedetection-hash-engine-onpremise-flowelements-devicedetectionhashenginebuilder.java&amp;utm_term=setallowunmatched">No Match Found</a>
      * @param allow true if results with no matched hash nodes should be
      *              considered valid
      * @return this builder
@@ -219,7 +219,7 @@ public class DeviceDetectionHashEngineBuilder
      * slightly from what is expected.
      * <p>
      * Default is 0.
-     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
+     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html?utm_source=code&amp;utm_medium=comment&amp;utm_campaign=device-detection-java&amp;utm_content=device-detection.hash.engine.on-premise-src-main-java-fiftyone-devicedetection-hash-engine-onpremise-flowelements-devicedetectionhashenginebuilder.java&amp;utm_term=setdifference#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
      * @param difference to allow
      * @return this builder
      */
@@ -236,7 +236,7 @@ public class DeviceDetectionHashEngineBuilder
      * returned.
      * <p>
      * Default is 0.
-     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
+     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html?utm_source=code&amp;utm_medium=comment&amp;utm_campaign=device-detection-java&amp;utm_content=device-detection.hash.engine.on-premise-src-main-java-fiftyone-devicedetection-hash-engine-onpremise-flowelements-devicedetectionhashenginebuilder.java&amp;utm_term=setdrift#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
      * @param drift to set
      * @return this builder
      */
@@ -256,7 +256,7 @@ public class DeviceDetectionHashEngineBuilder
      * next if there was no match in the performance graph.
      * <p>
      * Default is false
-     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
+     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html?utm_source=code&amp;utm_medium=comment&amp;utm_campaign=device-detection-java&amp;utm_content=device-detection.hash.engine.on-premise-src-main-java-fiftyone-devicedetection-hash-engine-onpremise-flowelements-devicedetectionhashenginebuilder.java&amp;utm_term=setuseperformancegraph#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
      * @param use true if the performance graph should be used
      * @return this builder
      */
@@ -275,7 +275,7 @@ public class DeviceDetectionHashEngineBuilder
      * consideration.
      * <p>
      * Default is true
-     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
+     * @see <a href="https://51degrees.com/documentation/_device_detection__hash.html?utm_source=code&amp;utm_medium=comment&amp;utm_campaign=device-detection-java&amp;utm_content=device-detection.hash.engine.on-premise-src-main-java-fiftyone-devicedetection-hash-engine-onpremise-flowelements-devicedetectionhashenginebuilder.java&amp;utm_term=setusepredictivegraph#DeviceDetection_Hash_DataSetProduction_Predictive">Hash Algorithm</a>
      * @param use true if the predictive graph should be used
      * @return this builder
      */

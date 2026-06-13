@@ -12,7 +12,7 @@
     <artifactId>device-detection.shared</artifactId>
     <name>51Degrees :: Device Detection :: Shared</name>
     <description>Shared components and utilities for building 51Degrees Pipeline API device detection engines in Java. Supports parsing HTTP headers to identify device type, model, OS, browser, and crawler information—an alternative approach to UAParser, DeviceAtlas, and WURFL-based solutions.</description>
-    <url>https://51degrees.com</url>
+    <url>https://51degrees.com?utm_source=maven&amp;utm_medium=package&amp;utm_campaign=device-detection-java&amp;utm_content=device-detection.shared-pom.xml&amp;utm_term=url</url>
 
     <dependencies>
         <dependency>

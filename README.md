@@ -1,8 +1,8 @@
 # 51Degrees Device Detection Engines
 
-![51Degrees](https://51degrees.com/img/logo.png?utm_source=github&utm_medium=repository&utm_content=readme_main&utm_campaign=java-open-source "Data rewards the curious") **Java Device Detection**
+![51Degrees](https://51degrees.com/img/logo.png?utm_source=github&utm_medium=readme&utm_campaign=device-detection-java&utm_content=readme.md&utm_term=top "Data rewards the curious") **Java Device Detection**
 
-[Developer Documentation](https://51degrees.com/device-detection-java/index.html?utm_source=github&utm_medium=repository&utm_content=documentation&utm_campaign=java-open-source "developer documentation")
+[Developer Documentation](https://51degrees.com/device-detection-java/index.html?utm_source=github&utm_medium=readme&utm_campaign=device-detection-java&utm_content=readme.md&utm_term=top "developer documentation")
 
 ## Introduction
 
@@ -10,8 +10,8 @@ This repository contains Java implementation of the device detection [specificat
 
 ## Dependencies
 
-For runtime dependencies, see our [dependencies](http://51degrees.com/documentation/_info__dependencies.html) page.
-The [tested versions](https://51degrees.com/documentation/_info__tested_versions.html) page shows 
+For runtime dependencies, see our [dependencies](https://51degrees.com/documentation/_info__dependencies.html?utm_source=github&utm_medium=readme&utm_campaign=device-detection-java&utm_content=readme.md&utm_term=dependencies) page.
+The [tested versions](https://51degrees.com/documentation/_info__tested_versions.html?utm_source=github&utm_medium=readme&utm_campaign=device-detection-java&utm_content=readme.md&utm_term=dependencies) page shows 
 the JDK versions that we currently test against. The software may run fine against other versions, 
 but additional caution should be applied.
 
@@ -21,9 +21,9 @@ The Java API can either use our cloud service to get its data or it can use a lo
 
 #### Cloud
 
-You will require [resource keys](https://51degrees.com/documentation/_info__resource_keys.html)
+You will require [resource keys](https://51degrees.com/documentation/_info__resource_keys.html?utm_source=github&utm_medium=readme&utm_campaign=device-detection-java&utm_content=readme.md&utm_term=cloud)
 to use the Cloud API, as described on our website. Get resource keys from
-our [configurator](https://configure.51degrees.com/), see our [documentation](https://51degrees.com/documentation/_concepts__configurator.html) on 
+our [configurator](https://configure.51degrees.com/?utm_source=github&utm_medium=readme&utm_campaign=device-detection-java&utm_content=readme.md&utm_term=cloud), see our [documentation](https://51degrees.com/documentation/_concepts__configurator.html?utm_source=github&utm_medium=readme&utm_campaign=device-detection-java&utm_content=readme.md&utm_term=cloud) on 
 how to use this.
 
 #### On-Premise
@@ -32,7 +32,7 @@ If you are using on-premise detection, a "Lite" version of the data required is 
 in this repository. It contains only a limited set of "essential" device detection properties. 
 
 You may want to license our complete data file containing all properties. 
-[Details of our licenses](https://51degrees.com/pricing) are available on our website.
+[Details of our licenses](https://51degrees.com/pricing?utm_source=github&utm_medium=readme&utm_campaign=device-detection-java&utm_content=readme.md&utm_term=on-premise) are available on our website.
 
 If you want to use the lite file, you will need to install [GitLFS](https://git-lfs.github.com/), then:
 
@@ -163,7 +163,7 @@ repository.
 
 ## Tests
 
-You will need [resource keys](https://51degrees.com/documentation/_info__resource_keys.html)
+You will need [resource keys](https://51degrees.com/documentation/_info__resource_keys.html?utm_source=github&utm_medium=readme&utm_campaign=device-detection-java&utm_content=readme.md&utm_term=tests)
 (see above) to complete the tests and run examples which include exercising the cloud API.
 
 To verify the code:

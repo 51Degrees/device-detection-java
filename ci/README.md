@@ -6,11 +6,11 @@ The following secrets are required:
     * Example: `github_pat_l0ng_r4nd0m_s7r1ng`
   
 The following secrets are required to run on-premise tests:
-* `DEVICE_DETECTION_KEY` - [license key](https://51degrees.com/pricing) for downloading assets (TAC hashes file and TAC CSV data file)
+* `DEVICE_DETECTION_KEY` - [license key](https://51degrees.com/pricing?utm_source=github&utm_medium=readme&utm_campaign=device-detection-java&utm_content=ci-readme.md&utm_term=api-specific-ci-cd-approach) for downloading assets (TAC hashes file and TAC CSV data file)
     * Example: `V3RYL0NGR4ND0M57R1NG`
  
 The following secrets are requred to run cloud tests:
-* `SUPER_RESOURCE_KEY` - [resource key](https://51degrees.com/documentation/4.4/_info__resource_keys.html) for integration tests
+* `SUPER_RESOURCE_KEY` - [resource key](https://51degrees.com/documentation/_info__resource_keys.html?utm_source=github&utm_medium=readme&utm_campaign=device-detection-java&utm_content=ci-readme.md&utm_term=api-specific-ci-cd-approach) for integration tests
     * Example: `R4nd0m-S7r1ng`
 
 The following secrets are required for publishing releases (this should only be needed by 51Degrees):
