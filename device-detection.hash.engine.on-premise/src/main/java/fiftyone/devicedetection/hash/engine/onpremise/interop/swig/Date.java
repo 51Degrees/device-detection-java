@@ -21,7 +21,7 @@ public class Date {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
-  @SuppressWarnings("deprecation")
+  @SuppressWarnings({"deprecation", "removal"})
   protected void finalize() {
     delete();
   }

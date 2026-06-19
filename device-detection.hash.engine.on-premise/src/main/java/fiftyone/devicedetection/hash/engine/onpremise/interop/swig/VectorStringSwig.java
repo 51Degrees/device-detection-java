@@ -36,6 +36,7 @@ public class VectorStringSwig extends java.util.AbstractList<String> implements 
     this.delete();
   }
 
+  @SuppressWarnings("this-escape")
   public VectorStringSwig(String[] initialElements) {
     this();
     reserve(initialElements.length);
@@ -45,6 +46,7 @@ public class VectorStringSwig extends java.util.AbstractList<String> implements 
     }
   }
 
+  @SuppressWarnings("this-escape")
   public VectorStringSwig(Iterable<String> initialElements) {
     this();
     for (String element : initialElements) {
