@@ -40,7 +40,7 @@ import java.util.Map;
  * Encapsulates a list of {@link DeviceData} instances which can be returned
  * by the 51Degrees cloud service when certain evidence is provided (e.g. TAC)
  */
-public class MultiDeviceDataCloud
+public final class MultiDeviceDataCloud
     extends AspectDataBase
     implements MultiProfileData<DeviceData> {
     private static final String DEVICE_LIST_KEY = "profiles";
