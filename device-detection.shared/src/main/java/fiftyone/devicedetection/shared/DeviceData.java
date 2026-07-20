@@ -601,6 +601,14 @@ public interface DeviceData extends AspectData
 	 */
 	AspectPropertyValue<Boolean> getIsTv();
 	/**
+	 * Indicates whether the device is likely to be a genuine iPhone based on interrogation by JavaScript contained in the JavaScriptHardwareProfile property.
+	 */
+	AspectPropertyValue<String> getIsVerifiediPhone();
+	/**
+	 * JavaScript which overrides the IsVerifiediPhone property to report whether an iPhone is genuine. This is only used where the device is presenting as an iPhone with the evidence provided. Requires JavascriptHardwareProfile property.
+	 */
+	AspectPropertyValue<JavaScript> getIsVerifiediPhoneJavaScript();
+	/**
 	 * Indicates if the browser or app is being used to access a web page through a WebView.
 	 */
 	AspectPropertyValue<Boolean> getIsWebApp();

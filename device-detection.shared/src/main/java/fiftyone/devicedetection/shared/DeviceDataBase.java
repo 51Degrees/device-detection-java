@@ -901,6 +901,18 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Boolean> getIsTv() { return getAs("istv", AspectPropertyValue.class, Boolean.class); }
 	/**
+	 * Indicates whether the device is likely to be a genuine iPhone based on interrogation by JavaScript contained in the JavaScriptHardwareProfile property.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<String> getIsVerifiediPhone() { return getAs("isverifiediphone", AspectPropertyValue.class, String.class); }
+	/**
+	 * JavaScript which overrides the IsVerifiediPhone property to report whether an iPhone is genuine. This is only used where the device is presenting as an iPhone with the evidence provided. Requires JavascriptHardwareProfile property.
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public AspectPropertyValue<JavaScript> getIsVerifiediPhoneJavaScript() { return getAs("isverifiediphonejavascript", AspectPropertyValue.class, JavaScript.class); }
+	/**
 	 * Indicates if the browser or app is being used to access a web page through a WebView.
 	 */
 	@SuppressWarnings("unchecked")
