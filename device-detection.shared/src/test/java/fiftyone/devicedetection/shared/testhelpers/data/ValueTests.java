@@ -30,6 +30,7 @@ import fiftyone.pipeline.core.data.ElementPropertyMetaData;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.engines.exceptions.PropertyMissingException;
+import fiftyone.pipeline.engines.fiftyone.data.ComponentMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 
 import java.lang.reflect.Method;
@@ -59,7 +60,21 @@ public class ValueTests {
                 .process();
             ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
             DeviceData device = (DeviceData) elementData;
-            assertEquals(1, device.getUserAgents().getValue().size());
+            // Since the detection result shape was unified in
+            // device-detection-cxx (issue #362), a single User-Agent produces
+            // one result - and so one matched User-Agent - per component the
+            // engine populates, rather than exactly one overall. The number
+            // depends on the data file, so assert the bound here and validate
+            // every matched substring below.
+            int componentCount = 0;
+            for (ComponentMetaData component : wrapper.getComponents()) {
+                componentCount++;
+            }
+            int matchedCount = device.getUserAgents().getValue().size();
+            assertTrue(
+                "Expected between 1 and " + componentCount +
+                    " matched User-Agents, got " + matchedCount,
+                matchedCount >= 1 && matchedCount <= componentCount);
             for (String matchedUa : device.getUserAgents().getValue()) {
                 for (String substring : matchedUa.split("_|\\{|\\}")) {
                     if (substring.isEmpty() == false) {
