@@ -29,6 +29,7 @@ import fiftyone.devicedetection.shared.testhelpers.data.DataValidator;
 import fiftyone.pipeline.core.data.FlowData;
 import fiftyone.pipeline.engines.data.AspectPropertyValue;
 import fiftyone.pipeline.engines.exceptions.NoValueException;
+import fiftyone.pipeline.engines.fiftyone.data.ComponentMetaData;
 import fiftyone.pipeline.engines.fiftyone.data.FiftyOneAspectPropertyMetaData;
 
 import java.util.Arrays;
@@ -81,13 +82,28 @@ public class DataValidatorHash implements DataValidator {
         if (validEvidence == false) {
             assertEquals("0-0-0-0", elementData.getDeviceId().getValue());
         }
-        int validKeys = 0;
-        for (String key : data.getEvidence().asKeyMap().keySet()) {
-            if (engine.getEvidenceKeyFilter().include(key)) {
-                validKeys++;
-            }
+        // Since the detection result shape was unified in device-detection-cxx
+        // (issue #362), the number of results - and therefore the number of
+        // matched User-Agents - is determined by the components the engine can
+        // populate, not by how many evidence keys were supplied. Supplying
+        // redundant evidence no longer changes it. The exact number depends on
+        // which components the data file makes available, so assert the bound
+        // rather than a fixed value, and that valid evidence produces at least
+        // one result.
+        int componentCount = 0;
+        for (ComponentMetaData component : engine.getComponents()) {
+            componentCount++;
         }
-        assertEquals("validKeys vs userAgents size mismatch", validKeys, elementData.getUserAgents().getValue().size());
+        int matchedUserAgents = elementData.getUserAgents().getValue().size();
+        assertTrue(
+            "There should be no more matched User-Agents (" + matchedUserAgents +
+                ") than components populated by the engine (" + componentCount + ")",
+            matchedUserAgents <= componentCount);
+        if (validEvidence) {
+            assertTrue(
+                "Valid evidence should produce at least one result",
+                matchedUserAgents >= 1);
+        }
     }
 
     @Override
