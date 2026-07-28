@@ -155,6 +155,31 @@ and also add a transitive dependency these jars need (would have been added by M
     <version>4.5.x</version>
 </dependency>
 ```
+## Native library access
+
+On-premise device detection loads a native library through `System.load`, which recent
+JDKs treat as a restricted method and will eventually block
+(see [JEP 472](https://openjdk.org/jeps/472)). The load is performed by `LibLoader` in
+`pipeline.engines.fiftyone`, so the permission is granted against that package.
+
+If the 51Degrees JARs are on the **classpath** (the usual setup):
+
+```bash
+java -cp "libs/*" --enable-native-access=ALL-UNNAMED com.example.Main
+```
+
+If the pipeline JARs are on the **module path**, you can grant native access to
+51Degrees code alone instead of to everything unnamed:
+
+```bash
+java --module-path libs --enable-native-access=fiftyone.pipeline.engines.fiftyone -m your.app/com.example.Main
+```
+
+The device detection packages themselves are not named modules and need no changes -
+unnamed modules can read named ones. See the
+[pipeline-java README](https://github.com/51Degrees/pipeline-java#java-modules-and-native-library-access)
+for the full list of module names and the caveats that apply on the module path.
+
 ## Examples
 
 Examples can be found in
