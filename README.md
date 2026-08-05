@@ -186,7 +186,7 @@ jars - and only those two - onto the module path, leaving your application and e
 other dependency on the classpath:
 
 ```bash
-java -cp "libs/*" --module-path "mods/*" --add-modules fiftyone.pipeline.engines.fiftyone,fiftyone.devicedetection.hash.engine.onpremise --enable-native-access=fiftyone.pipeline.engines.fiftyone,fiftyone.devicedetection.hash.engine.onpremise com.example.Main
+java -cp "libs/*" --module-path mods --add-modules fiftyone.pipeline.engines.fiftyone,fiftyone.devicedetection.hash.engine.onpremise --enable-native-access=fiftyone.pipeline.engines.fiftyone,fiftyone.devicedetection.hash.engine.onpremise com.example.Main
 ```
 
 A jar must not appear on both paths, so keep the two module path jars in a separate
