@@ -150,6 +150,27 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-jar</id>
+                        <configuration>
+                            <archive>
+                                <manifestEntries>
+                                    <!-- Names this jar as an automatic module. The JNI
+                                         native method declarations live here, and JEP 472
+                                         checks binding them against the module that
+                                         declares them, so this name is needed alongside
+                                         fiftyone.pipeline.engines.fiftyone. -->
+                                    <Automatic-Module-Name>fiftyone.devicedetection.hash.engine.onpremise</Automatic-Module-Name>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>

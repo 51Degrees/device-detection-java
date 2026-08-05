@@ -155,6 +155,67 @@ and also add a transitive dependency these jars need (would have been added by M
     <version>4.5.x</version>
 </dependency>
 ```
+## Native library access
+
+On-premise device detection uses a native library, and
+[JEP 472](https://openjdk.org/jeps/472) restricts two things it needs: calling
+`System.load`, and binding a JNI `native` method declaration to its implementation.
+Java 24 and 25 warn once per calling module, and a later release will refuse the call
+and throw `IllegalCallerException`.
+
+The two operations happen in **different** packages:
+
+| Restricted operation | Declared in | Module name |
+|---|---|---|
+| `System.load` | `pipeline.engines.fiftyone` | `fiftyone.pipeline.engines.fiftyone` |
+| JNI `native` methods | `device-detection.hash.engine.on-premise` | `fiftyone.devicedetection.hash.engine.onpremise` |
+
+### On the classpath
+
+This is the default layout and needs no changes to how you package or deploy. One flag
+covers both operations:
+
+```bash
+java -cp "libs/*" --enable-native-access=ALL-UNNAMED com.example.Main
+```
+
+### Naming 51Degrees code alone
+
+If granting native access to every jar on the classpath is too broad, move those two
+jars - and only those two - onto the module path, leaving your application and every
+other dependency on the classpath:
+
+```bash
+java -cp "libs/*" --module-path mods --add-modules fiftyone.pipeline.engines.fiftyone,fiftyone.devicedetection.hash.engine.onpremise --enable-native-access=fiftyone.pipeline.engines.fiftyone,fiftyone.devicedetection.hash.engine.onpremise com.example.Main
+```
+
+A jar must not appear on both paths, so keep the two module path jars in a separate
+directory from the classpath ones.
+
+### Module names
+
+Every package in this repository declares a module name, not just the two above. Only
+`fiftyone.devicedetection.hash.engine.onpremise` is needed for native access; the rest
+are named so that the name stays stable for anyone who puts them on the module path.
+
+| Package | Module name |
+|---|---|
+| device-detection | `fiftyone.devicedetection` |
+| device-detection.cloud | `fiftyone.devicedetection.cloud` |
+| device-detection.hash.engine.on-premise | `fiftyone.devicedetection.hash.engine.onpremise` |
+| device-detection.shared | `fiftyone.devicedetection.shared` |
+
+Without a declared name the module system derives one from the file name, which gives
+`device.detection.hash.engine.on.premise` and changes whenever the artifact is renamed
+or shaded.
+
+The names come from an `Automatic-Module-Name` manifest entry, so the jars remain
+ordinary non-modular jars, build identically on every JDK from 8 upwards, and nothing
+changes for consumers who stay on the classpath. See the
+[pipeline-java README](https://github.com/51Degrees/pipeline-java#native-library-access)
+for the pipeline module names and for how to configure element builders when a jar is on
+the module path.
+
 ## Examples
 
 Examples can be found in

@@ -34,6 +34,19 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <executions>
                     <execution>
+                        <id>default-jar</id>
+                        <configuration>
+                            <archive>
+                                <manifestEntries>
+                                    <!-- Names this jar as an automatic module, so that
+                                         the name stays stable if it is put on the
+                                         module path. -->
+                                    <Automatic-Module-Name>fiftyone.devicedetection.shared</Automatic-Module-Name>
+                                </manifestEntries>
+                            </archive>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>Jar Tests Package</id>
                         <phase>package</phase>
                         <goals>
