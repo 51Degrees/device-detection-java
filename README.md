@@ -192,12 +192,29 @@ java -cp "libs/*" --module-path "mods/*" --add-modules fiftyone.pipeline.engines
 A jar must not appear on both paths, so keep the two module path jars in a separate
 directory from the classpath ones.
 
-Both names come from an `Automatic-Module-Name` manifest entry, so the jars remain
-ordinary non-modular jars and nothing changes for consumers who stay on the classpath.
-See the
+### Module names
+
+Every package in this repository declares a module name, not just the two above. Only
+`fiftyone.devicedetection.hash.engine.onpremise` is needed for native access; the rest
+are named so that the name stays stable for anyone who puts them on the module path.
+
+| Package | Module name |
+|---|---|
+| device-detection | `fiftyone.devicedetection` |
+| device-detection.cloud | `fiftyone.devicedetection.cloud` |
+| device-detection.hash.engine.on-premise | `fiftyone.devicedetection.hash.engine.onpremise` |
+| device-detection.shared | `fiftyone.devicedetection.shared` |
+
+Without a declared name the module system derives one from the file name, which gives
+`device.detection.hash.engine.on.premise` and changes whenever the artifact is renamed
+or shaded.
+
+The names come from an `Automatic-Module-Name` manifest entry, so the jars remain
+ordinary non-modular jars, build identically on every JDK from 8 upwards, and nothing
+changes for consumers who stay on the classpath. See the
 [pipeline-java README](https://github.com/51Degrees/pipeline-java#native-library-access)
-for the other 51Degrees module names and for how to configure element builders when a
-jar is on the module path.
+for the pipeline module names and for how to configure element builders when a jar is on
+the module path.
 
 ## Examples
 
