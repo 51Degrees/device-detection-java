@@ -56,6 +56,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<String> getAjaxRequestType() { return getAs("ajaxrequesttype", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates if the browser supports 'window.requestAnimationFrame()' method.
+	 *
+	 * @see <a href="http://www.w3.org/TR/animation-timing/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -80,6 +82,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Integer> getBitsPerPixel() { return getAs("bitsperpixel", AspectPropertyValue.class, Integer.class); }
 	/**
 	 * Indicates if the browser fully supports BlobBuilder, containing a BlobBuilder interface, a FileSaver interface, a FileWriter interface, and a FileWriterSync interface.
+	 *
+	 * @see <a href="http://dev.w3.org/2009/dap/file-system/file-writer.html#the-blobbuilder-interface">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -128,6 +132,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<List<String>> getBrowserLogos() { return getAs("browserlogos", AspectPropertyValue.class, List.class, String.class); }
 	/**
 	 * Indicates the name of the browser. Many mobile browsers, by default, come with an operating system (OS). Unless specifically named, these browsers are named after the accompanying OS and/or the layout engine. 
+	 *
+	 * @see <a href="http://en.wikipedia.org/wiki/Web_browser">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -194,12 +200,16 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<String> getBrowserSourceProjectVersion() { return getAs("browsersourceprojectversion", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates the name of the company which created the browser.
+	 *
+	 * @see <a href="http://reference.sitepoint.com/css/vendorspecific">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getBrowserVendor() { return getAs("browservendor", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates the version or subversion of the browser.
+	 *
+	 * @see <a href="http://www.webdevelopersnotes.com/how-do-i/check-browser-version.php">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -224,18 +234,24 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<List<String>> getCameraTypes() { return getAs("cameratypes", AspectPropertyValue.class, List.class, String.class); }
 	/**
 	 * Indicates if the browser supports the canvas element, useful for drawing graphics via scripting (usually JavaScript).
+	 *
+	 * @see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCanvas() { return getAs("canvas", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Stands for Composite Capability/Preference Profiles.  Refers to the list of MIME types supported by the operating system. The list does not include MIME types that are only enabled through the use of 3rd party applications.
+	 *
+	 * @see <a href="http://en.wikipedia.org/wiki/Composite_Capability/Preference_Profiles">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<List<String>> getCcppAccept() { return getAs("ccppaccept", AspectPropertyValue.class, List.class, String.class); }
 	/**
 	 * Indicates which version of the Connected Limited Device Configuration the device supports for use with Java ME.
+	 *
+	 * @see <a href="http://java.sun.com/products/cldc/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -248,6 +264,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<String> getContrastRatio() { return getAs("contrastratio", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates if the browser supports http Cookies. However, the user may have disabled Cookies in their own configuration. Where data cannot be validated, it is assumed that the browser supports cookies.
+	 *
+	 * @see <a href="http://en.wikipedia.org/wiki/HTTP_cookie">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -302,42 +320,56 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<List<String>> getCrawlerUsage() { return getAs("crawlerusage", AspectPropertyValue.class, List.class, String.class); }
 	/**
 	 * Indicates if the browser supports CSS3 background properties (such as background-image, background-color, etc.) that allow styling of the border and the background of an object, and create a shadow effect.
+	 *
+	 * @see <a href="http://www.w3.org/TR/css3-background/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssBackground() { return getAs("cssbackground", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports border images, allowing decoration of the border around an object.
+	 *
+	 * @see <a href="http://www.w3.org/TR/css3-background/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssBorderImage() { return getAs("cssborderimage", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser can draw CSS images into a Canvas.
+	 *
+	 * @see <a href="http://www.webkit.org/blog/176/css-canvas-drawing/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssCanvas() { return getAs("csscanvas", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports CSS3 Color, allowing author control of the foreground colour and opacity of an element.
+	 *
+	 * @see <a href="http://www.w3.org/TR/css3-color/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssColor() { return getAs("csscolor", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports CSS3 columns for setting column- width and column-count.
+	 *
+	 * @see <a href="http://www.w3schools.com/css3/css3_multiple_columns.asp">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssColumn() { return getAs("csscolumn", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports flexbox, allowing the automatic reordering of elements on the page when accessed from devices with different screen sizes.
+	 *
+	 * @see <a href="http://www.w3.org/TR/css3-flexbox/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssFlexbox() { return getAs("cssflexbox", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports CSS3 fonts, including non-standard fonts, e.g. @font-face.
+	 *
+	 * @see <a href="http://www.w3.org/TR/css3-fonts/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -350,54 +382,72 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Boolean> getCssGrid() { return getAs("cssgrid", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports CSS3 images, allowing for fall-back images, gradients and other effects.
+	 *
+	 * @see <a href="http://dev.w3.org/csswg/css3-images/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssImages() { return getAs("cssimages", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports MediaQueries for dynamic CSS that uses the @media rule.
+	 *
+	 * @see <a href="http://www.w3.org/TR/css3-mediaqueries/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssMediaQueries() { return getAs("cssmediaqueries", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports the CSS 'min-width' and 'max-width' element.
+	 *
+	 * @see <a href="http://www.w3.org/TR/CSS21/visudet.html#min-max-widths">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssMinMax() { return getAs("cssminmax", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports overflowing of clipped blocks.
+	 *
+	 * @see <a href="http://www.w3.org/TR/CSS2/visufx.html">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssOverflow() { return getAs("cssoverflow", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports CSS position, allowing for different box placement algorithms, e.g. static, relative, absolute, fixed and initial.
+	 *
+	 * @see <a href="http://www.w3.org/TR/CSS21/visuren.html#choose-position">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssPosition() { return getAs("cssposition", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports all CSS3 text features including: text-overflow, word-wrap and word-break.
+	 *
+	 * @see <a href="http://www.w3.org/TR/css3-text/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssText() { return getAs("csstext", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports 2D transformations in CSS3 including rotating, scaling, etc. This property includes support for both transform and transform-origin properties.
+	 *
+	 * @see <a href="http://www.w3.org/TR/css3-2d-transforms/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssTransforms() { return getAs("csstransforms", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports CSS3 transitions elements, used for animating changes to properties.
+	 *
+	 * @see <a href="http://www.w3schools.com/css3/css3_transitions.asp">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getCssTransitions() { return getAs("csstransitions", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports CSS UI stylings, including text-overflow, css3-boxsizing and pointer properties.
+	 *
+	 * @see <a href="http://www.w3.org/TR/css3-ui/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -410,6 +460,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Boolean> getDataSet() { return getAs("dataset", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser allows encoded data to be contained in a URL.
+	 *
+	 * @see <a href="http://www.ietf.org/rfc/rfc2397">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -434,6 +486,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<String> getDeviceId() { return getAs("deviceid", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates if the browser supports DOM events for device orientation, e.g. 'deviceorientation', 'devicemotion' and 'compassneedscalibration'.
+	 *
+	 * @see <a href="http://www.w3.org/TR/orientation-event/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -445,7 +499,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Integer> getDeviceRAM() { return getAs("deviceram", AspectPropertyValue.class, Integer.class); }
 	/**
-	 * Indicates the volatile RAM capacity options for the device in megabytes (MB). If no variants are found, then the value returned will be the same as "DeviceRAM".
+	 * Indicates the volatile RAM capacity options for the device in megabytes (MB). If no variants are found, then the value returned will be the same as &quot;DeviceRAM&quot;.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -506,24 +560,32 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Boolean> getFetch() { return getAs("fetch", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports file reading with events to show progress and errors.
+	 *
+	 * @see <a href="http://www.w3.org/TR/FileAPI/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getFileReader() { return getAs("filereader", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser allows Blobs to be saved to client machines with events to show progress and errors. The End-User may opt to decline these files.
+	 *
+	 * @see <a href="http://www.w3.org/TR/file-writer-api/#idl-def-FileSaver">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getFileSaver() { return getAs("filesaver", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser allows files to be saved to client machines with events to show progress and errors. The End-User may opt to decline these files.
+	 *
+	 * @see <a href="http://www.w3.org/TR/file-writer-api/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getFileWriter() { return getAs("filewriter", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports the 'FormData' object. This property also refers to XMLHttpRequest. If the browser supports 'xhr2', the 'FormData' element will be also supported. 
+	 *
+	 * @see <a href="http://www.w3.org/TR/XMLHttpRequest/#interface-formdata">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -542,12 +604,16 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Double> getFrontCameraMegaPixels() { return getAs("frontcameramegapixels", AspectPropertyValue.class, Double.class); }
 	/**
 	 * Indicates if the browser supports requests from a video or canvas element to be displayed in full-screen mode.
+	 *
+	 * @see <a href="http://dvcs.w3.org/hg/fullscreen/raw-file/tip/Overview.html">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getFullscreen() { return getAs("fullscreen", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports a feature to acquire the geographical location. For information on which GeoLoc API the browser supports, refer to another property called JavaScriptPreferredGeoLocApi.
+	 *
+	 * @see <a href="http://www.w3.org/TR/geolocation-API/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -722,36 +788,48 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Boolean> getHasVirtualQwerty() { return getAs("hasvirtualqwerty", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser stores the session history for a web page that contains the URLs visited by the browser's user.
+	 *
+	 * @see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/history.html">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getHistory() { return getAs("history", AspectPropertyValue.class, Boolean.class); }
 	/**
-	 * Indicates if the browser is able to use media inputs, e.g. webcam and microphone, in a script and as an input for forms, e.g. '&lt;input type="file" accept="image/*" id="capture"&gt;' would prompt image- capturing software to open.
+	 * Indicates if the browser is able to use media inputs, e.g. webcam and microphone, in a script and as an input for forms, e.g. '&lt;input type=&quot;file&quot; accept=&quot;image/*&quot; id=&quot;capture&quot;&gt;' would prompt image- capturing software to open.
+	 *
+	 * @see <a href="http://www.w3.org/TR/html-media-capture/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getHtmlMediaCapture() { return getAs("html-media-capture", AspectPropertyValue.class, Boolean.class); }
 	/**
-	 * Indicates if the browser supports the new markup in HTML 5 that also refers to 'New Semantic Elements' such as <header>, <nav>, <section>, <aside>,<footer> etc.
+	 * Indicates if the browser supports the new markup in HTML 5 that also refers to 'New Semantic Elements' such as &lt;header&gt;, &lt;nav&gt;, &lt;section&gt;, &lt;aside&gt;,&lt;footer&gt; etc.
+	 *
+	 * @see <a href="http://www.w3.org/TR/html5/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getHtml5() { return getAs("html5", AspectPropertyValue.class, Boolean.class); }
 	/**
-	 * Lists what audio formats, if any, the browser supports using the HTML5 <audio> tag.
+	 * Lists what audio formats, if any, the browser supports using the HTML5 &lt;audio&gt; tag.
+	 *
+	 * @see <a href="http://www.w3schools.com/html5/html5_audio.asp">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<List<String>> getHtml5Audio() { return getAs("html5audio", AspectPropertyValue.class, List.class, String.class); }
 	/**
-	 * Lists what video formats, if any, the browser supports using the HTLM5 <video> tag.
+	 * Lists what video formats, if any, the browser supports using the HTLM5 &lt;video&gt; tag.
+	 *
+	 * @see <a href="http://www.w3schools.com/html5/html5_video.asp">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<List<String>> getHtml5Video() { return getAs("html5video", AspectPropertyValue.class, List.class, String.class); }
 	/**
 	 * Refers to the latest version of HyperText Markup Language (HTML) supported by the browser.
+	 *
+	 * @see <a href="http://www.w3schools.com/w3c/w3c_html.asp">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -770,18 +848,22 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<String> getHttpLiveStreaming() { return getAs("httplivestreaming", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates if the browser supports the 'Iframe' element, used to embed another document within a current HTML document.
+	 *
+	 * @see <a href="http://dev.w3.org/html5/spec/the-iframe-element.html#the-iframe-element">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getIframe() { return getAs("iframe", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports an indexed local database.
+	 *
+	 * @see <a href="http://www.w3.org/TR/IndexedDB/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getIndexedDB() { return getAs("indexeddb", AspectPropertyValue.class, Boolean.class); }
 	/**
-	 * Indicates the internal persistent storage (ROM capacity) options the device can be supplied with in gigabytes (GB), including the device's Operating System and bundled applications. This could also be referred to as "Electrically Erasable Programmable Read-Only Memory (EEPROM)" or "Non Volatile Random Access Memory (NVRAM)". If no variants are found, then the value returned will be the same as "MaxInternalStorage".
+	 * Indicates the internal persistent storage (ROM capacity) options the device can be supplied with in gigabytes (GB), including the device's Operating System and bundled applications. This could also be referred to as &quot;Electrically Erasable Programmable Read-Only Memory (EEPROM)&quot; or &quot;Non Volatile Random Access Memory (NVRAM)&quot;. If no variants are found, then the value returned will be the same as &quot;MaxInternalStorage&quot;.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -914,6 +996,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<JavaScript> getIsVerifiediPhoneJavaScript() { return getAs("isverifiediphonejavascript", AspectPropertyValue.class, JavaScript.class); }
 	/**
 	 * Indicates if the browser or app is being used to access a web page through a WebView.
+	 *
+	 * @see <a href="https://en.wikipedia.org/wiki/WebView">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -926,6 +1010,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Integer> getIterations() { return getAs("iterations", AspectPropertyValue.class, Integer.class); }
 	/**
 	 * Indicates if the browser supports JavaScript.
+	 *
+	 * @see <a href="http://www.w3schools.com/js/js_intro.asp">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1010,24 +1096,32 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Boolean> getJpeg2000() { return getAs("jpeg2000", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Refers to the grade of the level the device has with the jQuery Mobile Framework, as posted by jQuery.
+	 *
+	 * @see <a href="http://jquerymobile.com/gbs/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getjQueryMobileSupport() { return getAs("jquerymobilesupport", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates if the browser supports the 'JSON' object. This property may need a vendor prefix, e.g. webkit, moz, etc.
+	 *
+	 * @see <a href="http://es5.github.com/x15.12.html">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getJson() { return getAs("json", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Refers to the name of the embedded technology the browser uses to display formatted content on the screen.
+	 *
+	 * @see <a href="http://en.wikipedia.org/wiki/Web_browser_engine">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getLayoutEngine() { return getAs("layoutengine", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates if the browser supports the CSS-mask element that allows users to alter the visibility of an item by either partially or fully hiding the item.
+	 *
+	 * @see <a href="http://www.webkit.org/blog/181/css-masks/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1039,13 +1133,13 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<Integer> getMatchedNodes() { return getAs("matchednodes", AspectPropertyValue.class, Integer.class); }
 	/**
-	 * Indicates the maximum amount of internal persistent storage (ROM capacity) with which the device is supplied in gigabytes (GB), including the space used by the device's Operating System and bundled applications. This could also be referred to as "Electrically Erasable Programmable Read-Only Memory (EEPROM)" or "Non Volatile Random Access Memory (NVRAM)". Where a device has different internal storage options, the largest option available is returned.
+	 * Indicates the maximum amount of internal persistent storage (ROM capacity) with which the device is supplied in gigabytes (GB), including the space used by the device's Operating System and bundled applications. This could also be referred to as &quot;Electrically Erasable Programmable Read-Only Memory (EEPROM)&quot; or &quot;Non Volatile Random Access Memory (NVRAM)&quot;. Where a device has different internal storage options, the largest option available is returned.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Double> getMaxInternalStorage() { return getAs("maxinternalstorage", AspectPropertyValue.class, Double.class); }
 	/**
-	 * Indicates the maximum number of "Universal Integrated Circuit Cards (UICC - more commonly known as, SIM)" the device can support including both removable and embedded. If the device doesn't support any UICC then a value of '0' is returned.
+	 * Indicates the maximum number of &quot;Universal Integrated Circuit Cards (UICC - more commonly known as, SIM)&quot; the device can support including both removable and embedded. If the device doesn't support any UICC then a value of '0' is returned.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1070,6 +1164,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Integer> getMaxUsageTime() { return getAs("maxusagetime", AspectPropertyValue.class, Integer.class); }
 	/**
 	 * Indicates if the browser supports a meter element that represents a scalar measurement within a known range or fractional value. This property does not indicate whether the browser supports the progress bar indication. For this purpose, the progress property should be used.
+	 *
+	 * @see <a href="http://www.w3.org/TR/html-markup/meter.html">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1099,7 +1195,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getNativeDevice() { return getAs("nativedevice", AspectPropertyValue.class, List.class, String.class); }
 	/**
-	 * Refers to the 'Model' value returned for Android Google Play or Amazon native applications when the android.os.Build.MODEL javascript is used to display the class. For Apple devices, this property refers to the device identifier, for example 'iPad5,4'. This may be obtained by calling sysctlbyname and passing hw.machine as a name parameter or alternatively by obtaining "machine" member from a populated utsname structure using uname API.
+	 * Refers to the 'Model' value returned for Android Google Play or Amazon native applications when the android.os.Build.MODEL javascript is used to display the class. For Apple devices, this property refers to the device identifier, for example 'iPad5,4'. This may be obtained by calling sysctlbyname and passing hw.machine as a name parameter or alternatively by obtaining &quot;machine&quot; member from a populated utsname structure using uname API.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1172,6 +1268,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<List<String>> getPlatformLogos() { return getAs("platformlogos", AspectPropertyValue.class, List.class, String.class); }
 	/**
 	 * Indicates the name of the operating system the device is using.
+	 *
+	 * @see <a href="http://en.wikipedia.org/wiki/List_of_operating_systems">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1220,12 +1318,16 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Integer> getPlatformReleaseYear() { return getAs("platformreleaseyear", AspectPropertyValue.class, Integer.class); }
 	/**
 	 * Indicates the name of the company that developed the operating system.
+	 *
+	 * @see <a href="http://en.wikipedia.org/wiki/Mobile_operating_system">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getPlatformVendor() { return getAs("platformvendor", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates the version or subversion of the software platform. Where the PlatformVendor is Apple, the PlatformVersion returned will be the most likely version. It may be different to the value provided in the evidence.
+	 *
+	 * @see <a href="http://en.wikipedia.org/wiki/Mobile_operating_system">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1238,6 +1340,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<String> getPopularity() { return getAs("popularity", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates if the browser supports messages between different documents.
+	 *
+	 * @see <a href="http://www.w3.org/TR/webmessaging/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1262,6 +1366,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<String> getProfiles() { return getAs("profiles", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates if the browser supports progress reports, such as with HTTP requests. The progress element can be used to display the progress of the task. This property doesn't represent a scalar measurement. If the browser supports a gauge, the meter property should be used.
+	 *
+	 * @see <a href="http://www.w3.org/TR/progress-events/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1274,6 +1380,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<String> getPromise() { return getAs("promise", AspectPropertyValue.class, String.class); }
 	/**
 	 * Indicates if the browser supports simple dialogues (window.alert, window.confirm and window.prompt).
+	 *
+	 * @see <a href="http://www.w3.org/TR/html5/timers.html#user-prompts">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1496,24 +1604,32 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Integer> getSecondScreenPixelsWidth() { return getAs("secondscreenpixelswidth", AspectPropertyValue.class, Integer.class); }
 	/**
 	 * Indicates if the browser supports the querySelector() method that returns the first element matching a specified CSS selector(s) in the document.
+	 *
+	 * @see <a href="http://www.w3.org/TR/selectors-api2/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getSelector() { return getAs("selector", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Contains the Accept-CH HTTP header values to add to the HTTP response for the browser component. UACH values Sec-CH-UA, and Sec-CH-UA-Full-Version are relevant. The default value is Unknown if the browser does not fully support UACH.
+	 *
+	 * @see <a href="https://learnclienthints.com">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getSetHeaderBrowserAcceptCH() { return getAs("setheaderbrowseraccept-ch", AspectPropertyValue.class, String.class); }
 	/**
 	 * Contains the Accept-CH HTTP header values to add to the HTTP response for the hardware component. UACH values Sec-CH-UA-Model, and Sec-CH-UA-Mobile are relevant. The default value is Unknown if the browser does not fully support UACH.
+	 *
+	 * @see <a href="https://learnclienthints.com">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<String> getSetHeaderHardwareAcceptCH() { return getAs("setheaderhardwareaccept-ch", AspectPropertyValue.class, String.class); }
 	/**
 	 * Contains the Accept-CH HTTP header values to add to the HTTP response for the platform component. UACH values Sec-CH-UA-Platform, and Sec-CH-UA-Platform-Version are relevant. The default value is Unknown if the browser does not fully support UACH.
+	 *
+	 * @see <a href="https://learnclienthints.com">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1604,6 +1720,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Double> getSuggestedLinkSizePoints() { return getAs("suggestedlinksizepoints", AspectPropertyValue.class, Double.class); }
 	/**
 	 * Indicates the list of wireless data technologies supported by the device, including Bluetooth and Wi-Fi. For example, 4G cellular network technologies includes 'LTE' (Long Term Evolution), and 5G technologies includes 'NR' (New Radio). If the device supports phone calls, the SMS value is also returned.
+	 *
+	 * @see <a href="http://en.wikipedia.org/wiki/Wireless_Application_Protocol">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1616,12 +1734,16 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Double> getSupportedBluetooth() { return getAs("supportedbluetooth", AspectPropertyValue.class, Double.class); }
 	/**
 	 * Indicates the Bluetooth profiles the device supports.
+	 *
+	 * @see <a href="https://en.wikipedia.org/wiki/List_of_Bluetooth_profiles">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<List<String>> getSupportedBluetoothProfiles() { return getAs("supportedbluetoothprofiles", AspectPropertyValue.class, List.class, String.class); }
 	/**
 	 * This Property is no longer being supported. Please see Properties, SupportedBluetooth and SupportedBluetoothProfiles for the relevant data.
+	 *
+	 * @see <a href="http://en.wikipedia.org/wiki/Bluetooth">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1651,7 +1773,7 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	@Override
 	public AspectPropertyValue<List<String>> getSupportedSensorTypes() { return getAs("supportedsensortypes", AspectPropertyValue.class, List.class, String.class); }
 	/**
-	 * Indicates whether the "Universal Integrated Circuit Card (UICC - more commonly known as, SIM)" is removable or embedded. If removable, the form factor of the UICC is returned.
+	 * Indicates whether the &quot;Universal Integrated Circuit Card (UICC - more commonly known as, SIM)&quot; is removable or embedded. If removable, the form factor of the UICC is returned.
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1688,6 +1810,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Boolean> getSupportsWiDi() { return getAs("supportswidi", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports SVG (scalable vector graphics), useful for 2D animations and applications where all objects within the SVG can be accessed via the DOM and can have assigned event listener elements.
+	 *
+	 * @see <a href="http://www.w3.org/TR/SVG/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1712,12 +1836,16 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<JavaScript> getThirdPartyCookiesEnabledJavaScript() { return getAs("thirdpartycookiesenabledjavascript", AspectPropertyValue.class, JavaScript.class); }
 	/**
 	 * Indicates if the browser supports the method of registering and interpreting finder (or stylus) activity on touch screens or trackpads.
+	 *
+	 * @see <a href="http://www.w3.org/TR/touch-events/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getTouchEvents() { return getAs("touchevents", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports a method of tracking text being played with media, e.g. subtitles and captions.
+	 *
+	 * @see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html#the-track-element">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1730,12 +1858,16 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<List<String>> getUserAgents() { return getAs("useragents", AspectPropertyValue.class, List.class, String.class); }
 	/**
 	 * Indicates if the browser supports the 'Video' element for playing videos on web pages without requiring a plug-in.
+	 *
+	 * @see <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/the-video-element.html">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public AspectPropertyValue<Boolean> getVideo() { return getAs("video", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports Viewport, to give control over view for different screen sizes and resolutions of devices accessing a website.
+	 *
+	 * @see <a href="http://www.w3.org/TR/mwabp/#bp-viewport">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1748,6 +1880,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Boolean> getWebP() { return getAs("webp", AspectPropertyValue.class, Boolean.class); }
 	/**
 	 * Indicates if the browser supports background workers in JavaScript.
+	 *
+	 * @see <a href="http://www.w3.org/TR/workers/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -1766,6 +1900,8 @@ public abstract class DeviceDataBase extends AspectDataBase implements DeviceDat
 	public AspectPropertyValue<Double> getWeightWithoutBattery() { return getAs("weightwithoutbattery", AspectPropertyValue.class, Double.class); }
 	/**
 	 * Indicates if the browser supports client-to-server communication with XmlHttpRequests. If the browser supports 'Xhr2' will also support 'DataForm' element. This property may need a vendor prefix, e.g. webkit, moz, etc.
+	 *
+	 * @see <a href="http://www.w3.org/TR/XMLHttpRequest/">More information</a>
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
