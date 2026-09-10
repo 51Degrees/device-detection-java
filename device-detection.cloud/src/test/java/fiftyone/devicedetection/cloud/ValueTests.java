@@ -36,7 +36,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static fiftyone.pipeline.util.StringManipulation.stringJoin;
+import static fiftyone.devicedetection.shared.testhelpers.data.ValueTests.reportMissingGetters;
 import static org.junit.Assert.*;
 
 public class ValueTests {
@@ -141,6 +141,7 @@ public class ValueTests {
                 .process();
             ElementData elementData = data.get(wrapper.getEngine().getElementDataKey());
             List<String> missingGetters = new ArrayList<>();
+            int verifiedGetters = 0;
             for (AspectPropertyMetaData property :
                 (List<AspectPropertyMetaData>) wrapper.getEngine().getProperties()) {
 
@@ -185,29 +186,18 @@ public class ValueTests {
                                 }
                             }
                         }
+                        verifiedGetters++;
                     } catch (NoSuchMethodException e) {
                         missingGetters.add(property.getName());
                     }
                 }
             }
-            if (missingGetters.size() > 0) {
-                if (missingGetters.size() == 1) {
-                    fail("The property '" + missingGetters.get(0) + "' " +
-                        "is missing a getter in the DeviceData class. This is not " +
-                        "a serious issue, and the property can still be used " +
-                        "through the asMap method, but it is an indication " +
-                        "that the API should be updated in order to enable the " +
-                        "the strongly typed getter for this property.");
-                } else {
-                    fail("The properties " +
-                        stringJoin(missingGetters, ", ") +
-                        "are missing getters in the DeviceData class. This is not " +
-                        "a serious issue, and the properties can still be used " +
-                        "through the asMap method, but it is an indication " +
-                        "that the API should be updated in order to enable the " +
-                        "the strongly typed getter for these properties.");
-                }
-            }
+            // Only the reporting is shared with the on-premise copy of this
+            // check; the scan above is still duplicated between the two. That is
+            // enough for the bug being fixed, which was that a new data file
+            // property broke the build, but it does not make the copies
+            // equivalent. See issue #584.
+            reportMissingGetters(missingGetters, verifiedGetters);
         }
     }
     
