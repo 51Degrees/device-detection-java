@@ -14,6 +14,7 @@ param(
 
 $RepoPath = [IO.Path]::Combine($pwd, $RepoName)
 $ExamplesRepoName = "$RepoName-examples"
+$examplesStatus = 0
 
 try {
     Write-Output "Cloning '$ExamplesRepoName'"
@@ -47,6 +48,8 @@ try {
 
     Write-Output "Testing Examples"
     mvn clean test "-DTestResourceKey=$($Keys.TestResourceKey)" "-DSuperResourceKey=$($Keys.TestResourceKey)" "-DLicenseKey=$($Keys.DeviceDetection)"
+    # Checked after the Selenium tests, so a failure here does not stop them.
+    $examplesStatus = $LASTEXITCODE
 
     Write-Output "Copying test results".
     # Copy the test results into the test-results folder
@@ -72,8 +75,6 @@ finally {
     Pop-Location
 
 }
-
-$status = $LASTEXITCODE
 
 # Runs the shared Selenium contract tests (category Contract in
 # selenium-api-tests) against one web example. The example is built, started
@@ -161,6 +162,12 @@ function Invoke-ContractTests {
     }
 }
 
+# Failures are collected so that every set of tests runs before the job fails.
+$failures = [System.Collections.Generic.List[string]]::new()
+if ($examplesStatus -ne 0) {
+    $failures.Add("the example tests failed with exit code $examplesStatus")
+}
+
 Write-Host 'Running Selenium tests...'
 if ($IsLinux -and [System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture -eq 'Arm64') {
     # The Selenium Manager binary that the suite ships for Linux is built for
@@ -176,10 +183,8 @@ if ($IsLinux -and [System.Runtime.InteropServices.RuntimeInformation]::OSArchite
     $env:CLOUD_ROOT_URL = "https://cloud.51degrees.com/"
     $env:PAID_RESOURCE_KEY = $Keys.TestResourceKey
 
-    $seleniumFailures = [System.Collections.Generic.List[string]]::new()
-
     # The cloud example.
-    Invoke-ContractTests -Label 'cloud' -Module 'web/getting-started.cloud' -Port 8099 -Failures $seleniumFailures -ExampleEnv @{
+    Invoke-ContractTests -Label 'cloud' -Module 'web/getting-started.cloud' -Port 8099 -Failures $failures -ExampleEnv @{
         TestCloudEndpoint = "https://cloud.51degrees.com/api/v4"
         TestResourceKey = $Keys.TestResourceKey
     }
@@ -187,11 +192,11 @@ if ($IsLinux -and [System.Runtime.InteropServices.RuntimeInformation]::OSArchite
     # The on-premise example, against the TAC data file copied into the
     # examples repository above. The Lite data file has neither DeviceType nor
     # the JavaScript properties the contract tests need.
-    Invoke-ContractTests -Label 'on-premise' -Module 'web/getting-started.onprem' -Port 8098 -Failures $seleniumFailures -ExampleEnv @{
+    Invoke-ContractTests -Label 'on-premise' -Module 'web/getting-started.onprem' -Port 8098 -Failures $failures -ExampleEnv @{
         '51DEGREES_DD_PATH' = (Resolve-Path "device-detection-java-examples/device-detection-data/TAC-HashV41.hash").Path
     }
+}
 
-    if ($seleniumFailures.Count -gt 0) {
-        throw "Selenium tests failed: $($seleniumFailures -join '; ')"
-    }
+if ($failures.Count -gt 0) {
+    throw "Integration tests failed: $($failures -join '; ')"
 }
