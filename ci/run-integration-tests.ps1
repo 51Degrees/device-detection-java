@@ -85,7 +85,8 @@ function Invoke-ContractTests {
         [Parameter(Mandatory)][string]$Label,
         [Parameter(Mandatory)][string]$Module,
         [Parameter(Mandatory)][int]$Port,
-        [Parameter(Mandatory)][System.Collections.Generic.List[string]]$Failures,
+        [Parameter(Mandatory)][AllowEmptyCollection()]
+        [System.Collections.Generic.List[string]]$Failures,
         # Environment variables the example needs, removed again afterwards.
         [hashtable]$ExampleEnv = @{}
     )
