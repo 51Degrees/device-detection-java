@@ -88,9 +88,12 @@ try {
         $example = java -jar $jar 2>&1 &
     } finally { Pop-Location }
 
-    # Get the shared contract tests.
+    # Get the shared contract tests. SELENIUM_TESTS_REF picks a branch of
+    # the suite, so a change there can be tried here before it is merged.
+    $seleniumRef = if ($env:SELENIUM_TESTS_REF) { $env:SELENIUM_TESTS_REF } else { 'main' }
     if (-not (Test-Path selenium-api-tests)) {
-        git clone --depth 1 https://github.com/51Degrees/selenium-api-tests.git
+        Write-Host "Cloning the Selenium contract tests from '$seleniumRef'"
+        git clone --depth 1 --branch $seleniumRef https://github.com/51Degrees/selenium-api-tests.git
     }
     # Wait for the example to come up.
     curl -sS -o /dev/null --retry 5 --retry-connrefused "http://localhost:$env:PORT"
@@ -100,6 +103,13 @@ try {
     $env:EXAMPLE_URL = "http://localhost:$env:PORT"
     $env:EXAMPLE_LANG = 'java'
     dotnet test selenium-api-tests -c Release --filter TestCategory=Contract
+    # PowerShell does not stop for a native command that returns non-zero, so
+    # without this the browser tests could fail every case and the job would
+    # still be reported as a success.
+    if ($LASTEXITCODE -ne 0) {
+        throw "The Selenium contract tests failed, returning $LASTEXITCODE. " +
+            "Their output is above."
+    }
 } catch {
     if ($example) { Write-Host '>>> example app output >>>'; Receive-Job $example | Out-Host; Write-Host '<<< app output <<<' }
     throw
