@@ -175,9 +175,12 @@ if ($IsLinux -and [System.Runtime.InteropServices.RuntimeInformation]::OSArchite
     # "Exec format error" before a browser is started.
     Write-Host 'Skipping Selenium tests, Selenium Manager has no Linux Arm64 build'
 } else {
-    # Get the shared contract tests.
+    # Get the shared contract tests. SELENIUM_TESTS_REF picks a branch of
+    # the suite, so a change there can be tried here before it is merged.
+    $seleniumRef = if ($env:SELENIUM_TESTS_REF) { $env:SELENIUM_TESTS_REF } else { 'main' }
     if (-not (Test-Path selenium-api-tests)) {
-        git clone --depth 1 https://github.com/51Degrees/selenium-api-tests.git
+        Write-Host "Cloning the Selenium contract tests from '$seleniumRef'"
+        git clone --depth 1 --branch $seleniumRef https://github.com/51Degrees/selenium-api-tests.git
         if ($LASTEXITCODE -ne 0) { throw "Failed to clone selenium-api-tests" }
     }
     $env:CLOUD_ROOT_URL = "https://cloud.51degrees.com/"
