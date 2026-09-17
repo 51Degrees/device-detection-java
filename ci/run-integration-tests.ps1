@@ -90,9 +90,6 @@ try {
 
     # Get the shared contract tests. SELENIUM_TESTS_REF picks a branch of
     # the suite, so a change there can be tried here before it is merged.
-    # PROOF RUN ONLY, reverted in the next commit: point the suite at the
-    # branch that carries the ARM64 fix.
-    $env:SELENIUM_TESTS_REF = 'fix/arm-linux-browser-drivers'
     $seleniumRef = if ($env:SELENIUM_TESTS_REF) { $env:SELENIUM_TESTS_REF } else { 'main' }
     if (-not (Test-Path selenium-api-tests)) {
         Write-Host "Cloning the Selenium contract tests from '$seleniumRef'"

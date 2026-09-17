@@ -1,9 +1,104 @@
 [
   {
+    "Image": "ubuntu-22.04",
+    "Name": "Ubuntu_Java_21",
+    "JavaSDKEnvVar": "JAVA_HOME_21_X64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "ubuntu-22.04",
+    "Name": "Ubuntu_Java_17",
+    "JavaSDKEnvVar": "JAVA_HOME_17_X64",
+    "RunPerformance": true,
+    "PackageRequirement" : true
+  },
+  {
+    "Image": "ubuntu-22.04",
+    "Name": "Ubuntu_Java_11",
+    "JavaSDKEnvVar": "JAVA_HOME_11_X64",
+    "RunPerformance": true
+  },
+  {
     "Image": "ubuntu-22.04-arm",
     "Name": "Ubuntu_ARM_Java_17",
     "JavaSDKEnvVar": "JAVA_HOME_17_X64",
-    "RunPerformance": false,
+    "RunPerformance": true,
+    "PackageRequirement" : true
+  },
+  {
+    "Image": "ubuntu-22.04",
+    "Name": "Ubuntu_Java_8",
+    "JavaSDKEnvVar": "JAVA_HOME_8_X64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "windows-latest",
+    "Name": "Windows_Java_21",
+    "JavaSDKEnvVar": "JAVA_HOME_21_X64",
+    "RunPerformance": true,
+    "PackageRequirement" : false
+  },
+  {
+    "Image": "windows-latest",
+    "Name": "Windows_Java_17",
+    "JavaSDKEnvVar": "JAVA_HOME_17_X64",
+    "RunPerformance": true,
+    "PackageRequirement" : true
+  },
+  {
+    "Image": "windows-latest",
+    "Name": "Windows_Java_11",
+    "JavaSDKEnvVar": "JAVA_HOME_11_X64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "windows-latest",
+    "Name": "Windows_Java_8",
+    "JavaSDKEnvVar": "JAVA_HOME_8_X64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "macos-15-intel",
+    "Name": "MacOS_X64_Java_21",
+    "JavaSDKEnvVar": "JAVA_HOME_21_X64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "macos-15-intel",
+    "Name": "MacOS_X64_Java_17",
+    "JavaSDKEnvVar": "JAVA_HOME_17_X64",
+    "RunPerformance": true,
     "PackageRequirement": true
+  },
+  {
+    "Image": "macos-15-intel",
+    "Name": "MacOS_X64_Java_11",
+    "JavaSDKEnvVar": "JAVA_HOME_11_X64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "macos-15-intel",
+    "Name": "MacOS_X64_Java_8",
+    "JavaSDKEnvVar": "JAVA_HOME_8_X64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "macos-15",
+    "Name": "MacOS_ARM_Java_21",
+    "JavaSDKEnvVar": "JAVA_HOME_21_arm64",
+    "RunPerformance": true
+  },
+  {
+    "Image": "macos-15",
+    "Name": "MacOS_ARM_Java_17",
+    "JavaSDKEnvVar": "JAVA_HOME_17_arm64",
+    "RunPerformance": true,
+    "PackageRequirement": true
+  },
+  {
+    "Image": "macos-15",
+    "Name": "MacOS_ARM_Java_11",
+    "JavaSDKEnvVar": "JAVA_HOME_11_arm64",
+    "RunPerformance": true
   }
 ]
