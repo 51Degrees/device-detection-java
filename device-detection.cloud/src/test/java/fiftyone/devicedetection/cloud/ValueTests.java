@@ -105,12 +105,27 @@ public class ValueTests {
 
                     assertNotNull("Value of " + property.getName() + " is null. ", value);
                     assertTrue(AspectPropertyValue.class.isAssignableFrom(value.getClass()));
+                    AspectPropertyValue<?> propertyValue =
+                        (AspectPropertyValue<?>) value;
+                    // A property the 51Degrees client script populates, such
+                    // as HasWebDriver or IsVisible, has no value at all on a
+                    // request that carries no client script evidence, and
+                    // this request carries none. Asking such a value for its
+                    // type throws, so what is checked here is that the reason
+                    // for there being no value was given, which is what a
+                    // caller reads.
+                    if (propertyValue.hasValue() == false) {
+                        assertNotNull("Property '" + property.getName() +
+                                "' has no value and no reason was given.",
+                            propertyValue.getNoValueMessage());
+                        continue;
+                    }
                     assertTrue("Value of '" + property.getName() +
-                            "' was of type " + ((AspectPropertyValue<?>) value).getValue().getClass().getSimpleName() +
+                            "' was of type " + propertyValue.getValue().getClass().getSimpleName() +
                             " but should have been " + expectedType.getSimpleName() +
                             ".",
                         expectedType.isAssignableFrom(
-                            ((AspectPropertyValue<?>) value).getValue().getClass()));
+                            propertyValue.getValue().getClass()));
                 }
             }
         }
