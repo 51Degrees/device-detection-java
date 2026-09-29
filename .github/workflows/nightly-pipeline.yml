@@ -56,7 +56,7 @@ jobs:
       token: ${{ secrets.ACCESS_TOKEN }}
       DeviceDetection: ${{ secrets.DEVICE_DETECTION_KEY }}
       DeviceDetectionUrl: ${{ secrets.DEVICE_DETECTION_URL }}
-      TestResourceKey: ${{ secrets.SUPER_RESOURCE_KEY}}
+      TestResourceKey: ${{ secrets._51DEGREES_RESOURCE_KEY_BESPOKE}}
 
   Publish:
     if: ${{ !cancelled() }}
@@ -72,7 +72,7 @@ jobs:
       token: ${{ secrets.ACCESS_TOKEN }}
       DeviceDetection: ${{ secrets.DEVICE_DETECTION_KEY }}
       DeviceDetectionUrl: ${{ secrets.DEVICE_DETECTION_URL }}
-      TestResourceKey: ${{ secrets.SUPER_RESOURCE_KEY}}
+      TestResourceKey: ${{ secrets._51DEGREES_RESOURCE_KEY_BESPOKE}}
       MavenSettings: ${{ secrets.MAVEN_SETTINGS }}
       JavaGpgKeyPassphrase: ${{ secrets.JAVA_GPG_KEY_PASSPHRASE }}
       JavaPGP: ${{ secrets.JAVA_KEY_PGP_FILE }}
