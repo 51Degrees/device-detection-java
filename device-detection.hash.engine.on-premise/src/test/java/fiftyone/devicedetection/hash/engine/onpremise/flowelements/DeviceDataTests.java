@@ -39,6 +39,7 @@ import org.slf4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.*;
 
@@ -84,7 +85,32 @@ public class DeviceDataTests extends TestsBase {
 	            arg -> data);
 	        flowData.close();
 	        verify(results, times(1)).close();
-        }            
+        }
+    }
+
+    /**
+     * Check that drift adds the drift of every native result, one per
+     * component, as the specification describes and the native results do.
+     * @throws Exception
+     */
+    @Test
+    public void DeviceData_Drift_IsTheSumOfTheResults() throws Exception {
+        try (FlowData flowData = getWrapper().getPipeline().createFlowData()) {
+            DeviceDataHashDefault data = new DeviceDataHashDefault(
+                logger,
+                flowData,
+                getWrapper().getEngine(),
+                missingPropertyService);
+
+            ResultsHashSwig hardware = mock(ResultsHashSwig.class);
+            when(hardware.getDrift()).thenReturn(3);
+            ResultsHashSwig browser = mock(ResultsHashSwig.class);
+            when(browser.getDrift()).thenReturn(5);
+            data.setResults(hardware);
+            data.setResults(browser);
+
+            assertEquals(8, data.getDrift().getValue().intValue());
+        }
     }
 
     /**

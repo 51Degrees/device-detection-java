@@ -176,13 +176,11 @@ public class DeviceDataHashDefault
      * @return drift
      */
     private AspectPropertyValue<Integer> getDriftInternal() {
-        int result = Integer.MAX_VALUE;
+        int total = 0;
         for (ResultsHashSwig results : resultsList) {
-            if (results.getDrift() < result) {
-                result = results.getDrift();
-            }
+            total += results.getDrift();
         }
-        return new AspectPropertyValueDefault<>(result);
+        return new AspectPropertyValueDefault<>(total);
     }
 
     /**
