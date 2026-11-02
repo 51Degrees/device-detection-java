@@ -3,8 +3,8 @@ name: Monthly Copyright Update
 on:
   workflow_dispatch:
   schedule:
-    # * is a special character in YAML so quote this string
-    - cron:  '0 0 1 * *'
+    # The copyright year only changes once a year, so this runs on 1 January.
+    - cron: '0 0 1 1 *'
 
 jobs:
   # Run the common workflow on each pull request
